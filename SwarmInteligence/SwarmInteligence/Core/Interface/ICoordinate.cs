@@ -17,7 +17,7 @@ namespace SwarmInteligence
     /// This construction is useful for determine that all methods of the interface
     /// in implementation can work only with the objects of the same implementation. And is useful for performance.
     /// </remarks>
-    public interface ICoordinate<C>: ICloneable, IComparable<ICoordinate<C>>
+    public interface ICoordinate<C>: ICloneable, IEquatable<ICoordinate<C>>
         where C: struct, ICoordinate<C>
     {
         /// <summary> Find distance between two points specified by coordinates. </summary>

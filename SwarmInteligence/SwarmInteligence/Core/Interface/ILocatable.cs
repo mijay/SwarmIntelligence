@@ -32,7 +32,7 @@ namespace SwarmInteligence
         /// Gets the <see cref="Air"/> which is used for communication in <see cref="District{C,B}"/>
         /// in which object is stored.
         /// </summary>
-        public static Air Ether<C,B>(this ILocatable<C,B> locatable)
+        public static Air Air<C,B>(this ILocatable<C,B> locatable)
             where C: struct, ICoordinate<C>
         {
             return locatable.District.Air;
