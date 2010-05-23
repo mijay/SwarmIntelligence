@@ -12,17 +12,29 @@ namespace SwarmInteligence
     /// <remarks>
     /// For performance purpose all instances of <see cref="ICoordinate{C}"/> should be structures.
     /// Also everywhere where <see cref="ICoordinate{C}"/> are used they should be made a generic parameter, like this:
-    /// <example>public interface IExample&lt;C&gt; where C: struct, ICoordinate&lt;C&gt; {...}</example>
+    /// <code>public interface IExample&lt;C&gt; where C: struct, ICoordinate&lt;C&gt; {...}</code>
     /// 
     /// In implementation <typeparamref name="C"/> should be the type of that implementation. For example:
-    /// <example>public struct Coordinate: ICoordinate&lt;Coordinate&gt; {...}</example>
+    /// <code>public struct Coordinate: ICoordinate&lt;Coordinate&gt; {...}</code>
     /// This construction is useful for determine that all methods of the interface
     /// in implementation can work only with the objects of the same implementation. And is useful for performance.
     /// </remarks>
     [ContractClass(typeof(CoordinateContract<>))]
-    public interface ICoordinate<C>: ICloneable, IEquatable<ICoordinate<C>>
+    public interface ICoordinate<C>: ICloneable, IEquatable<C>
         where C: struct, ICoordinate<C>
     {
+        /// <summary>
+        /// This getter is redundant and returns the structure itself.
+        /// But it is useful for defining contracts.
+        /// </summary>
+        /// <example>
+        /// This property implementation usual should be like this:
+        /// <code>Coordinate2D Cast { get { return this; } }</code>
+        /// </example>
+        [Pure]
+        [Obsolete("For contracts only")]
+        C Cast { get; }
+
         /// <summary>
         /// Enumerate over all point from suburb of the point defined by the current <see cref="ICoordinate{C}"/>
         /// of the radius defined by <paramref name="radius"/>.
@@ -30,7 +42,7 @@ namespace SwarmInteligence
         //TODO: опять непонятно что с графами. Ну не заносить же ссылку на граф в каждую координату. Хотя возможно в этом есть смысл.
         //todo: подумай ка еще раз об этом методе и его взаимоотношении с Range
         [Pure]
-        IEnumerable<C> Suburb(long radius);
+        IEnumerable<C> Suburb(int radius);
 
         /// <summary>
         /// Enumerate over all <see cref="ICoordinate{C}"/> which are in the cube
@@ -56,8 +68,8 @@ namespace SwarmInteligence
         [Pure]
         public object Clone()
         {
-            Contract.Ensures(Contract.Result<object>().GetType()==this.GetType());
-            Contract.Ensures(this.Equals(Contract.Result<object>() as ICoordinate<C>));
+            Contract.Ensures(Contract.Result<object>().GetType() == GetType());
+            Contract.Ensures(Equals(Contract.Result<object>() as ICoordinate<C>));
             throw new NotImplementedException();
         }
 
@@ -66,7 +78,7 @@ namespace SwarmInteligence
         #region Implementation of IEquatable<ICoordinate<C>>
 
         [Pure]
-        public bool Equals(ICoordinate<C> other)
+        public bool Equals(C other)
         {
             throw new NotImplementedException();
         }
@@ -75,8 +87,9 @@ namespace SwarmInteligence
 
         #region Implementation of ICoordinate<C>
 
-        public IEnumerable<C> Suburb(long radius)
+        public IEnumerable<C> Suburb(int radius)
         {
+            Contract.Requires<ArgumentException>(radius >= 0);
             // check that this point is inside the suburb
             Contract.Ensures(Contract.Result<IEnumerable<C>>().Any(c => c.Equals(this)));
             // check that all point in suburb are distinct
@@ -87,19 +100,30 @@ namespace SwarmInteligence
         public IEnumerable<C> Range(C upperBound)
         {
             // check that this (as lowerBound) is the first point in range
-            Contract.Ensures(Contract.Result<IEnumerable<C>>().First().Equals(this));
+            Contract.Ensures(Contract.Result<IEnumerable<C>>().First().Equals(Cast));
             // check that upperBound is the last point in range
             Contract.Ensures(Contract.Result<IEnumerable<C>>().Last().Equals(upperBound));
             // check that for all all element in range IsInRange is true
-            //Contract.Ensures(Contract.Result<IEnumerable<C>>().All(c => c.IsInRange(this, upperBound)));
+            Contract.Ensures(Contract.Result<IEnumerable<C>>().All(c => c.IsInRange(Cast, upperBound)));
+            // check that all point in suburb are distinct
+            Contract.Ensures(Contract.Result<IEnumerable<C>>().GroupBy(c => c).All(g => g.Count() == 1));
             throw new NotImplementedException();
         }
 
         public bool IsInRange(C lowerBound, C upperBound)
         {
             // check that IsInRange == lowerBound.Range(upperBound).Contains(this)
-            Contract.Ensures(Contract.Result<bool>().Equals(lowerBound.Range(upperBound).Cast<ICoordinate<C>>().Contains(this)));
+            Contract.Ensures(Contract.Result<bool>().Equals(lowerBound.Range(upperBound).Contains(Cast)));
             throw new NotImplementedException();
+        }
+
+        public C Cast
+        {
+            get
+            {
+                Contract.Ensures(Equals(Contract.Result<C>()));
+                throw new NotImplementedException();
+            }
         }
 
         #endregion
