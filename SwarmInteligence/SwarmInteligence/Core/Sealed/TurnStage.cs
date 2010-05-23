@@ -30,7 +30,7 @@
         ApplyAfterTurn
     }
 
-    public static class TurnStageHelper
+    public static class TurnStageExtend
     {
         public static bool IsService(this TurnStage stage)
         {

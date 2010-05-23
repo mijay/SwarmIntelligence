@@ -39,6 +39,7 @@ namespace SwarmInteligence
         /// <summary>
         /// Gets the background data accessor of the current <see cref="Cell{C,B}"/>.
         /// </summary>
+        [Pure]
         public B Background
         {
             get
@@ -72,7 +73,7 @@ namespace SwarmInteligence
         public void Add(Stone<C, B> stone)
         {
             Contract.Requires<ArgumentNullException>(stone != null);
-            Contract.Requires(stone.Coordinate.Equals(coordinate), "cannot add stone which is stored in other cell");
+            Contract.Requires<InvalidOperationException>(!stone.IsInitialized, "cannot add stone which was already used");
             command.Add(new KeyValuePair<Action<Stone<C, B>>, Stone<C, B>>(ObjectsList.Add, stone));
         }
 
@@ -83,7 +84,7 @@ namespace SwarmInteligence
         internal void Remove(Stone<C, B> stone)
         {
             Contract.Requires<ArgumentNullException>(stone != null);
-            Contract.Requires(stone.Coordinate.Equals(coordinate), "cannot remove stone which is stored in other cell"); //todo: wtf
+            Contract.Requires(stone.Coordinate.Equals(coordinate), "cannot remove stone which is stored in other cell");
             Contract.Requires(ObjectsList.Contains(stone),"stone coordinate is correct but there is no such stone in the list");
             ObjectsList.Remove(stone);
         }
@@ -91,6 +92,7 @@ namespace SwarmInteligence
         /// <summary>
         /// Gets number of objects stored in the current <see cref="Cell{C,B}"/>.
         /// </summary>
+        [Pure]
         public int Count
         {
             get { return ObjectsList.Count; }
@@ -99,18 +101,21 @@ namespace SwarmInteligence
         /// <summary>
         /// Gets the first stored object from the <see cref="Cell{C,B}"/>.
         /// </summary>
+        [Pure]
         public Stone<C, B> First
         {
             get { return ObjectsList[0]; }
         }
 
         /// <inheritdoc/>
+        [Pure]
         public IEnumerator<Stone<C, B>> GetEnumerator()
         {
             return ObjectsList.GetEnumerator();
         }
 
         /// <inheritdoc/>
+        [Pure]
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();

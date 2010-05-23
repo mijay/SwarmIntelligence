@@ -6,51 +6,76 @@ using Utils.Drawing;
 
 namespace SwarmInteligence
 {
-    //todo: probably it is better to split this class into two and move some functions to abstract base
     /// <summary>
     /// Abstract class for representing objects of the <see cref="Map{C,B}"/>
     /// that are stored in <see cref="Cell{C,B}"/>
     /// </summary>
-    /// <typeparam name="C"></typeparam>
-    /// <typeparam name="B"></typeparam>
     public abstract class Stone<C, B>: ILocatable<C, B>, ICommunicative, IVisualizable
         where C: struct, ICoordinate<C>
     {
         protected Stone(District<C, B> district)
         {
-            Contract.Invariant(!initialized || (Cell.Coordinate.Equals(coordinate) && Cell.Contains(this)));
             Contract.Requires<ArgumentNullException>(district != null);
             this.district = district;
         }
+
+        [ContractInvariantMethod]
+        private void StoneInvariant()
+        {
+            Contract.Invariant(!initialized || (Cell.Coordinate.Equals(coordinate) && Cell.Contains(this)));
+        }
+
+        #region Work with Cell
 
         /// <summary>
         /// Move this object to other position on the <see cref="Map{C,B}"/>
         /// but only inside the current <see cref="District{C,B}"/>.
         /// </summary>
         /// <remarks>
-        /// This method is internal and should not be used outside of the class. And should not be made protected.
-        /// Protected method should use it.
+        /// This method should not be made protected. Protected method should use it.
         /// </remarks>
         /// <param name="newCoord"> Global coordinates of new position. </param>
         internal void MoveTo(C newCoord)
         {
-            //Contract.Requires<IndexOutOfRangeException>(district.Contains(newCoord));
+            Contract.Requires<IndexOutOfRangeException>(newCoord.IsInRange(district.Bounds.Item1, district.Bounds.Item2));
 
             if(initialized)
                 Cell.Remove(this);
             initialized = true;
 
             coordinate = newCoord;
-            Cell = new Cell<C, B>(district, coordinate, command, true);
-            Cell.Add(this);
+            cell = new Cell<C, B>(district, coordinate, command, true);
+            cell.Add(this);
         }
+
+        private Cell<C, B> cell;
 
         /// <summary>
         /// Gets the <see cref="Cell{C,B}"/> in which the object is stored.
         /// </summary>
-        public Cell<C, B> Cell { get; private set; }
+        [Pure]
+        public Cell<C, B> Cell
+        {
+            get
+            {
+                if(!initialized)
+                    throw new InvalidOperationException("Stone hasn't been initialized");
+                return cell;
+            }
+        }
+
+        #endregion
 
         private bool initialized;
+
+        /// <summary>
+        /// Checks if the <see cref="Stone{C,B}"/> has been already placed in some location.
+        /// </summary>
+        [Pure]
+        internal bool IsInitialized
+        {
+            get { return initialized; }
+        }
 
         //todo:?
         protected Command command;
@@ -70,7 +95,12 @@ namespace SwarmInteligence
         /// <inheritdoc/>
         public C Coordinate
         {
-            get { return coordinate; }
+            get
+            {
+                if (!initialized)
+                    throw new InvalidOperationException("Stone hasn't been initialized");
+                return coordinate;
+            }
         }
 
         #endregion
