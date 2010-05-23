@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 
 namespace SwarmInteligence.TwoDimentional
 {
     /// <summary>
     /// Implementation of <see cref="ICoordinate{C}"/> for 2 dimensional discrete map.
     /// </summary>
+    [ContractVerification(false)]
     public struct Coordinate2D: ICoordinate<Coordinate2D>
     {
         /// <summary>
