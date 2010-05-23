@@ -24,12 +24,13 @@ namespace SwarmInteligence
     }
 
     [ContractClassFor(typeof(ILocatable<,>))]
-    internal sealed class LocatableContract<C,B>: ILocatable<C,B>
+    internal class LocatableContract<C,B>: ILocatable<C,B>
         where C : struct, ICoordinate<C>
     {
         [ContractInvariantMethod]
-        public void ObjectInvariant()
+        private void ObjectInvariant()
         {
+            Contract.Invariant(District != null);
             Contract.Invariant(Coordinate.IsInRange(District.Bounds.Item1, District.Bounds.Item2),"ILocatable belongs to the wrong District");
         }
 
@@ -60,6 +61,7 @@ namespace SwarmInteligence
         public static Map<C,B> Map<C,B>(this ILocatable<C,B> locatable)
             where C: struct, ICoordinate<C>
         {
+            Contract.Requires<ArgumentNullException>(locatable != null);
             return locatable.District.Map;
         }
 
@@ -70,6 +72,7 @@ namespace SwarmInteligence
         public static Air Air<C,B>(this ILocatable<C,B> locatable)
             where C: struct, ICoordinate<C>
         {
+            Contract.Requires<ArgumentNullException>(locatable != null);
             return locatable.District.Air;
         }
     }

@@ -10,79 +10,17 @@ namespace SwarmInteligence
     /// Abstract class for representing objects of the <see cref="Map{C,B}"/>
     /// that are stored in <see cref="Cell{C,B}"/>
     /// </summary>
-    public abstract class Stone<C, B>: ILocatable<C, B>, ICommunicative, IVisualizable
+    public abstract class Stone<C, B>: ILocatable<C, B>, ICommunicative<C,B>, IVisualizable
         where C: struct, ICoordinate<C>
     {
-        protected Stone(District<C, B> district)
-        {
-            Contract.Requires<ArgumentNullException>(district != null);
-            this.district = district;
-        }
-
-        [ContractInvariantMethod]
-        private void StoneInvariant()
-        {
-            Contract.Invariant(!initialized || (Cell.Coordinate.Equals(coordinate) && Cell.Contains(this)));
-        }
-
-        #region Work with Cell
-
-        /// <summary>
-        /// Move this object to other position on the <see cref="Map{C,B}"/>
-        /// but only inside the current <see cref="District{C,B}"/>.
-        /// </summary>
-        /// <remarks>
-        /// This method should not be made protected. Protected method should use it.
-        /// </remarks>
-        /// <param name="newCoord"> Global coordinates of new position. </param>
-        internal void MoveTo(C newCoord)
-        {
-            Contract.Requires<IndexOutOfRangeException>(newCoord.IsInRange(district.Bounds.Item1, district.Bounds.Item2));
-
-            if(initialized)
-                Cell.Remove(this);
-            initialized = true;
-
-            coordinate = newCoord;
-            cell = new Cell<C, B>(district, coordinate, command, true);
-            cell.Add(this);
-        }
-
-        private Cell<C, B> cell;
-
-        /// <summary>
-        /// Gets the <see cref="Cell{C,B}"/> in which the object is stored.
-        /// </summary>
-        [Pure]
-        public Cell<C, B> Cell
-        {
-            get
-            {
-                if(!initialized)
-                    throw new InvalidOperationException("Stone hasn't been initialized");
-                return cell;
-            }
-        }
-
-        #endregion
-
+        protected readonly Command command = new Command();
         private bool initialized;
-
-        /// <summary>
-        /// Checks if the <see cref="Stone{C,B}"/> has been already placed in some location.
-        /// </summary>
-        [Pure]
-        internal bool IsInitialized
-        {
-            get { return initialized; }
-        }
-
-        //todo:?
-        protected Command command;
 
         #region Implementation of ILocatable<C,B>
 
         private readonly District<C, B> district;
+
+        private C coordinate;
 
         /// <inheritdoc/>
         public District<C, B> District
@@ -90,14 +28,12 @@ namespace SwarmInteligence
             get { return district; }
         }
 
-        private C coordinate;
-
         /// <inheritdoc/>
         public C Coordinate
         {
             get
             {
-                if (!initialized)
+                if(!initialized)
                     throw new InvalidOperationException("Stone hasn't been initialized");
                 return coordinate;
             }
@@ -116,7 +52,7 @@ namespace SwarmInteligence
         {
             get
             {
-                Contract.Requires<InvalidOperationException>(district.Stage == TurnStage.AfterTurn,
+                Contract.Requires<InvalidOperationException>(District.Stage == TurnStage.AfterTurn,
                                                              "Stone.Messages can be called only in AfterTurn stage");
                 return messages;
             }
@@ -125,9 +61,6 @@ namespace SwarmInteligence
         /// <inheritdoc/>
         public void SendMessage(IMessage message)
         {
-            Contract.Requires<InvalidOperationException>(district.Stage == TurnStage.Turn,
-                                                         "Stone.SendMessage can be called only in Turn stage");
-            Contract.Requires<ArgumentNullException>(message != null);
             messages.Add(message);
         }
 
@@ -137,6 +70,60 @@ namespace SwarmInteligence
 
         /// <inheritdoc/>
         public abstract void Draw(FastBitmap bitmap);
+
+        #endregion
+
+        protected Stone(District<C, B> district)
+        {
+            Contract.Requires<ArgumentNullException>(district != null);
+            this.district = district;
+        }
+
+        [ContractInvariantMethod]
+        private void StoneInvariant()
+        {
+            Contract.Invariant(!initialized || (Cell.Coordinate.Equals(coordinate) && Cell.Contains(this)));
+            Contract.Invariant(district != null && command != null && messages != null);
+        }
+
+        #region Work with Cell
+
+        private Cell<C, B> cell;
+
+        /// <summary>
+        /// Gets the <see cref="Cell{C,B}"/> in which the object is stored.
+        /// </summary>
+        [Pure]
+        public Cell<C, B> Cell
+        {
+            get
+            {
+                if(!initialized)
+                    throw new InvalidOperationException("Stone hasn't been initialized");
+                return cell;
+            }
+        }
+
+        /// <summary>
+        /// Move this object to other position on the <see cref="Map{C,B}"/>
+        /// but only inside the current <see cref="District{C,B}"/>.
+        /// </summary>
+        /// <remarks>
+        /// This method should not be made protected. Protected method should use it.
+        /// </remarks>
+        /// <param name="newCoord"> Global coordinates of new position. </param>
+        internal void MoveTo(C newCoord)
+        {
+            Contract.Requires<IndexOutOfRangeException>(newCoord.IsInRange(District.Bounds.Item1, District.Bounds.Item2));
+
+            if(initialized)
+                Cell.RemoveNow(this);
+            initialized = true;
+
+            coordinate = newCoord;
+            cell = new Cell<C, B>(district, coordinate, command, true);
+            cell.AddNow(this);
+        }
 
         #endregion
     }

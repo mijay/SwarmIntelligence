@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using System.Linq;
 
 
 namespace SwarmInteligence
@@ -15,9 +16,11 @@ namespace SwarmInteligence
     {
         internal Cell(District<C, B> district, C coordinate, Command command, bool initialize)
         {
+            Contract.Requires<ArgumentNullException>(district != null && command != null);
+            Contract.Requires<IndexOutOfRangeException>(coordinate.IsInRange(district.Bounds.Item1, district.Bounds.Item2));
+
             this.command = command;
             this.district = district;
-            this.command = command;
             this.coordinate = coordinate;
             if(initialize) {
                 backgroundInit = true;
@@ -29,6 +32,12 @@ namespace SwarmInteligence
                 background = default(B);
                 objectsList = null;    
             }
+        }
+
+        [ContractInvariantMethodAttribute]
+        private void CellContract()
+        {
+            Contract.Invariant(district != null && command != null);
         }
 
         #region Work with Background
@@ -59,11 +68,15 @@ namespace SwarmInteligence
 
         #region Work with list of stored objects
 
-        private List<Stone<C, B>> objectsList;
+        private IList<Stone<C, B>> objectsList;
 
-        private List<Stone<C,B>> ObjectsList
+        private IList<Stone<C,B>> ObjectsList
         {
-            get { return objectsList ?? (objectsList = district.GetData(coordinate)); }
+            get
+            {
+                Contract.Ensures(Contract.Result<IList<Stone<C, B>>>() != null);
+                return objectsList ?? (objectsList = district.GetData(coordinate));
+            }
         }
 
         /// <summary>
@@ -73,19 +86,29 @@ namespace SwarmInteligence
         public void Add(Stone<C, B> stone)
         {
             Contract.Requires<ArgumentNullException>(stone != null);
-            Contract.Requires<InvalidOperationException>(!stone.IsInitialized, "cannot add stone which was already used");
-            command.Add(new KeyValuePair<Action<Stone<C, B>>, Stone<C, B>>(ObjectsList.Add, stone));
+            Contract.Requires<InvalidOperationException>(!stone.Cell.Coordinate.Equals(stone.Coordinate), "cannot add stone which was already used");
+            command.Add(stone.MoveTo, coordinate);
+        }
+
+        /// <summary>
+        /// Add new object to the <see cref="Cell{C,B}"/>.
+        /// </summary>
+        /// <remarks>Uses command and delayed evaluation.</remarks>
+        internal void AddNow(Stone<C, B> stone)
+        {
+            Contract.Requires<ArgumentNullException>(stone != null);
+            Contract.Requires<InvalidOperationException>(stone.Coordinate.Equals(Coordinate), "cannot add stone which is placed in other cell");
+            ObjectsList.Add(stone);
         }
 
         /// <summary>
         /// Removes the <paramref name="stone"/> from the list of stored objects immediately.
         /// </summary>
-        /// <param name="stone"></param>
-        internal void Remove(Stone<C, B> stone)
+        internal void RemoveNow(Stone<C, B> stone)
         {
             Contract.Requires<ArgumentNullException>(stone != null);
-            Contract.Requires(stone.Coordinate.Equals(coordinate), "cannot remove stone which is stored in other cell");
-            Contract.Requires(ObjectsList.Contains(stone),"stone coordinate is correct but there is no such stone in the list");
+            Contract.Requires(stone.Coordinate.Equals(Coordinate), "cannot remove stone which is stored in other cell");
+            Contract.Requires(this.Contains(stone),"stone coordinate is correct but there is no such stone in the list");
             ObjectsList.Remove(stone);
         }
 
