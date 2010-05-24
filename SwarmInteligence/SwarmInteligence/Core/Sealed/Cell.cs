@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
 
-
 namespace SwarmInteligence
 {
     /// <summary>
@@ -14,30 +13,28 @@ namespace SwarmInteligence
     public struct Cell<C, B>: ILocatable<C, B>, IEnumerable<Stone<C, B>>
         where C: struct, ICoordinate<C>
     {
-        internal Cell(District<C, B> district, C coordinate, Command command, bool initialize)
+        internal Cell(District<C, B> district, C coordinate, bool initialize)
         {
-            Contract.Requires<ArgumentNullException>(district != null && command != null);
+            Contract.Requires<ArgumentNullException>(district != null);
             Contract.Requires<IndexOutOfRangeException>(coordinate.IsInRange(district.Bounds.Item1, district.Bounds.Item2));
 
-            this.command = command;
             this.district = district;
             this.coordinate = coordinate;
             if(initialize) {
                 backgroundInit = true;
                 background = district.Background[coordinate];
                 objectsList = district.GetData(coordinate);
-            }
-            else {
+            } else {
                 backgroundInit = false;
                 background = default(B);
-                objectsList = null;    
+                objectsList = null;
             }
         }
 
         [ContractInvariantMethodAttribute]
         private void CellContract()
         {
-            Contract.Invariant(district != null && command != null);
+            Contract.Invariant(district != null);
         }
 
         #region Work with Background
@@ -64,52 +61,17 @@ namespace SwarmInteligence
 
         #endregion
 
-        private readonly Command command;
-
         #region Work with list of stored objects
 
         private IList<Stone<C, B>> objectsList;
 
-        private IList<Stone<C,B>> ObjectsList
+        private IList<Stone<C, B>> ObjectsList
         {
             get
             {
                 Contract.Ensures(Contract.Result<IList<Stone<C, B>>>() != null);
                 return objectsList ?? (objectsList = district.GetData(coordinate));
             }
-        }
-
-        /// <summary>
-        /// Add new object to the <see cref="Cell{C,B}"/>.
-        /// </summary>
-        /// <remarks>Uses command and delayed evaluation.</remarks>
-        public void Add(Stone<C, B> stone)
-        {
-            Contract.Requires<ArgumentNullException>(stone != null);
-            Contract.Requires<InvalidOperationException>(!stone.Cell.Coordinate.Equals(stone.Coordinate), "cannot add stone which was already used");
-            command.Add(stone.MoveTo, coordinate);
-        }
-
-        /// <summary>
-        /// Add new object to the <see cref="Cell{C,B}"/>.
-        /// </summary>
-        /// <remarks>Uses command and delayed evaluation.</remarks>
-        internal void AddNow(Stone<C, B> stone)
-        {
-            Contract.Requires<ArgumentNullException>(stone != null);
-            Contract.Requires<InvalidOperationException>(stone.Coordinate.Equals(Coordinate), "cannot add stone which is placed in other cell");
-            ObjectsList.Add(stone);
-        }
-
-        /// <summary>
-        /// Removes the <paramref name="stone"/> from the list of stored objects immediately.
-        /// </summary>
-        internal void RemoveNow(Stone<C, B> stone)
-        {
-            Contract.Requires<ArgumentNullException>(stone != null);
-            Contract.Requires(stone.Coordinate.Equals(Coordinate), "cannot remove stone which is stored in other cell");
-            Contract.Requires(this.Contains(stone),"stone coordinate is correct but there is no such stone in the list");
-            ObjectsList.Remove(stone);
         }
 
         /// <summary>
@@ -144,10 +106,45 @@ namespace SwarmInteligence
             return GetEnumerator();
         }
 
+        /// <summary>
+        /// Add new object to the <see cref="Cell{C,B}"/>.
+        /// </summary>
+        /// <remarks>Uses delayed evaluation.</remarks>
+        public void Add(Stone<C, B> stone)
+        {
+            Contract.Requires<ArgumentNullException>(stone != null);
+            Contract.Requires<InvalidOperationException>(!stone.Cell.Coordinate.Equals(stone.Coordinate),
+                                                         "cannot add stone which was already used");
+            stone.MoveTo(coordinate, true);
+        }
+
+        /// <summary>
+        /// Add new object to the <see cref="Cell{C,B}"/> immediately.
+        /// </summary>
+        internal void AddNow(Stone<C, B> stone)
+        {
+            Contract.Requires<ArgumentNullException>(stone != null);
+            Contract.Requires<InvalidOperationException>(stone.Coordinate.Equals(Coordinate),
+                                                         "cannot add stone which is placed in other cell");
+            ObjectsList.Add(stone);
+        }
+
+        /// <summary>
+        /// Removes the <paramref name="stone"/> from the <see cref="Cell{C,B}"/> immediately.
+        /// </summary>
+        internal void RemoveNow(Stone<C, B> stone)
+        {
+            Contract.Requires<ArgumentNullException>(stone != null);
+            Contract.Requires(stone.Coordinate.Equals(Coordinate), "cannot remove stone which is stored in other cell");
+            Contract.Requires(this.Contains(stone), "stone coordinate is correct but there is no such stone in the list");
+            ObjectsList.Remove(stone);
+        }
+
         #endregion
 
         #region Implementation of ILocatable<C,B>
 
+        private readonly C coordinate;
         private readonly District<C, B> district;
 
         /// <inheritdoc/>
@@ -155,8 +152,6 @@ namespace SwarmInteligence
         {
             get { return district; }
         }
-
-        private readonly C coordinate;
 
         /// <inheritdoc/>
         public C Coordinate

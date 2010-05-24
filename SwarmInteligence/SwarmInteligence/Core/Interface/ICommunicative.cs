@@ -7,7 +7,7 @@ namespace SwarmInteligence
     /// Represent objects that can receive a <see cref="IMessage"/>.
     /// </summary>
     [ContractClass(typeof(CommunicativeContract<,>))]
-    public interface ICommunicative<C,B>:ILocatable<C,B>
+    public interface ICommunicative<C, B>: ILocatable<C, B>
         where C: struct, ICoordinate<C>
     {
         /// <summary>
@@ -17,8 +17,8 @@ namespace SwarmInteligence
     }
 
     [ContractClassFor(typeof(ICommunicative<,>))]
-    internal sealed class CommunicativeContract<C,B>:ICommunicative<C,B>
-        where C : struct, ICoordinate<C>
+    internal sealed class CommunicativeContract<C, B>: ICommunicative<C, B>
+        where C: struct, ICoordinate<C>
     {
         #region Implementation of ILocatable<C,B>
 

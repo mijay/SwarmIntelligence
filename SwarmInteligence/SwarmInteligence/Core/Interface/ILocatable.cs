@@ -14,7 +14,7 @@ namespace SwarmInteligence
         /// <see cref="District{C,B}"/> where the object is stored.
         /// </summary>
         [Pure]
-        District<C,B> District { get; }
+        District<C, B> District { get; }
 
         /// <summary>
         /// Coordinate of the object on the <see cref="Map{C,B}"/>
@@ -24,14 +24,15 @@ namespace SwarmInteligence
     }
 
     [ContractClassFor(typeof(ILocatable<,>))]
-    internal class LocatableContract<C,B>: ILocatable<C,B>
-        where C : struct, ICoordinate<C>
+    internal class LocatableContract<C, B>: ILocatable<C, B>
+        where C: struct, ICoordinate<C>
     {
         [ContractInvariantMethod]
         private void ObjectInvariant()
         {
             Contract.Invariant(District != null);
-            Contract.Invariant(Coordinate.IsInRange(District.Bounds.Item1, District.Bounds.Item2),"ILocatable belongs to the wrong District");
+            Contract.Invariant(Coordinate.IsInRange(District.Bounds.Item1, District.Bounds.Item2),
+                               "ILocatable belongs to the wrong District");
         }
 
         #region Implementation of ILocatable<C,B>
@@ -58,7 +59,7 @@ namespace SwarmInteligence
         /// <summary>
         /// Gets the <see cref="Map{C,B}"/> to which this objects belongs.
         /// </summary>
-        public static Map<C,B> Map<C,B>(this ILocatable<C,B> locatable)
+        public static Map<C, B> Map<C, B>(this ILocatable<C, B> locatable)
             where C: struct, ICoordinate<C>
         {
             Contract.Requires<ArgumentNullException>(locatable != null);
@@ -69,7 +70,7 @@ namespace SwarmInteligence
         /// Gets the <see cref="Air"/> which is used for communication in <see cref="District{C,B}"/>
         /// in which object is stored.
         /// </summary>
-        public static Air Air<C,B>(this ILocatable<C,B> locatable)
+        public static Air Air<C, B>(this ILocatable<C, B> locatable)
             where C: struct, ICoordinate<C>
         {
             Contract.Requires<ArgumentNullException>(locatable != null);

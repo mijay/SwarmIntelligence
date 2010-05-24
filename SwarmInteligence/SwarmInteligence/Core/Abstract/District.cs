@@ -62,7 +62,7 @@ namespace SwarmInteligence
         {
             get
             {
-                Contract.Ensures(Contract.Result<Tuple<C,C>>() != null);
+                Contract.Ensures(Contract.Result<Tuple<C, C>>() != null);
                 return bounds;
             }
         }
@@ -72,7 +72,7 @@ namespace SwarmInteligence
         {
             get
             {
-                Contract.Ensures(Contract.Result<Background<C,B>>() != null);
+                Contract.Ensures(Contract.Result<Background<C, B>>() != null);
                 return background;
             }
         }

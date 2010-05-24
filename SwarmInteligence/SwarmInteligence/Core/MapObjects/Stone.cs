@@ -10,7 +10,7 @@ namespace SwarmInteligence
     /// Abstract class for representing objects of the <see cref="Map{C,B}"/>
     /// that are stored in <see cref="Cell{C,B}"/>
     /// </summary>
-    public abstract class Stone<C, B>: ILocatable<C, B>, ICommunicative<C,B>, IVisualizable
+    public abstract class Stone<C, B>: ICommunicative<C, B>, IVisualizable
         where C: struct, ICoordinate<C>
     {
         protected readonly Command command = new Command();
@@ -112,16 +112,22 @@ namespace SwarmInteligence
         /// This method should not be made protected. Protected method should use it.
         /// </remarks>
         /// <param name="newCoord"> Global coordinates of new position. </param>
-        internal void MoveTo(C newCoord)
+        /// <param name="delayed"> True if this action should be added to the <see cref="Command"/> and executed laiter. </param>
+        internal void MoveTo(C newCoord, bool delayed)
         {
             Contract.Requires<IndexOutOfRangeException>(newCoord.IsInRange(District.Bounds.Item1, District.Bounds.Item2));
+
+            if(delayed) {
+                command.Add(MoveTo, newCoord, false);
+                return;
+            }
 
             if(initialized)
                 Cell.RemoveNow(this);
             initialized = true;
 
             coordinate = newCoord;
-            cell = new Cell<C, B>(district, coordinate, command, true);
+            cell = new Cell<C, B>(district, coordinate, true);
             cell.AddNow(this);
         }
 
