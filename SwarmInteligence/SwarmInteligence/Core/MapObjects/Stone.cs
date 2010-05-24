@@ -13,8 +13,22 @@ namespace SwarmInteligence
     public abstract class Stone<C, B>: ICommunicative<C, B>, IVisualizable
         where C: struct, ICoordinate<C>
     {
+        /// <summary>
+        /// <see cref="SwarmInteligence.Command"/> where all delayed actions for the current <see cref="TurnStage"/> are stored.
+        /// </summary>
         protected readonly Command command = new Command();
-        private bool initialized;
+
+        protected Stone(District<C, B> district)
+        {
+            Contract.Requires<ArgumentNullException>(district != null);
+            this.district = district;
+            IsInitialized = false;
+        }
+
+        /// <summary>
+        /// True if <see cref="Stone{C,B}"/> was already placed on the map.
+        /// </summary>
+        public bool IsInitialized { get; private set; }
 
         #region Implementation of ILocatable<C,B>
 
@@ -33,8 +47,7 @@ namespace SwarmInteligence
         {
             get
             {
-                if(!initialized)
-                    throw new InvalidOperationException("Stone hasn't been initialized");
+                Contract.Assert(IsInitialized, "Stone hasn't been initialized");
                 return coordinate;
             }
         }
@@ -73,16 +86,10 @@ namespace SwarmInteligence
 
         #endregion
 
-        protected Stone(District<C, B> district)
-        {
-            Contract.Requires<ArgumentNullException>(district != null);
-            this.district = district;
-        }
-
         [ContractInvariantMethod]
         private void StoneInvariant()
         {
-            Contract.Invariant(!initialized || (Cell.Coordinate.Equals(coordinate) && Cell.Contains(this)));
+            Contract.Invariant(!IsInitialized || (Cell.Coordinate.Equals(coordinate) && Cell.Contains(this)));
             Contract.Invariant(district != null && command != null && messages != null);
         }
 
@@ -98,8 +105,7 @@ namespace SwarmInteligence
         {
             get
             {
-                if(!initialized)
-                    throw new InvalidOperationException("Stone hasn't been initialized");
+                Contract.Requires<InvalidOperationException>(IsInitialized, "Stone hasn't been initialized");
                 return cell;
             }
         }
@@ -122,9 +128,9 @@ namespace SwarmInteligence
                 return;
             }
 
-            if(initialized)
+            if(IsInitialized)
                 Cell.RemoveNow(this);
-            initialized = true;
+            IsInitialized = true;
 
             coordinate = newCoord;
             cell = new Cell<C, B>(district, coordinate, true);

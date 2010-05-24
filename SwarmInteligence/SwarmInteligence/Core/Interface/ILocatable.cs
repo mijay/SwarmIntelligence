@@ -27,14 +27,6 @@ namespace SwarmInteligence
     internal class LocatableContract<C, B>: ILocatable<C, B>
         where C: struct, ICoordinate<C>
     {
-        [ContractInvariantMethod]
-        private void ObjectInvariant()
-        {
-            Contract.Invariant(District != null);
-            Contract.Invariant(Coordinate.IsInRange(District.Bounds.Item1, District.Bounds.Item2),
-                               "ILocatable belongs to the wrong District");
-        }
-
         #region Implementation of ILocatable<C,B>
 
         public District<C, B> District
@@ -48,7 +40,12 @@ namespace SwarmInteligence
 
         public C Coordinate
         {
-            get { throw new NotImplementedException(); }
+            get
+            {
+                Contract.Ensures(Contract.Result<C>().IsInRange(District.Bounds.Item1, District.Bounds.Item2),
+                               "ILocatable belongs to the wrong District");
+                throw new NotImplementedException();
+            }
         }
 
         #endregion
