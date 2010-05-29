@@ -7,8 +7,8 @@ using Utils.Drawing;
 namespace SwarmInteligence
 {
     /// <summary>
-    /// Abstract class for representing objects of the <see cref="Map{C,B}"/>
-    /// that are stored in <see cref="Cell{C,B}"/>
+    /// Abstract class for representing stone-like object on the <see cref="Map{C,B}"/>.
+    /// Such objects doesn't have any actions and cannot change theirs state.
     /// </summary>
     public abstract class Stone<C, B>: ICommunicative<C, B>, IVisualizable
         where C: struct, ICoordinate<C>
@@ -28,7 +28,7 @@ namespace SwarmInteligence
         /// <summary>
         /// True if <see cref="Stone{C,B}"/> was already placed on the map.
         /// </summary>
-        public bool IsInitialized { get; private set; }
+        protected bool IsInitialized { get; private set; }
 
         #region Implementation of ILocatable<C,B>
 
@@ -101,7 +101,7 @@ namespace SwarmInteligence
         /// Gets the <see cref="Cell{C,B}"/> in which the object is stored.
         /// </summary>
         [Pure]
-        public Cell<C, B> Cell
+        internal Cell<C, B> Cell
         {
             get
             {

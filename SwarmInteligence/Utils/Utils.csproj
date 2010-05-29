@@ -60,6 +60,7 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssertHelper.cs" />
     <Compile Include="FastDrawHelper.cs" />
     <Compile Include="FastBitmap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

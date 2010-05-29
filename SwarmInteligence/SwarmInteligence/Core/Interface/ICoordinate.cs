@@ -36,15 +36,6 @@ namespace SwarmInteligence
         C Cast { get; }
 
         /// <summary>
-        /// Enumerate over all point from suburb of the point defined by the current <see cref="ICoordinate{C}"/>
-        /// of the radius defined by <paramref name="radius"/>.
-        /// </summary>
-        //TODO: опять непонятно что с графами. Ну не заносить же ссылку на граф в каждую координату. Хотя возможно в этом есть смысл.
-        //todo: подумай ка еще раз об этом методе и его взаимоотношении с Range
-        [Pure]
-        IEnumerable<C> Suburb(int radius);
-
-        /// <summary>
         /// Enumerate over all <see cref="ICoordinate{C}"/> which are in the cube
         /// defined by it's <paramref name="upperBound"/> and current <see cref="ICoordinate{C}"/> as the lowerBound.
         /// </summary>
@@ -86,16 +77,6 @@ namespace SwarmInteligence
         #endregion
 
         #region Implementation of ICoordinate<C>
-
-        public IEnumerable<C> Suburb(int radius)
-        {
-            Contract.Requires<ArgumentException>(radius >= 0);
-            // check that this point is inside the suburb
-            Contract.Ensures(Contract.Result<IEnumerable<C>>().Any(c => c.Equals(this)));
-            // check that all point in suburb are distinct
-            Contract.Ensures(Contract.Result<IEnumerable<C>>().GroupBy(c => c).All(g => g.Count() == 1));
-            throw new NotImplementedException();
-        }
 
         public IEnumerable<C> Range(C upperBound)
         {

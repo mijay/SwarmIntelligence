@@ -85,13 +85,17 @@
     <Compile Include="Core\Abstract\Map.cs" />
     <Compile Include="Core\Interface\ICommunicative.cs" />
     <Compile Include="Core\Interface\ICoordinate.cs" />
+    <Compile Include="Core\Interface\IGauge.cs" />
     <Compile Include="Core\Interface\ILocatable.cs" />
     <Compile Include="Core\Interface\IMessage.cs" />
     <Compile Include="Core\Interface\IVisualizable.cs" />
+    <Compile Include="Core\MapObjects\Animal.cs" />
+    <Compile Include="Core\MapObjects\Plant.cs" />
     <Compile Include="Core\MapObjects\Stone.cs" />
     <Compile Include="Core\Sealed\Cell.cs" />
     <Compile Include="Core\Sealed\Command.cs" />
     <Compile Include="Core\Sealed\TurnStage.cs" />
+    <Compile Include="Core\Sealed\Zone.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TwoDimentional\Coordinate2D.cs" />
   </ItemGroup>

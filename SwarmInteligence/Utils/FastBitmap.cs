@@ -112,6 +112,17 @@ namespace Utils.Drawing
 
         public void Dispose()
         {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        ~FastBitmap()
+        {
+            Dispose(true);
+        }
+
+        protected virtual void Dispose(bool clean)
+        {
             if (_locked) UnlockBitmap();
         }
     }

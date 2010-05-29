@@ -43,7 +43,7 @@ namespace SwarmInteligence
             get
             {
                 Contract.Ensures(Contract.Result<C>().IsInRange(District.Bounds.Item1, District.Bounds.Item2),
-                               "ILocatable belongs to the wrong District");
+                                 "ILocatable belongs to the wrong District");
                 throw new NotImplementedException();
             }
         }
@@ -64,10 +64,10 @@ namespace SwarmInteligence
         }
 
         /// <summary>
-        /// Gets the <see cref="Air"/> which is used for communication in <see cref="District{C,B}"/>
+        /// Gets the <see cref="SwarmInteligence.Air{C,B}"/> which is used for communication in <see cref="District{C,B}"/>
         /// in which object is stored.
         /// </summary>
-        public static Air Air<C, B>(this ILocatable<C, B> locatable)
+        public static Air<C, B> Air<C, B>(this ILocatable<C, B> locatable)
             where C: struct, ICoordinate<C>
         {
             Contract.Requires<ArgumentNullException>(locatable != null);

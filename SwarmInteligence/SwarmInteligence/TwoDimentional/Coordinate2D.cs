@@ -60,17 +60,6 @@ namespace SwarmInteligence.TwoDimentional
         }
 
         /// <inheritdoc/>
-        public IEnumerable<Coordinate2D> Suburb(int radius)
-        {
-            int fromX = X - radius, fromY = Y - radius;
-            int toX = X + radius, toY = Y + radius;
-
-            for(int x = fromX; x <= toX; x++)
-                for(int y = fromY; y <= toY; y++)
-                    yield return new Coordinate2D(x, y);
-        }
-
-        /// <inheritdoc/>
         public IEnumerable<Coordinate2D> Range(Coordinate2D upperBound)
         {
             for(int x = X; x <= upperBound.X; x++)

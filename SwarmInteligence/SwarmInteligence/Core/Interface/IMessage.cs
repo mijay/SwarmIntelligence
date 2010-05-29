@@ -3,7 +3,7 @@
 namespace SwarmInteligence
 {
     /// <summary>
-    /// <see cref="IMessage"/> objects are used as messages in communications via <see cref="Air"/> and <see cref="ICommunicative"/>.
+    /// <see cref="IMessage"/> objects are used as messages in communications via <see cref="Air{C,B}"/> and <see cref="ICommunicative{C,B}"/>.
     /// </summary>
     public interface IMessage
     {
