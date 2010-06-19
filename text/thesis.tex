@@ -1,6 +1,6 @@
 \documentclass[14pt,a4paper,times,bachelor,
     subf,href,
-    draft
+%   draft
 ]{disser}
 
 \usepackage[
@@ -32,18 +32,29 @@
 commentstyle=\itshape,          % меняем стиль комментариев на италик
 frame=lines,                    % обрамлять листинг линиями сверху и снизу
 framesep=10pt, texcl,           % отступ до кода + комментарии в коде обрабатываются LaTeX
-aboveskip=15pt,belowskip=25pt,  % отступы до и после листинга
-language=[Sharp]C,
-basicstyle=\small}
+aboveskip=15pt,belowskip=15pt,  % отступы до и после листинга
+basicstyle=\small,              % стиль для всех надписей (избавляюсь от 14 шрифта)
+columns=fullflexible}           % магия - пробелы м/у буквами как в обычном тексте
+\lstnewenvironment{cscode}      % модифицированное окружение:
+{\lstset{                       % задаем настройки пакета локальные в этом окружении
+    language=[Sharp]C,          % язык - C#
+    morekeywords={where}        % добавили дополнительное ключевое слово
+ }\singlespacing}               % сделали одинарный интервал м/у строк
+{\onehalfspacing}               % вернули интервал обратно
+
 
 \usepackage{amssymb}            % доп. матсимволы + <= в русском стиле
 \renewcommand{\ge}{\geqslant}   % <= по умолчанию русское
 \renewcommand{\le}{\leqslant}   % >= по умолчанию русское
 
+\tolerance=9000                 % ставим растяжимость побольше - прощай overfull
+
 % Номера страниц сверху справа
 \def\headfont{\small}
 \pagestyle{headright}
 \chapterpagestyle{headright}
+% нумерация приложений по арабски:
+\renewcommand\theappendix{\@arabic\c@chapter}
 
 % Использовать полужирное начертание для векторов
 \let\vec=\mathbf
@@ -59,6 +70,7 @@ basicstyle=\small}
 
 \begin{document}
 \include{title}
+\include{referat}
 \setcounter{page}{2}
 \tableofcontents
 \include{intro}
