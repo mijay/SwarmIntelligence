@@ -11,7 +11,6 @@ namespace SwarmInteligence
     /// which depends on the current <see cref="Map{C,B}"/>'s topology.
     /// </summary>
     /// <typeparam name="C"> <see cref="ICoordinate{C}"/> for which this <see cref="IGauge{C}"/> can be used. </typeparam>
-    //todo: подумай мб перенести Gauge из District в Map?
     //todo: как бы оптимизировать операции с ним? Выносить его в генерик-параметр неохото >< Пока делать делегатную обертку
     [ContractClass(typeof(GaugeContract<>))]
     public interface IGauge<C>

@@ -7,11 +7,11 @@ namespace SwarmInteligence
     /// Represent objects that can receive a <see cref="IMessage"/>.
     /// </summary>
     [ContractClass(typeof(CommunicativeContract<,>))]
-    public interface ICommunicative<C, B>: ILocatable<C, B>
+    public interface ICommunicative<C, B>: IComponent<C, B>
         where C: struct, ICoordinate<C>
     {
         /// <summary>
-        /// Send a <paramref name="message"/> to the object.
+        /// Send a <paramref name="message"/> to the object. This method can be used only in <see cref="TurnStage.Turn"/>.
         /// </summary>
         void SendMessage(IMessage message);
     }
@@ -20,14 +20,9 @@ namespace SwarmInteligence
     internal sealed class CommunicativeContract<C, B>: ICommunicative<C, B>
         where C: struct, ICoordinate<C>
     {
-        #region Implementation of ILocatable<C,B>
+        #region Implementation of IComponent<C,B>
 
         public District<C, B> District
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public C Coordinate
         {
             get { throw new NotImplementedException(); }
         }

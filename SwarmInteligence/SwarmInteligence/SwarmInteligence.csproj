@@ -86,12 +86,10 @@
     <Compile Include="Core\Interface\ICommunicative.cs" />
     <Compile Include="Core\Interface\ICoordinate.cs" />
     <Compile Include="Core\Interface\IGauge.cs" />
+    <Compile Include="Core\Interface\IComponent.cs" />
     <Compile Include="Core\Interface\ILocatable.cs" />
     <Compile Include="Core\Interface\IMessage.cs" />
     <Compile Include="Core\Interface\IVisualizable.cs" />
-    <Compile Include="Core\MapObjects\Animal.cs" />
-    <Compile Include="Core\MapObjects\Plant.cs" />
-    <Compile Include="Core\MapObjects\Stone.cs" />
     <Compile Include="Core\Sealed\Cell.cs" />
     <Compile Include="Core\Sealed\Command.cs" />
     <Compile Include="Core\Sealed\TurnStage.cs" />
@@ -104,6 +102,9 @@
       <Project>{314103EA-3787-49A9-ABBE-F26502B8D459}</Project>
       <Name>Utils</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Core\MapObjects\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

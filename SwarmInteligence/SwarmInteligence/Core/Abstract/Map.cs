@@ -8,10 +8,11 @@ namespace SwarmInteligence
     {
         private readonly Tuple<C, C> bounds;
 
-        public Map(Tuple<C, C> bounds)
+        public Map(Tuple<C, C> bounds, IGauge<C> gauge)
         {
-            Contract.Requires<ArgumentNullException>(bounds != null);
+            Contract.Requires<ArgumentNullException>(bounds != null && gauge != null);
             this.bounds = bounds;
+            this.gauge = gauge;
         }
 
         [Pure]
@@ -27,7 +28,19 @@ namespace SwarmInteligence
         [ContractInvariantMethod]
         private void MapInvariant()
         {
-            Contract.Invariant(bounds != null);
+            Contract.Invariant(bounds != null && gauge != null);
+        }
+
+        protected readonly IGauge<C> gauge;
+
+        [Pure]
+        public IGauge<C> Gauge
+        {
+            get
+            {
+                Contract.Ensures(Contract.Result<IGauge<C>>() != null);
+                return gauge;
+            }
         }
     }
 }

@@ -3,7 +3,7 @@ using System.Diagnostics.Contracts;
 
 namespace SwarmInteligence
 {
-    public sealed class Zone<C, B>: ILocatable<C, B>
+    public sealed class Zone<C, B>: IComponent<C, B>
         where C: struct, ICoordinate<C>
     {
         private int radius;
@@ -37,7 +37,7 @@ namespace SwarmInteligence
             }
         }
 
-        #region Implementation of ILocatable<C,B>
+        #region Implementation of IComponent<C,B>
 
         private readonly District<C, B> district;
 

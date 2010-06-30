@@ -1,42 +1,61 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using System.Linq;
 
 namespace SwarmInteligence
 {
     [ContractClass(typeof(AirContract<,>))]
-    public abstract class Air<C, B>
+    public abstract class Air<C, B>: IComponent<C, B>
         where C: struct, ICoordinate<C>
     {
-        [ContractPublicPropertyName("District")]
-        private District<C, B> district;
-
-        public District<C, B> District
-        {
-            [Pure]
-            get
-            {
-                Contract.Requires<InvalidOperationException>(district != null, "District hasn't been initialized");
-                Contract.Ensures(Contract.Result<District<C, B>>() != null);
-                return district;
-            }
-            set
-            {
-                Contract.Requires<ArgumentNullException>(value != null);
-                Contract.Requires<InvalidOperationException>(district == null, "District was set already");
-                district = value;
-            }
-        }
-
+        /// <summary>
+        /// Receive all messages which were sent in previous <see cref="TurnStage.Turn"/> and weren't mark with tag.
+        /// </summary>
         [Pure]
         public abstract IEnumerable<IMessage> Messages { get; }
 
+        /// <summary>
+        /// Receive all messages associated with <paramref name="tag"/> which were sent in previous <see cref="TurnStage.Turn"/>.
+        /// </summary>
+        /// <exception cref="ArgumentNullException"><paramref name="tag"/> is null, empty or whitespace.</exception>
         [Pure]
         public abstract IEnumerable<IMessage> this[string tag] { get; }
 
-        public abstract void SendMessage(IMessage message);
+        #region IComponent<C,B> Members
 
-        public abstract void SendTaggedMessage(IMessage message, params string[] tags);
+        public District<C, B> District { get; set; }
+
+        #endregion
+
+        /// <summary>
+        /// Send broadcast <paramref name="message"/> and mark it with the <paramref name="tags"/> (can be empty).
+        /// This method can be used only in <see cref="TurnStage.Turn"/>.
+        /// </summary>
+        /// <exception cref="ArgumentNullException">Any tag is null, empty or whitespace.</exception>
+        public abstract void SendMessage(IMessage message, params string[] tags);
+
+        /// <summary>
+        /// Add a listener which will be invoked in <see cref="TurnStage.ApplyTurn"/> and which can modify
+        /// a list of <see cref="IMessage"/>s marked with some <paramref name="tag"/> which were sent in previous <see cref="TurnStage.Turn"/>
+        /// (use <see cref="string.Empty"/> for messages which haven't been marked).
+        /// </summary>
+        /// <remarks>
+        /// All <paramref name="listener"/>s for one <paramref name="tag"/> are invoked one-by-one.
+        /// All <paramref name="listener"/>s are invoked before listeners from <see cref="AddMessagesListener"/> are invoked.
+        /// </remarks>
+        public abstract void AddMessageListener(Action<IList<IMessage>> listener, string tag);
+
+        /// <summary>
+        /// Add a listener which will be invoked in <see cref="TurnStage.ApplyTurn"/> and which can modify
+        /// all lists of <see cref="IMessage"/>s which were sent in previous <see cref="TurnStage.Turn"/>
+        /// (String.Empty is a key for messages which haven't been marked).
+        /// </summary>
+        /// <remarks>
+        /// All <paramref name="listener"/>s are invoked one-by-one.
+        /// All <paramref name="listener"/>s are invoked after listeners from <see cref="AddMessageListener"/> were invoked.
+        /// </remarks>
+        public abstract void AddMessagesListener(Action<IDictionary<string, IList<IMessage>>> listener);
     }
 
     [ContractClassFor(typeof(Air<,>))]
@@ -47,33 +66,35 @@ namespace SwarmInteligence
 
         public override IEnumerable<IMessage> Messages
         {
-            get
-            {
-                Contract.Requires<InvalidOperationException>(District.Stage == TurnStage.AfterTurn);
-                throw new NotImplementedException();
-            }
+            get { throw new NotImplementedException(); }
         }
 
         public override IEnumerable<IMessage> this[string tag]
         {
             get
             {
-                Contract.Requires<InvalidOperationException>(District.Stage == TurnStage.AfterTurn);
+                Contract.Requires<ArgumentNullException>(!String.IsNullOrWhiteSpace(tag));
                 throw new NotImplementedException();
             }
         }
 
-        public override void SendMessage(IMessage message)
+        public override void SendMessage(IMessage message, params string[] tags)
         {
             Contract.Requires<ArgumentNullException>(message != null);
+            Contract.Requires<ArgumentNullException>(tags == null || tags.All(x => !String.IsNullOrWhiteSpace(x)));
             Contract.Requires<InvalidOperationException>(District.Stage == TurnStage.Turn);
             throw new NotImplementedException();
         }
 
-        public override void SendTaggedMessage(IMessage message, params string[] tags)
+        public override void AddMessageListener(Action<IList<IMessage>> listener, string tag)
         {
-            Contract.Requires<ArgumentNullException>(message != null && tags != null && tags.Length > 0);
-            Contract.Requires<InvalidOperationException>(District.Stage == TurnStage.Turn);
+            Contract.Requires<ArgumentNullException>(listener != null);
+            throw new NotImplementedException();
+        }
+
+        public override void AddMessagesListener(Action<IDictionary<string, IList<IMessage>>> listener)
+        {
+            Contract.Requires<ArgumentNullException>(listener != null);
             throw new NotImplementedException();
         }
 
