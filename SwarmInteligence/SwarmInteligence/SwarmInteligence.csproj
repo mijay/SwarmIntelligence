@@ -79,17 +79,20 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\Abstract\Background.cs" />
-    <Compile Include="Core\Abstract\District.cs" />
-    <Compile Include="Core\Abstract\Air.cs" />
-    <Compile Include="Core\Abstract\Map.cs" />
-    <Compile Include="Core\Interface\ICommunicative.cs" />
-    <Compile Include="Core\Interface\ICoordinate.cs" />
-    <Compile Include="Core\Interface\IGauge.cs" />
-    <Compile Include="Core\Interface\IComponent.cs" />
-    <Compile Include="Core\Interface\ILocatable.cs" />
-    <Compile Include="Core\Interface\IMessage.cs" />
-    <Compile Include="Core\Interface\IVisualizable.cs" />
+    <Compile Include="Core\MapRepresentation\Interfaces\AbstractComponent.cs" />
+    <Compile Include="Core\MapRepresentation\Background.cs" />
+    <Compile Include="Core\MapRepresentation\District.cs" />
+    <Compile Include="Core\Messages\AbstractCommunicative.cs" />
+    <Compile Include="Core\Messages\Air.cs" />
+    <Compile Include="Core\MapRepresentation\Map.cs" />
+    <Compile Include="Core\Messages\ICommunicative.cs" />
+    <Compile Include="Core\MapRepresentation\Interfaces\ICoordinate.cs" />
+    <Compile Include="Core\MapRepresentation\Interfaces\IGauge.cs" />
+    <Compile Include="Core\MapRepresentation\Interfaces\IComponent.cs" />
+    <Compile Include="Core\MapRepresentation\Interfaces\ILocatable.cs" />
+    <Compile Include="Core\Messages\IMessage.cs" />
+    <Compile Include="Core\AnimalRepresentation\IVisualizable.cs" />
+    <Compile Include="Core\AnimalRepresentation\Animal.cs" />
     <Compile Include="Core\Sealed\Cell.cs" />
     <Compile Include="Core\Sealed\Command.cs" />
     <Compile Include="Core\Sealed\TurnStage.cs" />
@@ -103,9 +106,7 @@
       <Name>Utils</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Core\MapObjects\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

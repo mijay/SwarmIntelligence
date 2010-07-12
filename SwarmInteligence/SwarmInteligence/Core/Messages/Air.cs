@@ -6,7 +6,7 @@ using System.Linq;
 namespace SwarmInteligence
 {
     [ContractClass(typeof(AirContract<,>))]
-    public abstract class Air<C, B>: IComponent<C, B>
+    public abstract class Air<C, B>: ICommunicative<C, B>
         where C: struct, ICoordinate<C>
     {
         /// <summary>
@@ -29,11 +29,17 @@ namespace SwarmInteligence
         #endregion
 
         /// <summary>
-        /// Send broadcast <paramref name="message"/> and mark it with the <paramref name="tags"/> (can be empty).
+        /// Send broadcast <paramref name="message"/> and mark it with the <paramref name="tags"/> (empty if none).
         /// This method can be used only in <see cref="TurnStage.Turn"/>.
         /// </summary>
         /// <exception cref="ArgumentNullException">Any tag is null, empty or whitespace.</exception>
-        public abstract void SendMessage(IMessage message, params string[] tags);
+        public void SendMessage(IMessage message, params string[] tags)
+        {
+            Contract.Requires<ArgumentNullException>(message != null);
+            Contract.Requires<ArgumentNullException>(tags == null || tags.All(x => !String.IsNullOrWhiteSpace(x)));
+            Contract.Requires<InvalidOperationException>(District.Stage == TurnStage.Turn);
+            SendMessageWithTags(message, tags ?? new string[0]);
+        }
 
         /// <summary>
         /// Add a listener which will be invoked in <see cref="TurnStage.ApplyTurn"/> and which can modify
@@ -56,6 +62,22 @@ namespace SwarmInteligence
         /// All <paramref name="listener"/>s are invoked after listeners from <see cref="AddMessageListener"/> were invoked.
         /// </remarks>
         public abstract void AddMessagesListener(Action<IDictionary<string, IList<IMessage>>> listener);
+
+        /// <inheritdoc/>
+        /// <remarks>
+        /// This message is broadcast and it is not marked with any tags.
+        /// </remarks>
+        void ICommunicative<C,B>.SendMessage(IMessage message)
+        {
+            SendMessage(message, new string[0]);
+        }
+
+        /// <summary>
+        /// This is a background method for <see cref="ICommunicative{C,B}.SendMessage(SwarmInteligence.IMessage)"/> and <see cref="SendMessage(SwarmInteligence.IMessage,string[])"/>.
+        /// </summary>
+        /// <param name="message"><see cref="IMessage"/> to send broadcast.</param>
+        /// <param name="tags">Tags to mark this message with (can be empty).</param>
+        protected abstract void SendMessageWithTags(IMessage message, string[] tags);
     }
 
     [ContractClassFor(typeof(Air<,>))]
@@ -78,23 +100,23 @@ namespace SwarmInteligence
             }
         }
 
-        public override void SendMessage(IMessage message, params string[] tags)
-        {
-            Contract.Requires<ArgumentNullException>(message != null);
-            Contract.Requires<ArgumentNullException>(tags == null || tags.All(x => !String.IsNullOrWhiteSpace(x)));
-            Contract.Requires<InvalidOperationException>(District.Stage == TurnStage.Turn);
-            throw new NotImplementedException();
-        }
-
         public override void AddMessageListener(Action<IList<IMessage>> listener, string tag)
         {
-            Contract.Requires<ArgumentNullException>(listener != null);
+            Contract.Requires<ArgumentNullException>(listener != null && tag != null);
             throw new NotImplementedException();
         }
 
         public override void AddMessagesListener(Action<IDictionary<string, IList<IMessage>>> listener)
         {
             Contract.Requires<ArgumentNullException>(listener != null);
+            throw new NotImplementedException();
+        }
+
+        protected override void SendMessageWithTags(IMessage message, string[] tags)
+        {
+            Contract.Requires<ArgumentNullException>(message != null);
+            Contract.Requires<ArgumentNullException>(tags.All(x => !String.IsNullOrWhiteSpace(x)));
+            Contract.Requires<InvalidOperationException>(District.Stage == TurnStage.Turn);
             throw new NotImplementedException();
         }
 

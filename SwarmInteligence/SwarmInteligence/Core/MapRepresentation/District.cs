@@ -36,7 +36,6 @@ namespace SwarmInteligence
         protected readonly Map<C, B> map;
 
 
-
         [Pure]
         public Map<C, B> Map
         {
@@ -79,6 +78,16 @@ namespace SwarmInteligence
                 return background;
             }
         }
+
+        #endregion
+
+        #region Events
+
+        public virtual event Action OnBeforeTurnStage;
+        public virtual event Action OnTurnStage;
+        public virtual event Action OnApplyTurnStage;
+        public virtual event Action OnAfterTurnStage;
+        public virtual event Action OnApplyAfterTurnStage;
 
         #endregion
     }

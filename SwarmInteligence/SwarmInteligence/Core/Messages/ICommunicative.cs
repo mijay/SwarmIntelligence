@@ -11,7 +11,7 @@ namespace SwarmInteligence
         where C: struct, ICoordinate<C>
     {
         /// <summary>
-        /// Send a <paramref name="message"/> to the object. This method can be used only in <see cref="TurnStage.Turn"/>.
+        /// Send a <paramref name="message"/>. This method can be used only in <see cref="TurnStage.Turn"/>.
         /// </summary>
         void SendMessage(IMessage message);
     }
