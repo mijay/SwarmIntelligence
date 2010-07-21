@@ -79,24 +79,24 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\MapRepresentation\Interfaces\AbstractComponent.cs" />
-    <Compile Include="Core\MapRepresentation\Background.cs" />
-    <Compile Include="Core\MapRepresentation\District.cs" />
+    <Compile Include="Core\MapModel\Interfaces\AbstractComponent.cs" />
+    <Compile Include="Core\MapModel\Background.cs" />
+    <Compile Include="Core\MapModel\District.cs" />
     <Compile Include="Core\Messages\AbstractCommunicative.cs" />
     <Compile Include="Core\Messages\Air.cs" />
-    <Compile Include="Core\MapRepresentation\Map.cs" />
+    <Compile Include="Core\MapModel\Map.cs" />
     <Compile Include="Core\Messages\ICommunicative.cs" />
-    <Compile Include="Core\MapRepresentation\Interfaces\ICoordinate.cs" />
-    <Compile Include="Core\MapRepresentation\Interfaces\IGauge.cs" />
-    <Compile Include="Core\MapRepresentation\Interfaces\IComponent.cs" />
-    <Compile Include="Core\MapRepresentation\Interfaces\ILocatable.cs" />
+    <Compile Include="Core\MapModel\Interfaces\ICoordinate.cs" />
+    <Compile Include="Core\MapModel\Interfaces\IGauge.cs" />
+    <Compile Include="Core\MapModel\Interfaces\IComponent.cs" />
+    <Compile Include="Core\MapModel\Interfaces\ILocatable.cs" />
     <Compile Include="Core\Messages\IMessage.cs" />
-    <Compile Include="Core\AnimalRepresentation\IVisualizable.cs" />
-    <Compile Include="Core\AnimalRepresentation\Animal.cs" />
-    <Compile Include="Core\Sealed\Cell.cs" />
-    <Compile Include="Core\Sealed\Command.cs" />
-    <Compile Include="Core\Sealed\TurnStage.cs" />
-    <Compile Include="Core\Sealed\Zone.cs" />
+    <Compile Include="Core\AnimalModel\IVisualizable.cs" />
+    <Compile Include="Core\AnimalModel\Animal.cs" />
+    <Compile Include="Core\CellModel\Cell.cs" />
+    <Compile Include="Core\CellModel\Command.cs" />
+    <Compile Include="Core\CellModel\TurnStage.cs" />
+    <Compile Include="Core\CellModel\Zone.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TwoDimentional\Coordinate2D.cs" />
   </ItemGroup>
