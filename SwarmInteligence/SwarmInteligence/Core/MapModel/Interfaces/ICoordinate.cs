@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
+using Utils;
 
 namespace SwarmInteligence
 {
@@ -56,7 +57,6 @@ namespace SwarmInteligence
     {
         #region Implementation of ICloneable
 
-        [Pure]
         public object Clone()
         {
             Contract.Ensures(Contract.Result<object>().GetType() == GetType());
@@ -68,7 +68,6 @@ namespace SwarmInteligence
 
         #region Implementation of IEquatable<ICoordinate<C>>
 
-        [Pure]
         public bool Equals(C other)
         {
             throw new NotImplementedException();
@@ -80,14 +79,17 @@ namespace SwarmInteligence
 
         public IEnumerable<C> Range(C upperBound)
         {
+            Contract.Ensures(Contract.Result<IEnumerable<C>>() != null);
             // check that this (as lowerBound) is the first point in range
             Contract.Ensures(Contract.Result<IEnumerable<C>>().First().Equals(Cast));
             // check that upperBound is the last point in range
             Contract.Ensures(Contract.Result<IEnumerable<C>>().Last().Equals(upperBound));
-            // check that for all all element in range IsInRange is true
-            Contract.Ensures(Contract.Result<IEnumerable<C>>().All(c => c.IsInRange(Cast, upperBound)));
+            // check that for all element in range IsInRange is true
+            Contract.ForAll(Contract.Result<IEnumerable<C>>(), c => c.IsInRange(Cast, upperBound));
             // check that all point in suburb are distinct
-            Contract.Ensures(Contract.Result<IEnumerable<C>>().GroupBy(c => c).All(g => g.Count() == 1));
+            Contract.Ensures(Contract.Result<IEnumerable<C>>().AreDistinct());
+            // checks that if lowerBound == upperBound then only one element returned and this element == this
+            Contract.Ensures(!Equals(upperBound) || Contract.Result<IEnumerable<C>>().Single().Equals(Cast));
             throw new NotImplementedException();
         }
 

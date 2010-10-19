@@ -1,13 +1,17 @@
-﻿namespace SwarmInteligence
+﻿using System;
+using System.Diagnostics.Contracts;
+
+namespace SwarmInteligence
 {
     public class AbstractComponent<C, B> : IComponent<C, B>
         where C : struct, ICoordinate<C>
     {
-        public AbstractComponent(District<C, B> district)
+        public AbstractComponent(Map<C, B> map)
         {
-            District = district;
+            Contract.Requires<ArgumentNullException>(map != null);
+            Map = map;
         }
 
-        public District<C, B> District { get; private set; }
+        public Map<C, B> Map { get; private set; }
     }
 }

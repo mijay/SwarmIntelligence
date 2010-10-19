@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssertHelper.cs" />
+    <Compile Include="EnumerableExtension.cs" />
     <Compile Include="FastDrawHelper.cs" />
     <Compile Include="FastBitmap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

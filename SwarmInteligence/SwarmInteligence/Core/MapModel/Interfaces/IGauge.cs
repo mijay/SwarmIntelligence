@@ -43,13 +43,16 @@ namespace SwarmInteligence
         public IEnumerable<C> Suburb(C center, int radius)
         {
             Contract.Requires<ArgumentException>(radius >= 0);
+            Contract.Ensures(Contract.Result<IEnumerable<C>>() != null);
             // check that zero-point is inside the suburb
-            Contract.Ensures(Contract.Result<IEnumerable<C>>().Any(c => c.Equals(default(C))));
+            Contract.Exists(Contract.Result<IEnumerable<C>>(), c => c.Equals(default(C)));
             // check that all point in suburb are distinct
-            Contract.Ensures(Contract.Result<IEnumerable<C>>().GroupBy(c => c).All(g => g.Count() == 1));
+            Contract.Ensures(Contract.Result<IEnumerable<C>>().AreDistinct());
             // check that all point in suburb can be converted back to global coordinates
             Contract.Ensures(
-                AssertHelper.DoNotThrow(() => Contract.Result<IEnumerable<C>>().Select(c => ToGlobal(c, center, radius))));
+                AssertHelper.DoesNotThrow(() => Contract.Result<IEnumerable<C>>().Select(c => ToGlobal(c, center, radius))));
+            // check that if radius ==0 then only one point returned
+            Contract.Ensures(radius != 0 || Contract.Result<IEnumerable<C>>().Single().Equals(default(C)));
             throw new NotImplementedException();
         }
 

@@ -22,7 +22,7 @@ namespace SwarmInteligence
     {
         #region Implementation of IComponent<C,B>
 
-        public District<C, B> District
+        public Map<C, B> Map
         {
             get { throw new NotImplementedException(); }
         }
@@ -33,7 +33,7 @@ namespace SwarmInteligence
 
         public void SendMessage(IMessage message)
         {
-            Contract.Requires<InvalidOperationException>(District.Stage == TurnStage.Turn,
+            Contract.Requires<InvalidOperationException>(Map.Stage == TurnStage.Turn,
                                                          "Stone.SendMessage can be called only in Turn stage");
             Contract.Requires<ArgumentNullException>(message != null);
         }

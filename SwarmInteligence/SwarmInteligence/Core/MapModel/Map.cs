@@ -3,44 +3,42 @@ using System.Diagnostics.Contracts;
 
 namespace SwarmInteligence
 {
-    public class Map<C, B>
+    public abstract class Map<C, B>
         where C: struct, ICoordinate<C>
     {
-        private readonly Tuple<C, C> bounds;
-
-        public Map(Tuple<C, C> bounds, IGauge<C> gauge)
+        protected Map(IGauge<C> gauge, Air<C, B> air, Background<C, B> background, District<C, B> district)
         {
-            Contract.Requires<ArgumentNullException>(bounds != null && gauge != null);
-            this.bounds = bounds;
-            this.gauge = gauge;
+            Contract.Requires<ArgumentNullException>(gauge != null && air != null && background != null && district != null);
+            Gauge = gauge;
+            Air = air;
+            Background = background;
+            District = district;
         }
 
         [Pure]
-        public Tuple<C, C> Bounds
-        {
-            get
-            {
-                Contract.Ensures(Contract.Result<Tuple<C, C>>() != null);
-                return bounds;
-            }
-        }
-
-        [ContractInvariantMethod]
-        private void MapInvariant()
-        {
-            Contract.Invariant(bounds != null && gauge != null);
-        }
-
-        protected readonly IGauge<C> gauge;
+        public IGauge<C> Gauge { get; private set; }
 
         [Pure]
-        public IGauge<C> Gauge
-        {
-            get
-            {
-                Contract.Ensures(Contract.Result<IGauge<C>>() != null);
-                return gauge;
-            }
-        }
+        public Air<C, B> Air { get; private set; }
+
+        [Pure]
+        public TurnStage Stage { get; protected set; }
+
+        [Pure]
+        public Background<C, B> Background { get; private set; }
+
+        [Pure]
+        public District<C, B> District { get; set; }
+
+
+        #region Events
+
+        public abstract event Action OnBeforeTurnStage;
+        public abstract event Action OnTurnStage;
+        public abstract event Action OnApplyTurnStage;
+        public abstract event Action OnAfterTurnStage;
+        public abstract event Action OnApplyAfterTurnStage;
+
+        #endregion
     }
 }

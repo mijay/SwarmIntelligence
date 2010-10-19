@@ -24,7 +24,7 @@ namespace SwarmInteligence
 
         #region IComponent<C,B> Members
 
-        public District<C, B> District { get; set; }
+        public Map<C, B> Map { get; set; }
 
         #endregion
 
@@ -37,7 +37,7 @@ namespace SwarmInteligence
         {
             Contract.Requires<ArgumentNullException>(message != null);
             Contract.Requires<ArgumentNullException>(tags == null || tags.All(x => !String.IsNullOrWhiteSpace(x)));
-            Contract.Requires<InvalidOperationException>(District.Stage == TurnStage.Turn);
+            Contract.Requires<InvalidOperationException>(Map.Stage == TurnStage.Turn);
             SendMessageWithTags(message, tags ?? new string[0]);
         }
 
@@ -116,7 +116,7 @@ namespace SwarmInteligence
         {
             Contract.Requires<ArgumentNullException>(message != null);
             Contract.Requires<ArgumentNullException>(tags.All(x => !String.IsNullOrWhiteSpace(x)));
-            Contract.Requires<InvalidOperationException>(District.Stage == TurnStage.Turn);
+            Contract.Requires<InvalidOperationException>(Map.Stage == TurnStage.Turn);
             throw new NotImplementedException();
         }
 

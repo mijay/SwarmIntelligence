@@ -5,9 +5,9 @@ namespace SwarmInteligence.Core.Messages
     public class AbstractCommunicative<C, B>: AbstractComponent<C, B>, ICommunicative<C, B>
         where C: struct, ICoordinate<C>
     {
-        public AbstractCommunicative(District<C, B> district): base(district)
+        public AbstractCommunicative(Map<C, B> map): base(map)
         {
-            district.OnApplyTurnStage += () => {
+            map.OnApplyTurnStage += () => {
                                              receivedMessages = receivingMessages;
                                              receivingMessages = new List<IMessage>();
                                          };

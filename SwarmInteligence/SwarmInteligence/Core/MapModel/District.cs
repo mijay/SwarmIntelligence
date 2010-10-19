@@ -6,107 +6,37 @@ namespace SwarmInteligence
 {
     [ContractClass(typeof(DistrictContract<,>))]
     public abstract class District<C, B>
-        where C: struct, ICoordinate<C>
+        where C : struct, ICoordinate<C>
     {
         [Pure]
-        protected District(Map<C, B> map, Air<C, B> air, Tuple<C, C> bounds, Background<C, B> background)
+        protected District(Tuple<C, C> bounds)
         {
-            Contract.Requires<ArgumentNullException>(map != null && air != null && bounds != null && background != null);
-            this.map = map;
-            this.background = background;
-            this.air = air;
-            air.District = this;
-            this.bounds = bounds;
+            Contract.Requires<ArgumentNullException>(bounds != null);
+            Bounds = bounds;
         }
 
-        [ContractInvariantMethod]
-        private void DistrictInvariant()
-        {
-            Contract.Invariant(bounds != null && air != null && background != null && map != null);
-        }
+        //[Pure]
+        //public abstract IList<Stone<C, B>> GetData(ICoordinate<C> coordinate);
 
         [Pure]
-        public abstract IList<Stone<C, B>> GetData(ICoordinate<C> coordinate);
-
-        #region Fields
-
-        protected readonly Air<C, B> air;
-        protected readonly Background<C, B> background;
-        protected readonly Tuple<C, C> bounds;
-        protected readonly Map<C, B> map;
-
-
-        [Pure]
-        public Map<C, B> Map
-        {
-            get
-            {
-                Contract.Ensures(Contract.Result<Map<C, B>>() != null);
-                return map;
-            }
-        }
-
-        [Pure]
-        public Air<C, B> Air
-        {
-            get
-            {
-                Contract.Ensures(Contract.Result<Air<C, B>>() != null);
-                return air;
-            }
-        }
-
-        [Pure]
-        public TurnStage Stage { protected set; get; }
-
-        [Pure]
-        public Tuple<C, C> Bounds
-        {
-            get
-            {
-                Contract.Ensures(Contract.Result<Tuple<C, C>>() != null);
-                return bounds;
-            }
-        }
-
-        [Pure]
-        public Background<C, B> Background
-        {
-            get
-            {
-                Contract.Ensures(Contract.Result<Background<C, B>>() != null);
-                return background;
-            }
-        }
-
-        #endregion
-
-        #region Events
-
-        public virtual event Action OnBeforeTurnStage;
-        public virtual event Action OnTurnStage;
-        public virtual event Action OnApplyTurnStage;
-        public virtual event Action OnAfterTurnStage;
-        public virtual event Action OnApplyAfterTurnStage;
-
-        #endregion
+        public Tuple<C, C> Bounds { get; private set; }
     }
 
     [ContractClassFor(typeof(District<,>))]
-    internal sealed class DistrictContract<C, B>: District<C, B>
-        where C: struct, ICoordinate<C>
+    internal sealed class DistrictContract<C, B> : District<C, B>
+        where C : struct, ICoordinate<C>
     {
-        public DistrictContract(Map<C, B> map, Air<C, B> air, Tuple<C, C> bounds, Background<C, B> background, IGauge<C> gauge)
-            : base(map, air, bounds, background) {}
+        public DistrictContract(Tuple<C, C> bounds)
+            : base(bounds) { }
 
         #region Overrides of District<C,B>
 
-        public override IList<Stone<C, B>> GetData(ICoordinate<C> coordinate)
-        {
-            Contract.Requires<IndexOutOfRangeException>(coordinate.IsInRange(Bounds.Item1, Bounds.Item2));
-            Contract.Ensures(Contract.Result<IList<Stone<C, B>>>() != null);
-            throw new NotImplementedException();
-        }
+        //public override IList<Stone<C, B>> GetData(ICoordinate<C> coordinate)
+        //{
+        //    Contract.Requires<IndexOutOfRangeException>(coordinate.IsInRange(Bounds.Item1, Bounds.Item2));
+        //    Contract.Ensures(Contract.Result<IList<Stone<C, B>>>() != null);
+        //    throw new NotImplementedException();
+        //}
 
         #endregion
     }

@@ -7,7 +7,7 @@ namespace SwarmInteligence
     {
         #region Implementation of ICommunicative<C,B>
 
-        public Animal(District<C, B> district): base(district) {}
+        public Animal(Map<C, B> map): base(map) {}
 
         #endregion
     }

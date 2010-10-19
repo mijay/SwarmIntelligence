@@ -15,7 +15,7 @@ namespace Utils
             return null;
         }
 
-        public static bool DoNotThrow(Action action)
+        public static bool DoesNotThrow(Action action)
         {
             return CatchException(action) == null;
         }

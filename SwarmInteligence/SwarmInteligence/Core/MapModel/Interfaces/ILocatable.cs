@@ -4,10 +4,10 @@ using System.Diagnostics.Contracts;
 namespace SwarmInteligence
 {
     /// <summary>
-    /// Represents all objects that can be placed on the <see cref="Map{C,B}"/>
+    /// Represents all objects that can be placed on the <see cref="District{C,B}"/>
     /// </summary>
     [ContractClass(typeof(LocatableContract<,>))]
-    public interface ILocatable<C, B>: IComponent<C, B>
+    public interface ILocatable<C, B>
         where C: struct, ICoordinate<C>
     {
         /// <summary>
@@ -15,6 +15,9 @@ namespace SwarmInteligence
         /// </summary>
         [Pure]
         C Coordinate { get; }
+
+        [Pure]
+        District<C, B> District { get; }
     }
 
 
@@ -34,13 +37,13 @@ namespace SwarmInteligence
             }
         }
 
-        #endregion
-
-        #region Implementation of IComponent<C,B>
-
         public District<C, B> District
         {
-            get { throw new NotImplementedException(); }
+            get
+            {
+                Contract.Ensures(Contract.Result<District<C, B>>() != null);
+                throw new NotImplementedException();
+            }
         }
 
         #endregion

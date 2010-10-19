@@ -14,7 +14,7 @@ namespace SwarmInteligence
         /// <see cref="District{C,B}"/> where the object is stored.
         /// </summary>
         [Pure]
-        District<C, B> District { get; }
+        Map<C, B> Map { get; }
     }
 
     [ContractClassFor(typeof(IComponent<,>))]
@@ -23,11 +23,11 @@ namespace SwarmInteligence
     {
         #region Implementation of IComponent<C,B>
 
-        public District<C, B> District
+        public Map<C, B> Map
         {
             get
             {
-                Contract.Ensures(Contract.Result<District<C, B>>() != null);
+                Contract.Ensures(Contract.Result<Map<C, B>>() != null);
                 throw new NotImplementedException();
             }
         }
@@ -35,18 +35,8 @@ namespace SwarmInteligence
         #endregion
     }
 
-    public static class ComponentExtend
+    public static class ComponentExtention
     {
-        /// <summary>
-        /// Gets the <see cref="Map{C,B}"/> to which this objects belongs.
-        /// </summary>
-        public static Map<C, B> Map<C, B>(this IComponent<C, B> component)
-            where C: struct, ICoordinate<C>
-        {
-            Contract.Requires<ArgumentNullException>(component != null);
-            return component.District.Map;
-        }
-
         /// <summary>
         /// Gets the <see cref="SwarmInteligence.Air{C,B}"/> which is used for communication in <see cref="District{C,B}"/>
         /// in which object is stored.
@@ -55,7 +45,7 @@ namespace SwarmInteligence
             where C: struct, ICoordinate<C>
         {
             Contract.Requires<ArgumentNullException>(component != null);
-            return component.District.Air;
+            return component.Map.Air;
         }
     }
 }
