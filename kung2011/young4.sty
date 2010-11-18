@@ -1,0 +1,137 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                                                %
+%       The Style for the Young Scientists Conference Papers                     %
+%   Institute of Mathematics and Mechanics, RAS, the Ural Branch                %
+%                     Version 3.01  (May 2010)                                   %
+%                                                                                %
+% To implement this style place it into your paper directory and write:          %
+%  \documentclass{article}                                                       %
+%  \usepackage{young4}                                                           %
+%                                                                                %
+% This file  contains some LaTeX2e  style  definitions (page width and height,   %
+% spacing, margins etc.) that are standard     for all papers submitted to the   %
+% Young Scientists Conference "Problems of Theoretic and Applied Mathematics".   %
+%                                                                                %
+% Attention! You should write  a title  of your  paper only with the command:    %
+%   \atitle{Arg1}{Arg2}[Arg3]                                                    %
+% where                                                                          %
+%   Arg1              - a title of paper,                                        %
+%   Arg2              - name(s) of author(s) (syntax: last name + initials)      %
+%   Arg3 (optional)   - papers attributes for contents (default is Arg2 + Arg1)  %
+%                                                                                %
+% Please, pay your attention to interesting theorem-like environments, that are  %
+% defined below with the commands \newtheorem. To write  (and properly decorate) %
+% your theorem (statement, definition, etc.) your may  use one of predefined     %
+% environments:                                                                  %
+%    \begin{thm} ... text of a theorem     ... \end{thm}   -  for a theorem      %
+%    \begin{stm} ... text of a statement   ... \end{stm}   -  for a statement    %
+%    \begin{prop}... text of a proposition ... \end{prop}  -  for a proposition  %
+%    \begin{defi}... text of a definition  ... \end{defi}  -  for a definition   %
+%    \begin{cor} ... text of a corollary   ... \end{cor}   -  for a corollary.   %
+%    \begin{rem} ... text of a remark      ... \end{rem}   -  for a remark.      %
+% Using these environments you may not care of titles or numbers of              %
+%    your theorems.                                                              %
+% If your paper contains only one theorem and you needn't number it, please, use %
+% one of these environments with a star. For example, to decorate the only       %
+% theorem simple write:                                                          %
+%  \begin{thm*} ... text ... \end{thm*}                                          %
+%                                                                                %
+%                                                                                %
+% 23.11.2000                                          Organizing Committee       %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Upade 23.04.2010
+
+\usepackage[space,noadjust]{cite}   
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[active]{srcltx}
+\usepackage[koi8-r,cp866,cp1251]{inputenc}
+\usepackage[english, russian]{babel}
+\usepackage[final]{graphicx}
+
+\typeout{Style for Young Scientists Conference Papers.}
+\typeout{Institute of  Mathematics and Mechanics, RAS,the Urals Branch}
+\typeout{Version 3.01}
+
+\pagestyle{empty}
+
+% Page size settings
+%
+\voffset          -2.0cm
+\textwidth          11cm
+\textheight         16cm
+\topmargin           0mm
+\oddsidemargin       5mm
+\emergencystretch=3pt
+
+
+\def\baselinestretch{1.0}
+\DeclareGraphicsRule{.wmf}{bmp}{}{}% declare WMF filename extension
+\DeclareGraphicsRule{.bmp}{bmp}{}{}% declare BMP filename extension
+\graphicspath{{.}}
+\raggedbottom
+\tolerance 1000
+
+\def\thesubsubsection{\arabic{subsubsection}.}
+\def\theparagraph{\arabic{subsubsection}.\arabic{paragraph}.}
+
+%
+%  Environments like a numbered theorem
+%
+\theoremstyle{plain}
+\newtheorem{thm}{Теорема}
+\newtheorem{lem}{Лемма}
+\newtheorem{cor}{Следствие}
+\newtheorem{prop}{Предложение}
+\newtheorem{stm}{Утверждение}
+\newtheorem{hyp}{Гипотеза}
+%
+%  Environments like an unnumbered theorem
+%
+\newtheorem*{thm*}{Теорема}
+\newtheorem*{lem*}{Лемма}
+\newtheorem*{cor*}{Следствие}
+\newtheorem*{prop*}{Предложение}
+\newtheorem*{stm*}{Утверждение}
+\newtheorem*{hyp*}{Гипотеза}
+%
+%  Environments like a numbered definition
+%
+\theoremstyle{definition}
+\newtheorem{defi}{Определение}
+\newtheorem{ex}{Пример}
+\newtheorem{rem}{Замечание}
+%
+%  Environments like an unnumbered definition
+%
+\newtheorem*{defi*}{Определение}
+\newtheorem*{ex*}{Пример}
+\newtheorem*{rem*}{Замечание}
+
+%
+% The Title
+% Args: 1  - a title
+%       2  - author's name (last name + initials)
+%      [3] - paper's attributes for the Table of contents
+%
+%
+\def\atitle#1#2%
+{\begin{center} {\bf\uppercase{#1}}\\[0.5\baselineskip] {#2}\end{center}
+ \vspace{\baselineskip}\@ifnextchar[{\@atitop{#1}{#2}}{\@atit{#1}{#2}}}
+\def\@atit#1#2{}
+\def\@atitop#1#2[#3]{}
+%
+%   Redefinition of the Bibliography Environment
+%
+\def\thebibliography#1{\renewcommand{\refname}{Литература}%
+ \subsubsection*{\refname\@mkboth
+ {\uppercase{\refname}}{\uppercase{\refname}}}\list
+ {[\arabic{enumi}]}{\settowidth\labelwidth{[#1]}\leftmargin\labelwidth
+ \advance\leftmargin\labelsep
+ \usecounter{enumi}}
+ \def\newblock{\hskip .11em plus .33em minus .07em}
+ \sloppy\clubpenalty4000\widowpenalty4000
+ \sfcode`\.=1000\relax}
+ \let\endthebibliography=\endlist
