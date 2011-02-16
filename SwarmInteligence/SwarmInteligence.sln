@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwarmInteligence", "SwarmIn
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utils", "Utils\Utils.csproj", "{314103EA-3787-49A9-ABBE-F26502B8D459}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwarmInteligence2", "SwarmIntelligence2\SwarmInteligence2.csproj", "{2FACFBFE-7D25-4F20-96D6-EFC7F742988A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +21,10 @@ Global
 		{314103EA-3787-49A9-ABBE-F26502B8D459}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{314103EA-3787-49A9-ABBE-F26502B8D459}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{314103EA-3787-49A9-ABBE-F26502B8D459}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2FACFBFE-7D25-4F20-96D6-EFC7F742988A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FACFBFE-7D25-4F20-96D6-EFC7F742988A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FACFBFE-7D25-4F20-96D6-EFC7F742988A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FACFBFE-7D25-4F20-96D6-EFC7F742988A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
