@@ -1,6 +1,8 @@
 using System;
+using System.Diagnostics.Contracts;
 using System.Drawing;
 using SwarmIntelligence2.Core;
+using SwarmIntelligence2.Core.Interface;
 using Utils.Drawing;
 
 namespace SwarmIntelligence2.TwoDimensional
@@ -11,7 +13,10 @@ namespace SwarmIntelligence2.TwoDimensional
         private bool disposed;
 
         public PictureBackground(Bitmap data)
+            : base(new Range<Coordinates2D>(new Coordinates2D(0, 0),
+                                            new Coordinates2D(data.Width - 1, data.Height - 1)))
         {
+            Contract.Requires<ArgumentNullException>(data != null);
             this.data = new FastBitmap(data);
         }
 

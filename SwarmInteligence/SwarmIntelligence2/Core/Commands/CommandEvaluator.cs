@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics.Contracts;
 using SwarmIntelligence2.Core.Interface;
+using Utils;
 
 namespace SwarmIntelligence2.Core.Commands
 {
@@ -13,6 +14,7 @@ namespace SwarmIntelligence2.Core.Commands
 
         public void Evaluate(AddAnt<C, B> command)
         {
+            Contract.Requires<ArgumentNullException>(command != null);
             Contract.Requires<InvalidOperationException>(EvaluationContext.IsFullFilled());
 
             EvaluationContext.Map[command.TargetPoint].Add(command.Ant);
@@ -20,23 +22,28 @@ namespace SwarmIntelligence2.Core.Commands
 
         public void Evaluate(SelfRemove<C, B> command)
         {
+            Contract.Requires<ArgumentNullException>(command != null);
             Contract.Requires<InvalidOperationException>(EvaluationContext.IsFullFilled());
 
-            bool wasRemoved = EvaluationContext.Cell.Remove(EvaluationContext.Ant);
-
-            Contract.Assert(wasRemoved);
+            MoveAntFromCell();
         }
 
         public void Evaluate(MoveTo<C, B> command)
         {
+            Contract.Requires<ArgumentNullException>(command != null);
             Contract.Requires<InvalidOperationException>(EvaluationContext.IsFullFilled());
 
-            var wasMoved = EvaluationContext.Cell.Remove(EvaluationContext.Ant);
+            MoveAntFromCell();
             EvaluationContext.Map[command.TargetPoint].Add(EvaluationContext.Ant);
-
-            Contract.Assert(wasMoved);
         }
 
         #endregion
+
+        private void MoveAntFromCell()
+        {
+            EvaluationContext.Cell.Remove(EvaluationContext.Ant);
+            if (EvaluationContext.Cell.IsEmpty())
+                EvaluationContext.Map.ClearData(EvaluationContext.Coordinate);
+        }
     }
 }

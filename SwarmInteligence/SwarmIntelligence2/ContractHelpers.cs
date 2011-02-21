@@ -4,7 +4,7 @@ using SwarmIntelligence2.Core.Interface;
 
 namespace SwarmIntelligence2
 {
-    internal static class ContractHelpers
+    public static class ContractHelpers
     {
         [Pure]
         public static bool IsFullFilled<C, B>(this EvaluationContext<C, B> context) where C: struct, ICoordinate<C>

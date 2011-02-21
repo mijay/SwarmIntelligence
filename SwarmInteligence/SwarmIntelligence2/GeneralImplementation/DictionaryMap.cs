@@ -1,4 +1,5 @@
 ﻿using System.Collections.Concurrent;
+using System.Collections.Generic;
 using SwarmIntelligence2.Core;
 using SwarmIntelligence2.Core.Interface;
 
@@ -11,6 +12,8 @@ namespace SwarmIntelligence2.GeneralImplementation
 
         #region Overrides of Map<C,B>
 
+        public DictionaryMap(Range<C> range): base(range) {}
+
         public override Cell<C, B> this[C coord]
         {
             get { return data.GetOrAdd(coord, delegate { return new Cell<C, B>(); }); }
@@ -19,6 +22,17 @@ namespace SwarmIntelligence2.GeneralImplementation
         public override bool HasData(C coord)
         {
             return data.ContainsKey(coord);
+        }
+
+        public override void ClearData(C coord)
+        {
+            Cell<C, B> cell;
+            data.TryRemove(coord, out cell);
+        }
+
+        public override IEnumerable<KeyValuePair<C, Cell<C, B>>> GetExistenData()
+        {
+            return data;
         }
 
         #endregion

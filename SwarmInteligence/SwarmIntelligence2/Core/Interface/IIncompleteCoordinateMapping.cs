@@ -1,8 +1,61 @@
-﻿namespace SwarmIntelligence2.Core.Interface
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics.Contracts;
+
+namespace SwarmIntelligence2.Core.Interface
 {
-    public interface IIncompleteCoordinateMapping<C, out TData>: ICoordinateMapping<C, TData>
+    [ContractClass(typeof(ContractIIncompleteCoordinateMapping<,>))]
+    public interface IIncompleteCoordinateMapping<C, TData>: ICoordinateMapping<C, TData>
         where C: struct, ICoordinate<C>
     {
+        [Pure]
         bool HasData(C coord);
+
+        void ClearData(C coord);
+        IEnumerable<KeyValuePair<C, TData>> GetExistenData();
+    }
+
+    [ContractClassFor(typeof(IIncompleteCoordinateMapping<,>))]
+    internal abstract class ContractIIncompleteCoordinateMapping<C, TData>: IIncompleteCoordinateMapping<C, TData>
+        where C: struct, ICoordinate<C>
+    {
+        #region Implementation of IIncompleteCoordinateMapping<C,TData>
+
+        public bool HasData(C coord)
+        {
+            Contract.Requires<ArgumentOutOfRangeException>(RangeValidator<C>.Instance.IsInRange(Range, coord));
+            throw new NotImplementedException();
+        }
+
+        public void ClearData(C coord)
+        {
+            Contract.Requires<ArgumentOutOfRangeException>(RangeValidator<C>.Instance.IsInRange(Range, coord));
+            Contract.Requires<ArgumentOutOfRangeException>(HasData(coord));
+            Contract.Ensures(!HasData(coord));
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<KeyValuePair<C, TData>> GetExistenData()
+        {
+            Contract.Ensures(Contract.ForAll(Contract.Result<IEnumerable<KeyValuePair<C, TData>>>(),
+                                             pair => HasData(pair.Key) && this[pair.Key].Equals(pair.Value)));
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region Implementation of ICoordinateMapping<C,out TData>
+
+        public Range<C> Range
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public TData this[C coord]
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        #endregion
     }
 }

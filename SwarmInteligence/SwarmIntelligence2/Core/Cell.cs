@@ -18,12 +18,13 @@ namespace SwarmIntelligence2.Core
             list.Add(ant);
         }
 
-        public bool Remove(Ant<C, B> ant)
+        public void Remove(Ant<C, B> ant)
         {
             Contract.Requires(ant != null);
-            Contract.Ensures(Contract.OldValue(this).Contains(ant) == Contract.Result<bool>());
+            Contract.Requires(this.Contains(ant));
+            Contract.Ensures(!this.Contains(ant));
 
-            return list.Remove(ant);
+            list.Remove(ant);
         }
 
         #region Implementation of IEnumerable

@@ -12,5 +12,12 @@ namespace Utils
             Contract.Requires<ArgumentNullException>(source != null);
             return source.Distinct().Count() == source.Count();
         }
+
+        public static bool IsEmpty<T>(this IEnumerable<T> source)
+        {
+            Contract.Requires<ArgumentNullException>(source != null);
+            using (var enumerator = source.GetEnumerator())
+                return !enumerator.MoveNext();
+        }
     }
 }
