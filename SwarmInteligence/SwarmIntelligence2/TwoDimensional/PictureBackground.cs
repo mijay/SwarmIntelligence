@@ -2,7 +2,7 @@ using System;
 using System.Diagnostics.Contracts;
 using System.Drawing;
 using SwarmIntelligence2.Core;
-using SwarmIntelligence2.Core.Interface;
+using SwarmIntelligence2.Core.Coordinates;
 using Utils.Drawing;
 
 namespace SwarmIntelligence2.TwoDimensional

@@ -61,6 +61,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssertHelper.cs" />
+    <Compile Include="Cache\FuncCacher.cs" />
+    <Compile Include="Cache\ConcurentDictionaryCache.cs" />
+    <Compile Include="Cache\IFuncCacher.cs" />
+    <Compile Include="Cache\IKeyValueCache.cs" />
+    <Compile Include="Cache\LocalCache.cs" />
+    <Compile Include="Cache\StaticCache.cs" />
     <Compile Include="ContractExtensions.cs" />
     <Compile Include="EnumerableExtension.cs" />
     <Compile Include="FastDrawHelper.cs" />

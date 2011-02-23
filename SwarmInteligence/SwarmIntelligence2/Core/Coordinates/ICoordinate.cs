@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Runtime.Remoting.Contexts;
 
-namespace SwarmIntelligence2.Core.Interface
+namespace SwarmIntelligence2.Core.Coordinates
 {
     /// <summary>
     /// Interface for representing coordinates on the <see cref="Map{C,B}"/>.

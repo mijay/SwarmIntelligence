@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
+using SwarmIntelligence2.Core.Coordinates;
 
 namespace SwarmIntelligence2.Core.Interface
 {

@@ -1,4 +1,5 @@
-﻿using SwarmIntelligence2.Core.Interface;
+﻿using SwarmIntelligence2.Core.Coordinates;
+using SwarmIntelligence2.Core.Interface;
 
 namespace SwarmIntelligence2.Core
 {

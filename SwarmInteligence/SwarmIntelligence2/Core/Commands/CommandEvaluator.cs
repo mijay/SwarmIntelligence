@@ -1,6 +1,6 @@
 using System;
 using System.Diagnostics.Contracts;
-using SwarmIntelligence2.Core.Interface;
+using SwarmIntelligence2.Core.Coordinates;
 using Utils;
 
 namespace SwarmIntelligence2.Core.Commands

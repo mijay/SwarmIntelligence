@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 
-namespace SwarmIntelligence2.Core.Interface
+namespace SwarmIntelligence2.Core.Coordinates
 {
     public abstract class RangeValidator<C>: IComparer<C>
         where C: struct, ICoordinate<C>

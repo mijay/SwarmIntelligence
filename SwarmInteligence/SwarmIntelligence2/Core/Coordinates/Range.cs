@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.Contracts;
 
-namespace SwarmIntelligence2.Core.Interface
+namespace SwarmIntelligence2.Core.Coordinates
 {
     /// <summary>
     /// Represents the range of coordinates.

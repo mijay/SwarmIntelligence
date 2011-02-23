@@ -1,7 +1,7 @@
 ﻿using System.Collections.Concurrent;
 using System.Collections.Generic;
 using SwarmIntelligence2.Core;
-using SwarmIntelligence2.Core.Interface;
+using SwarmIntelligence2.Core.Coordinates;
 
 namespace SwarmIntelligence2.GeneralImplementation
 {
