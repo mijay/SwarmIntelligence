@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="BasicTest\NoDataBackground.cs" />
     <Compile Include="BasicTest\Test.cs" />
+    <Compile Include="BasicTest\TestAnt.cs" />
     <Compile Include="CacheTest.cs" />
     <Compile Include="CacheTestBase.cs" />
     <Compile Include="FuncCacherTest.cs" />
