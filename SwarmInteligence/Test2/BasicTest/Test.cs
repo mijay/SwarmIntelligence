@@ -5,6 +5,7 @@ using NUnit.Framework;
 using SwarmIntelligence2.Core;
 using SwarmIntelligence2.Core.Coordinates;
 using SwarmIntelligence2.GeneralImplementation;
+using SwarmIntelligence2.GeneralImplementation.Background;
 using SwarmIntelligence2.TwoDimensional;
 using Utils;
 
@@ -19,16 +20,16 @@ namespace Test2.BasicTest
             base.SetUp();
             RangeValidator2D.Register();
             size = new Range<Coordinates2D>(new Coordinates2D(-4, -3), new Coordinates2D(12, 5));
-            map = new DictionaryMap<Coordinates2D, NoDataBackground>(size);
-            background = new DelegateBackground<Coordinates2D, NoDataBackground>(size, delegate { return new NoDataBackground(); });
+            map = new DictionaryMap<Coordinates2D, EmptyData>(size);
+            background = new EmptyBackground<Coordinates2D>(size);
             random = new Random();
         }
 
         #endregion
 
         private Range<Coordinates2D> size;
-        private Map<Coordinates2D, NoDataBackground> map;
-        private Background<Coordinates2D, NoDataBackground> background;
+        private DictionaryMap<Coordinates2D, EmptyData> map;
+        private EmptyBackground<Coordinates2D> background;
         private Random random;
 
         private IEnumerable<TestAnt> SeedAnts(int antsNumber, int timesAntJumps, params Coordinates2D[] lastAntSteps)
@@ -63,7 +64,7 @@ namespace Test2.BasicTest
             var seededAnts = SeedAnts(100, 4, lastStep);
             Assert.Fail("Not implemented");
 
-            KeyValuePair<Coordinates2D, Cell<Coordinates2D, NoDataBackground>> keyValuePair = map.GetExistenData().Single();
+            KeyValuePair<Coordinates2D, Cell<Coordinates2D, EmptyData>> keyValuePair = map.GetExistenData().Single();
             Assert.That(keyValuePair.Key, Is.EqualTo(lastStep));
             CollectionAssert.AreEquivalent(keyValuePair.Value, seededAnts);
         }

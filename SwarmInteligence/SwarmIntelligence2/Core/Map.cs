@@ -5,7 +5,7 @@ using SwarmIntelligence2.Core.Interface;
 namespace SwarmIntelligence2.Core
 {
     public abstract class Map<C, B>: IIncompleteCoordinateMapping<C, Cell<C, B>>
-        where C: struct, ICoordinate<C>
+        where C: ICoordinate<C>
     {
         protected Map(Range<C> range)
         {

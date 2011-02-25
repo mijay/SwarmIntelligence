@@ -2,10 +2,10 @@
 using SwarmIntelligence2.Core;
 using SwarmIntelligence2.Core.Coordinates;
 
-namespace SwarmIntelligence2.GeneralImplementation
+namespace SwarmIntelligence2.GeneralImplementation.Background
 {
     public class DelegateBackground<C, B>: Background<C, B>
-        where C: struct, ICoordinate<C>
+        where C: ICoordinate<C>
     {
         private readonly Func<C, B> factory;
 

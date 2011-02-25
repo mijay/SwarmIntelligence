@@ -5,7 +5,7 @@ using System.Diagnostics.Contracts;
 namespace SwarmIntelligence2.Core.Coordinates
 {
     public abstract class RangeValidator<C>: IComparer<C>
-        where C: struct, ICoordinate<C>
+        where C: ICoordinate<C>
     {
         [Pure]
         public static RangeValidator<C> Instance { get; private set; }

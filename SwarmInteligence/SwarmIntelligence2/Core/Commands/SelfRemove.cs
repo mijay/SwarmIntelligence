@@ -3,7 +3,7 @@
 namespace SwarmIntelligence2.Core.Commands
 {
     public class SelfRemove<C, B>: Command<C, B>
-        where C: struct, ICoordinate<C>
+        where C: ICoordinate<C>
     {
         public override void EvaluateWith(CommandEvaluator<C, B> visitor)
         {

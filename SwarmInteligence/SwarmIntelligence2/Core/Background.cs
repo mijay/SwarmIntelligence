@@ -4,7 +4,7 @@ using SwarmIntelligence2.Core.Interface;
 namespace SwarmIntelligence2.Core
 {
     public abstract class Background<C, B>: ICoordinateMapping<C, B>
-        where C: struct, ICoordinate<C>
+        where C: ICoordinate<C>
     {
         protected Background(Range<C> range)
         {

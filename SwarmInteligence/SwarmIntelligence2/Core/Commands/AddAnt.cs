@@ -3,7 +3,7 @@
 namespace SwarmIntelligence2.Core.Commands
 {
     public class AddAnt<C, B>: Command<C, B>
-        where C: struct, ICoordinate<C>
+        where C: ICoordinate<C>
     {
         public AddAnt(C targetPoint, Ant<C, B> ant)
         {

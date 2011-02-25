@@ -7,7 +7,7 @@ namespace SwarmIntelligence2
     public static class ContractHelpers
     {
         [Pure]
-        public static bool IsFullFilled<C, B>(this EvaluationContext<C, B> context) where C: struct, ICoordinate<C>
+        public static bool IsFullFilled<C, B>(this EvaluationContext<C, B> context) where C: ICoordinate<C>
         {
             return context != null &&
                    context.Map != null &&

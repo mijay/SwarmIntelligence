@@ -6,7 +6,7 @@ using Utils;
 namespace SwarmIntelligence2.Core.Commands
 {
     public class CommandEvaluator<C, B>
-        where C: struct, ICoordinate<C>
+        where C: ICoordinate<C>
     {
         public EvaluationContext<C, B> EvaluationContext { get; set; }
 

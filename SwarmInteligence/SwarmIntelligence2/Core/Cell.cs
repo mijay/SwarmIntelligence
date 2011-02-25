@@ -7,7 +7,7 @@ using SwarmIntelligence2.Core.Coordinates;
 namespace SwarmIntelligence2.Core
 {
     public class Cell<C, B>: IEnumerable<Ant<C, B>>
-        where C: struct, ICoordinate<C>
+        where C: ICoordinate<C>
     {
         private readonly List<Ant<C, B>> list = new List<Ant<C, B>>();
 

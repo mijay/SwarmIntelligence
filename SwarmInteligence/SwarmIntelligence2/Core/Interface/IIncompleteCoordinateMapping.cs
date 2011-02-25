@@ -7,7 +7,7 @@ namespace SwarmIntelligence2.Core.Interface
 {
     [ContractClass(typeof(ContractIIncompleteCoordinateMapping<,>))]
     public interface IIncompleteCoordinateMapping<C, TData>: ICoordinateMapping<C, TData>
-        where C: struct, ICoordinate<C>
+        where C: ICoordinate<C>
     {
         [Pure]
         bool HasData(C coord);
@@ -18,7 +18,7 @@ namespace SwarmIntelligence2.Core.Interface
 
     [ContractClassFor(typeof(IIncompleteCoordinateMapping<,>))]
     internal abstract class ContractIIncompleteCoordinateMapping<C, TData>: IIncompleteCoordinateMapping<C, TData>
-        where C: struct, ICoordinate<C>
+        where C: ICoordinate<C>
     {
         #region Implementation of IIncompleteCoordinateMapping<C,TData>
 

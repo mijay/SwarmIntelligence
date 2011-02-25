@@ -41,7 +41,6 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BasicTest\NoDataBackground.cs" />
     <Compile Include="BasicTest\Test.cs" />
     <Compile Include="BasicTest\TestAnt.cs" />
     <Compile Include="CacheTest.cs" />

@@ -7,7 +7,7 @@ namespace SwarmIntelligence2.Core.Coordinates
     /// </summary>
     /// <typeparam name="C">Type of the coordinates.</typeparam>
     public struct Range<C>
-        where C: struct, ICoordinate<C>
+        where C: ICoordinate<C>
     {
         public readonly C max;
         public readonly C min;

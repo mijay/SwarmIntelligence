@@ -3,7 +3,7 @@
 namespace SwarmIntelligence2.Core.Commands
 {
     public class MoveTo<C, B>: Command<C, B>
-        where C: struct, ICoordinate<C>
+        where C: ICoordinate<C>
     {
         public MoveTo(C targetPoint)
         {

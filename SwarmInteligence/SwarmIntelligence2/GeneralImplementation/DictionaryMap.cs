@@ -6,7 +6,7 @@ using SwarmIntelligence2.Core.Coordinates;
 namespace SwarmIntelligence2.GeneralImplementation
 {
     public class DictionaryMap<C, B>: Map<C, B>
-        where C: struct, ICoordinate<C>
+        where C: ICoordinate<C>
     {
         public readonly ConcurrentDictionary<C, Cell<C, B>> data = new ConcurrentDictionary<C, Cell<C, B>>();
 

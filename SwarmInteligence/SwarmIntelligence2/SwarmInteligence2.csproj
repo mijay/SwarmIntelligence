@@ -69,8 +69,10 @@
     <Compile Include="Core\Commands\SelfRemove.cs" />
     <Compile Include="Core\Coordinates\Range.cs" />
     <Compile Include="Core\Coordinates\RangeValidator.cs" />
-    <Compile Include="GeneralImplementation\CachedBackground.cs" />
-    <Compile Include="GeneralImplementation\DelegateBackground.cs" />
+    <Compile Include="GeneralImplementation\Background\CachedBackground.cs" />
+    <Compile Include="GeneralImplementation\Background\DelegateBackground.cs" />
+    <Compile Include="GeneralImplementation\Background\EmptyData.cs" />
+    <Compile Include="GeneralImplementation\Background\EmptyBackground.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Core\Ant.cs" />
     <Compile Include="Core\Background.cs" />

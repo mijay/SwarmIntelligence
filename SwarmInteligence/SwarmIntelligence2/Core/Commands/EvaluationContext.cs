@@ -3,7 +3,7 @@
 namespace SwarmIntelligence2.Core.Commands
 {
     public class EvaluationContext<C, B>
-        where C: struct, ICoordinate<C>
+        where C: ICoordinate<C>
     {
         public Map<C, B> Map { get; set; }
         public C Coordinate { get; set; }

@@ -12,7 +12,7 @@ namespace SwarmIntelligence2.Core.Interface
     /// <typeparam name="TData">Type of the stored data.</typeparam>
     [ContractClass(typeof(ContractICoordinateMapping<,>))]
     public interface ICoordinateMapping<C, out TData>
-        where C: struct, ICoordinate<C>
+        where C: ICoordinate<C>
     {
         [Pure]
         Range<C> Range { get; }
@@ -22,7 +22,7 @@ namespace SwarmIntelligence2.Core.Interface
 
     [ContractClassFor(typeof(ICoordinateMapping<,>))]
     internal abstract class ContractICoordinateMapping<C, TData>: ICoordinateMapping<C, TData>
-        where C: struct, ICoordinate<C>
+        where C: ICoordinate<C>
     {
         #region Implementation of ICoordinateMapping<C,out TData>
 

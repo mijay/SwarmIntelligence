@@ -3,10 +3,10 @@ using SwarmIntelligence2.Core;
 using SwarmIntelligence2.Core.Coordinates;
 using Utils.Cache;
 
-namespace SwarmIntelligence2.GeneralImplementation
+namespace SwarmIntelligence2.GeneralImplementation.Background
 {
     public class CachedBackground<C, B>: Background<C, B>
-        where C: struct, ICoordinate<C>
+        where C: ICoordinate<C>
     {
         private readonly Func<C, B> cachedGet;
 
