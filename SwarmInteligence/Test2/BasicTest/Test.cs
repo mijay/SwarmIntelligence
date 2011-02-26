@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using NUnit.Framework;
 using SwarmIntelligence2.Core;
+using SwarmIntelligence2.Core.Commands;
 using SwarmIntelligence2.Core.Coordinates;
 using SwarmIntelligence2.GeneralImplementation;
 using SwarmIntelligence2.GeneralImplementation.Background;
@@ -18,19 +20,28 @@ namespace Test2.BasicTest
         public override void SetUp()
         {
             base.SetUp();
-            RangeValidator2D.Register();
+
             size = new Range<Coordinates2D>(new Coordinates2D(-4, -3), new Coordinates2D(12, 5));
             map = new DictionaryMap<Coordinates2D, EmptyData>(size);
             background = new EmptyBackground<Coordinates2D>(size);
-            random = new Random();
+
+            runner = new Runner<Coordinates2D, EmptyData>(map, background, () => new CommandEvaluator<Coordinates2D, EmptyData>());
         }
 
         #endregion
+
+        public override void FixtureSetUp()
+        {
+            base.FixtureSetUp();
+            RangeValidator2D.Register();
+            random = new Random();
+        }
 
         private Range<Coordinates2D> size;
         private DictionaryMap<Coordinates2D, EmptyData> map;
         private EmptyBackground<Coordinates2D> background;
         private Random random;
+        private Runner<Coordinates2D, EmptyData> runner;
 
         private IEnumerable<TestAnt> SeedAnts(int antsNumber, int timesAntJumps, params Coordinates2D[] lastAntSteps)
         {
@@ -58,15 +69,20 @@ namespace Test2.BasicTest
         }
 
         [Test]
-        public void SimpleTest()
+        public void SimpleTest([Values(5, 10, 20, 80, 200)] int jumps, [Values(100, 1000)] int ants)
         {
-            var lastStep = new Coordinates2D(2, 3);
-            var seededAnts = SeedAnts(100, 4, lastStep);
-            Assert.Fail("Not implemented");
+            Coordinates2D lastStep = GenerateCoordinate();
+            IEnumerable<TestAnt> seededAnts = SeedAnts(ants, jumps - 1, lastStep);
+            var timer = new Stopwatch();
+            timer.Start();
+            for(int i = 0; i < jumps; ++i)
+                runner.ProcessTurn();
+            timer.Stop();
+            Debug.WriteLine(string.Format("jumps - {0}; ants - {1}; time - {2}", jumps, ants, timer.ElapsedMilliseconds));
 
             KeyValuePair<Coordinates2D, Cell<Coordinates2D, EmptyData>> keyValuePair = map.GetExistenData().Single();
             Assert.That(keyValuePair.Key, Is.EqualTo(lastStep));
-            CollectionAssert.AreEquivalent(keyValuePair.Value, seededAnts);
+            CollectionAssert.AreEquivalent(seededAnts, keyValuePair.Value);
         }
     }
 }

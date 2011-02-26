@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics.Contracts;
 using SwarmIntelligence2.Core.Coordinates;
 
 namespace SwarmIntelligence2.TwoDimensional
@@ -11,8 +10,6 @@ namespace SwarmIntelligence2.TwoDimensional
 
         public Coordinates2D(int x, int y)
         {
-            Contract.Requires<ArgumentOutOfRangeException>(x >= 0);
-            Contract.Requires<ArgumentOutOfRangeException>(y >= 0);
             this.x = x;
             this.y = y;
         }

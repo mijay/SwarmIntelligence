@@ -22,7 +22,6 @@ namespace Test2.BasicTest
 
         public override IEnumerable<Command<Coordinates2D, EmptyData>> ProcessTurn()
         {
-            Contract.Requires<IndexOutOfRangeException>(points.Count > 0);
             return new[] { new MoveTo<Coordinates2D, EmptyData>(points.Dequeue()) };
         }
 

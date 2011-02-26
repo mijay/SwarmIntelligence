@@ -11,5 +11,8 @@ namespace Test2
         public virtual void SetUp() {}
 
         #endregion
+
+        [TestFixtureSetUp]
+        public virtual void FixtureSetUp() {}
     }
 }
