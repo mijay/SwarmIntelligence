@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using SwarmIntelligence2.Core;
 using SwarmIntelligence2.Core.Commands;
+using SwarmIntelligence2.Core.Commands.Implementation;
 using SwarmIntelligence2.GeneralImplementation.Background;
 using SwarmIntelligence2.TwoDimensional;
 
-namespace Test2.BasicTest
+namespace Test2.ContextIndependendAnt
 {
     public class TestAnt: Ant<Coordinates2D, EmptyData>
     {

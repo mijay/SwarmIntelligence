@@ -1,6 +1,6 @@
 ﻿using SwarmIntelligence2.Core.Coordinates;
 
-namespace SwarmIntelligence2.Core.Commands
+namespace SwarmIntelligence2.Core.Commands.Implementation
 {
     public class AddAnt<C, B>: Command<C, B>
         where C: ICoordinate<C>
@@ -14,7 +14,7 @@ namespace SwarmIntelligence2.Core.Commands
         public C TargetPoint { get; set; }
         public Ant<C, B> Ant { get; set; }
 
-        public override void EvaluateWith(CommandEvaluator<C, B> visitor)
+        public override void Visit(ICommandVisitor<C, B> visitor)
         {
             visitor.Evaluate(this);
         }

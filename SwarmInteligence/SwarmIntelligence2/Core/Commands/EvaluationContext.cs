@@ -5,6 +5,7 @@ namespace SwarmIntelligence2.Core.Commands
     public class EvaluationContext<C, B>
         where C: ICoordinate<C>
     {
+        public Background<C, B> Background { get; set; }
         public Map<C, B> Map { get; set; }
         public C Coordinate { get; set; }
         public Ant<C, B> Ant { get; set; }

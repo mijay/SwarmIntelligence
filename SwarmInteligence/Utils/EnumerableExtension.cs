@@ -43,5 +43,13 @@ namespace Utils
 
             Enumerable.Repeat(0, times).ForEach(_ => func());
         }
+
+        public static IDictionary<TKey, TVal2> SelectValues<TKey, TVal1, TVal2>(this IDictionary<TKey, TVal1> dictionary,
+                                                                                Func<TKey, TVal1, TVal2> func)
+        {
+            Contract.Requires<ArgumentNullException>(dictionary != null);
+            Contract.Requires<ArgumentNullException>(func != null);
+            return dictionary.ToDictionary(pair => pair.Key, pair => func(pair.Key, pair.Value));
+        }
     }
 }

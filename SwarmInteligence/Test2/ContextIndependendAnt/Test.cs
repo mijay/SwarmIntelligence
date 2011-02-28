@@ -11,20 +11,26 @@ using SwarmIntelligence2.GeneralImplementation.Background;
 using SwarmIntelligence2.TwoDimensional;
 using Utils;
 
-namespace Test2.BasicTest
+namespace Test2.ContextIndependendAnt
 {
     public class Test: TestBase
     {
+        public Test(int minX = -4, int minY = -3, int maxX = 12, int maxY = 5)
+        {
+            min = new Coordinates2D(minX, minY);
+            max = new Coordinates2D(maxX, maxY);
+        }
+
         #region Setup/Teardown
 
         public override void SetUp()
         {
             base.SetUp();
+            random = new Random();
 
-            size = new Range<Coordinates2D>(new Coordinates2D(-4, -3), new Coordinates2D(12, 5));
+            size = new Range<Coordinates2D>(min, max);
             map = new DictionaryMap<Coordinates2D, EmptyData>(size);
             background = new EmptyBackground<Coordinates2D>(size);
-
             runner = new Runner<Coordinates2D, EmptyData>(map, background, () => new CommandEvaluator<Coordinates2D, EmptyData>());
         }
 
@@ -34,7 +40,6 @@ namespace Test2.BasicTest
         {
             base.FixtureSetUp();
             RangeValidator2D.Register();
-            random = new Random();
         }
 
         private Range<Coordinates2D> size;
@@ -42,6 +47,8 @@ namespace Test2.BasicTest
         private EmptyBackground<Coordinates2D> background;
         private Random random;
         private Runner<Coordinates2D, EmptyData> runner;
+        private readonly Coordinates2D min;
+        private readonly Coordinates2D max;
 
         private IEnumerable<TestAnt> SeedAnts(int antsNumber, int timesAntJumps, params Coordinates2D[] lastAntSteps)
         {
@@ -78,7 +85,7 @@ namespace Test2.BasicTest
             for(int i = 0; i < jumps; ++i)
                 runner.ProcessTurn();
             timer.Stop();
-            Debug.WriteLine(string.Format("jumps - {0}; ants - {1}; time - {2}", jumps, ants, timer.ElapsedMilliseconds));
+            Debug.WriteLine(string.Format("jumps - {0}; ants - {1}; time - {2} ms", jumps, ants, timer.ElapsedMilliseconds));
 
             KeyValuePair<Coordinates2D, Cell<Coordinates2D, EmptyData>> keyValuePair = map.GetExistenData().Single();
             Assert.That(keyValuePair.Key, Is.EqualTo(lastStep));

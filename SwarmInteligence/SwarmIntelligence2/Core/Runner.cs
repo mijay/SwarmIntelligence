@@ -29,7 +29,7 @@ namespace SwarmIntelligence2.Core
                 return new ThreadLocal<CommandEvaluator<C, B>>(
                     () => {
                         CommandEvaluator<C, B> result = commandEvaluatorFactory();
-                        result.EvaluationContext = new EvaluationContext<C, B> { Map = map };
+                        result.EvaluationContext = new EvaluationContext<C, B> { Map = map, Background = background };
                         return result;
                     });
             }
@@ -47,10 +47,10 @@ namespace SwarmIntelligence2.Core
             obtainedCommands
                 //.AsParallel()
                 .ForEach(commandsInContext => {
-                            CommandEvaluator<C, B> commandEvaluator = loclEvaluator.Value;
-                            commandsInContext.CopyTo(commandEvaluator.EvaluationContext);
-                            commandsInContext.commands.ForEach(command => command.EvaluateWith(commandEvaluator));
-                        });
+                             CommandEvaluator<C, B> commandEvaluator = loclEvaluator.Value;
+                             commandsInContext.CopyTo(commandEvaluator.EvaluationContext);
+                             commandsInContext.commands.ForEach(command => command.Visit(commandEvaluator));
+                         });
         }
 
         private AntContext[] ObtainCommands()

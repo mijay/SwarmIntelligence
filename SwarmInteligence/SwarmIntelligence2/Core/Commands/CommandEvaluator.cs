@@ -1,11 +1,12 @@
 using System;
 using System.Diagnostics.Contracts;
+using SwarmIntelligence2.Core.Commands.Implementation;
 using SwarmIntelligence2.Core.Coordinates;
 using Utils;
 
 namespace SwarmIntelligence2.Core.Commands
 {
-    public class CommandEvaluator<C, B>
+    public class CommandEvaluator<C, B>: ICommandVisitor<C, B>
         where C: ICoordinate<C>
     {
         public EvaluationContext<C, B> EvaluationContext { get; set; }
@@ -42,7 +43,7 @@ namespace SwarmIntelligence2.Core.Commands
         private void MoveAntFromCell()
         {
             EvaluationContext.Cell.Remove(EvaluationContext.Ant);
-            if (EvaluationContext.Cell.IsEmpty())
+            if(EvaluationContext.Cell.IsEmpty())
                 EvaluationContext.Map.ClearData(EvaluationContext.Coordinate);
         }
     }
