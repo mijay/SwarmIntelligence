@@ -31,7 +31,7 @@ namespace Test2.ContextIndependendAnt
             size = new Range<Coordinates2D>(min, max);
             map = new DictionaryMap<Coordinates2D, EmptyData>(size);
             background = new EmptyBackground<Coordinates2D>(size);
-            runner = new Runner<Coordinates2D, EmptyData>(map, background, () => new CommandEvaluator<Coordinates2D, EmptyData>());
+            runner = new Runner<Coordinates2D, EmptyData>(map, background);
         }
 
         #endregion
@@ -85,7 +85,7 @@ namespace Test2.ContextIndependendAnt
             for(int i = 0; i < jumps; ++i)
                 runner.ProcessTurn();
             timer.Stop();
-            Debug.WriteLine(string.Format("jumps - {0}; ants - {1}; time - {2} ms", jumps, ants, timer.ElapsedMilliseconds));
+            Console.WriteLine(string.Format("jumps - {0}; ants - {1}; time - {2} ms", jumps, ants, timer.ElapsedMilliseconds));
 
             KeyValuePair<Coordinates2D, Cell<Coordinates2D, EmptyData>> keyValuePair = map.GetExistenData().Single();
             Assert.That(keyValuePair.Key, Is.EqualTo(lastStep));

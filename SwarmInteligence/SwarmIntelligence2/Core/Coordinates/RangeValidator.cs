@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 
 namespace SwarmIntelligence2.Core.Coordinates
@@ -12,19 +11,12 @@ namespace SwarmIntelligence2.Core.Coordinates
 
         protected static void Register(RangeValidator<C> validator)
         {
-            Contract.Requires<InvalidOperationException>(Instance == null);
-            Contract.Requires<ArgumentNullException>(validator != null);
+            Contract.Requires(Instance == null);
+            Contract.Requires(validator != null);
             Contract.Ensures(Instance != null);
 
             Instance = validator;
         }
-
-        #region Implementation of IComparer<in C>
-
-        [Pure]
-        public abstract int Compare(C x, C y);
-
-        #endregion
 
         [Pure]
         public bool IsInRange(Range<C> range, C coord)
@@ -37,5 +29,12 @@ namespace SwarmIntelligence2.Core.Coordinates
         {
             return Compare(x, y) <= 0;
         }
+
+        #region Implementation of IComparer<in C>
+
+        [Pure]
+        public abstract int Compare(C x, C y);
+
+        #endregion
     }
 }

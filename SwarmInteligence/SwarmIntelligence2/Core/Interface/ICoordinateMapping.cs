@@ -35,7 +35,7 @@ namespace SwarmIntelligence2.Core.Interface
         {
             get
             {
-                Contract.Requires<ArgumentOutOfRangeException>(RangeValidator<C>.Instance.IsInRange(Range, coord));
+                Contract.Requires(RangeValidator<C>.Instance.IsInRange(Range, coord));
                 throw new NotImplementedException();
             }
         }

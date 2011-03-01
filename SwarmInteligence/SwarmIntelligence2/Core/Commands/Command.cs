@@ -8,16 +8,19 @@ namespace SwarmIntelligence2.Core.Commands
     public abstract class Command<C, B>
         where C: ICoordinate<C>
     {
-        public abstract void Visit(ICommandVisitor<C, B> visitor);
+        public abstract void Evaluate(EvaluationContext<C, B> context);
     }
 
     [ContractClassFor(typeof(Command<,>))]
     internal abstract class ContractCommand<C, B>: Command<C, B>
         where C: ICoordinate<C>
     {
-        public override void Visit(ICommandVisitor<C, B> visitor)
+        public override void Evaluate(EvaluationContext<C, B> context)
         {
-            Contract.Requires<ArgumentNullException>(visitor != null);
+            Contract.Requires(context.Map != null &&
+                                                     context.Ant != null &&
+                                                     context.Cell != null &&
+                                                     context.Background != null);
         }
     }
 }

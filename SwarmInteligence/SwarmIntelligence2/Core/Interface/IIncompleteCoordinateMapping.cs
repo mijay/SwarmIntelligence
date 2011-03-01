@@ -24,14 +24,14 @@ namespace SwarmIntelligence2.Core.Interface
 
         public bool HasData(C coord)
         {
-            Contract.Requires<ArgumentOutOfRangeException>(RangeValidator<C>.Instance.IsInRange(Range, coord));
+            Contract.Requires(RangeValidator<C>.Instance.IsInRange(Range, coord));
             throw new NotImplementedException();
         }
 
         public void ClearData(C coord)
         {
-            Contract.Requires<ArgumentOutOfRangeException>(RangeValidator<C>.Instance.IsInRange(Range, coord));
-            Contract.Requires<ArgumentOutOfRangeException>(HasData(coord));
+            Contract.Requires(RangeValidator<C>.Instance.IsInRange(Range, coord));
+            Contract.Requires(HasData(coord));
             Contract.Ensures(!HasData(coord));
             throw new NotImplementedException();
         }

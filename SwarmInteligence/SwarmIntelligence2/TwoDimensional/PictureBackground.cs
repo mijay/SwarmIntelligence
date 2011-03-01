@@ -16,7 +16,7 @@ namespace SwarmIntelligence2.TwoDimensional
             : base(new Range<Coordinates2D>(new Coordinates2D(0, 0),
                                             new Coordinates2D(data.Width - 1, data.Height - 1)))
         {
-            Contract.Requires<ArgumentNullException>(data != null);
+            Contract.Requires(data != null);
             this.data = new FastBitmap(data);
         }
 

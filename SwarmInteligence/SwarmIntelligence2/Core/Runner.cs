@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using SwarmIntelligence2.Core.Commands;
 using SwarmIntelligence2.Core.Coordinates;
+using SwarmIntelligence2.GeneralImplementation;
 using Utils;
 
 namespace SwarmIntelligence2.Core
@@ -12,27 +12,12 @@ namespace SwarmIntelligence2.Core
         where C: ICoordinate<C>
     {
         private readonly Background<C, B> background;
-        private readonly Func<CommandEvaluator<C, B>> commandEvaluatorFactory;
         private readonly Map<C, B> map;
 
-        public Runner(Map<C, B> map, Background<C, B> background, Func<CommandEvaluator<C, B>> commandEvaluatorFactory)
+        public Runner(Map<C, B> map, Background<C, B> background)
         {
             this.map = map;
             this.background = background;
-            this.commandEvaluatorFactory = commandEvaluatorFactory;
-        }
-
-        private ThreadLocal<CommandEvaluator<C, B>> CommandEvaluator
-        {
-            get
-            {
-                return new ThreadLocal<CommandEvaluator<C, B>>(
-                    () => {
-                        CommandEvaluator<C, B> result = commandEvaluatorFactory();
-                        result.EvaluationContext = new EvaluationContext<C, B> { Map = map, Background = background };
-                        return result;
-                    });
-            }
         }
 
         public void ProcessTurn()
@@ -41,15 +26,15 @@ namespace SwarmIntelligence2.Core
             ExecuteCommands(obtainedCommands);
         }
 
-        private void ExecuteCommands(AntContext[] obtainedCommands)
+        private void ExecuteCommands(IEnumerable<AntContext> obtainedCommands)
         {
-            ThreadLocal<CommandEvaluator<C, B>> loclEvaluator = CommandEvaluator;
+            var localContext = new ThreadLocal<EvaluationContext<C, B>>(
+                () => new EvaluationContext<C, B> { Map = map, Background = background });
             obtainedCommands
-                //.AsParallel()
                 .ForEach(commandsInContext => {
-                             CommandEvaluator<C, B> commandEvaluator = loclEvaluator.Value;
-                             commandsInContext.CopyTo(commandEvaluator.EvaluationContext);
-                             commandsInContext.commands.ForEach(command => command.Visit(commandEvaluator));
+                             var evaluationContext = localContext.Value;
+                             commandsInContext.CopyTo(evaluationContext);
+                             commandsInContext.commands.ForEach(command => command.Evaluate(evaluationContext));
                          });
         }
 

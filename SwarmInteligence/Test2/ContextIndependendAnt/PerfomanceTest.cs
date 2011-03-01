@@ -43,7 +43,7 @@ namespace Test2.ContextIndependendAnt
             var test = new Test(minX, minY, maxX, maxY);
             var size = (maxY - minY) * (maxX - minX);
             test.SetUp();
-            Debug.Write(string.Format("size - {0}; ", size));
+            Console.Write(string.Format("size - {0}; ", size));
             test.SimpleTest(jumps, ants);
         }
     }

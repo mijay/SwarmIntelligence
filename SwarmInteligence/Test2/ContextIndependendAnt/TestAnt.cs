@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using SwarmIntelligence2.Core;
 using SwarmIntelligence2.Core.Commands;
-using SwarmIntelligence2.Core.Commands.Implementation;
 using SwarmIntelligence2.GeneralImplementation.Background;
 using SwarmIntelligence2.TwoDimensional;
 
@@ -15,7 +14,7 @@ namespace Test2.ContextIndependendAnt
 
         public TestAnt(params Coordinates2D[] points)
         {
-            Contract.Requires<ArgumentNullException>(points != null);
+            Contract.Requires(points != null);
             this.points = new Queue<Coordinates2D>(points);
         }
 

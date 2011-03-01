@@ -25,7 +25,7 @@
     <CodeContractsEnableRuntimeChecking>True</CodeContractsEnableRuntimeChecking>
     <CodeContractsRuntimeOnlyPublicSurface>False</CodeContractsRuntimeOnlyPublicSurface>
     <CodeContractsRuntimeThrowOnFailure>True</CodeContractsRuntimeThrowOnFailure>
-    <CodeContractsRuntimeCallSiteRequires>True</CodeContractsRuntimeCallSiteRequires>
+    <CodeContractsRuntimeCallSiteRequires>False</CodeContractsRuntimeCallSiteRequires>
     <CodeContractsRunCodeAnalysis>True</CodeContractsRunCodeAnalysis>
     <CodeContractsNonNullObligations>False</CodeContractsNonNullObligations>
     <CodeContractsBoundsObligations>False</CodeContractsBoundsObligations>
@@ -60,14 +60,11 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\Commands\CommandEvaluator.cs" />
-    <Compile Include="Core\Commands\ICommandVisitor.cs" />
-    <Compile Include="Core\Commands\Implementation\AddAnt.cs" />
+    <Compile Include="Core\Commands\AddAnt.cs" />
     <Compile Include="Core\Commands\Command.cs" />
-    <Compile Include="ContractHelpers.cs" />
     <Compile Include="Core\Commands\EvaluationContext.cs" />
-    <Compile Include="Core\Commands\Implementation\MoveTo.cs" />
-    <Compile Include="Core\Commands\Implementation\SelfRemove.cs" />
+    <Compile Include="Core\Commands\MoveTo.cs" />
+    <Compile Include="Core\Commands\SelfRemove.cs" />
     <Compile Include="Core\Coordinates\Range.cs" />
     <Compile Include="Core\Coordinates\RangeValidator.cs" />
     <Compile Include="Core\Runner.cs" />
