@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utils", "Utils\Utils.csproj", "{314103EA-3787-49A9-ABBE-F26502B8D459}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwarmInteligence2", "SwarmIntelligence2\SwarmInteligence2.csproj", "{2FACFBFE-7D25-4F20-96D6-EFC7F742988A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwarmInteligence", "SwarmIntelligence\SwarmInteligence.csproj", "{2FACFBFE-7D25-4F20-96D6-EFC7F742988A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test2", "Test2\Test2.csproj", "{81CC1B1B-6EBA-4F2F-9554-A0286B1E8AC1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{81CC1B1B-6EBA-4F2F-9554-A0286B1E8AC1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
