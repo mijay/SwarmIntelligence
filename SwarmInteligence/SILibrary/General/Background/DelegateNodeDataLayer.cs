@@ -3,7 +3,7 @@ using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Data;
 using SwarmIntelligence.Core.Space;
 
-namespace SwarmIntelligence.GeneralImplementation.Background
+namespace SILibrary.General.Background
 {
     public class DelegateNodeDataLayer<C, B>: NodeDataLayer<C, B>
         where C: ICoordinate<C>

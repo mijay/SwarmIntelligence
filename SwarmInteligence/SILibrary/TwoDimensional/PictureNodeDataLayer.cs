@@ -4,7 +4,7 @@ using System.Drawing;
 using SwarmIntelligence.Core.Data;
 using Utils.Drawing;
 
-namespace SwarmIntelligence.TwoDimensional
+namespace SILibrary.TwoDimensional
 {
     public class PictureNodeDataLayer: NodeDataLayer<Coordinates2D, Color>, IDisposable
     {

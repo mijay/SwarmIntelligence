@@ -1,4 +1,4 @@
-namespace SwarmIntelligence.GeneralImplementation.Background
+namespace SILibrary.General.Background
 {
     public class EmptyData
     {

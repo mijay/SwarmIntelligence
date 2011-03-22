@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using SILibrary.General.Background;
+using SILibrary.TwoDimensional;
 using SwarmIntelligence.Core.Commands;
 using SwarmIntelligence.Core.Creatures;
-using SwarmIntelligence.GeneralImplementation.Background;
-using SwarmIntelligence.TwoDimensional;
 
 namespace Test.ContextIndependendAnt
 {

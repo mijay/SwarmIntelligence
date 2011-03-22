@@ -3,7 +3,7 @@ using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Data;
 using Utils.Cache;
 
-namespace SwarmIntelligence.GeneralImplementation.Background
+namespace SILibrary.General.Background
 {
     public class CachedNodeDataLayer<C, B>: NodeDataLayer<C, B>
         where C: ICoordinate<C>

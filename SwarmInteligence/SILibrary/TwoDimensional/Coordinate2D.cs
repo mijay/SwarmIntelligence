@@ -1,7 +1,7 @@
 using System;
 using SwarmIntelligence.Core;
 
-namespace SwarmIntelligence.TwoDimensional
+namespace SILibrary.TwoDimensional
 {
     public struct Coordinates2D: ICoordinate<Coordinates2D>
     {

@@ -1,6 +1,6 @@
 ﻿using SwarmIntelligence.Core.Space;
 
-namespace SwarmIntelligence.TwoDimensional
+namespace SILibrary.TwoDimensional
 {
     public class Boundaries2D: Boundaries<Coordinates2D>
     {

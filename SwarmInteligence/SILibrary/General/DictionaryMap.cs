@@ -4,7 +4,7 @@ using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Creatures;
 using SwarmIntelligence.Core.Space;
 
-namespace SwarmIntelligence.GeneralImplementation
+namespace SILibrary.General
 {
     public class DictionaryMap<C, B, E>: Map<C, B, E>
         where C: ICoordinate<C>

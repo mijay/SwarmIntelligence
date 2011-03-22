@@ -1,7 +1,7 @@
 using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Space;
 
-namespace SwarmIntelligence.GeneralImplementation.Background
+namespace SILibrary.General.Background
 {
     public class EmptyNodeDataLayer<C>: DelegateNodeDataLayer<C, EmptyData>
         where C: ICoordinate<C>

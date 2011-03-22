@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using NUnit.Framework;
+using SILibrary.General;
+using SILibrary.General.Background;
+using SILibrary.TwoDimensional;
 using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Creatures;
-using SwarmIntelligence.GeneralImplementation;
-using SwarmIntelligence.GeneralImplementation.Background;
-using SwarmIntelligence.TwoDimensional;
 using Utils;
 
 namespace Test.ContextIndependendAnt
