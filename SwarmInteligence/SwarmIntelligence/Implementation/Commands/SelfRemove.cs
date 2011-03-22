@@ -1,6 +1,8 @@
-﻿using Utils;
+﻿using SwarmIntelligence.Core;
+using SwarmIntelligence.Core.Commands;
+using Utils;
 
-namespace SwarmIntelligence.Core.Commands
+namespace SwarmIntelligence.Implementation.Commands
 {
     public class SelfRemove<C, B, E>: Command<C, B, E>
         where C: ICoordinate<C>

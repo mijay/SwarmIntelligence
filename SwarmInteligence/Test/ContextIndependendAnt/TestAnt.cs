@@ -4,6 +4,7 @@ using SILibrary.General.Background;
 using SILibrary.TwoDimensional;
 using SwarmIntelligence.Core.Commands;
 using SwarmIntelligence.Core.Creatures;
+using SwarmIntelligence.Implementation.Commands;
 
 namespace Test.ContextIndependendAnt
 {

@@ -99,8 +99,8 @@
     <Compile Include="Cache\StaticCache.cs" />
     <Compile Include="ContractExtensions.cs" />
     <Compile Include="EnumerableExtension.cs" />
-    <Compile Include="FastDrawHelper.cs" />
-    <Compile Include="FastBitmap.cs" />
+    <Compile Include="Drawing\FastDrawHelper.cs" />
+    <Compile Include="Drawing\FastBitmap.cs" />
     <Compile Include="Iz.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

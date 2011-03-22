@@ -16,6 +16,7 @@ namespace SILibrary.TwoDimensional
                                     new Coordinates2D(data.Width - 1, data.Height - 1)))
         {
             Contract.Requires(data != null);
+
             this.data = new FastBitmap(data);
         }
 

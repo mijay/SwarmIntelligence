@@ -3,8 +3,9 @@
 //  ContractArgumentValidator or ContractAbbreviator methods
 //
 using System;
+using System.Diagnostics;
 
-namespace System.Diagnostics.Contracts
+namespace Utils
 {
   /// <summary>
   /// Enables factoring legacy if-then-throw into separate methods for reuse and full control over

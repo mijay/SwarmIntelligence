@@ -1,6 +1,8 @@
-﻿using SwarmIntelligence.Core.Creatures;
+﻿using SwarmIntelligence.Core;
+using SwarmIntelligence.Core.Commands;
+using SwarmIntelligence.Core.Creatures;
 
-namespace SwarmIntelligence.Core.Commands
+namespace SwarmIntelligence.Implementation.Commands
 {
     public class AddAnt<C, B, E>: Command<C, B, E>
         where C: ICoordinate<C>

@@ -8,6 +8,7 @@ using SILibrary.General.Background;
 using SILibrary.TwoDimensional;
 using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Creatures;
+using SwarmIntelligence.Implementation;
 using Utils;
 
 namespace Test.ContextIndependendAnt

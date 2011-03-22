@@ -59,14 +59,18 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\Commands\AddAnt.cs" />
+    <Compile Include="Implementation\Commands\AddAnt.cs" />
     <Compile Include="Core\Commands\Command.cs" />
+    <Compile Include="Core\Commands\CommandDispatcher.cs" />
     <Compile Include="Core\Commands\EvaluationContext.cs" />
-    <Compile Include="Core\Commands\MoveTo.cs" />
-    <Compile Include="Core\Commands\SelfRemove.cs" />
+    <Compile Include="Core\Commands\ICommandDispatcher.cs" />
+    <Compile Include="Core\Commands\ITypedCommandDispatcher{T}.cs" />
+    <Compile Include="Core\Commands\ITypedCommandDispatcher.cs" />
+    <Compile Include="Implementation\Commands\MoveTo.cs" />
+    <Compile Include="Implementation\Commands\SelfRemove.cs" />
     <Compile Include="Core\Data\EndgeDataLayer.cs" />
     <Compile Include="Core\Edge.cs" />
-    <Compile Include="Core\Runner.cs" />
+    <Compile Include="Implementation\Runner.cs" />
     <Compile Include="Core\Space\Boundaries.cs" />
     <Compile Include="Core\Space\Topology.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -83,6 +87,9 @@
       <Project>{314103EA-3787-49A9-ABBE-F26502B8D459}</Project>
       <Name>Utils</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Implementation\CommandEvaluators\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
