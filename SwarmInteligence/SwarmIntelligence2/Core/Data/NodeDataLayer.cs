@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
-using SwarmIntelligence2.Core.World.Space;
+using SwarmIntelligence2.Core.Space;
 
-namespace SwarmIntelligence2.Core.World.Data
+namespace SwarmIntelligence2.Core.Data
 {
-    [ContractClass(typeof(ContractBackground<,>))]
-    public abstract class Background<C, B>: IMapping<C, B>
+    [ContractClass(typeof(ContractNodeDataLayer<,>))]
+    public abstract class NodeDataLayer<C, B>: IMapping<C, B>
         where C: ICoordinate<C>
     {
-        protected Background(Boundaries<C> boundaries)
+        protected NodeDataLayer(Boundaries<C> boundaries)
         {
             Boundaries = boundaries;
         }
@@ -22,13 +22,13 @@ namespace SwarmIntelligence2.Core.World.Data
         #endregion
     }
 
-    [ContractClassFor(typeof(Background<,>))]
-    internal abstract class ContractBackground<C,B>: Background<C,B>
+    [ContractClassFor(typeof(NodeDataLayer<,>))]
+    internal abstract class ContractNodeDataLayer<C, B>: NodeDataLayer<C, B>
         where C: ICoordinate<C>
     {
-        protected ContractBackground(Boundaries<C> boundaries): base(boundaries) {}
+        protected ContractNodeDataLayer(Boundaries<C> boundaries): base(boundaries) {}
 
-        #region Overrides of Background<C,B>
+        #region Overrides of NodeDataLayer<C,B>
 
         public override B this[C key]
         {

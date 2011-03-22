@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.Contracts;
 
-namespace SwarmIntelligence2.Core.World.Space
+namespace SwarmIntelligence2.Core.Space
 {
     public abstract class Boundaries<C>
         where C: ICoordinate<C>

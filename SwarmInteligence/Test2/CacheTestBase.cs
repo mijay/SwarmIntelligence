@@ -6,13 +6,17 @@ namespace Test2
 {
     public class CacheTestBase: TestBase
     {
-        protected LocalCache localCache;
+        #region Setup/Teardown
 
         public override void SetUp()
         {
             base.SetUp();
             localCache = new LocalCache();
         }
+
+        #endregion
+
+        protected LocalCache localCache;
 
         protected static Func<TKey, TVal> GetFuncForCache<TKey, TVal>(TKey key, TVal value)
         {

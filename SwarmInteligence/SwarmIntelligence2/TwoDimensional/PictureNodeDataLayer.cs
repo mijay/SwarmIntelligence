@@ -1,17 +1,17 @@
 using System;
 using System.Diagnostics.Contracts;
 using System.Drawing;
-using SwarmIntelligence2.Core.World.Data;
+using SwarmIntelligence2.Core.Data;
 using Utils.Drawing;
 
 namespace SwarmIntelligence2.TwoDimensional
 {
-    public class PictureBackground: Background<Coordinates2D, Color>, IDisposable
+    public class PictureNodeDataLayer: NodeDataLayer<Coordinates2D, Color>, IDisposable
     {
         private readonly FastBitmap data;
         private bool disposed;
 
-        public PictureBackground(Bitmap data)
+        public PictureNodeDataLayer(Bitmap data)
             : base(new Boundaries2D(new Coordinates2D(0, 0),
                                     new Coordinates2D(data.Width - 1, data.Height - 1)))
         {
@@ -19,7 +19,7 @@ namespace SwarmIntelligence2.TwoDimensional
             this.data = new FastBitmap(data);
         }
 
-        #region Overrides of Background<Coordinates2D,Color>
+        #region Overrides of NodeDataLayer<Coordinates2D,Color>
 
         public override Color this[Coordinates2D key]
         {
@@ -39,7 +39,7 @@ namespace SwarmIntelligence2.TwoDimensional
             disposed = true;
         }
 
-        ~PictureBackground()
+        ~PictureNodeDataLayer()
         {
             Dispose();
         }

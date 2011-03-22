@@ -1,4 +1,4 @@
-﻿using SwarmIntelligence2.Core.World.Space;
+﻿using SwarmIntelligence2.Core.Space;
 
 namespace SwarmIntelligence2.TwoDimensional
 {

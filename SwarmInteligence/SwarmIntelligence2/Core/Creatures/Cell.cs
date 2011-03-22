@@ -2,24 +2,24 @@
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
-using SwarmIntelligence2.Core.World;
 
-namespace SwarmIntelligence2.Core
+namespace SwarmIntelligence2.Core.Creatures
 {
-    public class Cell<C, B>: IEnumerable<Ant<C, B>>
+    public class Cell<C, B, E>: IEnumerable<Ant<C, B, E>>
         where C: ICoordinate<C>
     {
-        private readonly List<Ant<C, B>> list = new List<Ant<C, B>>();
+        private readonly List<Ant<C, B, E>> list = new List<Ant<C, B, E>>();
 
-        public void Add(Ant<C, B> ant)
+        public void Add(Ant<C, B, E> ant)
         {
             Contract.Requires(ant != null);
+            Contract.Requires(!this.Contains(ant));
             Contract.Ensures(this.Contains(ant));
 
             list.Add(ant);
         }
 
-        public void Remove(Ant<C, B> ant)
+        public void Remove(Ant<C, B, E> ant)
         {
             Contract.Requires(ant != null);
             Contract.Requires(this.Contains(ant));
@@ -30,7 +30,7 @@ namespace SwarmIntelligence2.Core
 
         #region Implementation of IEnumerable
 
-        public IEnumerator<Ant<C, B>> GetEnumerator()
+        public IEnumerator<Ant<C, B, E>> GetEnumerator()
         {
             return list.GetEnumerator();
         }

@@ -1,5 +1,5 @@
 using System;
-using SwarmIntelligence2.Core.World;
+using SwarmIntelligence2.Core;
 
 namespace SwarmIntelligence2.TwoDimensional
 {

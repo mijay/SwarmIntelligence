@@ -1,23 +1,23 @@
 ﻿using System.Collections.Concurrent;
 using System.Collections.Generic;
 using SwarmIntelligence2.Core;
-using SwarmIntelligence2.Core.Coordinates;
-using SwarmIntelligence2.Core.World;
+using SwarmIntelligence2.Core.Creatures;
+using SwarmIntelligence2.Core.Space;
 
 namespace SwarmIntelligence2.GeneralImplementation
 {
-    public class DictionaryMap<C, B>: Map<C, B>
+    public class DictionaryMap<C, B, E>: Map<C, B, E>
         where C: ICoordinate<C>
     {
-        public readonly ConcurrentDictionary<C, Cell<C, B>> data = new ConcurrentDictionary<C, Cell<C, B>>();
+        public readonly ConcurrentDictionary<C, Cell<C, B, E>> data = new ConcurrentDictionary<C, Cell<C, B, E>>();
 
         #region Overrides of Map<C,B>
 
-        public DictionaryMap(Range<C> range): base(range) {}
+        public DictionaryMap(Boundaries<C> boundaries): base(boundaries) {}
 
-        public override Cell<C, B> this[C key]
+        public override Cell<C, B, E> this[C key]
         {
-            get { return data.GetOrAdd(key, delegate { return new Cell<C, B>(); }); }
+            get { return data.GetOrAdd(key, delegate { return new Cell<C, B, E>(); }); }
         }
 
         public override bool IsInitialized(C key)
@@ -27,11 +27,11 @@ namespace SwarmIntelligence2.GeneralImplementation
 
         public override void Free(C key)
         {
-            Cell<C, B> cell;
+            Cell<C, B, E> cell;
             data.TryRemove(key, out cell);
         }
 
-        public override IEnumerable<KeyValuePair<C, Cell<C, B>>> GetInitialized()
+        public override IEnumerable<KeyValuePair<C, Cell<C, B, E>>> GetInitialized()
         {
             return data;
         }

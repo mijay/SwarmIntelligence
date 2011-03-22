@@ -19,24 +19,6 @@ namespace Test2
         private Memoizer memoizer;
 
         [Test]
-        public void CacheTakesFunctionIntoAccount()
-        {
-            const int key = 100;
-            const decimal val1 = 897;
-            const decimal val2 = 7;
-            var func1 = GetFuncForCache(key, val1);
-            var func2 = GetFuncForCache(key, val2);
-
-            var cached1 = memoizer.Memoize(func1);
-            var cached2 = memoizer.Memoize(func2);
-
-            Assert.That(cached1(key), Is.EqualTo(val1));
-            Assert.That(cached2(key), Is.EqualTo(val2));
-            Assert.That(cached1(key), Is.EqualTo(val1));
-            Assert.That(cached2(key), Is.EqualTo(val2));
-        }
-
-        [Test]
         public void CacheTakesArgumentsIntoAccount()
         {
             var keys = new[] { "key", "k", "j" };
@@ -55,6 +37,24 @@ namespace Test2
             for(int i = 0; i < 3; ++i)
                 for(int j = 0; j < keys.Length; ++j)
                     Assert.That(cached(keys[j]), Is.EqualTo(vals[j]));
+        }
+
+        [Test]
+        public void CacheTakesFunctionIntoAccount()
+        {
+            const int key = 100;
+            const decimal val1 = 897;
+            const decimal val2 = 7;
+            Func<int, decimal> func1 = GetFuncForCache(key, val1);
+            Func<int, decimal> func2 = GetFuncForCache(key, val2);
+
+            Func<int, decimal> cached1 = memoizer.Memoize(func1);
+            Func<int, decimal> cached2 = memoizer.Memoize(func2);
+
+            Assert.That(cached1(key), Is.EqualTo(val1));
+            Assert.That(cached2(key), Is.EqualTo(val2));
+            Assert.That(cached1(key), Is.EqualTo(val1));
+            Assert.That(cached2(key), Is.EqualTo(val2));
         }
 
         [Test]

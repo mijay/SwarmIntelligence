@@ -1,9 +1,8 @@
-﻿using SwarmIntelligence2.Core.World;
-using Utils;
+﻿using Utils;
 
 namespace SwarmIntelligence2.Core.Commands
 {
-    public class MoveTo<C, B>: Command<C, B>
+    public class MoveTo<C, B, E>: Command<C, B, E>
         where C: ICoordinate<C>
     {
         public MoveTo(C targetPoint)
@@ -13,7 +12,7 @@ namespace SwarmIntelligence2.Core.Commands
 
         public C TargetPoint { get; set; }
 
-        public override void Evaluate(EvaluationContext<C, B> context)
+        public override void Evaluate(EvaluationContext<C, B, E> context)
         {
             context.Cell.Remove(context.Ant);
             if(context.Cell.IsEmpty())

@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using NUnit.Framework;
 using SwarmIntelligence2.Core;
-using SwarmIntelligence2.Core.Coordinates;
+using SwarmIntelligence2.Core.Creatures;
 using SwarmIntelligence2.GeneralImplementation;
 using SwarmIntelligence2.GeneralImplementation.Background;
 using SwarmIntelligence2.TwoDimensional;
@@ -14,12 +14,6 @@ namespace Test2.ContextIndependendAnt
 {
     public class Test: TestBase
     {
-        public Test(int minX = -4, int minY = -3, int maxX = 12, int maxY = 5)
-        {
-            min = new Coordinates2D(minX, minY);
-            max = new Coordinates2D(maxX, maxY);
-        }
-
         #region Setup/Teardown
 
         public override void SetUp()
@@ -27,26 +21,26 @@ namespace Test2.ContextIndependendAnt
             base.SetUp();
             random = new Random();
 
-            size = new Range<Coordinates2D>(min, max);
             boundaries = new Boundaries2D(min, max);
-            map = new DictionaryMap<Coordinates2D, EmptyData>(size);
-            background = new EmptyBackground<Coordinates2D>(boundaries);
-            runner = new Runner<Coordinates2D, EmptyData>(map, background);
+            map = new DictionaryMap<Coordinates2D, EmptyData, EmptyData>(boundaries);
+            background = new EmptyNodeDataLayer<Coordinates2D>(boundaries);
+            runner = new Runner<Coordinates2D, EmptyData, EmptyData>(map, background);
         }
 
         #endregion
 
-        public override void FixtureSetUp()
+        public Test(): this(-4, -3, 12, 5) {}
+
+        public Test(int minX, int minY, int maxX, int maxY)
         {
-            base.FixtureSetUp();
-            RangeValidator2D.Register();
+            min = new Coordinates2D(minX, minY);
+            max = new Coordinates2D(maxX, maxY);
         }
 
-        private Range<Coordinates2D> size;
-        private DictionaryMap<Coordinates2D, EmptyData> map;
-        private EmptyBackground<Coordinates2D> background;
+        private DictionaryMap<Coordinates2D, EmptyData, EmptyData> map;
+        private EmptyNodeDataLayer<Coordinates2D> background;
         private Random random;
-        private Runner<Coordinates2D, EmptyData> runner;
+        private Runner<Coordinates2D, EmptyData, EmptyData> runner;
         private readonly Coordinates2D min;
         private readonly Coordinates2D max;
         private Boundaries2D boundaries;
@@ -71,8 +65,8 @@ namespace Test2.ContextIndependendAnt
 
         private Coordinates2D GenerateCoordinate()
         {
-            int x = random.Next(size.min.x, size.max.x + 1);
-            int y = random.Next(size.min.y, size.max.y + 1);
+            int x = random.Next(boundaries.TopLeft.x, boundaries.BottomRight.x + 1);
+            int y = random.Next(boundaries.TopLeft.y, boundaries.BottomRight.y + 1);
             return new Coordinates2D(x, y);
         }
 
@@ -88,7 +82,7 @@ namespace Test2.ContextIndependendAnt
             timer.Stop();
             Console.WriteLine(string.Format("jumps - {0}; ants - {1}; time - {2} ms", jumps, ants, timer.ElapsedMilliseconds));
 
-            KeyValuePair<Coordinates2D, Cell<Coordinates2D, EmptyData>> keyValuePair = map.GetInitialized().Single();
+            KeyValuePair<Coordinates2D, Cell<Coordinates2D, EmptyData, EmptyData>> keyValuePair = map.GetInitialized().Single();
             Assert.That(keyValuePair.Key, Is.EqualTo(lastStep));
             CollectionAssert.AreEquivalent(seededAnts, keyValuePair.Value);
         }

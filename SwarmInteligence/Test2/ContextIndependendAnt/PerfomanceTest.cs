@@ -1,20 +1,22 @@
 using System;
-using System.Diagnostics;
 using NUnit.Framework;
-using SwarmIntelligence2.TwoDimensional;
 using Utils;
 
 namespace Test2.ContextIndependendAnt
 {
     public class PerfomanceTest: TestBase
     {
-        public override void FixtureSetUp()
+        public static void RunTest(int minX, int minY, int maxX, int maxY, int ants, int jumps)
         {
-            base.FixtureSetUp();
-            RangeValidator2D.Register();
+            var test = new Test(minX, minY, maxX, maxY);
+            int size = (maxY - minY) * (maxX - minX);
+            test.SetUp();
+            Console.Write(string.Format("size - {0}; ", size));
+            test.SimpleTest(jumps, ants);
         }
 
         [Test]
+        [Ignore]
         public void RunAll()
         {
             var sizes = new[]
@@ -36,15 +38,6 @@ namespace Test2.ContextIndependendAnt
                         };
 
             tests.ForEach(x => RunTest(x.Item1.Item1, x.Item1.Item2, x.Item1.Item3, x.Item1.Item4, x.Item2, x.Item3));
-        }
-
-        public static void RunTest(int minX, int minY, int maxX, int maxY, int ants, int jumps)
-        {
-            var test = new Test(minX, minY, maxX, maxY);
-            var size = (maxY - minY) * (maxX - minX);
-            test.SetUp();
-            Console.Write(string.Format("size - {0}; ", size));
-            test.SimpleTest(jumps, ants);
         }
     }
 }

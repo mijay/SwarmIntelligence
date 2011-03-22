@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 
-namespace SwarmIntelligence2.Core.World.Data
+namespace SwarmIntelligence2.Core.Data
 {
     [ContractClass(typeof(ContractILazyMapping<,>))]
     public interface ILazyMapping<TKey, TData>: IMapping<TKey, TData>
     {
         [Pure]
         bool IsInitialized(TKey key);
+
         [Pure]
         IEnumerable<KeyValuePair<TKey, TData>> GetInitialized();
 

@@ -1,4 +1,4 @@
-﻿namespace SwarmIntelligence2.Core.World.Data
+﻿namespace SwarmIntelligence2.Core.Data
 {
     public interface IMapping<in TKey, out TData>
     {

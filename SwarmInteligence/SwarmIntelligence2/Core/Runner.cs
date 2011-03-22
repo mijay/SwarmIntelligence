@@ -2,22 +2,22 @@
 using System.Linq;
 using System.Threading;
 using SwarmIntelligence2.Core.Commands;
-using SwarmIntelligence2.Core.World;
-using SwarmIntelligence2.Core.World.Data;
+using SwarmIntelligence2.Core.Creatures;
+using SwarmIntelligence2.Core.Data;
 using Utils;
 
 namespace SwarmIntelligence2.Core
 {
-    public class Runner<C, B>
+    public class Runner<C, B, E>
         where C: ICoordinate<C>
     {
-        private readonly Background<C, B> background;
-        private readonly Map<C, B> map;
+        private readonly Map<C, B, E> map;
+        private readonly NodeDataLayer<C, B> nodeDataLayer;
 
-        public Runner(Map<C, B> map, Background<C, B> background)
+        public Runner(Map<C, B, E> map, NodeDataLayer<C, B> nodeDataLayer)
         {
             this.map = map;
-            this.background = background;
+            this.nodeDataLayer = nodeDataLayer;
         }
 
         public void ProcessTurn()
@@ -28,11 +28,11 @@ namespace SwarmIntelligence2.Core
 
         private void ExecuteCommands(IEnumerable<AntContext> obtainedCommands)
         {
-            var localContext = new ThreadLocal<EvaluationContext<C, B>>(
-                () => new EvaluationContext<C, B> { Map = map, Background = background });
+            var localContext = new ThreadLocal<EvaluationContext<C, B, E>>(
+                () => new EvaluationContext<C, B, E> { Map = map, NodeDataLayer = nodeDataLayer });
             obtainedCommands
                 .ForEach(commandsInContext => {
-                             EvaluationContext<C, B> evaluationContext = localContext.Value;
+                             EvaluationContext<C, B, E> evaluationContext = localContext.Value;
                              commandsInContext.CopyTo(evaluationContext);
                              commandsInContext.commands.ForEach(command => command.Evaluate(evaluationContext));
                          });
@@ -67,12 +67,12 @@ namespace SwarmIntelligence2.Core
 
         private struct AntContext
         {
-            public Ant<C, B> ant;
-            public Cell<C, B> cell;
-            public IEnumerable<Command<C, B>> commands;
+            public Ant<C, B, E> ant;
+            public Cell<C, B, E> cell;
+            public IEnumerable<Command<C, B, E>> commands;
             public C coord;
 
-            public void CopyTo(EvaluationContext<C, B> evaluationContext)
+            public void CopyTo(EvaluationContext<C, B, E> evaluationContext)
             {
                 evaluationContext.Ant = ant;
                 evaluationContext.Cell = cell;

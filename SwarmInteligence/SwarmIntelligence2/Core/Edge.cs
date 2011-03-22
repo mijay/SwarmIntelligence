@@ -1,4 +1,4 @@
-namespace SwarmIntelligence2.Core.World
+namespace SwarmIntelligence2.Core
 {
     public struct Edge<C>
         where C: ICoordinate<C>

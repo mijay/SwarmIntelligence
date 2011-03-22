@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics.Contracts;
-using SwarmIntelligence2.Core;
 using SwarmIntelligence2.Core.Commands;
+using SwarmIntelligence2.Core.Creatures;
 using SwarmIntelligence2.GeneralImplementation.Background;
 using SwarmIntelligence2.TwoDimensional;
 
 namespace Test2.ContextIndependendAnt
 {
-    public class TestAnt: Ant<Coordinates2D, EmptyData>
+    public class TestAnt: Ant<Coordinates2D, EmptyData, EmptyData>
     {
         private readonly Queue<Coordinates2D> points;
 
@@ -20,9 +19,9 @@ namespace Test2.ContextIndependendAnt
 
         #region Overrides of Ant<Coordinates2D,NoDataBackground>
 
-        public override IEnumerable<Command<Coordinates2D, EmptyData>> ProcessTurn()
+        public override IEnumerable<Command<Coordinates2D, EmptyData, EmptyData>> ProcessTurn()
         {
-            return new[] { new MoveTo<Coordinates2D, EmptyData>(points.Dequeue()) };
+            return new[] { new MoveTo<Coordinates2D, EmptyData, EmptyData>(points.Dequeue()) };
         }
 
         #endregion

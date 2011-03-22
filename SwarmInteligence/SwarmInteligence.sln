@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwarmInteligence", "SwarmInteligence\SwarmInteligence.csproj", "{AA79BDBF-44DB-4BC0-9B76-5A82B7963F5F}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utils", "Utils\Utils.csproj", "{314103EA-3787-49A9-ABBE-F26502B8D459}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwarmInteligence2", "SwarmIntelligence2\SwarmInteligence2.csproj", "{2FACFBFE-7D25-4F20-96D6-EFC7F742988A}"
@@ -15,10 +13,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{AA79BDBF-44DB-4BC0-9B76-5A82B7963F5F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AA79BDBF-44DB-4BC0-9B76-5A82B7963F5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AA79BDBF-44DB-4BC0-9B76-5A82B7963F5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AA79BDBF-44DB-4BC0-9B76-5A82B7963F5F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{314103EA-3787-49A9-ABBE-F26502B8D459}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{314103EA-3787-49A9-ABBE-F26502B8D459}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{314103EA-3787-49A9-ABBE-F26502B8D459}.Release|Any CPU.ActiveCfg = Release|Any CPU
