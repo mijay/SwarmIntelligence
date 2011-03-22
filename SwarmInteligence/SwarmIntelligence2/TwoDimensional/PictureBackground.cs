@@ -1,8 +1,7 @@
 using System;
 using System.Diagnostics.Contracts;
 using System.Drawing;
-using SwarmIntelligence2.Core;
-using SwarmIntelligence2.Core.Coordinates;
+using SwarmIntelligence2.Core.World.Data;
 using Utils.Drawing;
 
 namespace SwarmIntelligence2.TwoDimensional
@@ -13,8 +12,8 @@ namespace SwarmIntelligence2.TwoDimensional
         private bool disposed;
 
         public PictureBackground(Bitmap data)
-            : base(new Range<Coordinates2D>(new Coordinates2D(0, 0),
-                                            new Coordinates2D(data.Width - 1, data.Height - 1)))
+            : base(new Boundaries2D(new Coordinates2D(0, 0),
+                                    new Coordinates2D(data.Width - 1, data.Height - 1)))
         {
             Contract.Requires(data != null);
             this.data = new FastBitmap(data);
@@ -22,9 +21,9 @@ namespace SwarmIntelligence2.TwoDimensional
 
         #region Overrides of Background<Coordinates2D,Color>
 
-        public override Color this[Coordinates2D coord]
+        public override Color this[Coordinates2D key]
         {
-            get { return data.GetColor(coord.x, coord.y); }
+            get { return data.GetColor(key.x, key.y); }
         }
 
         #endregion

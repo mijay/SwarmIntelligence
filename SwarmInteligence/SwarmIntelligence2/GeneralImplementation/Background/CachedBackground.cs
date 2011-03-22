@@ -1,6 +1,6 @@
 ﻿using System;
-using SwarmIntelligence2.Core;
-using SwarmIntelligence2.Core.Coordinates;
+using SwarmIntelligence2.Core.World;
+using SwarmIntelligence2.Core.World.Data;
 using Utils.Cache;
 
 namespace SwarmIntelligence2.GeneralImplementation.Background
@@ -10,16 +10,16 @@ namespace SwarmIntelligence2.GeneralImplementation.Background
     {
         private readonly Func<C, B> cachedGet;
 
-        public CachedBackground(Background<C, B> background, IFuncCacher funcCacher): base(background.Range)
+        public CachedBackground(Background<C, B> background, IMemoizer memoizer): base(background.Boundaries)
         {
-            cachedGet = funcCacher.MakeCached<C, B>(c => background[c]);
+            cachedGet = memoizer.Memoize<C, B>(c => background[c]);
         }
 
         #region Overrides of Background<C,B>
 
-        public override B this[C coord]
+        public override B this[C key]
         {
-            get { return cachedGet(coord); }
+            get { return cachedGet(key); }
         }
 
         #endregion

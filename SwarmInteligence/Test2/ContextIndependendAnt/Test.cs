@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Linq;
 using NUnit.Framework;
 using SwarmIntelligence2.Core;
-using SwarmIntelligence2.Core.Commands;
 using SwarmIntelligence2.Core.Coordinates;
 using SwarmIntelligence2.GeneralImplementation;
 using SwarmIntelligence2.GeneralImplementation.Background;
@@ -29,8 +28,9 @@ namespace Test2.ContextIndependendAnt
             random = new Random();
 
             size = new Range<Coordinates2D>(min, max);
+            boundaries = new Boundaries2D(min, max);
             map = new DictionaryMap<Coordinates2D, EmptyData>(size);
-            background = new EmptyBackground<Coordinates2D>(size);
+            background = new EmptyBackground<Coordinates2D>(boundaries);
             runner = new Runner<Coordinates2D, EmptyData>(map, background);
         }
 
@@ -49,6 +49,7 @@ namespace Test2.ContextIndependendAnt
         private Runner<Coordinates2D, EmptyData> runner;
         private readonly Coordinates2D min;
         private readonly Coordinates2D max;
+        private Boundaries2D boundaries;
 
         private IEnumerable<TestAnt> SeedAnts(int antsNumber, int timesAntJumps, params Coordinates2D[] lastAntSteps)
         {
@@ -87,7 +88,7 @@ namespace Test2.ContextIndependendAnt
             timer.Stop();
             Console.WriteLine(string.Format("jumps - {0}; ants - {1}; time - {2} ms", jumps, ants, timer.ElapsedMilliseconds));
 
-            KeyValuePair<Coordinates2D, Cell<Coordinates2D, EmptyData>> keyValuePair = map.GetExistenData().Single();
+            KeyValuePair<Coordinates2D, Cell<Coordinates2D, EmptyData>> keyValuePair = map.GetInitialized().Single();
             Assert.That(keyValuePair.Key, Is.EqualTo(lastStep));
             CollectionAssert.AreEquivalent(seededAnts, keyValuePair.Value);
         }

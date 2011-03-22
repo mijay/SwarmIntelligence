@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SwarmIntelligence2.Core.Coordinates
+namespace SwarmIntelligence2.Core.World
 {
     /// <summary>
     /// Interface for representing coordinates on the <see cref="Map{C,B}"/>.

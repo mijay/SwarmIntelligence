@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.Contracts;
+using SwarmIntelligence2.Core.World;
 
 namespace SwarmIntelligence2.Core.Coordinates
 {

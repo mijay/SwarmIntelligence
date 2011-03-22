@@ -4,19 +4,19 @@ using Utils.Cache;
 
 namespace Test2
 {
-    public class FuncCacherTest: CacheTestBase
+    public class MemoizerTest: CacheTestBase
     {
         #region Setup/Teardown
 
         public override void SetUp()
         {
             base.SetUp();
-            funcCacher = new FuncCacher(localCache);
+            memoizer = new Memoizer(localCache);
         }
 
         #endregion
 
-        private FuncCacher funcCacher;
+        private Memoizer memoizer;
 
         [Test]
         public void CacheTakesFunctionIntoAccount()
@@ -27,8 +27,8 @@ namespace Test2
             var func1 = GetFuncForCache(key, val1);
             var func2 = GetFuncForCache(key, val2);
 
-            var cached1 = funcCacher.MakeCached(func1);
-            var cached2 = funcCacher.MakeCached(func2);
+            var cached1 = memoizer.Memoize(func1);
+            var cached2 = memoizer.Memoize(func2);
 
             Assert.That(cached1(key), Is.EqualTo(val1));
             Assert.That(cached2(key), Is.EqualTo(val2));
@@ -50,7 +50,7 @@ namespace Test2
                                          return vals[index];
                                      };
 
-            Func<string, int> cached = funcCacher.MakeCached(func);
+            Func<string, int> cached = memoizer.Memoize(func);
 
             for(int i = 0; i < 3; ++i)
                 for(int j = 0; j < keys.Length; ++j)
@@ -63,7 +63,7 @@ namespace Test2
             const string key = "key";
             const char value = '6';
             Func<string, char> func = GetFuncForCache(key, value);
-            Func<string, char> cached = funcCacher.MakeCached(func);
+            Func<string, char> cached = memoizer.Memoize(func);
 
             Assert.That(cached(key), Is.EqualTo(value));
             Assert.That(cached(key), Is.EqualTo(value));

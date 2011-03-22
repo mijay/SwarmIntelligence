@@ -1,6 +1,5 @@
-﻿using System;
-using System.Diagnostics.Contracts;
-using SwarmIntelligence2.Core.Coordinates;
+﻿using System.Diagnostics.Contracts;
+using SwarmIntelligence2.Core.World;
 
 namespace SwarmIntelligence2.Core.Commands
 {
@@ -18,9 +17,9 @@ namespace SwarmIntelligence2.Core.Commands
         public override void Evaluate(EvaluationContext<C, B> context)
         {
             Contract.Requires(context.Map != null &&
-                                                     context.Ant != null &&
-                                                     context.Cell != null &&
-                                                     context.Background != null);
+                              context.Ant != null &&
+                              context.Cell != null &&
+                              context.Background != null);
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using SwarmIntelligence2.Core;
 using SwarmIntelligence2.Core.Coordinates;
+using SwarmIntelligence2.Core.World;
 
 namespace SwarmIntelligence2.GeneralImplementation
 {
@@ -14,23 +15,23 @@ namespace SwarmIntelligence2.GeneralImplementation
 
         public DictionaryMap(Range<C> range): base(range) {}
 
-        public override Cell<C, B> this[C coord]
+        public override Cell<C, B> this[C key]
         {
-            get { return data.GetOrAdd(coord, delegate { return new Cell<C, B>(); }); }
+            get { return data.GetOrAdd(key, delegate { return new Cell<C, B>(); }); }
         }
 
-        public override bool HasData(C coord)
+        public override bool IsInitialized(C key)
         {
-            return data.ContainsKey(coord);
+            return data.ContainsKey(key);
         }
 
-        public override void ClearData(C coord)
+        public override void Free(C key)
         {
             Cell<C, B> cell;
-            data.TryRemove(coord, out cell);
+            data.TryRemove(key, out cell);
         }
 
-        public override IEnumerable<KeyValuePair<C, Cell<C, B>>> GetExistenData()
+        public override IEnumerable<KeyValuePair<C, Cell<C, B>>> GetInitialized()
         {
             return data;
         }

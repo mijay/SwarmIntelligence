@@ -2,8 +2,8 @@
 using System.Linq;
 using System.Threading;
 using SwarmIntelligence2.Core.Commands;
-using SwarmIntelligence2.Core.Coordinates;
-using SwarmIntelligence2.GeneralImplementation;
+using SwarmIntelligence2.Core.World;
+using SwarmIntelligence2.Core.World.Data;
 using Utils;
 
 namespace SwarmIntelligence2.Core
@@ -32,7 +32,7 @@ namespace SwarmIntelligence2.Core
                 () => new EvaluationContext<C, B> { Map = map, Background = background });
             obtainedCommands
                 .ForEach(commandsInContext => {
-                             var evaluationContext = localContext.Value;
+                             EvaluationContext<C, B> evaluationContext = localContext.Value;
                              commandsInContext.CopyTo(evaluationContext);
                              commandsInContext.commands.ForEach(command => command.Evaluate(evaluationContext));
                          });
@@ -52,7 +52,7 @@ namespace SwarmIntelligence2.Core
         private ParallelQuery<AntContext> GetAntContexts()
         {
             return map
-                .GetExistenData()
+                .GetInitialized()
                 .AsParallel()
                 .SelectMany(cellWithCoord => cellWithCoord.Value
                                                  .Select(ant => new AntContext
