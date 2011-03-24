@@ -1,7 +1,7 @@
 ﻿using System;
 using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Data;
-using Utils.Cache;
+using SwarmIntelligence.Utils.Cache;
 
 namespace SILibrary.General.Background
 {

@@ -1,7 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using SwarmIntelligence.Core;
+using SwarmIntelligence.Core.Creatures;
+using SwarmIntelligence.Infrastructure.CommandsInfrastructure;
 
-namespace SwarmIntelligence.Core.Commands
+namespace SwarmIntelligence.Infrastructure.Implementation
 {
     public class CommandDispatcher: ICommandDispatcher
     {

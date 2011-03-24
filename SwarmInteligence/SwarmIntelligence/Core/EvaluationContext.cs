@@ -1,7 +1,7 @@
 ﻿using SwarmIntelligence.Core.Creatures;
 using SwarmIntelligence.Core.Data;
 
-namespace SwarmIntelligence.Core.Commands
+namespace SwarmIntelligence.Core
 {
     public class EvaluationContext<C, B, E>
         where C: ICoordinate<C>

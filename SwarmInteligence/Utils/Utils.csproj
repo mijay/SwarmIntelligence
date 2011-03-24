@@ -90,15 +90,7 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssertHelper.cs" />
-    <Compile Include="Cache\Memoizer.cs" />
-    <Compile Include="Cache\ConcurentDictionaryCache.cs" />
-    <Compile Include="Cache\IMemoizer.cs" />
-    <Compile Include="Cache\IKeyValueCache.cs" />
-    <Compile Include="Cache\LocalCache.cs" />
-    <Compile Include="Cache\StaticCache.cs" />
     <Compile Include="ContractExtensions.cs" />
-    <Compile Include="EnumerableExtension.cs" />
     <Compile Include="Drawing\FastDrawHelper.cs" />
     <Compile Include="Drawing\FastBitmap.cs" />
     <Compile Include="Iz.cs" />

@@ -1,5 +1,6 @@
 using System;
 using NUnit.Framework;
+using SwarmIntelligence.Utils;
 using Utils;
 
 namespace Test.ContextIndependendAnt

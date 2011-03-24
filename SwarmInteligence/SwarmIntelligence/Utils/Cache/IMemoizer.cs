@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Utils.Cache
+namespace SwarmIntelligence.Utils.Cache
 {
     public interface IMemoizer
     {

@@ -1,8 +1,8 @@
 ﻿using SwarmIntelligence.Core;
-using SwarmIntelligence.Core.Commands;
-using Utils;
+using SwarmIntelligence.Core.Creatures;
+using SwarmIntelligence.Utils;
 
-namespace SwarmIntelligence.Implementation.Commands
+namespace SwarmIntelligence.Infrastructure.Commands
 {
     public class MoveTo<C, B, E>: Command<C, B, E>
         where C: ICoordinate<C>

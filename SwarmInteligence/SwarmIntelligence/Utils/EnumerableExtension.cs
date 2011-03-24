@@ -3,21 +3,14 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
 
-namespace Utils
+namespace SwarmIntelligence.Utils
 {
     public static class EnumerableExtension
     {
-        public static bool AreDistinct<T>(this IEnumerable<T> source)
-        {
-            Contract.Requires(source != null);
-            return source.Distinct().Count() == source.Count();
-        }
-
         public static bool IsEmpty<T>(this IEnumerable<T> source)
         {
             Contract.Requires(source != null);
-            using(IEnumerator<T> enumerator = source.GetEnumerator())
-                return !enumerator.MoveNext();
+            return source.Take(1).Count() == 0;
         }
 
         public static void ForEach<T>(this IEnumerable<T> source, Action<T> action)
@@ -36,15 +29,7 @@ namespace Utils
             return Enumerable.Repeat(0, times).Select(_ => func());
         }
 
-        public static void InvokeTimes(this Action func, int times)
-        {
-            Contract.Requires(func != null);
-            Contract.Requires(times >= 0);
-
-            Enumerable.Repeat(0, times).ForEach(_ => func());
-        }
-
-        public static IDictionary<TKey, TVal2> SelectValues<TKey, TVal1, TVal2>(this IDictionary<TKey, TVal1> dictionary,
+        public static IDictionary<TKey, TVal2> MapValues<TKey, TVal1, TVal2>(this IDictionary<TKey, TVal1> dictionary,
                                                                                 Func<TKey, TVal1, TVal2> func)
         {
             Contract.Requires(dictionary != null);

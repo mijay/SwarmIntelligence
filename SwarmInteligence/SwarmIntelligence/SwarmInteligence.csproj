@@ -59,18 +59,22 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Implementation\Commands\AddAnt.cs" />
-    <Compile Include="Core\Commands\Command.cs" />
-    <Compile Include="Core\Commands\CommandDispatcher.cs" />
-    <Compile Include="Core\Commands\EvaluationContext.cs" />
-    <Compile Include="Core\Commands\ICommandDispatcher.cs" />
-    <Compile Include="Core\Commands\ITypedCommandDispatcher{T}.cs" />
-    <Compile Include="Core\Commands\ITypedCommandDispatcher.cs" />
-    <Compile Include="Implementation\Commands\MoveTo.cs" />
-    <Compile Include="Implementation\Commands\SelfRemove.cs" />
-    <Compile Include="Core\Data\EndgeDataLayer.cs" />
+    <Compile Include="Core\World.cs" />
+    <Compile Include="Infrastructure\CommandsInfrastructure\CommandContext.cs" />
+    <Compile Include="Infrastructure\Commands\AddAnt.cs" />
+    <Compile Include="Core\Creatures\Command.cs" />
+    <Compile Include="Infrastructure\Implementation\CommandDispatcher.cs" />
+    <Compile Include="Core\EvaluationContext.cs" />
+    <Compile Include="Infrastructure\CommandsInfrastructure\ICommandDispatcher.cs" />
+    <Compile Include="Infrastructure\CommandsInfrastructure\ITypedCommandDispatcher{T}.cs" />
+    <Compile Include="Infrastructure\CommandsInfrastructure\ITypedCommandDispatcher.cs" />
+    <Compile Include="Infrastructure\CommandsInfrastructure\CommandContext.cs" />
+    <Compile Include="Infrastructure\CommandsInfrastructure\CommandImplementationBase.cs" />
+    <Compile Include="Infrastructure\Commands\MoveTo.cs" />
+    <Compile Include="Infrastructure\Commands\SelfRemove.cs" />
+    <Compile Include="Core\Data\EdgeDataLayer.cs" />
     <Compile Include="Core\Edge.cs" />
-    <Compile Include="Implementation\Runner.cs" />
+    <Compile Include="Infrastructure\Implementation\Runner.cs" />
     <Compile Include="Core\Space\Boundaries.cs" />
     <Compile Include="Core\Space\Topology.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -81,6 +85,14 @@
     <Compile Include="Core\Data\IMapping.cs" />
     <Compile Include="Core\Data\ILazyMapping.cs" />
     <Compile Include="Core\Creatures\Map.cs" />
+    <Compile Include="Utils\Cache\ConcurentDictionaryCache.cs" />
+    <Compile Include="Utils\Cache\IKeyValueCache.cs" />
+    <Compile Include="Utils\Cache\IMemoizer.cs" />
+    <Compile Include="Utils\Cache\LocalCache.cs" />
+    <Compile Include="Utils\Cache\Memoizer.cs" />
+    <Compile Include="Utils\Cache\StaticCache.cs" />
+    <Compile Include="Utils\EnumerableExtension.cs" />
+    <Compile Include="Utils\ICloneable.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Utils\Utils.csproj">
@@ -88,9 +100,7 @@
       <Name>Utils</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Implementation\CommandEvaluators\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

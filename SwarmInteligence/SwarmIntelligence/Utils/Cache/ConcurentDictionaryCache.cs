@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 
-namespace Utils.Cache
+namespace SwarmIntelligence.Utils.Cache
 {
     public abstract class ConcurentDictionaryCache: IKeyValueCache
     {

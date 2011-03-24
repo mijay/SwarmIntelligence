@@ -5,10 +5,10 @@ using SwarmIntelligence.Core.Space;
 namespace SwarmIntelligence.Core.Data
 {
     [ContractClass(typeof(ContractEdgeDataLayer<,>))]
-    public abstract class EndgeDataLayer<C, E>: IMapping<Edge<C>, E>
+    public abstract class EdgeDataLayer<C, E>: IMapping<Edge<C>, E>
         where C: ICoordinate<C>
     {
-        protected EndgeDataLayer(Topology<C> topology)
+        protected EdgeDataLayer(Topology<C> topology)
         {
             Topology = topology;
         }
@@ -22,8 +22,8 @@ namespace SwarmIntelligence.Core.Data
         public Topology<C> Topology { get; private set; }
     }
 
-    [ContractClassFor(typeof(EndgeDataLayer<,>))]
-    internal abstract class ContractEdgeDataLayer<C, E>: EndgeDataLayer<C, E>
+    [ContractClassFor(typeof(EdgeDataLayer<,>))]
+    internal abstract class ContractEdgeDataLayer<C, E>: EdgeDataLayer<C, E>
         where C: ICoordinate<C>
     {
         protected ContractEdgeDataLayer(Topology<C> topology): base(topology) {}

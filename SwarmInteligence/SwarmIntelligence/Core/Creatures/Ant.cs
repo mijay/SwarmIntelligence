@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using SwarmIntelligence.Core.Commands;
 
 namespace SwarmIntelligence.Core.Creatures
 {

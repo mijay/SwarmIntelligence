@@ -1,6 +1,6 @@
 using System;
 using NUnit.Framework;
-using Utils.Cache;
+using SwarmIntelligence.Utils.Cache;
 
 namespace Test
 {

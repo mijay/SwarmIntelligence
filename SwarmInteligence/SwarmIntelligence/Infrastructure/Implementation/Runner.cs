@@ -2,12 +2,11 @@
 using System.Linq;
 using System.Threading;
 using SwarmIntelligence.Core;
-using SwarmIntelligence.Core.Commands;
 using SwarmIntelligence.Core.Creatures;
 using SwarmIntelligence.Core.Data;
-using Utils;
+using SwarmIntelligence.Utils;
 
-namespace SwarmIntelligence.Implementation
+namespace SwarmIntelligence.Infrastructure.Implementation
 {
     public class Runner<C, B, E>
         where C: ICoordinate<C>
