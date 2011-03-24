@@ -10,7 +10,6 @@ using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Creatures;
 using SwarmIntelligence.Infrastructure.Implementation;
 using SwarmIntelligence.Utils;
-using Utils;
 
 namespace Test.ContextIndependendAnt
 {
@@ -23,10 +22,14 @@ namespace Test.ContextIndependendAnt
             base.SetUp();
             random = new Random();
 
-            boundaries = new Boundaries2D(min, max);
-            map = new DictionaryMap<Coordinates2D, EmptyData, EmptyData>(boundaries);
-            background = new EmptyNodeDataLayer<Coordinates2D>(boundaries);
-            runner = new Runner<Coordinates2D, EmptyData, EmptyData>(map, background);
+            var boundaries = new Boundaries2D(min, max);
+            var topology = new EightConnectedSurfaceTopology(boundaries);
+            var map = new DictionaryMap<Coordinates2D, EmptyData, EmptyData>(boundaries);
+            var nodeDataLayer = new EmptyNodeDataLayer<Coordinates2D>(boundaries);
+            var edgeDataLayer = new EmptyEdgeDataLayer<Coordinates2D>(topology);
+
+            world = new World<Coordinates2D, EmptyData, EmptyData>(boundaries, topology, nodeDataLayer, edgeDataLayer, map);
+            runner = new Runner<Coordinates2D, EmptyData, EmptyData>(world, null);
         }
 
         #endregion
@@ -39,13 +42,11 @@ namespace Test.ContextIndependendAnt
             max = new Coordinates2D(maxX, maxY);
         }
 
-        private DictionaryMap<Coordinates2D, EmptyData, EmptyData> map;
-        private EmptyNodeDataLayer<Coordinates2D> background;
+        private World<Coordinates2D, EmptyData, EmptyData> world;
         private Random random;
         private Runner<Coordinates2D, EmptyData, EmptyData> runner;
         private readonly Coordinates2D min;
         private readonly Coordinates2D max;
-        private Boundaries2D boundaries;
 
         private IEnumerable<TestAnt> SeedAnts(int antsNumber, int timesAntJumps, params Coordinates2D[] lastAntSteps)
         {
@@ -61,14 +62,14 @@ namespace Test.ContextIndependendAnt
                                           .Repeat(GenerateCoordinate, timesAntJumps)
                                           .Concat(lastAntSteps)
                                           .ToArray());
-            map[initialPosition].Add(testAnt);
+            world.Map[initialPosition].Add(testAnt);
             return testAnt;
         }
 
         private Coordinates2D GenerateCoordinate()
         {
-            int x = random.Next(boundaries.TopLeft.x, boundaries.BottomRight.x + 1);
-            int y = random.Next(boundaries.TopLeft.y, boundaries.BottomRight.y + 1);
+            int x = random.Next(min.x, max.x + 1);
+            int y = random.Next(min.y, max.y + 1);
             return new Coordinates2D(x, y);
         }
 
@@ -84,7 +85,7 @@ namespace Test.ContextIndependendAnt
             timer.Stop();
             Console.WriteLine(string.Format("jumps - {0}; ants - {1}; time - {2} ms", jumps, ants, timer.ElapsedMilliseconds));
 
-            KeyValuePair<Coordinates2D, Cell<Coordinates2D, EmptyData, EmptyData>> keyValuePair = map.GetInitialized().Single();
+            KeyValuePair<Coordinates2D, Cell<Coordinates2D, EmptyData, EmptyData>> keyValuePair = world.Map.GetInitialized().Single();
             Assert.That(keyValuePair.Key, Is.EqualTo(lastStep));
             CollectionAssert.AreEquivalent(seededAnts, keyValuePair.Value);
         }

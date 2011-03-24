@@ -1,17 +1,8 @@
 ﻿using SwarmIntelligence.Core;
-using SwarmIntelligence.Core.Creatures;
-using SwarmIntelligence.Utils;
+using SwarmIntelligence.Infrastructure.CommandsInfrastructure;
 
 namespace SwarmIntelligence.Infrastructure.Commands
 {
-    public class SelfRemove<C, B, E>: Command<C, B, E>
-        where C: ICoordinate<C>
-    {
-        public override void Evaluate(EvaluationContext<C, B, E> context)
-        {
-            context.Cell.Remove(context.Ant);
-            if(context.Cell.IsEmpty())
-                context.Map.Free(context.Coordinate);
-        }
-    }
+    public class SelfRemove<C, B, E>: CommandImplementationBase<C, B, E>
+        where C: ICoordinate<C> {}
 }

@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Creatures;
-using SwarmIntelligence.Core.Data;
+using SwarmIntelligence.Infrastructure.CommandsInfrastructure;
 using SwarmIntelligence.Utils;
 
 namespace SwarmIntelligence.Infrastructure.Implementation
@@ -11,13 +10,13 @@ namespace SwarmIntelligence.Infrastructure.Implementation
     public class Runner<C, B, E>
         where C: ICoordinate<C>
     {
-        private readonly Map<C, B, E> map;
-        private readonly NodeDataLayer<C, B> nodeDataLayer;
+        private readonly ICommandDispatcher commandDispatcher;
+        private readonly World<C, B, E> world;
 
-        public Runner(Map<C, B, E> map, NodeDataLayer<C, B> nodeDataLayer)
+        public Runner(World<C, B, E> world, ICommandDispatcher commandDispatcher)
         {
-            this.map = map;
-            this.nodeDataLayer = nodeDataLayer;
+            this.world = world;
+            this.commandDispatcher = commandDispatcher;
         }
 
         public void ProcessTurn()
@@ -28,13 +27,16 @@ namespace SwarmIntelligence.Infrastructure.Implementation
 
         private void ExecuteCommands(IEnumerable<AntContext> obtainedCommands)
         {
-            var localContext = new ThreadLocal<EvaluationContext<C, B, E>>(
-                () => new EvaluationContext<C, B, E> { Map = map, NodeDataLayer = nodeDataLayer });
+            CommandContext<C, B, E>.CurrentContext = new CommandContext<C, B, E>
+                                                     {
+                                                         World = world
+                                                     };
             obtainedCommands
                 .ForEach(commandsInContext => {
-                             EvaluationContext<C, B, E> evaluationContext = localContext.Value;
-                             commandsInContext.CopyTo(evaluationContext);
-                             commandsInContext.commands.ForEach(command => command.Evaluate(evaluationContext));
+                             CommandContext<C, B, E>.CurrentContext.Ant = commandsInContext.ant;
+                             CommandContext<C, B, E>.CurrentContext.Coordinate = commandsInContext.coord;
+
+                             commandsInContext.commands.ForEach(command => commandDispatcher.Dispatch(command));
                          });
         }
 
@@ -51,14 +53,14 @@ namespace SwarmIntelligence.Infrastructure.Implementation
 
         private ParallelQuery<AntContext> GetAntContexts()
         {
-            return map
+            return world
+                .Map
                 .GetInitialized()
                 .AsParallel()
                 .SelectMany(cellWithCoord => cellWithCoord.Value
                                                  .Select(ant => new AntContext
                                                                 {
                                                                     coord = cellWithCoord.Key,
-                                                                    cell = cellWithCoord.Value,
                                                                     ant = ant
                                                                 }));
         }
@@ -68,16 +70,8 @@ namespace SwarmIntelligence.Infrastructure.Implementation
         private struct AntContext
         {
             public Ant<C, B, E> ant;
-            public Cell<C, B, E> cell;
             public IEnumerable<Command<C, B, E>> commands;
             public C coord;
-
-            public void CopyTo(EvaluationContext<C, B, E> evaluationContext)
-            {
-                evaluationContext.Ant = ant;
-                evaluationContext.Cell = cell;
-                evaluationContext.Coordinate = coord;
-            }
         }
 
         #endregion

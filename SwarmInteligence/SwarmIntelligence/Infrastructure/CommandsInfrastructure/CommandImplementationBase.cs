@@ -6,11 +6,11 @@ namespace SwarmIntelligence.Infrastructure.CommandsInfrastructure
     public abstract class CommandImplementationBase<C, B, E>: Command<C, B, E>
         where C: ICoordinate<C>
     {
-        public CommandContext<C, B, E> CommandContext { get; private set; }
+        public CommandContext<C, B, E> Context { get; private set; }
 
         protected CommandImplementationBase()
         {
-            CommandContext = CommandContext<C,B,E>.CurrentContext.Clone();
+            Context = CommandContext<C,B,E>.CurrentContext.Clone();
         }
     }
 }

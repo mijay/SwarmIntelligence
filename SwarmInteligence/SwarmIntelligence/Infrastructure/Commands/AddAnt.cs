@@ -15,10 +15,5 @@ namespace SwarmIntelligence.Infrastructure.Commands
 
         public C TargetPoint { get; set; }
         public Ant<C, B, E> Ant { get; set; }
-
-        public override void Evaluate(EvaluationContext<C, B, E> context)
-        {
-            context.Map[TargetPoint].Add(Ant);
-        }
     }
 }

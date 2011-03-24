@@ -36,5 +36,12 @@ namespace SwarmIntelligence.Utils
             Contract.Requires(func != null);
             return dictionary.ToDictionary(pair => pair.Key, pair => func(pair.Key, pair.Value));
         }
+
+        public static IEnumerable<TRes> SetMultiply<T1, T2, TRes>(this IEnumerable<T1> firstSet, IEnumerable<T2> secondSet, Func<T1, T2, TRes> mergeFunction)
+        {
+            Contract.Requires(firstSet != null && secondSet != null && mergeFunction != null);
+
+            return firstSet.Join(secondSet, _ => 0, _ => 0, mergeFunction);
+        }
     }
 }
