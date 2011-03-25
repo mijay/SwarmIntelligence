@@ -5,6 +5,11 @@ namespace Utils
 {
     public static class Iz
     {
+        public static IResolveConstraint Any
+        {
+            get { return new MatchesContraint<object>(_ => true); }
+        }
+
         public static IResolveConstraint Match<T>(Predicate<T> predicate)
         {
             return new MatchesContraint<T>(predicate);

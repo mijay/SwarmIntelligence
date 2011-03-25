@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using SILibrary.General;
 using System.Linq;
+using SILibrary.General;
 using SwarmIntelligence.Utils;
 
 namespace SILibrary.TwoDimensional
@@ -14,7 +14,6 @@ namespace SILibrary.TwoDimensional
             this.boundaries = boundaries;
         }
 
-        //todo test it
         protected override IEnumerable<Coordinates2D> GetNeighbours(Coordinates2D coord)
         {
             var neighbourX = new List<int> { coord.x };

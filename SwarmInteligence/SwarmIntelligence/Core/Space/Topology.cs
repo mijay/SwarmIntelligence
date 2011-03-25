@@ -26,25 +26,27 @@ namespace SwarmIntelligence.Core.Space
         public virtual bool Exists(Edge<C> edge)
         {
             Contract.Requires(Boundaries.Lays(edge));
-
             return GetSuccessors(edge.from).Contains(edge.to);
         }
 
         [Pure]
         public IEnumerable<Edge<C>> GetOutgoing(C coord)
         {
+            Contract.Requires(Boundaries.Lays(coord));
             return GetSuccessors(coord).Select(x => new Edge<C>(coord, x));
         }
 
         [Pure]
         public IEnumerable<Edge<C>> GetIncoming(C coord)
         {
+            Contract.Requires(Boundaries.Lays(coord));
             return GetPredecessors(coord).Select(x => new Edge<C>(x, coord));
         }
 
         [Pure]
         public IEnumerable<Edge<C>> GetAdjacent(C coord)
         {
+            Contract.Requires(Boundaries.Lays(coord));
             return GetOutgoing(coord).Concat(GetIncoming(coord));
         }
     }
