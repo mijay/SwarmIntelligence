@@ -2,7 +2,7 @@
 using System.Diagnostics.Contracts;
 using Common.Cache;
 
-namespace Common.DependencyInjection
+namespace Utils.DependencyInjection
 {
     public class InstanceProvider: IInstanceProvider
     {

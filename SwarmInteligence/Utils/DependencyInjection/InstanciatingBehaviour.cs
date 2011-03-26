@@ -1,4 +1,4 @@
-﻿namespace Common.DependencyInjection
+﻿namespace Utils.DependencyInjection
 {
     public enum InstanciatingBehaviour
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Common.DependencyInjection
+namespace Utils.DependencyInjection
 {
     [Flags]
     public enum TypeResolvingOptions

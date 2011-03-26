@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Common;
 using Common.Collections;
 using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Creatures;
@@ -28,23 +27,15 @@ namespace SwarmIntelligence.Infrastructure.Implementation
 
         private void ExecuteCommands(IEnumerable<AntContext> obtainedCommands)
         {
-            CommandContext<C, B, E>.CurrentContext = new CommandContext<C, B, E>
-                                                     {
-                                                         World = world
-                                                     };
-            obtainedCommands
-                .ForEach(commandsInContext => {
-                             CommandContext<C, B, E>.CurrentContext.Ant = commandsInContext.ant;
-                             CommandContext<C, B, E>.CurrentContext.Coordinate = commandsInContext.coord;
-
-                             commandsInContext.commands.ForEach(command => commandDispatcher.Dispatch(command));
-                         });
+            obtainedCommands.ForEach(
+                commandsInContext => commandsInContext.commands.ForEach(command => commandDispatcher.Dispatch(command)));
         }
 
         private AntContext[] ObtainCommands()
         {
             return GetAntContexts()
                 .Select(context => {
+                            InitializeCommandContext(context);
                             context.commands = context.ant.ProcessTurn();
                             return context;
                         })
@@ -52,12 +43,21 @@ namespace SwarmIntelligence.Infrastructure.Implementation
                 .ToArray();
         }
 
-        private ParallelQuery<AntContext> GetAntContexts()
+        private void InitializeCommandContext(AntContext context)
+        {
+            if(CommandContext<C, B, E>.CurrentContext == null)
+                CommandContext<C, B, E>.CurrentContext = new CommandContext<C, B, E> { World = world };
+            CommandContext<C, B, E>.CurrentContext.Ant = context.ant;
+            CommandContext<C, B, E>.CurrentContext.Coordinate = context.coord;
+        }
+
+        //private ParallelQuery<AntContext> GetAntContexts()
+        private IEnumerable<AntContext> GetAntContexts()
         {
             return world
                 .Map
                 .GetInitialized()
-                .AsParallel()
+                //  .AsParallel()
                 .SelectMany(cellWithCoord => cellWithCoord.Value
                                                  .Select(ant => new AntContext
                                                                 {

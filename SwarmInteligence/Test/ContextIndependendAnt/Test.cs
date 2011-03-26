@@ -5,16 +5,37 @@ using System.Linq;
 using Common;
 using Common.Collections;
 using CommonTest;
+using Ninject;
+using Ninject.Activation;
 using NUnit.Framework;
+using Ninject.Extensions.Conventions;
 using SILibrary.General;
 using SILibrary.General.Background;
 using SILibrary.TwoDimensional;
 using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Creatures;
+using SwarmIntelligence.Infrastructure.CommandsInfrastructure;
 using SwarmIntelligence.Infrastructure.Implementation;
 
 namespace Test.ContextIndependendAnt
 {
+    public class AllInterfacesBinding: IBindingGenerator
+    {
+        #region Implementation of IBindingGenerator
+
+        public void Process(Type type, Func<IContext, object> scopeCallback, IKernel kernel)
+        {
+            if(type.IsInterface || type.IsAbstract)
+                return;
+
+            type
+                .GetInterfaces()
+                .ForEach(i => kernel.Bind(i).To(type).InScope(scopeCallback));
+        }
+
+        #endregion
+    }
+
     public class Test: TestBase
     {
         #region Setup/Teardown
@@ -31,7 +52,21 @@ namespace Test.ContextIndependendAnt
             var edgeDataLayer = new EmptyEdgeDataLayer<Coordinates2D>(topology);
 
             world = new World<Coordinates2D, EmptyData, EmptyData>(boundaries, topology, nodeDataLayer, edgeDataLayer, map);
-            runner = new Runner<Coordinates2D, EmptyData, EmptyData>(world, null);
+
+            var kernel = new StandardKernel(new NinjectSettings
+                                            {
+                                                ActivationCacheDisabled = false,
+                                                AllowNullInjection = false,
+                                                UseReflectionBasedInjection = true
+                                            });
+            kernel.Scan(x => {
+                            x.From(AppDomain.CurrentDomain.GetAssemblies());
+                            x.InSingletonScope();
+                            x.BindWith(new AllInterfacesBinding());
+                            //x.BindWithDefaultConventions();
+                        });
+
+            runner = new Runner<Coordinates2D, EmptyData, EmptyData>(world, kernel.Get<ICommandDispatcher>());
         }
 
         #endregion

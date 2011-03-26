@@ -4,7 +4,7 @@ using System.Diagnostics.Contracts;
 using System.Linq;
 using Common.Memoization;
 
-namespace Common.DependencyInjection
+namespace Utils.DependencyInjection
 {
     public class TypeResolver: ITypeResolver
     {

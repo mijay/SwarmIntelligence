@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Common.DependencyInjection
+namespace Utils.DependencyInjection
 {
     public class TypeProvider: ITypeProvider
     {

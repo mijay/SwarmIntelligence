@@ -4,7 +4,7 @@ using System.Linq;
 using Common.Cache;
 using Common.Memoization;
 
-namespace Common.DependencyInjection
+namespace Utils.DependencyInjection
 {
     public static class ContainerHost
     {

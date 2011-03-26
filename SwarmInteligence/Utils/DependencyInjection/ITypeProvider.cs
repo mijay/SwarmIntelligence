@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Common.DependencyInjection
+namespace Utils.DependencyInjection
 {
     public interface ITypeProvider {
         IEnumerable<Type> Types { get; }

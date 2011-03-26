@@ -69,15 +69,6 @@
     <Compile Include="Collections\ListExtension.cs" />
     <Compile Include="Collections\ReadOnlyCollection.cs" />
     <Compile Include="Collections\ReadOnlyList.cs" />
-    <Compile Include="DependencyInjection\ContainerHost.cs" />
-    <Compile Include="DependencyInjection\IInstanceProvider.cs" />
-    <Compile Include="DependencyInjection\InstanceProvider.cs" />
-    <Compile Include="DependencyInjection\InstanciatingBehaviour.cs" />
-    <Compile Include="DependencyInjection\ITypeProvider.cs" />
-    <Compile Include="DependencyInjection\ITypeResolver.cs" />
-    <Compile Include="DependencyInjection\TypeProvider.cs" />
-    <Compile Include="DependencyInjection\TypeResolver.cs" />
-    <Compile Include="DependencyInjection\TypeResolvingOptions.cs" />
     <Compile Include="DisposableBase.cs" />
     <Compile Include="Collections\EnumerableExtension.cs" />
     <Compile Include="ICloneable.cs" />
