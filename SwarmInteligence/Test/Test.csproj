@@ -71,6 +71,7 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ContextIndependendAnt\AllInterfacesBinding.cs" />
     <Compile Include="ContextIndependendAnt\PerfomanceTest.cs" />
     <Compile Include="ContextIndependendAnt\Test.cs" />
     <Compile Include="ContextIndependendAnt\TestAnt.cs" />

@@ -26,11 +26,35 @@
             </summary>
             <param name="types"></param>
         </member>
+        <member name="M:Ninject.Extensions.Conventions.IAssemblyScanner.FromCallingAssembly">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="M:Ninject.Extensions.Conventions.IAssemblyScanner.From(System.Collections.Generic.IEnumerable{System.Reflection.Assembly})">
             <summary>
             Loads the specified assemblies.
             </summary>
             <param name="assemblies">The assemblies.</param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.IAssemblyScanner.From(System.String)">
+            <summary>
+            Loads the specified assembly.
+            </summary>
+            <param name="assembly">The assembly.</param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.IAssemblyScanner.From(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Loads the specified assemblies.
+            </summary>
+            <param name="assemblies">The assemblies.</param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.IAssemblyScanner.From(System.Collections.Generic.IEnumerable{System.String},System.Predicate{System.Reflection.Assembly})">
+            <summary>
+            
+            </summary>
+            <param name="assemblies"></param>
+            <param name="filter"></param>
         </member>
         <member name="M:Ninject.Extensions.Conventions.IAssemblyScanner.FromAssemblyContaining``1">
             <summary>
@@ -49,6 +73,31 @@
             Loads the assembly containing.
             </summary>
             <param name="types">The types.</param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.IAssemblyScanner.FromAssembliesInPath(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="path"></param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.IAssemblyScanner.FromAssembliesInPath(System.String,System.Predicate{System.Reflection.Assembly})">
+            <summary>
+            
+            </summary>
+            <param name="path"></param>
+            <param name="assemblyFilter"></param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.IAssemblyScanner.FromAssembliesMatching(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="pattern"></param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.IAssemblyScanner.FromAssembliesMatching(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            
+            </summary>
+            <param name="patterns"></param>
         </member>
         <member name="M:Ninject.Extensions.Conventions.IAssemblyScanner.Including``1">
             <summary>
@@ -132,6 +181,11 @@
             
             </summary>
         </member>
+        <member name="M:Ninject.Extensions.Conventions.IAssemblyScanner.AutoLoadModules">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="M:Ninject.Extensions.Conventions.IAssemblyScanner.WhereTypeInheritsFrom``1">
             <summary>
             
@@ -191,11 +245,65 @@
             </summary>
             <param name="assembly">The assembly.</param>
         </member>
+        <member name="M:Ninject.Extensions.Conventions.AssemblyScanner.FromCallingAssembly">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="M:Ninject.Extensions.Conventions.AssemblyScanner.From(System.Collections.Generic.IEnumerable{System.Reflection.Assembly})">
             <summary>
             Loads the specified assemblies.
             </summary>
             <param name="assemblies">The assemblies.</param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.AssemblyScanner.From(System.String)">
+            <summary>
+            Loads the specified assembly.
+            </summary>
+            <param name="assembly">The assembly.</param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.AssemblyScanner.From(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Loads the specified assemblies.
+            </summary>
+            <param name="assemblies">The assemblies.</param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.AssemblyScanner.From(System.Collections.Generic.IEnumerable{System.String},System.Predicate{System.Reflection.Assembly})">
+            <summary>
+            
+            </summary>
+            <param name="assemblies"></param>
+            <param name="filter"></param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.AssemblyScanner.FromAssembliesInPath(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="path"></param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.AssemblyScanner.FromAssembliesInPath(System.String,System.Predicate{System.Reflection.Assembly})">
+            <summary>
+            
+            </summary>
+            <param name="path"></param>
+            <param name="assemblyFilter"></param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.AssemblyScanner.FromAssembliesMatching(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="pattern"></param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.AssemblyScanner.FromAssembliesMatching(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            
+            </summary>
+            <param name="patterns"></param>
+        </member>
+        <member name="M:Ninject.Extensions.Conventions.AssemblyScanner.AutoLoadModules">
+            <summary>
+            
+            </summary>
         </member>
         <member name="M:Ninject.Extensions.Conventions.AssemblyScanner.FromAssemblyContaining``1">
             <summary>

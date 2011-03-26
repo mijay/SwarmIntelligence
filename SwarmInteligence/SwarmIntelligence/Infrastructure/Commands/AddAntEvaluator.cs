@@ -3,7 +3,7 @@ using SwarmIntelligence.Infrastructure.CommandsInfrastructure;
 
 namespace SwarmIntelligence.Infrastructure.Commands
 {
-    public class AddAntEvaluator<C, B, E>: ITypedCommandDispatcher<AddAnt<C, B, E>>
+    public class AddAntEvaluator<C, B, E>: ITypedCommandDispatcher<AddAnt<C, B, E>, C, B, E>
         where C: ICoordinate<C>
     {
         #region Implementation of ITypedCommandDispatcher<in AddAnt<C,B,E>>

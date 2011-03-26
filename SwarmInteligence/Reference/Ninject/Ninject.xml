@@ -1429,6 +1429,12 @@
             </summary>
             <returns>The exception message.</returns>
         </member>
+        <member name="M:Ninject.Infrastructure.Introspection.ExceptionFormatter.TargetDoesNotHaveADefaultValue(Ninject.Planning.Targets.ITarget)">
+            <summary>
+            Generates a message saying that modules without names are not supported.
+            </summary>
+            <returns>The exception message.</returns>
+        </member>
         <member name="M:Ninject.Infrastructure.Introspection.ExceptionFormatter.ModuleWithSameNameIsAlreadyLoaded(Ninject.Modules.INinjectModule,Ninject.Modules.INinjectModule)">
             <summary>
             Generates a message saying that a module with the same name is already loaded.
@@ -1551,6 +1557,27 @@
             </summary>
             <param name="type">The type to be formatted.</param>
             <returns>The type formatted as string.</returns>
+        </member>
+        <member name="T:Ninject.Infrastructure.Language.ExtensionsForIEnumerableOfT">
+            <summary>
+            Provides extension methods for see cref="IEnumerable{T}"/>
+            </summary>
+        </member>
+        <member name="M:Ninject.Infrastructure.Language.ExtensionsForIEnumerableOfT.Map``1(System.Collections.Generic.IEnumerable{``0},System.Action{``0})">
+            <summary>
+            Executes the given action for each of the elements in the enumerable.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="series">The series.</param>
+            <param name="action">The action.</param>
+        </member>
+        <member name="M:Ninject.Infrastructure.Language.ExtensionsForIEnumerableOfT.ToEnumerable``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Converts the given enumerable type to prevent changed on the type behind.
+            </summary>
+            <typeparam name="T">The type of the enumerable.</typeparam>
+            <param name="series">The series.</param>
+            <returns>The input type as real enumerable not castable to the original type.</returns>
         </member>
         <member name="T:Ninject.Infrastructure.Language.ExtensionsForMemberInfo">
             <summary>
@@ -2341,18 +2368,9 @@
             <param name="name">The name of the property to override.</param>
             <param name="valueCallback">The callback to invoke to get the value that should be injected.</param>
         </member>
-        <member name="T:Ninject.Planning.Bindings.Resolvers.IBindingResolver">
+        <member name="T:Ninject.Planning.Bindings.Resolvers.DefaultValueBindingResolver">
             <summary>
-            Contains logic about which bindings to use for a given service request.
             </summary>
-        </member>
-        <member name="M:Ninject.Planning.Bindings.Resolvers.IBindingResolver.Resolve(Ninject.Infrastructure.Multimap{System.Type,Ninject.Planning.Bindings.IBinding},System.Type)">
-            <summary>
-            Returns any bindings from the specified collection that match the specified service.
-            </summary>
-            <param name="bindings">The multimap of all registered bindings.</param>
-            <param name="service">The service in question.</param>
-            <returns>The series of matching bindings.</returns>
         </member>
         <member name="T:Ninject.Planning.Bindings.Resolvers.IMissingBindingResolver">
             <summary>
@@ -2366,6 +2384,27 @@
             </summary>
             <param name="bindings">The multimap of all registered bindings.</param>
             <param name="request">The request in question.</param>
+            <returns>The series of matching bindings.</returns>
+        </member>
+        <member name="M:Ninject.Planning.Bindings.Resolvers.DefaultValueBindingResolver.Resolve(Ninject.Infrastructure.Multimap{System.Type,Ninject.Planning.Bindings.IBinding},Ninject.Activation.IRequest)">
+            <summary>
+            Returns any bindings from the specified collection that match the specified service.
+            </summary>
+            <param name="bindings">The multimap of all registered bindings.</param>
+            <param name="request">The service in question.</param>
+            <returns>The series of matching bindings.</returns>
+        </member>
+        <member name="T:Ninject.Planning.Bindings.Resolvers.IBindingResolver">
+            <summary>
+            Contains logic about which bindings to use for a given service request.
+            </summary>
+        </member>
+        <member name="M:Ninject.Planning.Bindings.Resolvers.IBindingResolver.Resolve(Ninject.Infrastructure.Multimap{System.Type,Ninject.Planning.Bindings.IBinding},System.Type)">
+            <summary>
+            Returns any bindings from the specified collection that match the specified service.
+            </summary>
+            <param name="bindings">The multimap of all registered bindings.</param>
+            <param name="service">The service in question.</param>
             <returns>The series of matching bindings.</returns>
         </member>
         <member name="T:Ninject.Planning.Bindings.Resolvers.OpenGenericBindingResolver">
@@ -3485,6 +3524,17 @@
             Gets a value indicating whether the target represents an optional dependency.
             </summary>
         </member>
+        <member name="P:Ninject.Planning.Targets.ITarget.HasDefaultValue">
+            <summary>
+            Gets a value indicating whether the target has a default value.
+            </summary>
+        </member>
+        <member name="P:Ninject.Planning.Targets.ITarget.DefaultValue">
+            <summary>
+            Gets the default value for the target.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">If the item does not have a default value.</exception>
+        </member>
         <member name="T:Ninject.Planning.Targets.ParameterTarget">
             <summary>
             Represents an injection target for a <see cref="T:System.Reflection.ParameterInfo"/>.
@@ -3591,6 +3641,17 @@
             Gets a value indicating whether the target represents an optional dependency.
             </summary>
         </member>
+        <member name="P:Ninject.Planning.Targets.Target`1.HasDefaultValue">
+            <summary>
+            Gets a value indicating whether the target has a default value.
+            </summary>
+        </member>
+        <member name="P:Ninject.Planning.Targets.Target`1.DefaultValue">
+            <summary>
+            Gets the default value for the target.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">If the item does not have a default value.</exception>
+        </member>
         <member name="M:Ninject.Planning.Targets.ParameterTarget.#ctor(System.Reflection.MethodBase,System.Reflection.ParameterInfo)">
             <summary>
             Initializes a new instance of the <see cref="T:Ninject.Planning.Targets.ParameterTarget"/> class.
@@ -3607,6 +3668,17 @@
             <summary>
             Gets the type of the target.
             </summary>
+        </member>
+        <member name="P:Ninject.Planning.Targets.ParameterTarget.HasDefaultValue">
+            <summary>
+            Gets a value indicating whether the target has a default value.
+            </summary>
+        </member>
+        <member name="P:Ninject.Planning.Targets.ParameterTarget.DefaultValue">
+            <summary>
+            Gets the default value for the target.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">If the item does not have a default value.</exception>
         </member>
         <member name="T:Ninject.Planning.Targets.PropertyTarget">
             <summary>
@@ -4134,6 +4206,30 @@
             <param name="info">The serialized object data.</param>
             <param name="context">The serialization context.</param>
         </member>
+        <member name="T:Ninject.GlobalKernelRegistry">
+            <summary>
+            All kernels register on the static list of this class. This allows derived types to do things for the kernels.
+            e.g. used by One per request module to release the objects in request scope right after the request ended.
+            </summary>
+        </member>
+        <member name="M:Ninject.GlobalKernelRegistry.StartManaging(Ninject.IKernel)">
+            <summary>
+            Start managing instances for the specified kernel.
+            </summary>
+            <param name="kernel">The kernel.</param>
+        </member>
+        <member name="M:Ninject.GlobalKernelRegistry.StopManaging(Ninject.IKernel)">
+            <summary>
+            Stops managing instances for the specified kernel.
+            </summary>
+            <param name="kernel">The kernel.</param>
+        </member>
+        <member name="P:Ninject.GlobalKernelRegistry.Kernels">
+            <summary>
+            Gets all kernels of the application.
+            </summary>
+            <value>The kernels of the application.</value>
+        </member>
         <member name="T:Ninject.IInitializable">
             <summary>
             A service that requires initialization after it is activated.
@@ -4259,9 +4355,9 @@
             Gets a value indicating whether the kernel should automatically load extensions at startup.
             </summary>
         </member>
-        <member name="P:Ninject.INinjectSettings.ExtensionSearchPattern">
+        <member name="P:Ninject.INinjectSettings.ExtensionSearchPatterns">
             <summary>
-            Gets the path that should be searched for extensions.
+            Gets the paths that should be searched for extensions.
             </summary>
         </member>
         <member name="P:Ninject.INinjectSettings.UseReflectionBasedInjection">
@@ -4299,7 +4395,7 @@
         <member name="P:Ninject.INinjectSettings.AllowNullInjection">
             <summary>
             Gets or sets a value indicating whether Null is a valid value for injection.
-            By defualt this is disabled and whenever a provider returns null an eception is thrown.
+            By defuault this is disabled and whenever a provider returns null an exception is thrown.
             </summary>
             <value><c>true</c> if null is allowed as injected value otherwise false.</value>
         </member>
@@ -4568,9 +4664,9 @@
             Gets or sets a value indicating whether the kernel should automatically load extensions at startup.
             </summary>
         </member>
-        <member name="P:Ninject.NinjectSettings.ExtensionSearchPattern">
+        <member name="P:Ninject.NinjectSettings.ExtensionSearchPatterns">
             <summary>
-            Gets or sets the path that should be searched for extensions.
+            Gets or sets the paths that should be searched for extensions.
             </summary>
         </member>
         <member name="P:Ninject.NinjectSettings.UseReflectionBasedInjection">
@@ -4608,7 +4704,7 @@
         <member name="P:Ninject.NinjectSettings.AllowNullInjection">
             <summary>
             Gets or sets a value indicating whether Null is a valid value for injection.
-            By defualt this is disabled and whenever a provider returns null an eception is thrown.
+            By default this is disabled and whenever a provider returns null an exception is thrown.
             </summary>
             <value>
             	<c>true</c> if null is allowed as injected value otherwise false.

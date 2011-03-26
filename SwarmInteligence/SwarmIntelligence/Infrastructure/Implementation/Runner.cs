@@ -10,10 +10,10 @@ namespace SwarmIntelligence.Infrastructure.Implementation
     public class Runner<C, B, E>
         where C: ICoordinate<C>
     {
-        private readonly ICommandDispatcher commandDispatcher;
+        private readonly ICommandDispatcher<C, B, E> commandDispatcher;
         private readonly World<C, B, E> world;
 
-        public Runner(World<C, B, E> world, ICommandDispatcher commandDispatcher)
+        public Runner(World<C, B, E> world, ICommandDispatcher<C, B, E> commandDispatcher)
         {
             this.world = world;
             this.commandDispatcher = commandDispatcher;

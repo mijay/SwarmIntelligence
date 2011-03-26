@@ -3,7 +3,7 @@ using SwarmIntelligence.Infrastructure.CommandsInfrastructure;
 
 namespace SwarmIntelligence.Infrastructure.Commands
 {
-    public class MoveToEvaluator<C, B, E>: ITypedCommandDispatcher<MoveTo<C, B, E>>
+    public class MoveToEvaluator<C, B, E>: ITypedCommandDispatcher<MoveTo<C, B, E>, C, B, E>
         where C: ICoordinate<C>
     {
         #region Implementation of ITypedCommandDispatcher<in MoveTo<C,B,E>>

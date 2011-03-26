@@ -30,18 +30,26 @@ namespace Common.Collections
         }
 
         public static IDictionary<TKey, TVal2> MapValues<TKey, TVal1, TVal2>(this IDictionary<TKey, TVal1> dictionary,
-                                                                                Func<TKey, TVal1, TVal2> func)
+                                                                             Func<TKey, TVal1, TVal2> func)
         {
             Contract.Requires(dictionary != null);
             Contract.Requires(func != null);
             return dictionary.ToDictionary(pair => pair.Key, pair => func(pair.Key, pair.Value));
         }
 
-        public static IEnumerable<TRes> SetMultiply<T1, T2, TRes>(this IEnumerable<T1> firstSet, IEnumerable<T2> secondSet, Func<T1, T2, TRes> mergeFunction)
+        public static IEnumerable<TRes> SetMultiply<T1, T2, TRes>(this IEnumerable<T1> firstSet, IEnumerable<T2> secondSet,
+                                                                  Func<T1, T2, TRes> mergeFunction)
         {
             Contract.Requires(firstSet != null && secondSet != null && mergeFunction != null);
 
             return firstSet.Join(secondSet, _ => 0, _ => 0, mergeFunction);
+        }
+
+        public static IEnumerable<T> NotNull<T>(this IEnumerable<T> enumerable) where T: class
+        {
+            Contract.Requires(enumerable != null);
+
+            return enumerable.Where(x => x != null);
         }
     }
 }

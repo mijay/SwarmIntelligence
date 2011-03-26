@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using Common;
 using Common.Collections;
 using CommonTest;
 using Ninject;
-using Ninject.Activation;
 using NUnit.Framework;
 using Ninject.Extensions.Conventions;
 using SILibrary.General;
@@ -14,28 +14,12 @@ using SILibrary.General.Background;
 using SILibrary.TwoDimensional;
 using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Creatures;
+using SwarmIntelligence.Infrastructure.Commands;
 using SwarmIntelligence.Infrastructure.CommandsInfrastructure;
 using SwarmIntelligence.Infrastructure.Implementation;
 
 namespace Test.ContextIndependendAnt
 {
-    public class AllInterfacesBinding: IBindingGenerator
-    {
-        #region Implementation of IBindingGenerator
-
-        public void Process(Type type, Func<IContext, object> scopeCallback, IKernel kernel)
-        {
-            if(type.IsInterface || type.IsAbstract)
-                return;
-
-            type
-                .GetInterfaces()
-                .ForEach(i => kernel.Bind(i).To(type).InScope(scopeCallback));
-        }
-
-        #endregion
-    }
-
     public class Test: TestBase
     {
         #region Setup/Teardown
@@ -66,7 +50,10 @@ namespace Test.ContextIndependendAnt
                             //x.BindWithDefaultConventions();
                         });
 
-            runner = new Runner<Coordinates2D, EmptyData, EmptyData>(world, kernel.Get<ICommandDispatcher>());
+            var all = kernel.GetAll<ITypedCommandDispatcher<MoveTo<Coordinates2D, EmptyData, EmptyData>, Coordinates2D, EmptyData, EmptyData>>().ToArray();
+            var all2 = kernel.GetAll<ITypedCommandDispatcher<Coordinates2D, EmptyData, EmptyData>>().ToArray();
+
+            runner = new Runner<Coordinates2D, EmptyData, EmptyData>(world, kernel.Get<ICommandDispatcher<Coordinates2D, EmptyData, EmptyData>>());
         }
 
         #endregion

@@ -3,9 +3,10 @@ using SwarmIntelligence.Core.Creatures;
 
 namespace SwarmIntelligence.Infrastructure.CommandsInfrastructure
 {
-    public interface ICommandDispatcher<C, B, E>
+    public interface ITypedCommandDispatcher<in TCommand, C, B, E>: ITypedCommandDispatcher<C, B, E>
+        where TCommand: Command<C,B,E>
         where C: ICoordinate<C>
     {
-        void Dispatch(Command<C, B, E> command);
+        void Dispatch(TCommand command);
     }
 }
