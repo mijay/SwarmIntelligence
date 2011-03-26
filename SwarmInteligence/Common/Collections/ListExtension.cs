@@ -1,6 +1,7 @@
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 
-namespace Common.CollectionsExtensions
+namespace Common.Collections
 {
     public static class ListExtension
     {
@@ -11,6 +12,7 @@ namespace Common.CollectionsExtensions
         /// </summary>
         public static void SetAt<T>(this IList<T> list, int index, T elem)
         {
+            Contract.Requires(list != null && index >= 0);
             if(list.Count > index)
                 list[index] = elem;
             else {
@@ -18,6 +20,12 @@ namespace Common.CollectionsExtensions
                     list.Add(default(T));
                 list.Add(elem);
             }
+        }
+
+        public static IList<T> AsReadOnly<T>(this IList<T> list)
+        {
+            Contract.Requires(list != null);
+            return new ReadOnlyList<T>(list);
         }
     }
 }

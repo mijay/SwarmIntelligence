@@ -4,7 +4,7 @@ using System.Diagnostics.Contracts;
 using System.Text;
 using System.Linq;
 
-namespace Common.CollectionsExtensions
+namespace Common.Collections
 {
     /// <summary>
     /// Some extensions for arrays and especially byte arrays.

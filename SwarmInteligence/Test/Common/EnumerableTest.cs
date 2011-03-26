@@ -1,8 +1,8 @@
-using Common;
+using Common.Collections;
 using CommonTest;
 using NUnit.Framework;
 
-namespace Test
+namespace Test.Common
 {
     public class EnumerableTest: TestBase
     {

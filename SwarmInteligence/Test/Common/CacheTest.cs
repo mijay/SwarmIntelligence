@@ -3,7 +3,7 @@ using System.Linq;
 using Moq;
 using NUnit.Framework;
 
-namespace Test
+namespace Test.Common
 {
     public class CacheTest: CacheTestBase
     {

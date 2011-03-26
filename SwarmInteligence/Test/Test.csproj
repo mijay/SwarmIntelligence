@@ -65,19 +65,20 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\DITest.cs" />
     <Compile Include="ContextIndependendAnt\PerfomanceTest.cs" />
     <Compile Include="ContextIndependendAnt\Test.cs" />
     <Compile Include="ContextIndependendAnt\TestAnt.cs" />
-    <Compile Include="CacheTest.cs" />
-    <Compile Include="CacheTestBase.cs" />
+    <Compile Include="Common\CacheTest.cs" />
+    <Compile Include="Common\CacheTestBase.cs" />
     <Compile Include="EightConnectedSurfaceTest.cs" />
-    <Compile Include="EnumerableTest.cs" />
+    <Compile Include="Common\EnumerableTest.cs" />
     <Compile Include="FourConnectedSurfaceTest.cs" />
-    <Compile Include="MemoizerTest.cs" />
+    <Compile Include="Common\MemoizerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CommonTest\Common.Test.csproj">
+    <ProjectReference Include="..\Common.Test\Common.Test.csproj">
       <Project>{AFCB32EC-DFCF-4B5D-AD23-F34CBC0C48DD}</Project>
       <Name>Common.Test</Name>
     </ProjectReference>

@@ -18,9 +18,10 @@ namespace Common
         private static IEnumerable<IObservable<TSource>> ProduceWhile<TSource>(IObservable<TSource> source, Func<bool> condition)
         {
             Contract.Requires(source != null && condition != null);
-            do {
+            do
+            {
                 yield return source;
-            } while(condition());
+            } while (condition());
         }
     }
 }

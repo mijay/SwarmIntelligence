@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using Common.Cache;
 using CommonTest;
 using NUnit.Framework;
 
-namespace Test
+namespace Test.Common
 {
     public class CacheTestBase: TestBase
     {
@@ -12,12 +13,12 @@ namespace Test
         public override void SetUp()
         {
             base.SetUp();
-            localCache = new LocalCache();
+            localCache = new ConcurentDictionaryCache(new ConcurrentDictionary<object, object>());
         }
 
         #endregion
 
-        protected LocalCache localCache;
+        protected ConcurentDictionaryCache localCache;
 
         protected static Func<TKey, TVal> GetFuncForCache<TKey, TVal>(TKey key, TVal value)
         {

@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{2BC749DB-5C4C-403A-9391-8FC43719D93A}</ProjectGuid>
+    <ProjectGuid>{AFCB32EC-DFCF-4B5D-AD23-F34CBC0C48DD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Common</RootNamespace>
-    <AssemblyName>Common</AssemblyName>
+    <RootNamespace>CommonTest</RootNamespace>
+    <AssemblyName>Common.Test</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <CodeContractsAssemblyMode>1</CodeContractsAssemblyMode>
@@ -55,37 +55,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Reactive, Version=1.0.2856.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\Reference\Rx\System.Reactive.dll</HintPath>
+    <Reference Include="nunit.framework, Version=2.5.6.10205, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Reference\nunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Collections\ArrayExtension.cs" />
-    <Compile Include="Cache\ConcurentDictionaryCache.cs" />
-    <Compile Include="Cache\IKeyValueCache.cs" />
-    <Compile Include="Collections\CollectionExtensions.cs" />
-    <Compile Include="Collections\DictionaryExtension.cs" />
-    <Compile Include="Collections\ListExtension.cs" />
-    <Compile Include="Collections\ReadOnlyCollection.cs" />
-    <Compile Include="Collections\ReadOnlyList.cs" />
-    <Compile Include="DependencyInjection\ContainerHost.cs" />
-    <Compile Include="DependencyInjection\IInstanceProvider.cs" />
-    <Compile Include="DependencyInjection\InstanceProvider.cs" />
-    <Compile Include="DependencyInjection\InstanciatingBehaviour.cs" />
-    <Compile Include="DependencyInjection\ITypeProvider.cs" />
-    <Compile Include="DependencyInjection\ITypeResolver.cs" />
-    <Compile Include="DependencyInjection\TypeProvider.cs" />
-    <Compile Include="DependencyInjection\TypeResolver.cs" />
-    <Compile Include="DependencyInjection\TypeResolvingOptions.cs" />
-    <Compile Include="DisposableBase.cs" />
-    <Compile Include="Collections\EnumerableExtension.cs" />
-    <Compile Include="ICloneable.cs" />
-    <Compile Include="Memoization\IMemoizer.cs" />
-    <Compile Include="Memoization\Memoizer.cs" />
-    <Compile Include="Cache\StaticCache.cs" />
-    <Compile Include="ObservableExtensions.cs" />
+    <Compile Include="Iz.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestBase.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

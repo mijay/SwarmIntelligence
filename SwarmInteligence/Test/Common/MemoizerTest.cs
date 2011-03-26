@@ -2,7 +2,7 @@ using System;
 using Common.Memoization;
 using NUnit.Framework;
 
-namespace Test
+namespace Test.Common
 {
     public class MemoizerTest: CacheTestBase
     {
