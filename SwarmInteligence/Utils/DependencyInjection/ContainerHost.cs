@@ -18,9 +18,8 @@ namespace Utils.DependencyInjection
 
         static ContainerHost()
         {
-            instanceProvider = new InstanceProvider(new ConcurentDictionaryCache(new ConcurrentDictionary<object, object>()));
-            typeResolver = new TypeResolver(new TypeProvider(),
-                                            new Memoizer(new ConcurentDictionaryCache(new ConcurrentDictionary<object, object>())));
+            instanceProvider = new InstanceProvider(new LocalCache());
+            typeResolver = new TypeResolver(new TypeProvider(), new Memoizer(new LocalCache()));
         }
 
         public static T Get<T>()

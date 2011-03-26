@@ -62,7 +62,7 @@
     <Compile Include="Core\World.cs" />
     <Compile Include="Infrastructure\CommandsInfrastructure\CommandContext.cs" />
     <Compile Include="Infrastructure\Commands\AddAnt.cs" />
-    <Compile Include="Core\Creatures\Command.cs" />
+    <Compile Include="Infrastructure\CommandsInfrastructure\Command.cs" />
     <Compile Include="Infrastructure\Commands\AddAntEvaluator.cs" />
     <Compile Include="Infrastructure\Commands\CommandEvaluationHelpers.cs" />
     <Compile Include="Infrastructure\Commands\MoveToEvaluator.cs" />

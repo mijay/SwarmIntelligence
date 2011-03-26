@@ -33,6 +33,11 @@ namespace SILibrary.TwoDimensional
 
         #endregion
 
+        public override string ToString()
+        {
+            return string.Format("X: {0}, Y: {1}", x, y);
+        }
+
         public override bool Equals(object obj)
         {
             return obj is Coordinates2D && Equals((Coordinates2D) obj);

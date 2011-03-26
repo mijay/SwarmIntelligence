@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using Common;
+using Common.Cache;
 using Common.Collections;
 using CommonTest;
 using Ninject;
@@ -50,8 +51,7 @@ namespace Test.ContextIndependendAnt
                             //x.BindWithDefaultConventions();
                         });
 
-            var all = kernel.GetAll<ITypedCommandDispatcher<MoveTo<Coordinates2D, EmptyData, EmptyData>, Coordinates2D, EmptyData, EmptyData>>().ToArray();
-            var all2 = kernel.GetAll<ITypedCommandDispatcher<Coordinates2D, EmptyData, EmptyData>>().ToArray();
+            kernel.Rebind<IKeyValueCache>().To<LocalCache>().InTransientScope();
 
             runner = new Runner<Coordinates2D, EmptyData, EmptyData>(world, kernel.Get<ICommandDispatcher<Coordinates2D, EmptyData, EmptyData>>());
         }

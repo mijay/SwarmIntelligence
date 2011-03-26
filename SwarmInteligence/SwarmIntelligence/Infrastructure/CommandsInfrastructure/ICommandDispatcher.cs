@@ -6,6 +6,6 @@ namespace SwarmIntelligence.Infrastructure.CommandsInfrastructure
     public interface ICommandDispatcher<C, B, E>
         where C: ICoordinate<C>
     {
-        void Dispatch(Command<C, B, E> command);
+        void Dispatch<TCommand>(TCommand command) where TCommand: Command<C, B, E>;
     }
 }

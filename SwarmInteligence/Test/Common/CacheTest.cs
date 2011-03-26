@@ -15,9 +15,9 @@ namespace Test.Common
             Func<string, decimal> func1 = GetFuncForCache(key1, val1);
             Func<string, decimal> func2 = delegate { throw new AssertionException("Incorrect func2 call"); };
 
-            Assert.That(localCache.GetOrSet(key1, func1), Is.EqualTo(val1));
-            Assert.That(localCache.GetOrSet(key1, func2), Is.EqualTo(val1));
-            Assert.That(localCache.GetOrSet(key1, func1), Is.EqualTo(val1));
+            Assert.That(localCache.GetOrAdd(key1, func1), Is.EqualTo(val1));
+            Assert.That(localCache.GetOrAdd(key1, func2), Is.EqualTo(val1));
+            Assert.That(localCache.GetOrAdd(key1, func1), Is.EqualTo(val1));
         }
 
         [Test]
@@ -31,10 +31,10 @@ namespace Test.Common
             const decimal val2 = 456;
             Func<Tuple<string, string>, decimal> func2 = GetFuncForCache(key2, val2);
 
-            Assert.That(localCache.GetOrSet(key1, func1), Is.EqualTo(val1));
-            Assert.That(localCache.GetOrSet(key2, func2), Is.EqualTo(val2));
-            Assert.That(localCache.GetOrSet(key1, func1), Is.EqualTo(val1));
-            Assert.That(localCache.GetOrSet(key2, func2), Is.EqualTo(val2));
+            Assert.That(localCache.GetOrAdd(key1, func1), Is.EqualTo(val1));
+            Assert.That(localCache.GetOrAdd(key2, func2), Is.EqualTo(val2));
+            Assert.That(localCache.GetOrAdd(key1, func1), Is.EqualTo(val1));
+            Assert.That(localCache.GetOrAdd(key2, func2), Is.EqualTo(val2));
         }
 
         [Test]
@@ -44,9 +44,9 @@ namespace Test.Common
             const decimal value = 134;
             Func<Tuple<string>, decimal> func = GetFuncForCache(key, value);
 
-            Assert.That(localCache.GetOrSet(key, func), Is.EqualTo(value));
-            Assert.That(localCache.GetOrSet(key, func), Is.EqualTo(value));
-            Assert.That(localCache.GetOrSet(key, func), Is.EqualTo(value));
+            Assert.That(localCache.GetOrAdd(key, func), Is.EqualTo(value));
+            Assert.That(localCache.GetOrAdd(key, func), Is.EqualTo(value));
+            Assert.That(localCache.GetOrAdd(key, func), Is.EqualTo(value));
         }
 
         [Test]
@@ -55,10 +55,10 @@ namespace Test.Common
             const int key1 = 11;
             const decimal val1 = 67.7m;
             Func<int, decimal> func1 = GetFuncForCache(key1, val1);
-            Assert.That(localCache.GetOrSet(key1, func1), Is.EqualTo(val1));
+            Assert.That(localCache.GetOrAdd(key1, func1), Is.EqualTo(val1));
 
             int key2 = Math.Min(100, 1) + Enumerable.Range(0, 5).Sum();
-            Assert.That(localCache.GetOrSet(key2, func1), Is.EqualTo(val1));
+            Assert.That(localCache.GetOrAdd(key2, func1), Is.EqualTo(val1));
         }
 
         [Test]
@@ -75,8 +75,8 @@ namespace Test.Common
             const decimal val2 = 666;
             Func<object, decimal> func2 = GetFuncForCache(key2.Object, val2);
 
-            Assert.That(localCache.GetOrSet(key1.Object, func1), Is.EqualTo(val1));
-            Assert.That(localCache.GetOrSet(key2.Object, func2), Is.EqualTo(val2));
+            Assert.That(localCache.GetOrAdd(key1.Object, func1), Is.EqualTo(val1));
+            Assert.That(localCache.GetOrAdd(key2.Object, func2), Is.EqualTo(val2));
         }
     }
 }

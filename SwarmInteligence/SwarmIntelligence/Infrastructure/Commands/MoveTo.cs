@@ -1,4 +1,5 @@
-﻿using SwarmIntelligence.Core;
+﻿using System;
+using SwarmIntelligence.Core;
 using SwarmIntelligence.Infrastructure.CommandsInfrastructure;
 
 namespace SwarmIntelligence.Infrastructure.Commands
@@ -12,5 +13,14 @@ namespace SwarmIntelligence.Infrastructure.Commands
         }
 
         public C TargetPoint { get; set; }
+
+        #region Overrides of Command<C,B,E>
+
+        public override void Dispatch(ICommandDispatcher<C, B, E> dispatcher)
+        {
+            dispatcher.Dispatch(this);
+        }
+
+        #endregion
     }
 }

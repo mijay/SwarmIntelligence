@@ -13,8 +13,8 @@ namespace SwarmIntelligence.Core.Creatures
         public void Add(Ant<C, B, E> ant)
         {
             Contract.Requires(ant != null);
-            Contract.Requires(!this.Contains(ant));
-            Contract.Ensures(this.Contains(ant));
+            Contract.Requires(!list.Contains(ant));
+            Contract.Ensures(list.Contains(ant));
 
             list.Add(ant);
         }
@@ -22,8 +22,8 @@ namespace SwarmIntelligence.Core.Creatures
         public void Remove(Ant<C, B, E> ant)
         {
             Contract.Requires(ant != null);
-            Contract.Requires(this.Contains(ant));
-            Contract.Ensures(!this.Contains(ant));
+            Contract.Requires(list.Contains(ant));
+            Contract.Ensures(!list.Contains(ant));
 
             list.Remove(ant);
         }

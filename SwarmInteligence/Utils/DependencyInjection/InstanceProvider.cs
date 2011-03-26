@@ -20,7 +20,7 @@ namespace Utils.DependencyInjection
             if(behaviour == InstanciatingBehaviour.AlwaysInstanciate)
                 return CreateInstance(type);
             if(behaviour == InstanciatingBehaviour.ReuseInstance)
-                return cache.GetOrSet(type, CreateInstance);
+                return cache.GetOrAdd(type, CreateInstance);
             throw new ArgumentException();
         }
 

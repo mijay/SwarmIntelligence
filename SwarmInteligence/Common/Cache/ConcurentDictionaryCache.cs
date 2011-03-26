@@ -15,7 +15,7 @@ namespace Common.Cache
 
         #region IKeyValueCache Members
 
-        public TVal GetOrSet<TKey, TVal>(TKey key, Func<TKey, TVal> factory)
+        public TVal GetOrAdd<TKey, TVal>(TKey key, Func<TKey, TVal> factory)
         {
             Contract.Requires(factory != null && key != null);
             object result = cache.GetOrAdd(key, objKey => factory((TKey) objKey));

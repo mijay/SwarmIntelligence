@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Common.Cache;
 using SwarmIntelligence.Core;
-using SwarmIntelligence.Core.Creatures;
 using SwarmIntelligence.Infrastructure.CommandsInfrastructure;
 
 namespace SwarmIntelligence.Infrastructure.Implementation
@@ -10,19 +10,25 @@ namespace SwarmIntelligence.Infrastructure.Implementation
         where C: ICoordinate<C>
     {
         private readonly IEnumerable<ITypedCommandDispatcher<C, B, E>> commandDispatchers;
+        private readonly IKeyValueCache keyValueCache;
 
-        public CommandDispatcher(IEnumerable<ITypedCommandDispatcher<C, B, E>> commandDispatchers)
+        public CommandDispatcher(IEnumerable<ITypedCommandDispatcher<C, B, E>> commandDispatchers, IKeyValueCache keyValueCache)
         {
             this.commandDispatchers = commandDispatchers;
+            this.keyValueCache = keyValueCache;
         }
 
         #region ICommandDispatcher<C,B,E> Members
 
-        public void Dispatch(Command<C, B, E> command)
+        public void Dispatch<TCommand>(TCommand command) where TCommand: Command<C, B, E>
         {
-            commandDispatchers
-                .OfType<ITypedCommandDispatcher<Command<C, B, E>, C, B, E>>()
-                .Single()
+            keyValueCache
+                .GetOrAdd(typeof(TCommand),
+                          delegate {
+                              return commandDispatchers
+                                  .OfType<ITypedCommandDispatcher<TCommand, C, B, E>>()
+                                  .Single();
+                          })
                 .Dispatch(command);
         }
 

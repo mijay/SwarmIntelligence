@@ -28,7 +28,8 @@ namespace SwarmIntelligence.Infrastructure.Implementation
         private void ExecuteCommands(IEnumerable<AntContext> obtainedCommands)
         {
             obtainedCommands.ForEach(
-                commandsInContext => commandsInContext.commands.ForEach(command => commandDispatcher.Dispatch(command)));
+                commandsInContext => commandsInContext.commands
+                                         .ForEach(command => command.Dispatch(commandDispatcher)));
         }
 
         private AntContext[] ObtainCommands()
