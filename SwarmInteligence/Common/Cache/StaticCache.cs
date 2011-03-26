@@ -1,6 +1,6 @@
 ﻿using System.Collections.Concurrent;
 
-namespace SwarmIntelligence.Utils.Cache
+namespace Common.Cache
 {
     public class StaticCache: ConcurentDictionaryCache
     {

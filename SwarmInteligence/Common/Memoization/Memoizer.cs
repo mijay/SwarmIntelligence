@@ -1,6 +1,7 @@
 ﻿using System;
+using Common.Cache;
 
-namespace SwarmIntelligence.Utils.Cache
+namespace Common.Memoization
 {
     public class Memoizer: IMemoizer
     {

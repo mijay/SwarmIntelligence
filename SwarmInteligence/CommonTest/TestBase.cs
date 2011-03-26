@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 
-namespace Test
+namespace CommonTest
 {
     [TestFixture]
     public abstract class TestBase

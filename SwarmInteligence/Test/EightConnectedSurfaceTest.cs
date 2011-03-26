@@ -1,5 +1,5 @@
+using CommonTest;
 using NUnit.Framework;
-using NUnit.Framework.Constraints;
 using SILibrary.TwoDimensional;
 
 namespace Test
@@ -23,7 +23,7 @@ namespace Test
         [Test]
         public void BorderConditions()
         {
-            Assert.Throws(Utils.Iz.Any, () => topology.GetSuccessors(new Coordinates2D(0, 0)));
+            Assert.Throws(CommonTest.Iz.Any, () => topology.GetSuccessors(new Coordinates2D(0, 0)));
 
             CollectionAssert.AreEquivalent(
                 new[] { new Coordinates2D(2, 3), new Coordinates2D(3, 3), new Coordinates2D(3, 2) },

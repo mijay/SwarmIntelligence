@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
 
-namespace SwarmIntelligence.Utils
+namespace Common
 {
     public static class EnumerableExtension
     {

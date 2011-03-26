@@ -1,7 +1,7 @@
 ﻿using System;
 using NUnit.Framework.Constraints;
 
-namespace Utils
+namespace CommonTest
 {
     public static class Iz
     {

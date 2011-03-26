@@ -87,16 +87,13 @@
     <Compile Include="Core\Data\IMapping.cs" />
     <Compile Include="Core\Data\ILazyMapping.cs" />
     <Compile Include="Core\Creatures\Map.cs" />
-    <Compile Include="Utils\Cache\ConcurentDictionaryCache.cs" />
-    <Compile Include="Utils\Cache\IKeyValueCache.cs" />
-    <Compile Include="Utils\Cache\IMemoizer.cs" />
-    <Compile Include="Utils\Cache\LocalCache.cs" />
-    <Compile Include="Utils\Cache\Memoizer.cs" />
-    <Compile Include="Utils\Cache\StaticCache.cs" />
-    <Compile Include="Utils\EnumerableExtension.cs" />
-    <Compile Include="Utils\ICloneable.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{2BC749DB-5C4C-403A-9391-8FC43719D93A}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

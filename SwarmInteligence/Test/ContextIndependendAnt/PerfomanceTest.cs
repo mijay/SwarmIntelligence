@@ -1,7 +1,7 @@
 using System;
+using Common;
+using CommonTest;
 using NUnit.Framework;
-using SwarmIntelligence.Utils;
-using Utils;
 
 namespace Test.ContextIndependendAnt
 {

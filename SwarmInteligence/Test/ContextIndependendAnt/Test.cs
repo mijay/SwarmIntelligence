@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using Common;
+using CommonTest;
 using NUnit.Framework;
 using SILibrary.General;
 using SILibrary.General.Background;
@@ -9,7 +11,6 @@ using SILibrary.TwoDimensional;
 using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Creatures;
 using SwarmIntelligence.Infrastructure.Implementation;
-using SwarmIntelligence.Utils;
 
 namespace Test.ContextIndependendAnt
 {

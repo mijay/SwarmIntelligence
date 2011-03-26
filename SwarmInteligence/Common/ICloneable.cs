@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace SwarmIntelligence.Utils
+﻿namespace Common
 {
     public interface ICloneable<out T>
     {

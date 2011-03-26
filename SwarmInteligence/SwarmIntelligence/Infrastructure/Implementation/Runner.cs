@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Common;
 using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Creatures;
 using SwarmIntelligence.Infrastructure.CommandsInfrastructure;
-using SwarmIntelligence.Utils;
 
 namespace SwarmIntelligence.Infrastructure.Implementation
 {

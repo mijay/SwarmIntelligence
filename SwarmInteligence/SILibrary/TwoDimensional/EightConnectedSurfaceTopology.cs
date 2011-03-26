@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
+using Common;
 using SILibrary.General;
-using SwarmIntelligence.Utils;
 
 namespace SILibrary.TwoDimensional
 {
