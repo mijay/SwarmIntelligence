@@ -1,5 +1,4 @@
 ﻿using SwarmIntelligence.Core;
-using SwarmIntelligence.Core.Creatures;
 
 namespace SwarmIntelligence.Infrastructure.CommandsInfrastructure
 {
@@ -10,7 +9,7 @@ namespace SwarmIntelligence.Infrastructure.CommandsInfrastructure
 
         protected CommandImplementationBase()
         {
-            Context = CommandContext<C,B,E>.CurrentContext.Clone();
+            Context = CommandContext<C,B,E>.CurrentContext.Value.Clone();
         }
     }
 }

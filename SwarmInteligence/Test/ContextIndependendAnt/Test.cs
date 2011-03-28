@@ -107,7 +107,7 @@ namespace Test.ContextIndependendAnt
             for(int i = 0; i < jumps; ++i)
                 runner.ProcessTurn();
             timer.Stop();
-            Console.WriteLine(string.Format("jumps - {0}; ants - {1}; time - {2} ms", jumps, ants, timer.ElapsedMilliseconds));
+            Debug.WriteLine(string.Format("jumps - {0}; ants - {1}; time - {2} ms", jumps, ants, timer.ElapsedMilliseconds));
 
             KeyValuePair<Coordinates2D, Cell<Coordinates2D, EmptyData, EmptyData>> keyValuePair = world.Map.GetInitialized().Single();
             Assert.That(keyValuePair.Key, Is.EqualTo(lastStep));

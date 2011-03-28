@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using Common;
 using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Creatures;
@@ -8,8 +9,7 @@ namespace SwarmIntelligence.Infrastructure.CommandsInfrastructure
     public class CommandContext<C, B, E>: ICloneable<CommandContext<C, B, E>>
         where C: ICoordinate<C>
     {
-        [ThreadStatic]
-        public static CommandContext<C, B, E> CurrentContext;
+        public static ThreadLocal<CommandContext<C, B, E>> CurrentContext;
 
         public World<C, B, E> World { get; set; }
         public Ant<C, B, E> Ant { get; set; }

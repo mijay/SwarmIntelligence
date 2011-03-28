@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using Common.Collections;
 using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Creatures;
@@ -21,50 +22,46 @@ namespace SwarmIntelligence.Infrastructure.Implementation
 
         public void ProcessTurn()
         {
-            AntContext[] obtainedCommands = ObtainCommands();
-            ExecuteCommands(obtainedCommands);
+            ExecuteCommands(ObtainCommands());
         }
 
-        private void ExecuteCommands(IEnumerable<AntContext> obtainedCommands)
+        private void ExecuteCommands(IEnumerable<Command<C, B, E>> obtainedCommands)
         {
-            obtainedCommands.ForEach(
-                commandsInContext => commandsInContext.commands
-                                         .ForEach(command => command.Dispatch(commandDispatcher)));
+            obtainedCommands.ForEach(command => command.Dispatch(commandDispatcher));
         }
 
-        private AntContext[] ObtainCommands()
+        private Command<C, B, E>[] ObtainCommands()
         {
+            CommandContext<C, B, E>.CurrentContext =
+                new ThreadLocal<CommandContext<C, B, E>>(() => new CommandContext<C, B, E> { World = world });
+
             return GetAntContexts()
-                .Select(context => {
-                            InitializeCommandContext(context);
-                            context.commands = context.ant.ProcessTurn();
-                            return context;
-                        })
-                .Where(context => !context.commands.IsEmpty())
+                .SelectMany(context => {
+                                InitializeCommandContext(context);
+                                return context.ant.ProcessTurn();
+                            })
                 .ToArray();
         }
 
-        private void InitializeCommandContext(AntContext context)
+        private ParallelQuery<AntContext> GetAntContexts()
         {
-            if(CommandContext<C, B, E>.CurrentContext == null)
-                CommandContext<C, B, E>.CurrentContext = new CommandContext<C, B, E> { World = world };
-            CommandContext<C, B, E>.CurrentContext.Ant = context.ant;
-            CommandContext<C, B, E>.CurrentContext.Coordinate = context.coord;
+            return world.Map
+                .GetInitialized()
+                .AsParallel()
+                .SelectMany(cellWithCoord =>
+                            cellWithCoord.Value
+                                .Select(ant => new AntContext
+                                               {
+                                                   coord = cellWithCoord.Key,
+                                                   ant = ant
+                                               }))
+                .AsParallel();
         }
 
-        //private ParallelQuery<AntContext> GetAntContexts()
-        private IEnumerable<AntContext> GetAntContexts()
+        private static void InitializeCommandContext(AntContext context)
         {
-            return world
-                .Map
-                .GetInitialized()
-                //  .AsParallel()
-                .SelectMany(cellWithCoord => cellWithCoord.Value
-                                                 .Select(ant => new AntContext
-                                                                {
-                                                                    coord = cellWithCoord.Key,
-                                                                    ant = ant
-                                                                }));
+            CommandContext<C, B, E>.CurrentContext.Value.Ant = context.ant;
+            CommandContext<C, B, E>.CurrentContext.Value.Coordinate = context.coord;
         }
 
         #region Nested type: AntContext
@@ -72,7 +69,6 @@ namespace SwarmIntelligence.Infrastructure.Implementation
         private struct AntContext
         {
             public Ant<C, B, E> ant;
-            public IEnumerable<Command<C, B, E>> commands;
             public C coord;
         }
 

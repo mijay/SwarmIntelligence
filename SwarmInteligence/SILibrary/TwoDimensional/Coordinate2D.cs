@@ -35,7 +35,7 @@ namespace SILibrary.TwoDimensional
 
         public override string ToString()
         {
-            return string.Format("X: {0}, Y: {1}", x, y);
+            return string.Format("x: {0}, y: {1}", x, y);
         }
 
         public override bool Equals(object obj)
