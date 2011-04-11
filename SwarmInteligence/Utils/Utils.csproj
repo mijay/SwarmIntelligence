@@ -87,15 +87,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ContractExtensions.cs" />
-    <Compile Include="DependencyInjection\ContainerHost.cs" />
-    <Compile Include="DependencyInjection\IInstanceProvider.cs" />
-    <Compile Include="DependencyInjection\InstanceProvider.cs" />
-    <Compile Include="DependencyInjection\InstanciatingBehaviour.cs" />
-    <Compile Include="DependencyInjection\ITypeProvider.cs" />
-    <Compile Include="DependencyInjection\ITypeResolver.cs" />
-    <Compile Include="DependencyInjection\TypeProvider.cs" />
-    <Compile Include="DependencyInjection\TypeResolver.cs" />
-    <Compile Include="DependencyInjection\TypeResolvingOptions.cs" />
     <Compile Include="Drawing\FastDrawHelper.cs" />
     <Compile Include="Drawing\FastBitmap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

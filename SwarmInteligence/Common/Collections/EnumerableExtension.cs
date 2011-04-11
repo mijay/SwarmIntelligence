@@ -13,6 +13,12 @@ namespace Common.Collections
             return source.Take(1).Count() == 0;
         }
 
+        public static bool IsNotEmpty<T>(this IEnumerable<T> source)
+        {
+            Contract.Requires(source != null);
+            return source.Take(1).Count() != 0;
+        }
+
         public static void ForEach<T>(this IEnumerable<T> source, Action<T> action)
         {
             Contract.Requires(source != null);

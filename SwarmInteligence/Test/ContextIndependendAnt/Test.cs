@@ -7,12 +7,12 @@ using Common;
 using Common.Cache;
 using Common.Collections;
 using CommonTest;
-using Ninject;
 using NUnit.Framework;
-using Ninject.Extensions.Conventions;
 using SILibrary.General;
 using SILibrary.General.Background;
 using SILibrary.TwoDimensional;
+using StructureMap;
+using StructureMap.Interceptors;
 using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Creatures;
 using SwarmIntelligence.Infrastructure.Commands;
@@ -38,22 +38,16 @@ namespace Test.ContextIndependendAnt
 
             world = new World<Coordinates2D, EmptyData, EmptyData>(boundaries, topology, nodeDataLayer, edgeDataLayer, map);
 
-            var kernel = new StandardKernel(new NinjectSettings
-                                            {
-                                                ActivationCacheDisabled = false,
-                                                AllowNullInjection = false,
-                                                UseReflectionBasedInjection = true
-                                            });
-            kernel.Scan(x => {
-                            x.From(AppDomain.CurrentDomain.GetAssemblies());
-                            x.InSingletonScope();
-                            x.BindWith(new AllInterfacesBinding());
-                            //x.BindWithDefaultConventions();
-                        });
-
-            kernel.Rebind<IKeyValueCache>().To<LocalCache>().InTransientScope();
-
-            runner = new Runner<Coordinates2D, EmptyData, EmptyData>(world, kernel.Get<ICommandDispatcher<Coordinates2D, EmptyData, EmptyData>>());
+            var container = new Container(x => {
+                                              x.Scan(a => {
+                                                         a.Assembly(Assembly.Load("Common"));
+                                                         a.Assembly(Assembly.Load("SwarmIntelligence"));
+                                                         a.Assembly(Assembly.Load("SILibrary"));
+                                                         a.WithDefaultConventions();
+                                                     });
+                                              x.For<IKeyValueCache>().AlwaysUnique().Use<LocalCache>();
+                                          });
+            runner = new Runner<Coordinates2D, EmptyData, EmptyData>(world, container.GetInstance<ICommandDispatcher<Coordinates2D, EmptyData, EmptyData>>());
         }
 
         #endregion

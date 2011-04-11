@@ -58,20 +58,16 @@
     <Reference Include="Moq">
       <HintPath>..\Reference\Moq.dll</HintPath>
     </Reference>
-    <Reference Include="Ninject">
-      <HintPath>..\Reference\Ninject\Ninject.dll</HintPath>
-    </Reference>
-    <Reference Include="Ninject.Extensions.Conventions">
-      <HintPath>..\Reference\Ninject\extensions\Ninject.Extensions.Conventions.dll</HintPath>
-    </Reference>
     <Reference Include="nunit.framework, Version=2.5.6.10205, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Reference\nunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="StructureMap">
+      <HintPath>..\Reference\StructureMap\StructureMap.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ContextIndependendAnt\AllInterfacesBinding.cs" />
     <Compile Include="ContextIndependendAnt\PerfomanceTest.cs" />
     <Compile Include="ContextIndependendAnt\Test.cs" />
     <Compile Include="ContextIndependendAnt\TestAnt.cs" />

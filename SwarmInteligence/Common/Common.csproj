@@ -55,6 +55,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="StructureMap">
+      <HintPath>..\Reference\StructureMap\StructureMap.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Reactive, Version=1.0.2856.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\Reference\Rx\System.Reactive.dll</HintPath>
@@ -70,6 +73,13 @@
     <Compile Include="Collections\ListExtension.cs" />
     <Compile Include="Collections\ReadOnlyCollection.cs" />
     <Compile Include="Collections\ReadOnlyList.cs" />
+    <Compile Include="DependecyInjection\Container.cs" />
+    <Compile Include="DependecyInjection\IAssemblyProvider.cs" />
+    <Compile Include="DependecyInjection\AttributeBasedAssemblyProvider.cs" />
+    <Compile Include="DependecyInjection\ContainerFactory.cs" />
+    <Compile Include="DependecyInjection\ContainerWrap.cs" />
+    <Compile Include="DependecyInjection\IContainer.cs" />
+    <Compile Include="DependecyInjection\ScanAssemblyAttribute.cs" />
     <Compile Include="DisposableBase.cs" />
     <Compile Include="Collections\EnumerableExtension.cs" />
     <Compile Include="ICloneable.cs" />
@@ -78,6 +88,7 @@
     <Compile Include="Cache\StaticCache.cs" />
     <Compile Include="ObservableExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TypeExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
