@@ -57,5 +57,12 @@ namespace Common.Collections
 
             return enumerable.Where(x => x != null);
         }
+
+        public static IEnumerable<T> Concat<T>(this IEnumerable<T> enumerable, T elem)
+        {
+            Contract.Requires(enumerable != null);
+
+            return enumerable.Concat(new[] { elem });
+        }
     }
 }

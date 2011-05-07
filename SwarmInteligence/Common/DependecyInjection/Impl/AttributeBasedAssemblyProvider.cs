@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using Common.Collections;
 
-namespace Common.DependecyInjection
+namespace Common.DependecyInjection.Impl
 {
     public class AttributeBasedAssemblyProvider: IAssemblyProvider
     {

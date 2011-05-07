@@ -1,13 +1,18 @@
+using System;
+using System.Threading;
+using Common.DependecyInjection.Impl;
+
 namespace Common.DependecyInjection
 {
-    public static class Container
+    public static class ContainerHost
     {
-        private static readonly ContainerFactory factory =
-            new ContainerFactory(new AttributeBasedAssemblyProvider());
+        private static readonly Lazy<IContainer> container =
+            new Lazy<IContainer>(() => new ContainerWrap(new ContainerFactory(new AttributeBasedAssemblyProvider()).Create()),
+                                 LazyThreadSafetyMode.ExecutionAndPublication);
 
-        public static IContainer Build()
+        public static IContainer Container
         {
-            return new ContainerWrap(factory.Create());
+            get { return container.Value; }
         }
     }
 }

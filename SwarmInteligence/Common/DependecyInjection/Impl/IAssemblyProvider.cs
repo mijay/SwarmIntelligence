@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
 
-namespace Common.DependecyInjection
+namespace Common.DependecyInjection.Impl
 {
     public interface IAssemblyProvider
     {
