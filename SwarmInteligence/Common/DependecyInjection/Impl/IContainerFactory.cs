@@ -1,6 +1,9 @@
+using StructureMap;
+
 namespace Common.DependecyInjection.Impl
 {
-    public interface IContainerFactory {
-        StructureMap.Container Create();
+    public interface IContainerFactory
+    {
+        Container Create();
     }
 }

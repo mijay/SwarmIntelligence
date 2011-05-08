@@ -12,7 +12,7 @@ namespace Utils.Drawing
         /// </summary>
         public static void DrawPoint(FastBitmap bmp, int x, int y, PixelData color)
         {
-            var addr = bmp[x, y];
+            PixelData* addr = bmp[x, y];
             addr->R = color.R;
             addr->G = color.G;
             addr->B = color.B;
@@ -28,14 +28,15 @@ namespace Utils.Drawing
         public static void DrawPoint(FastBitmap bmp, int x, int y, Color color)
         {
             byte a = color.A;
-            byte b = (byte) ~a;
-            var addr = bmp[x, y];
+            var b = (byte) ~a;
+            PixelData* addr = bmp[x, y];
             checked {
-                addr->R = (byte)((addr->R * b + color.R * a) / 255);
-                addr->G = (byte)((addr->G * b + color.G * a) / 255);
-                addr->B = (byte)((addr->B * b + color.B * a) / 255);    
+                addr->R = (byte) ((addr->R * b + color.R * a) / 255);
+                addr->G = (byte) ((addr->G * b + color.G * a) / 255);
+                addr->B = (byte) ((addr->B * b + color.B * a) / 255);
             }
         }
+
         //todo: write a code!!
     }
 }

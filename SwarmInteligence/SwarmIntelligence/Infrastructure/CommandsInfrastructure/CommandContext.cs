@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using Common;
 using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Creatures;

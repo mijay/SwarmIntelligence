@@ -5,7 +5,7 @@ using SwarmIntelligence.Core.Space;
 
 namespace SILibrary.General.Background
 {
-    public class DelegateEdgeDataLayer<C,E>:EdgeDataLayer<C,E>
+    public class DelegateEdgeDataLayer<C, E>: EdgeDataLayer<C, E>
         where C: ICoordinate<C>
     {
         private readonly Func<Edge<C>, E> factory;

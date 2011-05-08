@@ -30,14 +30,14 @@ namespace Common.Collections
                 result = defaultVal;
             return result;
         }
-        
+
         public static TVal GetOrAdd<TKey, TVal>(this IDictionary<TKey, TVal> dictionary, TKey key, Func<TVal> valueGetter)
         {
             Contract.Requires(dictionary != null && valueGetter != null);
             TVal result;
-            if (!dictionary.TryGetValue(key, out result)) {
+            if(!dictionary.TryGetValue(key, out result)) {
                 result = valueGetter();
-                dictionary.Add(key ,result);
+                dictionary.Add(key, result);
             }
             return result;
         }

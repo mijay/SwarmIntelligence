@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using Common;
 using Common.Cache;
 using Common.Collections;
 using CommonTest;
@@ -12,10 +11,8 @@ using SILibrary.General;
 using SILibrary.General.Background;
 using SILibrary.TwoDimensional;
 using StructureMap;
-using StructureMap.Interceptors;
 using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Creatures;
-using SwarmIntelligence.Infrastructure.Commands;
 using SwarmIntelligence.Infrastructure.CommandsInfrastructure;
 using SwarmIntelligence.Infrastructure.Implementation;
 
@@ -47,7 +44,10 @@ namespace Test.ContextIndependendAnt
                                                      });
                                               x.For<IKeyValueCache>().AlwaysUnique().Use<LocalCache>();
                                           });
-            runner = new Runner<Coordinates2D, EmptyData, EmptyData>(world, container.GetInstance<ICommandDispatcher<Coordinates2D, EmptyData, EmptyData>>());
+            runner = new Runner<Coordinates2D, EmptyData, EmptyData>(world,
+                                                                     container.GetInstance
+                                                                         <ICommandDispatcher<Coordinates2D, EmptyData, EmptyData>>
+                                                                         ());
         }
 
         #endregion
@@ -103,7 +103,8 @@ namespace Test.ContextIndependendAnt
             timer.Stop();
             Debug.WriteLine(string.Format("jumps - {0}; ants - {1}; time - {2} ms", jumps, ants, timer.ElapsedMilliseconds));
 
-            KeyValuePair<Coordinates2D, Cell<Coordinates2D, EmptyData, EmptyData>> keyValuePair = world.Map.GetInitialized().Single();
+            KeyValuePair<Coordinates2D, Cell<Coordinates2D, EmptyData, EmptyData>> keyValuePair =
+                world.Map.GetInitialized().Single();
             Assert.That(keyValuePair.Key, Is.EqualTo(lastStep));
             CollectionAssert.AreEquivalent(seededAnts, keyValuePair.Value);
         }

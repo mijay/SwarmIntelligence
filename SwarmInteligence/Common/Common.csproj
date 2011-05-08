@@ -81,6 +81,7 @@
     <Compile Include="DependecyInjection\Impl\ContainerWrap.cs" />
     <Compile Include="DependecyInjection\IContainer.cs" />
     <Compile Include="DependecyInjection\Impl\IContainerFactory.cs" />
+    <Compile Include="DependecyInjection\Impl\IConventions.cs" />
     <Compile Include="DependecyInjection\ScanAssemblyAttribute.cs" />
     <Compile Include="DependecyInjection\Impl\SmartConventions.cs" />
     <Compile Include="DisposableBase.cs" />

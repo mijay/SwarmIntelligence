@@ -33,19 +33,20 @@ namespace Utils.Drawing
         }
     }
 
-    public unsafe class FastBitmap : IDisposable
+    public unsafe class FastBitmap: IDisposable
     {
-        private Bitmap _bitmap;
-        private int _width;
-        private BitmapData _bitmapData = null;
+        private readonly Bitmap _bitmap;
+        private BitmapData _bitmapData;
+        private bool _locked;
         private byte* _pBase = null;
         private PixelData* _pInitPixel = null;
         private Point _size;
-        private bool _locked = false;
+        private int _width;
 
         public FastBitmap(Bitmap bmp)
         {
-            if (bmp == null) throw new ArgumentNullException("bitmap");
+            if(bmp == null)
+                throw new ArgumentNullException("bitmap");
 
             _bitmap = bmp;
             _size = new Point(bmp.Width, bmp.Height);
@@ -53,14 +54,24 @@ namespace Utils.Drawing
             LockBitmap();
         }
 
-        public PixelData* GetInitialPixelForRow(int rowNumber)
-        {
-            return (PixelData*)(_pBase + rowNumber * _width);
-        }
-
         public PixelData* this[int x, int y]
         {
-            get { return (PixelData*)(_pBase + y * _width + x * sizeof(PixelData)); }
+            get { return (PixelData*) (_pBase + y * _width + x * sizeof(PixelData)); }
+        }
+
+        #region IDisposable Members
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        #endregion
+
+        public PixelData* GetInitialPixelForRow(int rowNumber)
+        {
+            return (PixelData*) (_pBase + rowNumber * _width);
         }
 
         public Color GetColor(int x, int y)
@@ -79,41 +90,38 @@ namespace Utils.Drawing
 
         private void LockBitmap()
         {
-            if (_locked) throw new InvalidOperationException("Already locked");
+            if(_locked)
+                throw new InvalidOperationException("Already locked");
 
-            Rectangle bounds = new Rectangle(0, 0, _bitmap.Width, _bitmap.Height);
+            var bounds = new Rectangle(0, 0, _bitmap.Width, _bitmap.Height);
 
             // Figure out the number of bytes in a row. This is rounded up to be a multiple 
             // of 4 bytes, since a scan line in an image must always be a multiple of 4 bytes
             // in length. 
             _width = bounds.Width * sizeof(PixelData);
-            if (_width % 4 != 0) _width = 4 * (_width / 4 + 1);
+            if(_width % 4 != 0)
+                _width = 4 * (_width / 4 + 1);
 
             _bitmapData = _bitmap.LockBits(bounds, ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
 
-            _pBase = (byte*)_bitmapData.Scan0.ToPointer();
+            _pBase = (byte*) _bitmapData.Scan0.ToPointer();
             _locked = true;
         }
 
         private void InitCurrentPixel()
         {
-            _pInitPixel = (PixelData*)_pBase;
+            _pInitPixel = (PixelData*) _pBase;
         }
 
         private void UnlockBitmap()
         {
-            if (!_locked) throw new InvalidOperationException("Not currently locked");
+            if(!_locked)
+                throw new InvalidOperationException("Not currently locked");
 
             _bitmap.UnlockBits(_bitmapData);
             _bitmapData = null;
             _pBase = null;
             _locked = false;
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
         }
 
         ~FastBitmap()
@@ -123,7 +131,8 @@ namespace Utils.Drawing
 
         protected virtual void Dispose(bool clean)
         {
-            if (_locked) UnlockBitmap();
+            if(_locked)
+                UnlockBitmap();
         }
     }
 }

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
-using System.Text;
 using System.Linq;
+using System.Text;
 
 namespace Common.Collections
 {
@@ -43,14 +43,13 @@ namespace Common.Collections
         {
             Contract.Requires(data != null);
 
-            var lineBegin = 0;
-            for(var position = 0; position < data.Length; ++position) {
+            int lineBegin = 0;
+            for(int position = 0; position < data.Length; ++position)
                 if(data[position] == '\n') {
-                    var line = Encoding.UTF8.GetString(data, lineBegin, position - lineBegin);
+                    string line = Encoding.UTF8.GetString(data, lineBegin, position - lineBegin);
                     lineBegin = position + 1;
                     yield return new KeyValuePair<string, IEnumerable<byte>>(line, data.Skip(lineBegin));
                 }
-            }
         }
     }
 }

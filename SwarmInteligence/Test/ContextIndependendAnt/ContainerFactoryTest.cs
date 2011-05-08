@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -22,7 +23,7 @@ namespace Test.ContextIndependendAnt
             assemblyProvider
                 .Setup(x => x.GetAssemblies())
                 .Returns(new[] { Assembly.Load("DITestAssembly") });
-            var containerFactory = new ContainerFactory(assemblyProvider.Object);
+            var containerFactory = new ContainerFactory(assemblyProvider.Object, new SmartConventions());
             createdContainer = containerFactory.Create();
         }
 
@@ -36,6 +37,15 @@ namespace Test.ContextIndependendAnt
         }
 
         private Container createdContainer;
+
+        [Test]
+        public void GetAbstractGenericType_CorrectNonabstractGenericInheritorReturned()
+        {
+            Assert.That(createdContainer.GetInstance<TestWhere<int>>(),
+                        Is.TypeOf<TestWhereStruct<int>>());
+            Assert.That(createdContainer.GetInstance<TestWhere<ArrayList>>(),
+                        Is.TypeOf<TestWhereEnumerable<ArrayList>>());
+        }
 
         [Test]
         public void GetAllForBaseTypeForTypeWithInheritor_TypeAndInheritedTypeInstancesReturned()
@@ -122,7 +132,6 @@ namespace Test.ContextIndependendAnt
                         Is.TypeOf<TestInheritanceBaseNonAbstract>());
         }
 
-        //todo: тесты на тип у которого больше ограничений на аргументы чем у предка (есть брат с другими ограничениями)
         //todo: полу-открытые типы
         //todo: наследование с частичным определением аргументов
     }

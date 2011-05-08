@@ -1,5 +1,4 @@
-﻿using System;
-using SwarmIntelligence.Core;
+﻿using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Creatures;
 using SwarmIntelligence.Infrastructure.CommandsInfrastructure;
 

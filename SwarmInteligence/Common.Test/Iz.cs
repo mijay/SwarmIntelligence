@@ -17,7 +17,7 @@ namespace CommonTest
 
         #region Nested type: MatchesContraint
 
-        private class MatchesContraint<T> : IResolveConstraint
+        private class MatchesContraint<T>: IResolveConstraint
         {
             private readonly Predicate<T> predicate;
 

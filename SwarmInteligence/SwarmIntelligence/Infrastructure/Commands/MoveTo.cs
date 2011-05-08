@@ -1,5 +1,4 @@
-﻿using System;
-using SwarmIntelligence.Core;
+﻿using SwarmIntelligence.Core;
 using SwarmIntelligence.Infrastructure.CommandsInfrastructure;
 
 namespace SwarmIntelligence.Infrastructure.Commands

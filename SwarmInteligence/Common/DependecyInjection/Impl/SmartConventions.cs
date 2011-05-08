@@ -1,55 +1,57 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
 using System.Linq;
-using Common.Collections;
-using StructureMap;
 using StructureMap.Configuration.DSL;
 using StructureMap.Graph;
 using StructureMap.TypeRules;
 
 namespace Common.DependecyInjection.Impl
 {
-    public class SmartConventions: IRegistrationConvention
+    public class SmartConventions: IConventions
     {
-        #region Implementation of IRegistrationConvention
+        #region IConventions Members
 
         public void Process(Type type, Registry registry)
         {
+            Contract.Requires(type != null && registry != null);
             if(!type.IsConcrete())
                 return;
-            if(type.IsGenericType) {
-                if (type.GetGenericArguments().Count() == 0)
-                    ProcessOpenType(type, registry);
+
+            registry.For(type).Singleton().Use(type);
+
+            foreach(Type t in type.GetBaseTypes().Concat(type.GetInterfaces()))
+                if(t.IsGenericType && type.IsGenericType)
+                    registry
+                        .For(t.GetGenericTypeDefinition())
+                        .Singleton()
+                        .Add(type.GetGenericTypeDefinition());
                 else
-                    ProcessOpenClosedType(type, registry);
+                    registry.For(t).Singleton().Add(type);
+        }
+
+        public void Patch(PluginGraph pluginGraph)
+        {
+            Contract.Requires(pluginGraph != null);
+            PluginFamily[] initialPluginFamilies = pluginGraph.PluginFamilies.ToArray();
+            foreach(PluginFamily pluginFamily in initialPluginFamilies) {
+                Type pluginType = pluginFamily.PluginType;
+                if(pluginType.IsClosedGenerictType()) {
+                    Type openPluginType = pluginType.GetGenericTypeDefinition();
+                    if(pluginGraph.ContainsFamily(openPluginType)) {
+                        PluginFamily openPluginFamily = pluginGraph.FindFamily(openPluginType);
+                        CopyOpenGenericFamiltyToClosed(openPluginFamily, pluginFamily);
+                    }
+                }
             }
-            else
-                ProcessClosedType(type, registry);
         }
 
         #endregion
 
-        private void ProcessOpenType(Type type, Registry registry)
+        private static void CopyOpenGenericFamiltyToClosed(PluginFamily openGenericFamily, PluginFamily closedGenericFamily)
         {
-            //todo: Implement !!
-            return;
-        }
-
-        private void ProcessOpenClosedType(Type type, Registry registry)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void ProcessClosedType(Type type, Registry registry)
-        {
-            Type[] types = type.GetBaseTypes()
-                .Where(x => !x.IsConcrete())
-                .Concat(type.GetInterfaces())
-                .Concat(type)
-                .ToArray();
-            foreach(Type t in types)
-                registry.For(t)
-                    .LifecycleIs(InstanceScope.Singleton)
-                    .Add(type);
+            PluginFamily mergedFamily =
+                openGenericFamily.CreateTemplatedClone(closedGenericFamily.PluginType.GetGenericArguments());
+            mergedFamily.ImportFrom(closedGenericFamily);
         }
     }
 }
