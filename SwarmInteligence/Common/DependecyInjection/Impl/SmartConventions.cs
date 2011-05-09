@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
 using System.Linq;
+using Common.Collections;
 using StructureMap.Configuration.DSL;
 using StructureMap.Graph;
 using StructureMap.TypeRules;
@@ -19,14 +20,10 @@ namespace Common.DependecyInjection.Impl
 
             registry.For(type).Singleton().Use(type);
 
-            foreach(Type t in type.GetBaseTypes().Concat(type.GetInterfaces()))
-                if(t.IsGenericType && type.IsGenericType)
-                    registry
-                        .For(t.GetGenericTypeDefinition())
-                        .Singleton()
-                        .Add(type.GetGenericTypeDefinition());
-                else
-                    registry.For(t).Singleton().Add(type);
+            if (type.IsOpenGeneric())
+                ProcessOpenType(type, registry);
+            else
+                ProcessCloseType(type, registry);
         }
 
         public void Patch(PluginGraph pluginGraph)
@@ -46,6 +43,27 @@ namespace Common.DependecyInjection.Impl
         }
 
         #endregion
+
+        private static void ProcessCloseType(Type type, Registry registry)
+        {
+            type.GetBaseTypesAndInterfaces().ForEach(t => registry.For(t).Singleton().Add(type));
+        }
+
+        private static void ProcessOpenType(Type type, Registry registry)
+        {
+            foreach(Type t in type.GetBaseTypesAndInterfaces()) {
+                if(!t.IsOpenGeneric())
+                    // if `t` is not generic then during request
+                    // we won't have enough data to create concrete closed `type`
+                    // so ignore such types
+                    continue;
+                // todo: here we should understand partially opened types.
+                registry
+                        .For(t.GetGenericTypeDefinition())
+                        .Singleton()
+                        .Add(type.GetGenericTypeDefinition());
+            }
+        }
 
         private static void CopyOpenGenericFamiltyToClosed(PluginFamily openGenericFamily, PluginFamily closedGenericFamily)
         {

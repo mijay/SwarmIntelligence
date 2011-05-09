@@ -9,8 +9,9 @@ using DITestAssembly;
 using Moq;
 using NUnit.Framework;
 using StructureMap;
+using StructureMap.TypeRules;
 
-namespace Test.ContextIndependendAnt
+namespace Test.Common
 {
     public class ContainerFactoryTest: TestBase
     {
@@ -37,7 +38,7 @@ namespace Test.ContextIndependendAnt
         }
 
         private Container createdContainer;
-
+        
         [Test]
         public void GetAbstractGenericType_CorrectNonabstractGenericInheritorReturned()
         {
@@ -132,7 +133,42 @@ namespace Test.ContextIndependendAnt
                         Is.TypeOf<TestInheritanceBaseNonAbstract>());
         }
 
-        //todo: полу-открытые типы
-        //todo: наследование с частичным определением аргументов
+        [Test]
+        public void IsOpenGeneric()
+        {
+            Assert.True(typeof(IEnumerable<>).IsOpenGeneric());
+            Assert.False(typeof(IDictionary<int, double>).IsOpenGeneric());
+
+            var openListType = typeof(IList<>);
+            var collectionTypeWithTypeparam =
+                openListType.GetInterfaces().Single(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(ICollection<>));
+            Assert.True(collectionTypeWithTypeparam.IsOpenGeneric());
+
+            var closedListType = typeof(IList<int>);
+            var collectionTypeWithSpecifiedParam =
+                closedListType.GetInterfaces().Single(
+                    x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(ICollection<>));
+            Assert.False(collectionTypeWithSpecifiedParam.IsOpenGeneric());
+        }
+
+        [Test]
+        public void GetTypeWithGenericWichSutisfyesAllInheritorsConstraints_ReturnTypeAndAllInheritors()
+        {
+            AssertHasInstancesOf(createdContainer.GetAllInstances<TestPartGenBase<double, int>>(),
+                typeof(TestPartGen<double>), typeof(TestPartGenBrother<int>), typeof(TestPartGenBase<double, int>));
+        }
+
+        [Test]
+        public void GetTypeWithGenericWichSutisfyesSomeInheritorsConstraints_ReturnTypeAndThatInheritors()
+        {
+            AssertHasInstancesOf(createdContainer.GetAllInstances<TestPartGenBase<double, float>>(),
+                typeof(TestPartGenBrother<float>), typeof(TestPartGenBase<double, float>));
+        }
+
+        [Test]
+        public void GetNongenericInterfaceWithOnlyOneGenericImplementation_Throws()
+        {
+            Assert.Throws<StructureMapException>(() => createdContainer.GetInstance<ITestNoGenericParams>());
+        }
     }
 }

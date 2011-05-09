@@ -37,6 +37,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestGenericInheritance.cs" />
     <Compile Include="TestInheritance.cs" />
+    <Compile Include="TestNoGenericParams.cs" />
+    <Compile Include="TestPartGen.cs" />
     <Compile Include="TestSimple.cs" />
     <Compile Include="TestWhere.cs" />
   </ItemGroup>
