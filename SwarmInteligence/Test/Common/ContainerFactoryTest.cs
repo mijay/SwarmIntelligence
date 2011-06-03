@@ -30,15 +30,13 @@ namespace Test.Common
 
         #endregion
 
+        private Container createdContainer;
+
         private static void AssertHasInstancesOf(IEnumerable<object> collection, params Type[] types)
         {
-            Assert.That(collection.Count(), Is.EqualTo(types.Length));
-            foreach(Type type in types)
-                Assert.That(collection.Count(x => x.GetType() == type), Is.EqualTo(1));
+            CollectionAssert.AreEquivalent(collection.Select(x => x.GetType()), types);
         }
 
-        private Container createdContainer;
-        
         [Test]
         public void GetAbstractGenericType_CorrectNonabstractGenericInheritorReturned()
         {
@@ -127,6 +125,27 @@ namespace Test.Common
         }
 
         [Test]
+        public void GetNongenericInterfaceWithOnlyOneGenericImplementation_Throws()
+        {
+            Assert.Throws<StructureMapException>(() => createdContainer.GetInstance<ITestNoGenericParams>());
+        }
+
+        [Test]
+        public void GetTypeWithGenericWichSutisfyesAllInheritorsConstraints_ReturnTypeAndAllInheritors()
+        {
+            AssertHasInstancesOf(createdContainer.GetAllInstances<TestPartGenBase<double, int>>(),
+                                 typeof(TestPartGen<double>), typeof(TestPartGenBrother<int>),
+                                 typeof(TestPartGenBase<double, int>));
+        }
+
+        [Test]
+        public void GetTypeWithGenericWichSutisfyesSomeInheritorsConstraints_ReturnTypeAndThatInheritors()
+        {
+            AssertHasInstancesOf(createdContainer.GetAllInstances<TestPartGenBase<double, float>>(),
+                                 typeof(TestPartGenBrother<float>), typeof(TestPartGenBase<double, float>));
+        }
+
+        [Test]
         public void GetTypeWithInheritor_TypeInstanceReturned()
         {
             Assert.That(createdContainer.GetInstance<TestInheritanceBaseNonAbstract>(),
@@ -139,36 +158,16 @@ namespace Test.Common
             Assert.True(typeof(IEnumerable<>).IsOpenGeneric());
             Assert.False(typeof(IDictionary<int, double>).IsOpenGeneric());
 
-            var openListType = typeof(IList<>);
-            var collectionTypeWithTypeparam =
+            Type openListType = typeof(IList<>);
+            Type collectionTypeWithTypeparam =
                 openListType.GetInterfaces().Single(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(ICollection<>));
             Assert.True(collectionTypeWithTypeparam.IsOpenGeneric());
 
-            var closedListType = typeof(IList<int>);
-            var collectionTypeWithSpecifiedParam =
+            Type closedListType = typeof(IList<int>);
+            Type collectionTypeWithSpecifiedParam =
                 closedListType.GetInterfaces().Single(
                     x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(ICollection<>));
             Assert.False(collectionTypeWithSpecifiedParam.IsOpenGeneric());
-        }
-
-        [Test]
-        public void GetTypeWithGenericWichSutisfyesAllInheritorsConstraints_ReturnTypeAndAllInheritors()
-        {
-            AssertHasInstancesOf(createdContainer.GetAllInstances<TestPartGenBase<double, int>>(),
-                typeof(TestPartGen<double>), typeof(TestPartGenBrother<int>), typeof(TestPartGenBase<double, int>));
-        }
-
-        [Test]
-        public void GetTypeWithGenericWichSutisfyesSomeInheritorsConstraints_ReturnTypeAndThatInheritors()
-        {
-            AssertHasInstancesOf(createdContainer.GetAllInstances<TestPartGenBase<double, float>>(),
-                typeof(TestPartGenBrother<float>), typeof(TestPartGenBase<double, float>));
-        }
-
-        [Test]
-        public void GetNongenericInterfaceWithOnlyOneGenericImplementation_Throws()
-        {
-            Assert.Throws<StructureMapException>(() => createdContainer.GetInstance<ITestNoGenericParams>());
         }
     }
 }
