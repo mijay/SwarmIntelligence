@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
-using StructureMap.TypeRules;
 
 namespace Common
 {
@@ -23,6 +22,12 @@ namespace Common
         {
             Contract.Requires(type != null);
             return type.IsGenericType && !type.ContainsGenericParameters;
+        }
+
+        public static bool IsOpenGenerictType(this Type type)
+        {
+            Contract.Requires(type != null);
+            return type.IsGenericType && type.ContainsGenericParameters;
         }
 
         public static IEnumerable<Type> GetBaseTypesAndInterfaces(this Type type)

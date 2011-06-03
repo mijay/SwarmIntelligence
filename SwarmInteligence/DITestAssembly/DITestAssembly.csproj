@@ -36,7 +36,9 @@
   <ItemGroup>
     <Compile Include="GenericArgumentMapTest\CannotRestoreTypes.cs" />
     <Compile Include="GenericArgumentMapTest\CheckConstraints.cs" />
+    <Compile Include="GenericArgumentMapTest\ComplexConstracint.cs" />
     <Compile Include="GenericArgumentMapTest\InheritanceWithReoder.cs" />
+    <Compile Include="GenericArgumentMapTest\NestedGeneric.cs" />
     <Compile Include="GenericArgumentMapTest\SimpleInheritance.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestGenericInheritance.cs" />

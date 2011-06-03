@@ -3,22 +3,23 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using Common.Collections;
+using Common;
 
 namespace Common.DependecyInjection.Impl
 {
-    public class GenericArgumentsMap
+    public class GenericArgumentsMapBuilder
     {
         private readonly IList<int?> argumentsResolvers = new List<int?>();
         private readonly Type typeToExtractFrom;
 
-        private GenericArgumentsMap(Type typeToExtractFrom)
+        private GenericArgumentsMapBuilder(Type typeToExtractFrom)
         {
             this.typeToExtractFrom = typeToExtractFrom.GetGenericTypeDefinition();
         }
 
         public Type[] ExtractContext(Type concreteType)
         {
-            if (concreteType.GetGenericTypeDefinition() != typeToExtractFrom)
+            if(concreteType.GetGenericTypeDefinition() != typeToExtractFrom)
                 throw new ArgumentException();
 
             Type[] realArgs = concreteType.GetGenericArguments();
@@ -37,9 +38,9 @@ namespace Common.DependecyInjection.Impl
                    && argumentsResolvers.All(x => x != null);
         }
 
-        public static GenericArgumentsMap BuildFor(Type t, GenericContext context)
+        public static GenericArgumentsMapBuilder BuildFor(Type t, GenericContext context)
         {
-            var result = new GenericArgumentsMap(t);
+            var result = new GenericArgumentsMapBuilder(t);
             Type[] args = t.GetGenericArguments();
             for(int i = 0; i < args.Length; ++i)
                 if(args[i].IsGenericParameter)

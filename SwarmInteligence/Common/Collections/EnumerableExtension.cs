@@ -27,6 +27,17 @@ namespace Common.Collections
                 action(elem);
         }
 
+        public static void ForEach<T>(this IEnumerable<T> source, Action<T, int> action)
+        {
+            Contract.Requires(source != null);
+            Contract.Requires(action != null);
+            var ind = 0;
+            foreach (T elem in source) {
+                action(elem, ind);
+                ind++;
+            }
+        }
+
         public static IEnumerable<T> Repeat<T>(this Func<T> func, int times)
         {
             Contract.Requires(func != null);
