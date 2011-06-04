@@ -8,6 +8,13 @@ namespace Common
     public static class TypeExtensions
     {
         [Pure]
+        public static IEnumerable<Type> GetBaseTypesAndInterfaces(this Type type)
+        {
+            Contract.Requires(type != null);
+            return type.GetBaseTypes().Concat(type.GetInterfaces());
+        }
+
+        [Pure]
         public static IEnumerable<Type> GetBaseTypes(this Type type)
         {
             Contract.Requires(type != null);
@@ -31,13 +38,6 @@ namespace Common
         {
             Contract.Requires(type != null);
             return type.IsGenericType && type.ContainsGenericParameters;
-        }
-
-        [Pure]
-        public static IEnumerable<Type> GetBaseTypesAndInterfaces(this Type type)
-        {
-            Contract.Requires(type != null);
-            return type.GetBaseTypes().Concat(type.GetInterfaces());
         }
     }
 }

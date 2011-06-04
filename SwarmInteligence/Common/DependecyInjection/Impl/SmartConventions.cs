@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using System.Linq;
 using Common.Collections;
-using StructureMap;
 using StructureMap.Configuration.DSL;
 using StructureMap.Graph;
-using StructureMap.Pipeline;
 using StructureMap.TypeRules;
 
 namespace Common.DependecyInjection.Impl

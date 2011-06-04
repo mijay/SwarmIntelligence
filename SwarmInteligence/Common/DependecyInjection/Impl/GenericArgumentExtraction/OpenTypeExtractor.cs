@@ -5,20 +5,18 @@ using Common.Collections;
 
 namespace Common.DependecyInjection.Impl.GenericArgumentExtraction
 {
-    public class OpenTypeExtractor: TypeExtractor
+    public class OpenTypeExtractor: Extractor
     {
-        private readonly TypeExtractor[] nestedTypeExtractors;
-
         public OpenTypeExtractor(Type openType, ExtractionContext typeExtractionContext)
         {
             Contract.Requires(openType != null && openType.IsOpenGenerictType());
             TypeGenericDefinition = openType.GetGenericTypeDefinition();
-            nestedTypeExtractors = openType.GetGenericArguments()
+            NestedExtractors = openType.GetGenericArguments()
                 .Select(x => Build(x, typeExtractionContext))
                 .ToArray();
         }
 
-        #region Overrides of TypeExtractor
+        #region Overrides of Extractor
 
         public override void Extract(Type from, GenericArgumentsMap to)
         {
@@ -29,7 +27,7 @@ namespace Common.DependecyInjection.Impl.GenericArgumentExtraction
 
             try {
                 from.GetGenericArguments()
-                    .Zip(nestedTypeExtractors,
+                    .Zip(NestedExtractors,
                          (type, extractor) => new { type, extractor })
                     .ForEach(x => x.extractor.Extract(x.type, to));
             }
@@ -39,6 +37,8 @@ namespace Common.DependecyInjection.Impl.GenericArgumentExtraction
         }
 
         #endregion
+
+        public Extractor[] NestedExtractors { get; private set; }
 
         public Type TypeGenericDefinition { get; private set; }
     }

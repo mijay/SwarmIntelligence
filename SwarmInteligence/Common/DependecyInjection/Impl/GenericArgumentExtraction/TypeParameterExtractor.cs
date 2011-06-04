@@ -3,7 +3,7 @@ using System.Diagnostics.Contracts;
 
 namespace Common.DependecyInjection.Impl.GenericArgumentExtraction
 {
-    public class TypeParameterExtractor: TypeExtractor
+    public class TypeParameterExtractor: Extractor
     {
         public TypeParameterExtractor(Type genericParameter, ExtractionContext typeExtractionContext)
         {
@@ -12,7 +12,7 @@ namespace Common.DependecyInjection.Impl.GenericArgumentExtraction
             typeExtractionContext.MarkResolvable(genericParameter);
         }
 
-        #region Overrides of TypeExtractor
+        #region Overrides of Extractor
 
         public override void Extract(Type from, GenericArgumentsMap to)
         {

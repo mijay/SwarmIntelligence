@@ -3,12 +3,12 @@ using System.Diagnostics.Contracts;
 
 namespace Common.DependecyInjection.Impl.GenericArgumentExtraction
 {
-    [ContractClass(typeof(TypeExtractorContract))]
-    public abstract class TypeExtractor
+    [ContractClass(typeof(ExtractorContract))]
+    public abstract class Extractor
     {
         public abstract void Extract(Type from, GenericArgumentsMap to);
 
-        public static TypeExtractor Build(Type extractFrom, ExtractionContext extractionContext)
+        public static Extractor Build(Type extractFrom, ExtractionContext extractionContext)
         {
             if(extractFrom.IsGenericParameter)
                 return new TypeParameterExtractor(extractFrom, extractionContext);
@@ -28,8 +28,8 @@ namespace Common.DependecyInjection.Impl.GenericArgumentExtraction
         #endregion
     }
 
-    [ContractClassFor(typeof(TypeExtractor))]
-    internal abstract class TypeExtractorContract: TypeExtractor
+    [ContractClassFor(typeof(Extractor))]
+    internal abstract class ExtractorContract: Extractor
     {
         public override void Extract(Type from, GenericArgumentsMap to)
         {

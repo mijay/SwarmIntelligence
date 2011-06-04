@@ -12,7 +12,7 @@ namespace Common.DependecyInjection.Impl.GenericArgumentExtraction
 
         public ExtractionContext(Type @for)
         {
-            Contract.Requires(@for != null && @for.IsGenericTypeDefinition);
+            Contract.Requires(@for != null);
             Arguments = new ReadOnlyList<Type>(@for.GetGenericArguments());
         }
 

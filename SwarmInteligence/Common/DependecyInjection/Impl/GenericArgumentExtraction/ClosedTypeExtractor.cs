@@ -3,7 +3,7 @@ using System.Diagnostics.Contracts;
 
 namespace Common.DependecyInjection.Impl.GenericArgumentExtraction
 {
-    public class ClosedTypeExtractor: TypeExtractor
+    public class ClosedTypeExtractor: Extractor
     {
         public ClosedTypeExtractor(Type closedType)
         {
@@ -11,7 +11,7 @@ namespace Common.DependecyInjection.Impl.GenericArgumentExtraction
             Type = closedType;
         }
 
-        #region Overrides of TypeExtractor
+        #region Overrides of Extractor
 
         public override void Extract(Type from, GenericArgumentsMap to)
         {

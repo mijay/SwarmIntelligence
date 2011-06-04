@@ -28,7 +28,7 @@ namespace Test.Common
             GetBaseTypeAsABaseOfInheritor(inheritedType,
                                           baseType.IsGenericType ? baseType.GetGenericTypeDefinition() : baseType,
                                           out foundBaseType);
-            Func<Type, Type[]> build = GenericArgumentsExtractorBuilder.Build(inheritedType, foundBaseType);
+            Func<Type, Type[]> build = BaseToInheritorMapper.Build(inheritedType, foundBaseType);
             Assert.That(build, Is.Not.Null);
 
             Type[] result = build(baseType);
@@ -43,7 +43,7 @@ namespace Test.Common
         {
             Type baseType;
             GetBaseTypeAsABaseOfInheritor(typeof(GenericChild<>), typeof(NonGenericBase), out baseType);
-            Func<Type, Type[]> build = GenericArgumentsExtractorBuilder.Build(typeof(GenericChild<>), baseType);
+            Func<Type, Type[]> build = BaseToInheritorMapper.Build(typeof(GenericChild<>), baseType);
 
             Assert.That(build, Is.Null);
         }
@@ -69,7 +69,7 @@ namespace Test.Common
         {
             Type baseType;
             GetBaseTypeAsABaseOfInheritor(typeof(ChildType<>), typeof(BaseType<>), out baseType);
-            Func<Type, Type[]> build = GenericArgumentsExtractorBuilder.Build(typeof(ChildType<>), baseType);
+            Func<Type, Type[]> build = BaseToInheritorMapper.Build(typeof(ChildType<>), baseType);
 
             Assert.That(build(typeof(FakeBaseType<int>)), Is.Null);
         }
