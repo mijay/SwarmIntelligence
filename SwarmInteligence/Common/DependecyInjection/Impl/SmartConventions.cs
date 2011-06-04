@@ -16,7 +16,6 @@ namespace Common.DependecyInjection.Impl
 
         public void Process(Type type, Registry registry)
         {
-            Contract.Requires(type != null && registry != null);
             if(!type.IsConcrete())
                 return;
 
@@ -30,8 +29,6 @@ namespace Common.DependecyInjection.Impl
 
         public void Patch(PluginGraph pluginGraph)
         {
-            Contract.Requires(pluginGraph != null);
-
             foreach(PluginFamily pluginFamily in pluginGraph.PluginFamilies.ToArray())
                 if(pluginFamily.PluginType.IsClosedGenerictType()) {
                     Type openPluginType = pluginFamily.PluginType.GetGenericTypeDefinition();

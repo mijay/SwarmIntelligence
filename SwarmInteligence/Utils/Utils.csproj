@@ -86,7 +86,6 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ContractExtensions.cs" />
     <Compile Include="Drawing\FastDrawHelper.cs" />
     <Compile Include="Drawing\FastBitmap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
