@@ -1,27 +1,32 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 
 namespace Common.DependecyInjection.Impl.GenericArgumentExtraction
 {
-    public class TypeParameterExtractor: GenericArgumentsExtractor
+    public class TypeParameterExtractor: TypeExtractor
     {
-        public Type GenericParameter { get; internal set; }
-
-        public TypeParameterExtractor(Type genericParameter)
+        public TypeParameterExtractor(Type genericParameter, ExtractionContext typeExtractionContext)
         {
             Contract.Requires(genericParameter != null && genericParameter.IsGenericParameter);
-            GenericParameter = genericParameter;
+            GenericParameterName = genericParameter.Name;
+            typeExtractionContext.MarkResolvable(genericParameter);
         }
 
-        #region Overrides of GenericArgumentsExtractor
+        #region Overrides of TypeExtractor
 
         public override void Extract(Type from, GenericArgumentsMap to)
         {
-            //todo: check constraints?
-            to[GenericParameter.Name] = from;
+            if(!to.HasValueFor(GenericParameterName))
+                //todo: check constraints?
+                to[GenericParameterName] = from;
+            else if(to[GenericParameterName] != from)
+                throw new CannotExtractException(
+                    string.Format("Parameter {0} has already been set to {1} and cannot be changed to {2}.",
+                        GenericParameterName, to[GenericParameterName].FullName, from.Name));
         }
 
         #endregion
+
+        public string GenericParameterName { get; internal set; }
     }
 }

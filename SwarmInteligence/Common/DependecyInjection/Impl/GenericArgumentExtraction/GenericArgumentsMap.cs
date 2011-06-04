@@ -8,7 +8,10 @@ namespace Common.DependecyInjection.Impl.GenericArgumentExtraction
 {
     public class GenericArgumentsMap
     {
-        public GenericArgumentsMap(Type[] genericParametersForMappingTo)
+        private readonly IDictionary<string, Type> namedTypeArguments = new SortedList<string, Type>();
+        private readonly IDictionary<string, int> typeArgumentsOrder;
+
+        public GenericArgumentsMap(IList<Type> genericParametersForMappingTo)
         {
             Contract.Requires(!genericParametersForMappingTo.IsNullOrEmpty());
             Contract.Requires(Contract.ForAll(genericParametersForMappingTo, x => x.IsGenericParameter));
@@ -16,9 +19,6 @@ namespace Common.DependecyInjection.Impl.GenericArgumentExtraction
             typeArgumentsOrder = new SortedList<string, int>();
             genericParametersForMappingTo.ForEach((x, i) => typeArgumentsOrder.Add(x.Name, i));
         }
-
-        private readonly IDictionary<string, Type> namedTypeArguments = new SortedList<string, Type>();
-        private readonly IDictionary<string, int> typeArgumentsOrder;
 
         public Type this[string name]
         {
@@ -32,7 +32,7 @@ namespace Common.DependecyInjection.Impl.GenericArgumentExtraction
             set
             {
                 Contract.Requires(!string.IsNullOrEmpty(name) && value != null);
-                Contract.Requires(!IsArgumentInitialized(name));
+                Contract.Requires(!HasValueFor(name));
                 if(!typeArgumentsOrder.ContainsKey(name))
                     throw new ArgumentException("Incorrect type argument name");
                 namedTypeArguments[name] = value;
@@ -40,7 +40,7 @@ namespace Common.DependecyInjection.Impl.GenericArgumentExtraction
         }
 
         [Pure]
-        public bool IsArgumentInitialized(string name)
+        public bool HasValueFor(string name)
         {
             Contract.Requires(!string.IsNullOrEmpty(name));
             if(!typeArgumentsOrder.ContainsKey(name))

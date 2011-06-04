@@ -31,8 +31,8 @@ namespace Common.Collections
         {
             Contract.Requires(source != null);
             Contract.Requires(action != null);
-            var ind = 0;
-            foreach (T elem in source) {
+            int ind = 0;
+            foreach(T elem in source) {
                 action(elem, ind);
                 ind++;
             }
@@ -74,6 +74,12 @@ namespace Common.Collections
             Contract.Requires(enumerable != null);
 
             return enumerable.Concat(new[] { elem });
+        }
+
+        public static bool IsAllUnique<T>(this IEnumerable<T> enumerable)
+        {
+            Contract.Requires(enumerable != null);
+            return enumerable.GroupBy(x => x).Count(x => x.Count() != 1) == 0;
         }
     }
 }

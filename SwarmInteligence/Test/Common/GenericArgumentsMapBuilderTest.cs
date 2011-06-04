@@ -1,5 +1,6 @@
 ﻿using System;
 using Common;
+using Common.Collections;
 using Common.DependecyInjection.Impl;
 using CommonTest;
 using DITestAssembly.GenericArgumentMapTest;
@@ -9,12 +10,9 @@ namespace Test.Common
 {
     public class GenericArgumentsMapBuilderTest: TestBase
     {
-        private static void CreateTAndGenericContext(Type type, Type baseTypePattern,
-                                                     out Type foundBaseType,
-                                                     out GenericArgumentsMapBuilder.GenericContext contextOfInherited)
+        private static void GetBaseTypeAsABaseOfInheritor(Type type, Type baseTypePattern,
+                                                          out Type foundBaseType)
         {
-            contextOfInherited = new GenericArgumentsMapBuilder.GenericContext(type.GetGenericArguments());
-
             foreach(Type t in type.GetBaseTypesAndInterfaces())
                 if((t.IsGenericType && t.GetGenericTypeDefinition() == baseTypePattern)
                    || (!t.IsGenericType && t == baseTypePattern)) {
@@ -24,48 +22,56 @@ namespace Test.Common
             throw new InvalidOperationException();
         }
 
+        public static void RunTestOn(Type inheritedType, Type baseType, params Type[] expectedResult)
+        {
+            Type foundBaseType;
+            GetBaseTypeAsABaseOfInheritor(inheritedType,
+                                          baseType.IsGenericType ? baseType.GetGenericTypeDefinition() : baseType,
+                                          out foundBaseType);
+            Func<Type, Type[]> build = GenericArgumentsExtractorBuilder.Build(inheritedType, foundBaseType);
+            Assert.That(build, Is.Not.Null);
+
+            Type[] result = build(baseType);
+            if(expectedResult.IsNullOrEmpty())
+                Assert.That(result, Is.Null);
+            else
+                CollectionAssert.AreEqual(result, expectedResult);
+        }
+
         [Test]
         public void BaseTypeUseNotAllGenericParameters_BuildRetursNull()
         {
             Type baseType;
-            GenericArgumentsMapBuilder.GenericContext context;
-            CreateTAndGenericContext(typeof(GenericChild<>), typeof(NonGenericBase), out baseType, out context);
+            GetBaseTypeAsABaseOfInheritor(typeof(GenericChild<>), typeof(NonGenericBase), out baseType);
+            Func<Type, Type[]> build = GenericArgumentsExtractorBuilder.Build(typeof(GenericChild<>), baseType);
 
-            Assert.That(GenericArgumentsMapBuilder.BuildFor(baseType, context), Is.Null);
+            Assert.That(build, Is.Null);
         }
 
         [Test]
         public void ChildAndBaseTypeHasSameTypeParametersInDifferentOrder_ExtractedOrderIsLikeInChild()
         {
-            Type baseType;
-            GenericArgumentsMapBuilder.GenericContext context;
-            CreateTAndGenericContext(typeof(InheritanceWithReoder<,>), typeof(TwoGenParamBase<,>), out baseType, out context);
-            GenericArgumentsMapBuilder genericArgumentsMapBuilder = GenericArgumentsMapBuilder.BuildFor(baseType, context);
-
-            CollectionAssert.AreEqual(genericArgumentsMapBuilder.ExtractContext(typeof(TwoGenParamBase<int, double>)),
-                                      new[] { typeof(double), typeof(int) });
+            RunTestOn(typeof(InheritanceWithReoder<,>),
+                      typeof(TwoGenParamBase<int, double>),
+                      typeof(double), typeof(int));
         }
 
         [Test]
         public void ChildAndBaseTypeHasSameTypeParameters_CanExtractFromBase()
         {
-            Type baseType;
-            GenericArgumentsMapBuilder.GenericContext context;
-            CreateTAndGenericContext(typeof(ChildType<>), typeof(BaseType<>), out baseType, out context);
-            GenericArgumentsMapBuilder genericArgumentsMapBuilder = GenericArgumentsMapBuilder.BuildFor(baseType, context);
-
-            CollectionAssert.AreEqual(genericArgumentsMapBuilder.ExtractContext(typeof(BaseType<int>)), new[] { typeof(int) });
+            RunTestOn(typeof(ChildType<>),
+                      typeof(BaseType<int>),
+                      typeof(int));
         }
 
         [Test]
-        public void MapCreatedForOneType_UsedWithOther_ExceptionOccurs()
+        public void MapCreatedForOneType_UsedWithOther_NullReturned()
         {
             Type baseType;
-            GenericArgumentsMapBuilder.GenericContext context;
-            CreateTAndGenericContext(typeof(ChildType<>), typeof(BaseType<>), out baseType, out context);
-            GenericArgumentsMapBuilder genericArgumentsMapBuilder = GenericArgumentsMapBuilder.BuildFor(baseType, context);
+            GetBaseTypeAsABaseOfInheritor(typeof(ChildType<>), typeof(BaseType<>), out baseType);
+            Func<Type, Type[]> build = GenericArgumentsExtractorBuilder.Build(typeof(ChildType<>), baseType);
 
-            Assert.Throws<ArgumentException>(() => genericArgumentsMapBuilder.ExtractContext(typeof(FakeBaseType<int>)));
+            Assert.That(build(typeof(FakeBaseType<int>)), Is.Null);
         }
 
         [Test]
@@ -73,13 +79,8 @@ namespace Test.Common
             ПриНаследованииСтрогоФиксируетсяОдинИзПараметровБазовогоТипа_ExtractИзБазовогоТипаСПарметромНеРавнымЗафиксироанному_ВозвращаемNull
             ()
         {
-            Type baseType;
-            GenericArgumentsMapBuilder.GenericContext context;
-            CreateTAndGenericContext(typeof(ChildWithOnlyOneParam<>), typeof(TwoGenParamBase<,>), out baseType, out context);
-            GenericArgumentsMapBuilder genericArgumentsMapBuilder = GenericArgumentsMapBuilder.BuildFor(baseType, context);
-
-            Assert.That(genericArgumentsMapBuilder.ExtractContext(typeof(TwoGenParamBase<double, string>)),
-                        Is.Null);
+            RunTestOn(typeof(ChildWithOnlyOneParam<>),
+                      typeof(TwoGenParamBase<double, string>));
         }
 
         [Test]
@@ -87,28 +88,9 @@ namespace Test.Common
             ПриНаследованииСтрогоФиксируетсяОдинИзПараметровБазовогоТипа_ExtractИзБазовогоТипаСПарметромРавнымЗафиксироанному_ВсеРаботает
             ()
         {
-            Type baseType;
-            GenericArgumentsMapBuilder.GenericContext context;
-            CreateTAndGenericContext(typeof(ChildWithOnlyOneParam<>), typeof(TwoGenParamBase<,>), out baseType, out context);
-            GenericArgumentsMapBuilder genericArgumentsMapBuilder = GenericArgumentsMapBuilder.BuildFor(baseType, context);
-
-            CollectionAssert.AreEqual(genericArgumentsMapBuilder.ExtractContext(typeof(TwoGenParamBase<double, int>)),
-                                      new[] { typeof(double) });
-        }
-
-        [Test]
-        public void
-            ПриОпределенииНаследникаИспользуютсяВложенныеGeneric_ExtractИзБазовогоТипаСПравильнымиПараметрами_ВсеРаботает
-            ()
-        {
-            Type baseType;
-            GenericArgumentsMapBuilder.GenericContext context;
-            CreateTAndGenericContext(typeof(NestedGeneric<,>), typeof(TwoGenParamBase<,>), out baseType, out context);
-            GenericArgumentsMapBuilder genericArgumentsMapBuilder = GenericArgumentsMapBuilder.BuildFor(baseType, context);
-
-            CollectionAssert.AreEqual(
-                genericArgumentsMapBuilder.ExtractContext(typeof(TwoGenParamBase<BaseType<int>, FakeBaseType<BaseType<double>>>)),
-                new[] { typeof(double), typeof(int) });
+            RunTestOn(typeof(ChildWithOnlyOneParam<>),
+                      typeof(TwoGenParamBase<double, int>),
+                      typeof(double));
         }
 
         [Test]
@@ -116,29 +98,18 @@ namespace Test.Common
             ПриОпределенииНаследникаИспользуютсяВложенныеGeneric_ExtractИзБазовогоТипаСНемногоНеправильнымиПараметрами_ReturnNull
             ()
         {
-            Type baseType;
-            GenericArgumentsMapBuilder.GenericContext context;
-            CreateTAndGenericContext(typeof(NestedGeneric<,>), typeof(TwoGenParamBase<,>), out baseType, out context);
-            GenericArgumentsMapBuilder genericArgumentsMapBuilder = GenericArgumentsMapBuilder.BuildFor(baseType, context);
-
-            Assert.That(
-                genericArgumentsMapBuilder.ExtractContext(typeof(TwoGenParamBase<BaseType<int>, FakeBaseType<FakeBaseType<double>>>)),
-                Is.Null);
+            RunTestOn(typeof(NestedGeneric<,>),
+                      typeof(TwoGenParamBase<BaseType<int>, FakeBaseType<FakeBaseType<double>>>));
         }
 
         [Test]
         public void
-            ПриОпределенииНаследникаИспользуютсяВложенныеGenericСМногократнымУпоминаниемОдногоПараметра_ExtractИзБазовогоТипаСПравильнымиПараметрами_ВсеРаботает
+            ПриОпределенииНаследникаИспользуютсяВложенныеGeneric_ExtractИзБазовогоТипаСПравильнымиПараметрами_ВсеРаботает
             ()
         {
-            Type baseType;
-            GenericArgumentsMapBuilder.GenericContext context;
-            CreateTAndGenericContext(typeof(ComplexConstracint<>), typeof(TwoGenParamBase<,>), out baseType, out context);
-            GenericArgumentsMapBuilder genericArgumentsMapBuilder = GenericArgumentsMapBuilder.BuildFor(baseType, context);
-
-            CollectionAssert.AreEqual(
-                genericArgumentsMapBuilder.ExtractContext(typeof(TwoGenParamBase<BaseType<int>, FakeBaseType<int>>)),
-                new[] {  typeof(int) });
+            RunTestOn(typeof(NestedGeneric<,>),
+                      typeof(TwoGenParamBase<BaseType<int>, FakeBaseType<BaseType<double>>>),
+                      typeof(double), typeof(int));
         }
 
         [Test]
@@ -146,14 +117,18 @@ namespace Test.Common
             ПриОпределенииНаследникаИспользуютсяВложенныеGenericСМногократнымУпоминаниемОдногоПараметра_ExtractИзБазовогоТипаВКоторомВЭтихУпоминанияхИспользуютсяРазныеТипы_Null
             ()
         {
-            Type baseType;
-            GenericArgumentsMapBuilder.GenericContext context;
-            CreateTAndGenericContext(typeof(ComplexConstracint<>), typeof(TwoGenParamBase<,>), out baseType, out context);
-            GenericArgumentsMapBuilder genericArgumentsMapBuilder = GenericArgumentsMapBuilder.BuildFor(baseType, context);
+            RunTestOn(typeof(ComplexConstracint<>),
+                      typeof(TwoGenParamBase<BaseType<int>, FakeBaseType<double>>));
+        }
 
-            Assert.That(
-                genericArgumentsMapBuilder.ExtractContext(typeof(TwoGenParamBase<BaseType<int>, FakeBaseType<double>>)),
-                Is.Null);
+        [Test]
+        public void
+            ПриОпределенииНаследникаИспользуютсяВложенныеGenericСМногократнымУпоминаниемОдногоПараметра_ExtractИзБазовогоТипаСПравильнымиПараметрами_ВсеРаботает
+            ()
+        {
+            RunTestOn(typeof(ComplexConstracint<>),
+                      typeof(TwoGenParamBase<BaseType<int>, FakeBaseType<int>>),
+                      typeof(int));
         }
     }
 }

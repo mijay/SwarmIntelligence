@@ -12,14 +12,6 @@ namespace Common.Collections
     public static class ArrayExtension
     {
         /// <summary>
-        /// Figures out if given array is null or if it is empty.
-        /// </summary>
-        public static bool IsNullOrEmpty<T>(this T[] data)
-        {
-            return data == null || data.Length == 0;
-        }
-
-        /// <summary>
         /// This method splits the <paramref name="data"/> into sequence of pieces
         /// size of each is not more then <paramref name="maxLength"/>.
         /// (Size of each except the last is equal to <paramref name="maxLength"/>, size of the last can be less).
