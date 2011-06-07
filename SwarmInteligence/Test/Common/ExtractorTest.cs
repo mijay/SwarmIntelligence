@@ -1,14 +1,14 @@
 ﻿using System;
 using Common;
 using Common.Collections;
-using Common.DependecyInjection.Impl;
+using Common.DependecyInjection.Impl.GenericArgumentExtraction;
 using CommonTest;
 using DITestAssembly.GenericArgumentMapTest;
 using NUnit.Framework;
 
 namespace Test.Common
 {
-    public class GenericArgumentsMapBuilderTest: TestBase
+    public class ExtractorTest: TestBase
     {
         private static void GetBaseTypeAsABaseOfInheritor(Type type, Type baseTypePattern,
                                                           out Type foundBaseType)
@@ -28,24 +28,34 @@ namespace Test.Common
             GetBaseTypeAsABaseOfInheritor(inheritedType,
                                           baseType.IsGenericType ? baseType.GetGenericTypeDefinition() : baseType,
                                           out foundBaseType);
-            Func<Type, Type[]> build = BaseToInheritorMapper.Build(inheritedType, foundBaseType);
-            Assert.That(build, Is.Not.Null);
 
-            Type[] result = build(baseType);
+            var extractionContext = new ExtractionContext(inheritedType);
+            Extractor extractor = Extractor.Build(foundBaseType, extractionContext);
+            Assert.That(extractor, Is.Not.Null);
+            Assert.That(extractionContext.IsResolved());
+
+            GenericArgumentsMap argumentsMap = extractionContext.GetInitialMap();
             if(expectedResult.IsNullOrEmpty())
-                Assert.That(result, Is.Null);
-            else
+                Assert.Throws<Extractor.CannotExtractException>(() => extractor.Extract(baseType, argumentsMap));
+            else {
+                extractor.Extract(baseType, argumentsMap);
+                Type[] result = argumentsMap.ToArray();
                 CollectionAssert.AreEqual(result, expectedResult);
+            }
         }
 
         [Test]
-        public void BaseTypeUseNotAllGenericParameters_BuildRetursNull()
+        public void BaseTypeUseNotAllGenericParameters_BuildDoesNotResolveContext()
         {
-            Type baseType;
-            GetBaseTypeAsABaseOfInheritor(typeof(GenericChild<>), typeof(NonGenericBase), out baseType);
-            Func<Type, Type[]> build = BaseToInheritorMapper.Build(typeof(GenericChild<>), baseType);
+            Type inheritedType = typeof(GenericChild<>);
+            Type baseType = typeof(NonGenericBase);
+            Type foundBaseType;
+            GetBaseTypeAsABaseOfInheritor(inheritedType, baseType, out foundBaseType);
 
-            Assert.That(build, Is.Null);
+            var extractionContext = new ExtractionContext(inheritedType);
+            Extractor extractor = Extractor.Build(foundBaseType, extractionContext);
+            Assert.That(extractor, Is.Not.Null);
+            Assert.That(extractionContext.IsResolved(), Is.False);
         }
 
         [Test]
@@ -65,18 +75,25 @@ namespace Test.Common
         }
 
         [Test]
-        public void MapCreatedForOneType_UsedWithOther_NullReturned()
+        public void MapCreatedForOneType_UsedWithOther_ExceptionOccures()
         {
-            Type baseType;
-            GetBaseTypeAsABaseOfInheritor(typeof(ChildType<>), typeof(BaseType<>), out baseType);
-            Func<Type, Type[]> build = BaseToInheritorMapper.Build(typeof(ChildType<>), baseType);
+            Type inheritedType = typeof(ChildType<>);
+            Type baseType = typeof(BaseType<>);
+            Type foundBaseType;
+            GetBaseTypeAsABaseOfInheritor(inheritedType, baseType, out foundBaseType);
 
-            Assert.That(build(typeof(FakeBaseType<int>)), Is.Null);
+            var extractionContext = new ExtractionContext(inheritedType);
+            Extractor extractor = Extractor.Build(foundBaseType, extractionContext);
+            Assert.That(extractor, Is.Not.Null);
+            Assert.That(extractionContext.IsResolved());
+
+            Assert.Throws<Extractor.CannotExtractException>(
+                () => extractor.Extract(typeof(FakeBaseType<int>), extractionContext.GetInitialMap()));
         }
 
         [Test]
         public void
-            ПриНаследованииСтрогоФиксируетсяОдинИзПараметровБазовогоТипа_ExtractИзБазовогоТипаСПарметромНеРавнымЗафиксироанному_ВозвращаемNull
+            ПриНаследованииСтрогоФиксируетсяОдинИзПараметровБазовогоТипа_ExtractИзБазовогоТипаСПарметромНеРавнымЗафиксироанному_ExceptionOccurs
             ()
         {
             RunTestOn(typeof(ChildWithOnlyOneParam<>),
@@ -95,7 +112,7 @@ namespace Test.Common
 
         [Test]
         public void
-            ПриОпределенииНаследникаИспользуютсяВложенныеGeneric_ExtractИзБазовогоТипаСНемногоНеправильнымиПараметрами_ReturnNull
+            ПриОпределенииНаследникаИспользуютсяВложенныеGeneric_ExtractИзБазовогоТипаСНемногоНеправильнымиПараметрами_ExceptionOccurs
             ()
         {
             RunTestOn(typeof(NestedGeneric<,>),
@@ -114,7 +131,7 @@ namespace Test.Common
 
         [Test]
         public void
-            ПриОпределенииНаследникаИспользуютсяВложенныеGenericСМногократнымУпоминаниемОдногоПараметра_ExtractИзБазовогоТипаВКоторомВЭтихУпоминанияхИспользуютсяРазныеТипы_Null
+            ПриОпределенииНаследникаИспользуютсяВложенныеGenericСМногократнымУпоминаниемОдногоПараметра_ExtractИзБазовогоТипаВКоторомВЭтихУпоминанияхИспользуютсяРазныеТипы_ExceptionOccurs
             ()
         {
             RunTestOn(typeof(ComplexConstracint<>),

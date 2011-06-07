@@ -81,5 +81,26 @@ namespace Common.Collections
             Contract.Requires(enumerable != null);
             return enumerable.GroupBy(x => x).Count(x => x.Count() != 1) == 0;
         }
+
+        public static IEnumerable<KeyValuePair<T1, T2>> LazyZip<T1, T2>(this IEnumerable<T1> left, IEnumerable<T2> right)
+        {
+            Contract.Requires(left != null && right != null);
+            return left.Zip(right, (arg1, arg2) => new KeyValuePair<T1, T2>(arg1, arg2));
+        }
+
+        public static IEnumerable<KeyValuePair<T1, T2>> EagerZip<T1, T2>(this IEnumerable<T1> left, IEnumerable<T2> right)
+        {
+            Contract.Requires(left != null && right != null);
+
+            var leftEnumerator = left.GetEnumerator();
+            var rightEnumerator = right.GetEnumerator();
+            bool hasLeft, hasRight;
+
+            while((hasLeft = leftEnumerator.MoveNext()) | (hasRight = rightEnumerator.MoveNext())) {
+                yield return new KeyValuePair<T1, T2>(
+                    hasLeft ? leftEnumerator.Current : default(T1),
+                    hasRight ? rightEnumerator.Current : default(T2));
+            }
+        }
     }
 }

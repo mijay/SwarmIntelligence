@@ -1,6 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using Common.Collections;
 using Common.DependecyInjection.Impl.GenericArgumentExtraction;
 using StructureMap;
 using StructureMap.Pipeline;
@@ -23,20 +23,22 @@ namespace Common.DependecyInjection.Impl
                 throw new InvalidOperationException();
             if(extractor is ClosedTypeExtractor)
                 return new ConfiguredInstance((extractor as ClosedTypeExtractor).Type);
-            return new MappedInheritorInstance((extractor as OpenTypeExtractor), context.Arguments);
+            return new MappedInheritorInstance(@for, (extractor as OpenTypeExtractor));
         }
 
         #region Nested type: MappedInheritorInstance
 
         public class MappedInheritorInstance: Instance
         {
-            private readonly IList<Type> genericParams;
             private readonly Extractor[] argumentExtractors;
+            private readonly Type[] genericParams;
+            private readonly Type inheritorType;
 
-            public MappedInheritorInstance(OpenTypeExtractor openTypeExtractor, IList<Type> genericParams)
+            public MappedInheritorInstance(Type inheritorType, OpenTypeExtractor openTypeExtractor)
             {
-                Contract.Requires(openTypeExtractor != null && genericParams != null);
-                this.genericParams = genericParams;
+                Contract.Requires(openTypeExtractor != null && inheritorType != null && inheritorType.IsGenericTypeDefinition);
+                this.inheritorType = inheritorType;
+                genericParams = inheritorType.GetGenericArguments();
                 argumentExtractors = openTypeExtractor.NestedExtractors;
             }
 
@@ -55,8 +57,21 @@ namespace Common.DependecyInjection.Impl
 
             public override Instance CloseType(Type[] types)
             {
-                throw new NotImplementedException();
-                return base.CloseType(types);
+                if(types.Length != genericParams.Length)
+                    throw new InvalidOperationException();
+
+                var argumentsMap = new GenericArgumentsMap(genericParams);
+                try {
+                    types
+                        .LazyZip(argumentExtractors)
+                        .ForEach(x => x.Value.Extract(x.Key, argumentsMap));
+                }
+                catch(Extractor.CannotExtractException) {
+                    return null;
+                }
+
+                Type genericType = inheritorType.MakeGenericType(argumentsMap.ToArray());
+                return new ConfiguredInstance(genericType);
             }
 
             #endregion

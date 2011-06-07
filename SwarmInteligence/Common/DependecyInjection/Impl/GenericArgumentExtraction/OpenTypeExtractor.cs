@@ -27,9 +27,8 @@ namespace Common.DependecyInjection.Impl.GenericArgumentExtraction
 
             try {
                 from.GetGenericArguments()
-                    .Zip(NestedExtractors,
-                         (type, extractor) => new { type, extractor })
-                    .ForEach(x => x.extractor.Extract(x.type, to));
+                    .LazyZip(NestedExtractors)
+                    .ForEach(x => x.Value.Extract(x.Key, to));
             }
             catch(CannotExtractException e) {
                 throw new CannotExtractException(string.Format("Cannot extract type {0}.", from.FullName), e);
