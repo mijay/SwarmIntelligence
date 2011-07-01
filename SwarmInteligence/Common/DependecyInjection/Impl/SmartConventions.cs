@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using Common.Collections;
 using StructureMap.Configuration.DSL;
 using StructureMap.Graph;
 using StructureMap.TypeRules;
@@ -18,10 +17,14 @@ namespace Common.DependecyInjection.Impl
 
             registry.For(type).Singleton().Use(type);
 
-            if(type.IsGenericType)
-                ProcessGenericType(type, registry);
-            else
-                ProcessCloseType(type, registry);
+            foreach(Type t in type.GetBaseTypesAndInterfaces()) {
+                var instance = BaseToInheritorMapper.Build(type, t);
+                if (instance != null)
+                    registry
+                        .For(!t.IsGenericType ? t : t.GetGenericTypeDefinition())
+                        .Singleton()
+                        .Use(instance);
+            }
         }
 
         public void Patch(PluginGraph pluginGraph)
@@ -35,30 +38,6 @@ namespace Common.DependecyInjection.Impl
         }
 
         #endregion
-
-        private static void ProcessCloseType(Type type, Registry registry)
-        {
-            type.GetBaseTypesAndInterfaces().ForEach(t => registry.For(t).Singleton().Add(type));
-        }
-
-        private static void ProcessGenericType(Type type, Registry registry)
-        {
-            foreach(Type t in type.GetBaseTypesAndInterfaces()) {
-                if(!t.IsOpenGeneric())
-                    // if `t` is not generic then during request
-                    // we won't have enough data to create concrete closed `type`
-                    // so ignore such types
-                    continue;
-                // todo: here we should understand partially opened types.
-                // todo: creates smth like a GenericArgumentsMap from `t`-s generic params to `type`-s
-                // todo: then if such map is trivial (one-to-one) then use following code
-                // todo: if map will not be surjective then above code (ignore and continue)
-                registry
-                    .For(t.GetGenericTypeDefinition())
-                    .Singleton()
-                    .Add(type.GetGenericTypeDefinition());
-            }
-        }
 
         private static void CopyOpenGenericFamiltyToClosed(PluginFamily openGenericFamily, PluginFamily closedGenericFamily)
         {

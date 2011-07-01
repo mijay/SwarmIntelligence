@@ -22,7 +22,7 @@ namespace Common.DependecyInjection.Impl
             if(extractor is TypeParameterExtractor)
                 throw new InvalidOperationException();
             if(extractor is ClosedTypeExtractor)
-                return new ConfiguredInstance((extractor as ClosedTypeExtractor).Type);
+                return new ConfiguredInstance(@for);
             return new MappedInheritorInstance(@for, (extractor as OpenTypeExtractor));
         }
 
