@@ -1,6 +1,6 @@
 ﻿using System.Collections.Concurrent;
 using System.Collections.Generic;
-using SwarmIntelligence.Core.Creatures;
+using SwarmIntelligence.Core.PlayingField;
 using SwarmIntelligence.Core.Space;
 
 namespace SILibrary.General

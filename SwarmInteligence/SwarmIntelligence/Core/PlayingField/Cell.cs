@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
+using SwarmIntelligence.Core.Creatures;
 using SwarmIntelligence.Core.Space;
 
-namespace SwarmIntelligence.Core.Creatures
+namespace SwarmIntelligence.Core.PlayingField
 {
     public class Cell<C, B, E>: IEnumerable<Ant<C, B, E>>
         where C: ICoordinate<C>

@@ -1,7 +1,7 @@
 using System;
 using System.Diagnostics.Contracts;
 using System.Drawing;
-using SwarmIntelligence.Core.Data;
+using SwarmIntelligence.Core.DataLayer;
 using Utils.Drawing;
 
 namespace SILibrary.TwoDimensional

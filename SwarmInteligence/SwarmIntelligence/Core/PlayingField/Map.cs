@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
-using SwarmIntelligence.Core.Data;
+using SwarmIntelligence.Core.Interfaces;
 using SwarmIntelligence.Core.Space;
 
-namespace SwarmIntelligence.Core.Creatures
+namespace SwarmIntelligence.Core.PlayingField
 {
     [ContractClass(typeof(ContractMap<,,>))]
     public abstract class Map<C, B, E>: ILazyMapping<C, Cell<C, B, E>>

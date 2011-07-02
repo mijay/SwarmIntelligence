@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
+using SwarmIntelligence.Core.Interfaces;
 using SwarmIntelligence.Core.Space;
 
-namespace SwarmIntelligence.Core.Data
+namespace SwarmIntelligence.Core.DataLayer
 {
     [ContractClass(typeof(ContractNodeDataLayer<,>))]
     public abstract class NodeDataLayer<C, B>: IMapping<C, B>

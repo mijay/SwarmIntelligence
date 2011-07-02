@@ -1,6 +1,6 @@
 using System.Diagnostics.Contracts;
-using SwarmIntelligence.Core.Creatures;
-using SwarmIntelligence.Core.Data;
+using SwarmIntelligence.Core.DataLayer;
+using SwarmIntelligence.Core.PlayingField;
 using SwarmIntelligence.Core.Space;
 
 namespace SwarmIntelligence.Core

@@ -62,33 +62,22 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Creatures\IOutlook.cs" />
+    <Compile Include="Core\Creatures\OutlookExtensions.cs" />
     <Compile Include="Core\World.cs" />
-    <Compile Include="Infrastructure\CommandsInfrastructure\CommandContext.cs" />
-    <Compile Include="Infrastructure\Commands\AddAnt.cs" />
-    <Compile Include="Infrastructure\CommandsInfrastructure\Command.cs" />
-    <Compile Include="Infrastructure\Commands\AddAntEvaluator.cs" />
-    <Compile Include="Infrastructure\Commands\CommandEvaluationHelpers.cs" />
-    <Compile Include="Infrastructure\Commands\MoveToEvaluator.cs" />
-    <Compile Include="Infrastructure\Commands\SelfRemoveEvaluator.cs" />
-    <Compile Include="Infrastructure\Implementation\CommandDispatcher.cs" />
-    <Compile Include="Infrastructure\CommandsInfrastructure\ICommandDispatcher.cs" />
-    <Compile Include="Infrastructure\CommandsInfrastructure\ITypedCommandDispatcher{TCommand, C, B, E}.cs" />
-    <Compile Include="Infrastructure\CommandsInfrastructure\ITypedCommandDispatcher{C, B, E}.cs" />
-    <Compile Include="Infrastructure\CommandsInfrastructure\CommandImplementationBase.cs" />
-    <Compile Include="Infrastructure\Commands\MoveTo.cs" />
-    <Compile Include="Infrastructure\Commands\SelfRemove.cs" />
-    <Compile Include="Core\Data\EdgeDataLayer.cs" />
+    <Compile Include="Core\DataLayer\EdgeDataLayer.cs" />
     <Compile Include="Core\Space\Edge.cs" />
-    <Compile Include="Infrastructure\Implementation\Runner.cs" />
+    <Compile Include="Infrastructure\ThreadLocalOutlook.cs" />
+    <Compile Include="Infrastructure\Runner.cs" />
     <Compile Include="Core\Space\Topology.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Core\Creatures\Ant.cs" />
-    <Compile Include="Core\Data\NodeDataLayer.cs" />
-    <Compile Include="Core\Creatures\Cell.cs" />
+    <Compile Include="Core\DataLayer\NodeDataLayer.cs" />
+    <Compile Include="Core\PlayingField\Cell.cs" />
     <Compile Include="Core\Space\ICoordinate.cs" />
-    <Compile Include="Core\Data\IMapping.cs" />
-    <Compile Include="Core\Data\ILazyMapping.cs" />
-    <Compile Include="Core\Creatures\Map.cs" />
+    <Compile Include="Core\Interfaces\IMapping.cs" />
+    <Compile Include="Core\Interfaces\ILazyMapping.cs" />
+    <Compile Include="Core\PlayingField\Map.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">

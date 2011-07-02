@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 
-namespace SwarmIntelligence.Core.Data
+namespace SwarmIntelligence.Core.Interfaces
 {
     [ContractClass(typeof(ContractILazyMapping<,>))]
     public interface ILazyMapping<TKey, TData>: IMapping<TKey, TData>

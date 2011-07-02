@@ -3,8 +3,6 @@ using System.Diagnostics.Contracts;
 using SILibrary.General.Background;
 using SILibrary.TwoDimensional;
 using SwarmIntelligence.Core.Creatures;
-using SwarmIntelligence.Infrastructure.Commands;
-using SwarmIntelligence.Infrastructure.CommandsInfrastructure;
 
 namespace Test.ContextIndependendAnt
 {
@@ -20,9 +18,9 @@ namespace Test.ContextIndependendAnt
 
         #region Overrides of Ant<Coordinates2D,NoDataBackground>
 
-        public override IEnumerable<Command<Coordinates2D, EmptyData, EmptyData>> ProcessTurn()
+        public override void ProcessTurn(IOutlook<Coordinates2D, EmptyData, EmptyData> outlook)
         {
-            return new[] { new MoveTo<Coordinates2D, EmptyData, EmptyData>(points.Dequeue()) };
+            outlook.MoveTo(points.Dequeue());
         }
 
         #endregion

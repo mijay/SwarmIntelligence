@@ -2,19 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Reflection;
-using Common.Cache;
 using Common.Collections;
 using CommonTest;
 using NUnit.Framework;
 using SILibrary.General;
 using SILibrary.General.Background;
 using SILibrary.TwoDimensional;
-using StructureMap;
 using SwarmIntelligence.Core;
-using SwarmIntelligence.Core.Creatures;
-using SwarmIntelligence.Infrastructure.CommandsInfrastructure;
-using SwarmIntelligence.Infrastructure.Implementation;
+using SwarmIntelligence.Core.PlayingField;
+using SwarmIntelligence.Infrastructure;
 
 namespace Test.ContextIndependendAnt
 {
@@ -34,17 +30,7 @@ namespace Test.ContextIndependendAnt
 
             world = new World<Coordinates2D, EmptyData, EmptyData>(topology, nodeDataLayer, edgeDataLayer, map);
 
-            var container = new Container(x => {
-                                              x.Scan(a => {
-                                                         a.Assembly(Assembly.Load("Common"));
-                                                         a.Assembly(Assembly.Load("SwarmIntelligence"));
-                                                         a.Assembly(Assembly.Load("SILibrary"));
-                                                         a.WithDefaultConventions();
-                                                     });
-                                              x.For<IKeyValueCache>().AlwaysUnique().Use<LocalCache>();
-                                          });
-            runner = new Runner<Coordinates2D, EmptyData, EmptyData>(
-                world,container.GetInstance<ICommandDispatcher<Coordinates2D, EmptyData, EmptyData>>());
+            runner = new Runner<Coordinates2D, EmptyData, EmptyData>(world);
         }
 
         #endregion
