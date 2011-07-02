@@ -12,8 +12,7 @@ namespace Test
         {
             base.SetUp();
 
-            var boundaries2D = new Boundaries2D(new Coordinates2D(2, 2), new Coordinates2D(10, 10));
-            topology = new FourConnectedSurfaceTopology(boundaries2D);
+            topology = new FourConnectedSurfaceTopology(new Coordinates2D(2, 2), new Coordinates2D(10, 10));
         }
 
         #endregion

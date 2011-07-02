@@ -11,11 +11,12 @@ namespace SILibrary.TwoDimensional
         private readonly FastBitmap data;
         private bool disposed;
 
-        public PictureNodeDataLayer(Bitmap data)
-            : base(new Boundaries2D(new Coordinates2D(0, 0),
-                                    new Coordinates2D(data.Width - 1, data.Height - 1)))
+        public PictureNodeDataLayer(Bitmap data, SurfaceTopology topology)
+            : base(topology)
         {
-            Contract.Requires(data != null);
+            Contract.Requires(data != null && topology != null);
+            Contract.Requires(topology.TopLeft.Equals(new Coordinates2D(0, 0))
+                              && topology.BottomRight.Equals(new Coordinates2D(data.Width - 1, data.Height - 1)));
 
             this.data = new FastBitmap(data);
         }

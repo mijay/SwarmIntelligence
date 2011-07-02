@@ -10,9 +10,9 @@ namespace SwarmIntelligence.Core.Creatures
     public abstract class Map<C, B, E>: ILazyMapping<C, Cell<C, B, E>>
         where C: ICoordinate<C>
     {
-        protected Map(Boundaries<C> boundaries)
+        protected Map(Topology<C> topology)
         {
-            Boundaries = boundaries;
+            Topology = topology;
         }
 
         #region Implementation of IMapping<in C,out Cell<C,B,E>>
@@ -31,20 +31,20 @@ namespace SwarmIntelligence.Core.Creatures
 
         #endregion
 
-        public Boundaries<C> Boundaries { get; set; }
+        public Topology<C> Topology { get; set; }
     }
 
     [ContractClassFor(typeof(Map<,,>))]
     internal abstract class ContractMap<C, B, E>: Map<C, B, E>
         where C: ICoordinate<C>
     {
-        protected ContractMap(Boundaries<C> boundaries): base(boundaries) {}
+        protected ContractMap(Topology<C> topology): base(topology) {}
 
         public override Cell<C, B, E> this[C key]
         {
             get
             {
-                Contract.Requires(Boundaries.Lays(key));
+                Contract.Requires(Topology.Lays(key));
 
                 throw new NotImplementedException();
             }
@@ -52,7 +52,7 @@ namespace SwarmIntelligence.Core.Creatures
 
         public override bool IsInitialized(C key)
         {
-            Contract.Requires(Boundaries.Lays(key));
+            Contract.Requires(Topology.Lays(key));
 
             throw new NotImplementedException();
         }

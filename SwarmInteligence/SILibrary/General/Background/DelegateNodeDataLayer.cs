@@ -1,5 +1,4 @@
 ﻿using System;
-using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Data;
 using SwarmIntelligence.Core.Space;
 
@@ -10,7 +9,7 @@ namespace SILibrary.General.Background
     {
         private readonly Func<C, B> factory;
 
-        public DelegateNodeDataLayer(Boundaries<C> boundaries, Func<C, B> factory): base(boundaries)
+        public DelegateNodeDataLayer(Topology<C> topology, Func<C, B> factory): base(topology)
         {
             this.factory = factory;
         }

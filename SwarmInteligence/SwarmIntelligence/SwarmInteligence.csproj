@@ -78,15 +78,14 @@
     <Compile Include="Infrastructure\Commands\MoveTo.cs" />
     <Compile Include="Infrastructure\Commands\SelfRemove.cs" />
     <Compile Include="Core\Data\EdgeDataLayer.cs" />
-    <Compile Include="Core\Edge.cs" />
+    <Compile Include="Core\Space\Edge.cs" />
     <Compile Include="Infrastructure\Implementation\Runner.cs" />
-    <Compile Include="Core\Space\Boundaries.cs" />
     <Compile Include="Core\Space\Topology.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Core\Creatures\Ant.cs" />
     <Compile Include="Core\Data\NodeDataLayer.cs" />
     <Compile Include="Core\Creatures\Cell.cs" />
-    <Compile Include="Core\ICoordinate.cs" />
+    <Compile Include="Core\Space\ICoordinate.cs" />
     <Compile Include="Core\Data\IMapping.cs" />
     <Compile Include="Core\Data\ILazyMapping.cs" />
     <Compile Include="Core\Creatures\Map.cs" />

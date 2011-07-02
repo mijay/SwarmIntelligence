@@ -1,6 +1,7 @@
 ﻿using Common.Collections;
 using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Creatures;
+using SwarmIntelligence.Core.Space;
 using SwarmIntelligence.Infrastructure.CommandsInfrastructure;
 
 namespace SwarmIntelligence.Infrastructure.Commands

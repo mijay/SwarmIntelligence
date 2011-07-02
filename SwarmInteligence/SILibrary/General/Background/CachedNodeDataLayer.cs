@@ -2,6 +2,7 @@
 using Common.Memoization;
 using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Data;
+using SwarmIntelligence.Core.Space;
 
 namespace SILibrary.General.Background
 {
@@ -10,7 +11,7 @@ namespace SILibrary.General.Background
     {
         private readonly Func<C, B> cachedGet;
 
-        public CachedNodeDataLayer(NodeDataLayer<C, B> nodeDataLayer, IMemoizer memoizer): base(nodeDataLayer.Boundaries)
+        public CachedNodeDataLayer(NodeDataLayer<C, B> nodeDataLayer, IMemoizer memoizer): base(nodeDataLayer.Topology)
         {
             cachedGet = memoizer.Memoize<C, B>(c => nodeDataLayer[c]);
         }

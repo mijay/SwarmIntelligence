@@ -8,21 +8,19 @@ namespace SwarmIntelligence.Core
     public class World<C, B, E>
         where C: ICoordinate<C>
     {
-        public World(Boundaries<C> boundaries, Topology<C> topology, NodeDataLayer<C, B> nodesData,
+        public World(Topology<C> topology, NodeDataLayer<C, B> nodesData,
                      EdgeDataLayer<C, E> edgesData, Map<C, B, E> map)
         {
-            Contract.Requires(boundaries != null && topology != null && nodesData != null && edgesData != null && map != null);
-            Contract.Requires(topology.Boundaries == boundaries && nodesData.Boundaries == boundaries
-                              && edgesData.Topology == topology && map.Boundaries == boundaries);
+            Contract.Requires(topology != null && nodesData != null && edgesData != null && map != null);
+            Contract.Requires(nodesData.Topology == topology && edgesData.Topology == topology
+                              && map.Topology == topology);
 
-            Boundaries = boundaries;
             Topology = topology;
             NodesData = nodesData;
             EdgesData = edgesData;
             Map = map;
         }
 
-        public Boundaries<C> Boundaries { get; private set; }
         public Topology<C> Topology { get; private set; }
         public NodeDataLayer<C, B> NodesData { get; private set; }
         public EdgeDataLayer<C, E> EdgesData { get; private set; }

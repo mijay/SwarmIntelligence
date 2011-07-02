@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
+using SwarmIntelligence.Core.Space;
 
 namespace SwarmIntelligence.Core.Creatures
 {

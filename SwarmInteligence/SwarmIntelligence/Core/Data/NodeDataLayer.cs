@@ -8,12 +8,12 @@ namespace SwarmIntelligence.Core.Data
     public abstract class NodeDataLayer<C, B>: IMapping<C, B>
         where C: ICoordinate<C>
     {
-        protected NodeDataLayer(Boundaries<C> boundaries)
+        protected NodeDataLayer(Topology<C> topology)
         {
-            Boundaries = boundaries;
+            Topology = topology;
         }
 
-        public Boundaries<C> Boundaries { get; private set; }
+        public Topology<C> Topology { get; private set; }
 
         #region IMapping<C,B> Members
 
@@ -26,7 +26,7 @@ namespace SwarmIntelligence.Core.Data
     internal abstract class ContractNodeDataLayer<C, B>: NodeDataLayer<C, B>
         where C: ICoordinate<C>
     {
-        protected ContractNodeDataLayer(Boundaries<C> boundaries): base(boundaries) {}
+        protected ContractNodeDataLayer(Topology<C> topology): base(topology) {}
 
         #region Overrides of NodeDataLayer<C,B>
 
@@ -34,7 +34,7 @@ namespace SwarmIntelligence.Core.Data
         {
             get
             {
-                Contract.Requires(Boundaries.Lays(key));
+                Contract.Requires(Topology.Lays(key));
 
                 throw new NotImplementedException();
             }

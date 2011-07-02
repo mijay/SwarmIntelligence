@@ -1,4 +1,5 @@
 ﻿using SwarmIntelligence.Core;
+using SwarmIntelligence.Core.Space;
 
 namespace SwarmIntelligence.Infrastructure.CommandsInfrastructure
 {

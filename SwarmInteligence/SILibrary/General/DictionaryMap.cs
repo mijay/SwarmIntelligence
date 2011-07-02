@@ -1,6 +1,5 @@
 ﻿using System.Collections.Concurrent;
 using System.Collections.Generic;
-using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Creatures;
 using SwarmIntelligence.Core.Space;
 
@@ -13,7 +12,7 @@ namespace SILibrary.General
 
         #region Overrides of Map<C,B>
 
-        public DictionaryMap(Boundaries<C> boundaries): base(boundaries) {}
+        public DictionaryMap(Topology<C> topology): base(topology) {}
 
         public override Cell<C, B, E> this[C key]
         {

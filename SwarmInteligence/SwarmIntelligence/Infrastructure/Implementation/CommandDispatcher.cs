@@ -2,6 +2,7 @@
 using System.Linq;
 using Common.Cache;
 using SwarmIntelligence.Core;
+using SwarmIntelligence.Core.Space;
 using SwarmIntelligence.Infrastructure.CommandsInfrastructure;
 
 namespace SwarmIntelligence.Infrastructure.Implementation

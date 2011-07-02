@@ -1,4 +1,4 @@
-namespace SwarmIntelligence.Core
+namespace SwarmIntelligence.Core.Space
 {
     public struct Edge<C>
         where C: ICoordinate<C>

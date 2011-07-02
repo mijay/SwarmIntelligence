@@ -2,6 +2,7 @@
 using Common.Memoization;
 using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Data;
+using SwarmIntelligence.Core.Space;
 
 namespace SILibrary.General.Background
 {

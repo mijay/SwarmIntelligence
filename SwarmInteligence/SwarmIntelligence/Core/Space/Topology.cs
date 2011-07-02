@@ -9,12 +9,8 @@ namespace SwarmIntelligence.Core.Space
     public abstract class Topology<C>
         where C: ICoordinate<C>
     {
-        protected Topology(Boundaries<C> boundaries)
-        {
-            Boundaries = boundaries;
-        }
-
-        public Boundaries<C> Boundaries { get; private set; }
+        [Pure]
+        public abstract bool Lays(C coord);
 
         [Pure]
         public abstract IEnumerable<C> GetSuccessors(C coord);
@@ -23,30 +19,36 @@ namespace SwarmIntelligence.Core.Space
         public abstract IEnumerable<C> GetPredecessors(C coord);
 
         [Pure]
-        public virtual bool Exists(Edge<C> edge)
+        public bool Lays(Edge<C> edge)
         {
-            Contract.Requires(Boundaries.Lays(edge));
-            return GetSuccessors(edge.from).Contains(edge.to);
+            return Lays(edge.from) && Lays(edge.to);
         }
 
         [Pure]
+        public virtual bool Exists(Edge<C> edge)
+        {
+            Contract.Requires(Lays(edge));
+            return GetSuccessors(edge.from).Contains(edge.to);
+        }
+            
+        [Pure]
         public IEnumerable<Edge<C>> GetOutgoing(C coord)
         {
-            Contract.Requires(Boundaries.Lays(coord));
+            Contract.Requires(Lays(coord));
             return GetSuccessors(coord).Select(x => new Edge<C>(coord, x));
         }
 
         [Pure]
         public IEnumerable<Edge<C>> GetIncoming(C coord)
         {
-            Contract.Requires(Boundaries.Lays(coord));
+            Contract.Requires(Lays(coord));
             return GetPredecessors(coord).Select(x => new Edge<C>(x, coord));
         }
 
         [Pure]
         public IEnumerable<Edge<C>> GetAdjacent(C coord)
         {
-            Contract.Requires(Boundaries.Lays(coord));
+            Contract.Requires(Lays(coord));
             return GetOutgoing(coord).Concat(GetIncoming(coord));
         }
     }
@@ -55,19 +57,17 @@ namespace SwarmIntelligence.Core.Space
     internal abstract class ContractTopology<C>: Topology<C>
         where C: ICoordinate<C>
     {
-        protected ContractTopology(Boundaries<C> boundaries): base(boundaries) {}
-
         #region Overrides of Topology<C>
 
         public override IEnumerable<C> GetSuccessors(C coord)
         {
-            Contract.Requires(Boundaries.Lays(coord));
+            Contract.Requires(Lays(coord));
             throw new NotImplementedException();
         }
 
         public override IEnumerable<C> GetPredecessors(C coord)
         {
-            Contract.Requires(Boundaries.Lays(coord));
+            Contract.Requires(Lays(coord));
             throw new NotImplementedException();
         }
 

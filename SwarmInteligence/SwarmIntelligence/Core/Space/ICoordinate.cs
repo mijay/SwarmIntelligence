@@ -1,7 +1,7 @@
 ﻿using System;
 using SwarmIntelligence.Core.Creatures;
 
-namespace SwarmIntelligence.Core
+namespace SwarmIntelligence.Core.Space
 {
     /// <summary>
     /// Interface for representing coordinates on the <see cref="Map{C,B,E}"/>.

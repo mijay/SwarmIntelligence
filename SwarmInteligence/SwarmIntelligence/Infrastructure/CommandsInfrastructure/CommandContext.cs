@@ -2,6 +2,7 @@
 using Common;
 using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Creatures;
+using SwarmIntelligence.Core.Space;
 
 namespace SwarmIntelligence.Infrastructure.CommandsInfrastructure
 {

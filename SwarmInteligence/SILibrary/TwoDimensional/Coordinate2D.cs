@@ -1,5 +1,6 @@
 using System;
 using SwarmIntelligence.Core;
+using SwarmIntelligence.Core.Space;
 
 namespace SILibrary.TwoDimensional
 {
