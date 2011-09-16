@@ -23,11 +23,7 @@ namespace SwarmIntelligence.Core.Playground
 
 		#region Implementation of IMapping<in TCoordinate,out Cell<TCoordinate,TNodeData,TEdgeData>>
 
-		public Cell<TCoordinate, TNodeData, TEdgeData> Get(TCoordinate key)
-		{
-			Cell<TCoordinate, TNodeData, TEdgeData> cell;
-			return TryGet(key, out cell) ? cell : null;
-		}
+		public abstract Cell<TCoordinate, TNodeData, TEdgeData> Get(TCoordinate key);
 
 		#endregion
 

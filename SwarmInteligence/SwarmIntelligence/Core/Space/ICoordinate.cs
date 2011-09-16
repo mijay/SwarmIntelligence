@@ -6,14 +6,20 @@ namespace SwarmIntelligence.Core.Space
 {
 	/// <summary>
 	/// Interface for representing coordinates on the <see cref="Map{TCoordinate,TNodeData,TEdgeData}"/>.
-	/// Should be implemented in the following way:
+	/// </summary>
+	/// <remarks>
+	///	Should be implemented in the following way:
 	/// <code>
 	/// public struct Coordinate: ICoordinate&lt;Coordinate&gt;
 	/// {
 	///	 …
 	/// }
+	/// And should override <see cref="object.GetHashCode"/> correctly.
 	/// </code>
-	/// </summary>
+	/// </remarks>
 	public interface ICoordinate<TCoordinate>: IEquatable<TCoordinate>, ICloneable<TCoordinate>
-		where TCoordinate: ICoordinate<TCoordinate> {}
+		where TCoordinate: ICoordinate<TCoordinate>
+	{
+		int GetHashCode();
+	}
 }
