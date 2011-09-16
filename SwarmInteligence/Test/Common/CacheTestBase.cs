@@ -6,29 +6,29 @@ using NUnit.Framework;
 
 namespace Test.Common
 {
-    public class CacheTestBase: TestBase
-    {
-        #region Setup/Teardown
+	public class CacheTestBase: TestBase
+	{
+		#region Setup/Teardown
 
-        public override void SetUp()
-        {
-            base.SetUp();
-            localCache = new ConcurentDictionaryCache(new ConcurrentDictionary<object, object>());
-        }
+		public override void SetUp()
+		{
+			base.SetUp();
+			localCache = new ConcurentDictionaryCache(new ConcurrentDictionary<object, object>());
+		}
 
-        #endregion
+		#endregion
 
-        protected ConcurentDictionaryCache localCache;
+		protected ConcurentDictionaryCache localCache;
 
-        protected static Func<TKey, TVal> GetFuncForCache<TKey, TVal>(TKey key, TVal value)
-        {
-            bool firstCall = true;
-            return a => {
-                       Assert.IsTrue(firstCall);
-                       firstCall = false;
-                       Assert.That(a, Is.EqualTo(key));
-                       return value;
-                   };
-        }
-    }
+		protected static Func<TKey, TVal> GetFuncForCache<TKey, TVal>(TKey key, TVal value)
+		{
+			bool firstCall = true;
+			return a => {
+			       	Assert.IsTrue(firstCall);
+			       	firstCall = false;
+			       	Assert.That(a, Is.EqualTo(key));
+			       	return value;
+			       };
+		}
+	}
 }

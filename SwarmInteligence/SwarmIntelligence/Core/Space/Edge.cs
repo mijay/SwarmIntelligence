@@ -1,12 +1,11 @@
 namespace SwarmIntelligence.Core.Space
 {
-    public struct Edge<C>
-        where C: ICoordinate<C>
+    public struct Edge<TCoordinate>
     {
-        public readonly C from;
-        public readonly C to;
+        public readonly TCoordinate from;
+        public readonly TCoordinate to;
 
-        public Edge(C from, C to): this()
+        public Edge(TCoordinate from, TCoordinate to): this()
         {
             this.from = from;
             this.to = to;

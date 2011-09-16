@@ -2,14 +2,14 @@
 
 namespace SwarmIntelligence.Core.Interfaces
 {
-    public interface IMapping<in TKey, out TData>
+    public interface IMutableMapping<in TKey, TData>:IMapping<TKey, TData>
     {
 		/// <summary>
-		/// TDOD
+		/// TODO
 		/// </summary>
 		/// <param name="key"></param>
-		/// <returns></returns>
+		/// <param name="data"></param>
 		/// <exception cref="IndexOutOfRangeException"><paramref name="key"/> value is illegal or out of the bounds.</exception>
-        TData Get(TKey key);
+        void Set(TKey key, TData data);
     }
 }

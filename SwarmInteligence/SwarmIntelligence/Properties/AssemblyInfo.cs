@@ -1,19 +1,16 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
-using Common.DependecyInjection;
-
-[assembly: ScanAssembly]
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 
-[assembly: AssemblyTitle("SwarmIntelligence2")]
+[assembly: AssemblyTitle("Swarm Intelligence library")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("SwarmIntelligence2")]
-[assembly: AssemblyCopyright("Copyright ©  2011")]
+[assembly: AssemblyCompany("Dmitry Kononchuk")]
+[assembly: AssemblyProduct("Swarm Intelligence")]
+[assembly: AssemblyCopyright("Copyright © Dmitry Kononchuk, 2011")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

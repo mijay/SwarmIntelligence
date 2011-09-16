@@ -93,10 +93,6 @@
       <Project>{2BC749DB-5C4C-403A-9391-8FC43719D93A}</Project>
       <Name>Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DITestAssembly\DITestAssembly.csproj">
-      <Project>{5FBBA9E6-C37C-43A3-8838-0B47CD9322C7}</Project>
-      <Name>DITestAssembly</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SILibrary\SILibrary.csproj">
       <Project>{946A0892-9823-49F6-9D96-3B2B90B6C9C0}</Project>
       <Name>SILibrary</Name>

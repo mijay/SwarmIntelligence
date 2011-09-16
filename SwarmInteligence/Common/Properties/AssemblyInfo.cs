@@ -1,19 +1,16 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
-using Common.DependecyInjection;
-
-[assembly: ScanAssembly]
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 
-[assembly: AssemblyTitle("CommonUtilities")]
+[assembly: AssemblyTitle("Common Utilities")]
 [assembly: AssemblyDescription("Collections of widely used solutions and helpers")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Dmitry Kononchuk")]
-[assembly: AssemblyProduct("CommonUtilities")]
-[assembly: AssemblyCopyright("Copyright © Dmitry Kononchuk 2010")]
+[assembly: AssemblyProduct("Common Utilities")]
+[assembly: AssemblyCopyright("Copyright © Dmitry Kononchuk, 2011")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

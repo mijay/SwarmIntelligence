@@ -62,22 +62,20 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\Creatures\IOutlook.cs" />
-    <Compile Include="Core\Creatures\OutlookExtensions.cs" />
+    <Compile Include="Core\Playground\IOutlook.cs" />
+    <Compile Include="Core\Interfaces\IEnumerableMapping.cs" />
+    <Compile Include="Core\Interfaces\IMutableMapping.cs" />
+    <Compile Include="Core\Interfaces\ISparseMappint.cs" />
     <Compile Include="Core\World.cs" />
-    <Compile Include="Core\DataLayer\EdgeDataLayer.cs" />
+    <Compile Include="Core\DataLayer.cs" />
     <Compile Include="Core\Space\Edge.cs" />
-    <Compile Include="Infrastructure\ThreadLocalOutlook.cs" />
-    <Compile Include="Infrastructure\Runner.cs" />
     <Compile Include="Core\Space\Topology.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Core\Creatures\Ant.cs" />
-    <Compile Include="Core\DataLayer\NodeDataLayer.cs" />
-    <Compile Include="Core\PlayingField\Cell.cs" />
+    <Compile Include="Core\Playground\Ant.cs" />
+    <Compile Include="Core\Playground\Cell.cs" />
     <Compile Include="Core\Space\ICoordinate.cs" />
     <Compile Include="Core\Interfaces\IMapping.cs" />
-    <Compile Include="Core\Interfaces\ILazyMapping.cs" />
-    <Compile Include="Core\PlayingField\Map.cs" />
+    <Compile Include="Core\Playground\Map.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">

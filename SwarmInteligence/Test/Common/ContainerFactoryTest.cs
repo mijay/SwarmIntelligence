@@ -13,161 +13,161 @@ using StructureMap.TypeRules;
 
 namespace Test.Common
 {
-    public class ContainerFactoryTest: TestBase
-    {
-        #region Setup/Teardown
+	public class ContainerFactoryTest: TestBase
+	{
+		#region Setup/Teardown
 
-        public override void SetUp()
-        {
-            base.SetUp();
-            var assemblyProvider = new Mock<IAssemblyProvider>(MockBehavior.Strict);
-            assemblyProvider
-                .Setup(x => x.GetAssemblies())
-                .Returns(new[] { Assembly.Load("DITestAssembly") });
-            var containerFactory = new ContainerFactory(assemblyProvider.Object, new SmartConventions());
-            createdContainer = containerFactory.Create();
-        }
+		public override void SetUp()
+		{
+			base.SetUp();
+			var assemblyProvider = new Mock<IAssemblyProvider>(MockBehavior.Strict);
+			assemblyProvider
+				.Setup(x => x.GetAssemblies())
+				.Returns(new[] { Assembly.Load("DITestAssembly") });
+			var containerFactory = new ContainerFactory(assemblyProvider.Object, new SmartConventions());
+			createdContainer = containerFactory.Create();
+		}
 
-        #endregion
+		#endregion
 
-        private Container createdContainer;
+		private Container createdContainer;
 
-        private static void AssertHasInstancesOf(IEnumerable<object> collection, params Type[] types)
-        {
-            CollectionAssert.AreEquivalent(collection.Select(x => x.GetType()), types);
-        }
+		private static void AssertHasInstancesOf(IEnumerable<object> collection, params Type[] types)
+		{
+			CollectionAssert.AreEquivalent(collection.Select(x => x.GetType()), types);
+		}
 
-        [Test]
-        public void GetAbstractGenericType_CorrectNonabstractGenericInheritorReturned()
-        {
-            Assert.That(createdContainer.GetInstance<TestWhere<int>>(),
-                        Is.TypeOf<TestWhereStruct<int>>());
-            Assert.That(createdContainer.GetInstance<TestWhere<ArrayList>>(),
-                        Is.TypeOf<TestWhereEnumerable<ArrayList>>());
-        }
+		[Test]
+		public void GetAbstractGenericType_CorrectNonabstractGenericInheritorReturned()
+		{
+			Assert.That(createdContainer.GetInstance<TestWhere<int>>(),
+			            Is.TypeOf<TestWhereStruct<int>>());
+			Assert.That(createdContainer.GetInstance<TestWhere<ArrayList>>(),
+			            Is.TypeOf<TestWhereEnumerable<ArrayList>>());
+		}
 
-        [Test]
-        public void GetAllForBaseTypeForTypeWithInheritor_TypeAndInheritedTypeInstancesReturned()
-        {
-            AssertHasInstancesOf(createdContainer.GetAllInstances<TestInheritanceAbstractBase>(),
-                                 typeof(TestInheritanceBaseNonAbstract), typeof(TestInheritance));
-        }
+		[Test]
+		public void GetAllForBaseTypeForTypeWithInheritor_TypeAndInheritedTypeInstancesReturned()
+		{
+			AssertHasInstancesOf(createdContainer.GetAllInstances<TestInheritanceAbstractBase>(),
+			                     typeof(TestInheritanceBaseNonAbstract), typeof(TestInheritance));
+		}
 
-        [Test]
-        public void GetAllForNonabstrGenericBaseWithCorrectTypeArg_TypeAndBaseTypeInstancesReturned()
-        {
-            AssertHasInstancesOf(createdContainer.GetAllInstances<TestGenericInheritanceBase<int>>(),
-                                 typeof(TestGenericInheritanceBase<int>), typeof(TestGenericInheritance));
-        }
+		[Test]
+		public void GetAllForNonabstrGenericBaseWithCorrectTypeArg_TypeAndBaseTypeInstancesReturned()
+		{
+			AssertHasInstancesOf(createdContainer.GetAllInstances<TestGenericInheritanceBase<int>>(),
+			                     typeof(TestGenericInheritanceBase<int>), typeof(TestGenericInheritance));
+		}
 
-        [Test]
-        public void GetAllForNonabstrGenericBaseWithIncorrectTypeArg_BaseTypeInstanceReturned()
-        {
-            AssertHasInstancesOf(createdContainer.GetAllInstances<TestGenericInheritanceBase<double>>(),
-                                 typeof(TestGenericInheritanceBase<double>));
-        }
+		[Test]
+		public void GetAllForNonabstrGenericBaseWithIncorrectTypeArg_BaseTypeInstanceReturned()
+		{
+			AssertHasInstancesOf(createdContainer.GetAllInstances<TestGenericInheritanceBase<double>>(),
+			                     typeof(TestGenericInheritanceBase<double>));
+		}
 
-        [Test]
-        public void GetAllForTypeWithInheritor_TypeAndInheritedTypeInstancesReturned()
-        {
-            AssertHasInstancesOf(createdContainer.GetAllInstances<TestInheritanceBaseNonAbstract>(),
-                                 typeof(TestInheritanceBaseNonAbstract), typeof(TestInheritance));
-        }
+		[Test]
+		public void GetAllForTypeWithInheritor_TypeAndInheritedTypeInstancesReturned()
+		{
+			AssertHasInstancesOf(createdContainer.GetAllInstances<TestInheritanceBaseNonAbstract>(),
+			                     typeof(TestInheritanceBaseNonAbstract), typeof(TestInheritance));
+		}
 
-        [Test]
-        public void GetBaseClass_ConcreteClassInstanceReturned()
-        {
-            Assert.That(createdContainer.GetInstance<TestSimpleBase>(), Is.TypeOf<TestSimple>());
-        }
+		[Test]
+		public void GetBaseClass_ConcreteClassInstanceReturned()
+		{
+			Assert.That(createdContainer.GetInstance<TestSimpleBase>(), Is.TypeOf<TestSimple>());
+		}
 
-        [Test]
-        public void GetBaseWithManyImpl_Throws()
-        {
-            Assert.Throws<StructureMapException>(() => createdContainer.GetInstance<TestSimpleBadBase>());
-        }
+		[Test]
+		public void GetBaseWithManyImpl_Throws()
+		{
+			Assert.Throws<StructureMapException>(() => createdContainer.GetInstance<TestSimpleBadBase>());
+		}
 
-        [Test]
-        public void GetClassInterface_ConcreteClassInstanceReturned()
-        {
-            Assert.That(createdContainer.GetInstance<ITestSimple>(), Is.TypeOf<TestSimple>());
-        }
+		[Test]
+		public void GetClassInterface_ConcreteClassInstanceReturned()
+		{
+			Assert.That(createdContainer.GetInstance<ITestSimple>(), Is.TypeOf<TestSimple>());
+		}
 
-        [Test]
-        public void GetCommonClass_ClassInstanceReturned()
-        {
-            Assert.That(createdContainer.GetInstance<TestSimple>(), Is.TypeOf<TestSimple>());
-        }
+		[Test]
+		public void GetCommonClass_ClassInstanceReturned()
+		{
+			Assert.That(createdContainer.GetInstance<TestSimple>(), Is.TypeOf<TestSimple>());
+		}
 
-        [Test]
-        public void GetGenericBaseClassWithCorrectTypeArg_ClassInstanceReturned()
-        {
-            Assert.That(createdContainer.GetInstance<TestSimpleGenericBase<int>>(), Is.TypeOf<TestSimple>());
-        }
+		[Test]
+		public void GetGenericBaseClassWithCorrectTypeArg_ClassInstanceReturned()
+		{
+			Assert.That(createdContainer.GetInstance<TestSimpleGenericBase<int>>(), Is.TypeOf<TestSimple>());
+		}
 
-        [Test]
-        public void GetGenericBaseClassWithIncorrectTypeArg_Throws()
-        {
-            Assert.Throws<StructureMapException>(() => createdContainer.GetInstance<TestSimpleGenericBase<double>>());
-        }
+		[Test]
+		public void GetGenericBaseClassWithIncorrectTypeArg_Throws()
+		{
+			Assert.Throws<StructureMapException>(() => createdContainer.GetInstance<TestSimpleGenericBase<double>>());
+		}
 
-        [Test]
-        public void GetNonabstrGenericBaseWithCorrectTypeArg_BaseTypeInstanceReturned()
-        {
-            Assert.That(createdContainer.GetInstance<TestGenericInheritanceBase<int>>(),
-                        Is.TypeOf<TestGenericInheritanceBase<int>>());
-        }
+		[Test]
+		public void GetNonabstrGenericBaseWithCorrectTypeArg_BaseTypeInstanceReturned()
+		{
+			Assert.That(createdContainer.GetInstance<TestGenericInheritanceBase<int>>(),
+			            Is.TypeOf<TestGenericInheritanceBase<int>>());
+		}
 
-        [Test]
-        public void GetNonabstrGenericBaseWithIncorrectTypeArg_BaseTypeInstanceReturned()
-        {
-            Assert.That(createdContainer.GetInstance<TestGenericInheritanceBase<double>>(),
-                        Is.TypeOf<TestGenericInheritanceBase<double>>());
-        }
+		[Test]
+		public void GetNonabstrGenericBaseWithIncorrectTypeArg_BaseTypeInstanceReturned()
+		{
+			Assert.That(createdContainer.GetInstance<TestGenericInheritanceBase<double>>(),
+			            Is.TypeOf<TestGenericInheritanceBase<double>>());
+		}
 
-        [Test]
-        public void GetNongenericInterfaceWithOnlyOneGenericImplementation_Throws()
-        {
-            Assert.Throws<StructureMapException>(() => createdContainer.GetInstance<ITestNoGenericParams>());
-        }
+		[Test]
+		public void GetNongenericInterfaceWithOnlyOneGenericImplementation_Throws()
+		{
+			Assert.Throws<StructureMapException>(() => createdContainer.GetInstance<ITestNoGenericParams>());
+		}
 
-        [Test]
-        public void GetTypeWithGenericWichSutisfyesAllInheritorsConstraints_ReturnTypeAndAllInheritors()
-        {
-            AssertHasInstancesOf(createdContainer.GetAllInstances<TestPartGenBase<double, int>>(),
-                                 typeof(TestPartGen<double>), typeof(TestPartGenBrother<int>),
-                                 typeof(TestPartGenBase<double, int>));
-        }
+		[Test]
+		public void GetTypeWithGenericWichSutisfyesAllInheritorsConstraints_ReturnTypeAndAllInheritors()
+		{
+			AssertHasInstancesOf(createdContainer.GetAllInstances<TestPartGenBase<double, int>>(),
+			                     typeof(TestPartGen<double>), typeof(TestPartGenBrother<int>),
+			                     typeof(TestPartGenBase<double, int>));
+		}
 
-        [Test]
-        public void GetTypeWithGenericWichSutisfyesSomeInheritorsConstraints_ReturnTypeAndThatInheritors()
-        {
-            AssertHasInstancesOf(createdContainer.GetAllInstances<TestPartGenBase<double, float>>(),
-                                 typeof(TestPartGenBrother<float>), typeof(TestPartGenBase<double, float>));
-        }
+		[Test]
+		public void GetTypeWithGenericWichSutisfyesSomeInheritorsConstraints_ReturnTypeAndThatInheritors()
+		{
+			AssertHasInstancesOf(createdContainer.GetAllInstances<TestPartGenBase<double, float>>(),
+			                     typeof(TestPartGenBrother<float>), typeof(TestPartGenBase<double, float>));
+		}
 
-        [Test]
-        public void GetTypeWithInheritor_TypeInstanceReturned()
-        {
-            Assert.That(createdContainer.GetInstance<TestInheritanceBaseNonAbstract>(),
-                        Is.TypeOf<TestInheritanceBaseNonAbstract>());
-        }
+		[Test]
+		public void GetTypeWithInheritor_TypeInstanceReturned()
+		{
+			Assert.That(createdContainer.GetInstance<TestInheritanceBaseNonAbstract>(),
+			            Is.TypeOf<TestInheritanceBaseNonAbstract>());
+		}
 
-        [Test]
-        public void IsOpenGeneric()
-        {
-            Assert.True(typeof(IEnumerable<>).IsOpenGeneric());
-            Assert.False(typeof(IDictionary<int, double>).IsOpenGeneric());
+		[Test]
+		public void IsOpenGeneric()
+		{
+			Assert.True(typeof(IEnumerable<>).IsOpenGeneric());
+			Assert.False(typeof(IDictionary<int, double>).IsOpenGeneric());
 
-            Type openListType = typeof(IList<>);
-            Type collectionTypeWithTypeparam =
-                openListType.GetInterfaces().Single(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(ICollection<>));
-            Assert.True(collectionTypeWithTypeparam.IsOpenGeneric());
+			Type openListType = typeof(IList<>);
+			Type collectionTypeWithTypeparam =
+				openListType.GetInterfaces().Single(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(ICollection<>));
+			Assert.True(collectionTypeWithTypeparam.IsOpenGeneric());
 
-            Type closedListType = typeof(IList<int>);
-            Type collectionTypeWithSpecifiedParam =
-                closedListType.GetInterfaces().Single(
-                    x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(ICollection<>));
-            Assert.False(collectionTypeWithSpecifiedParam.IsOpenGeneric());
-        }
-    }
+			Type closedListType = typeof(IList<int>);
+			Type collectionTypeWithSpecifiedParam =
+				closedListType.GetInterfaces().Single(
+					x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(ICollection<>));
+			Assert.False(collectionTypeWithSpecifiedParam.IsOpenGeneric());
+		}
+	}
 }

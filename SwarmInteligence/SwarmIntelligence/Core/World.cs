@@ -1,29 +1,27 @@
 using System.Diagnostics.Contracts;
-using SwarmIntelligence.Core.DataLayer;
-using SwarmIntelligence.Core.PlayingField;
+using SwarmIntelligence.Core.Playground;
 using SwarmIntelligence.Core.Space;
 
 namespace SwarmIntelligence.Core
 {
-    public class World<C, B, E>
-        where C: ICoordinate<C>
-    {
-        public World(Topology<C> topology, NodeDataLayer<C, B> nodesData,
-                     EdgeDataLayer<C, E> edgesData, Map<C, B, E> map)
-        {
-            Contract.Requires(topology != null && nodesData != null && edgesData != null && map != null);
-            Contract.Requires(nodesData.Topology == topology && edgesData.Topology == topology
-                              && map.Topology == topology);
+	public class World<TCoordinate, TNodeData, TEdgeData>
+		where TCoordinate: ICoordinate<TCoordinate>
+	{
+		public World(DataLayer<TCoordinate, TNodeData> nodesData,
+		             DataLayer<Edge<TCoordinate>, TEdgeData> edgesData,
+		             Map<TCoordinate, TNodeData, TEdgeData> map)
+		{
+			Contract.Requires(nodesData != null && edgesData != null && map != null);
 
-            Topology = topology;
-            NodesData = nodesData;
-            EdgesData = edgesData;
-            Map = map;
-        }
+			Topology = map.Topology;
+			NodesData = nodesData;
+			EdgesData = edgesData;
+			Map = map;
+		}
 
-        public Topology<C> Topology { get; private set; }
-        public NodeDataLayer<C, B> NodesData { get; private set; }
-        public EdgeDataLayer<C, E> EdgesData { get; private set; }
-        public Map<C, B, E> Map { get; private set; }
-    }
+		public Topology<TCoordinate> Topology { get; private set; }
+		public DataLayer<TCoordinate, TNodeData> NodesData { get; private set; }
+		public DataLayer<Edge<TCoordinate>, TEdgeData> EdgesData { get; private set; }
+		public Map<TCoordinate, TNodeData, TEdgeData> Map { get; private set; }
+	}
 }

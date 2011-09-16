@@ -1,76 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace SwarmIntelligence.Core.Space
 {
-    [ContractClass(typeof(ContractTopology<>))]
-    public abstract class Topology<C>
-        where C: ICoordinate<C>
-    {
-        [Pure]
-        public abstract bool Lays(C coord);
+	public abstract class Topology<TCoordinate>
+	{
+		public abstract bool Lays(TCoordinate coord);
 
-        [Pure]
-        public abstract IEnumerable<C> GetSuccessors(C coord);
+		public abstract IEnumerable<TCoordinate> GetSuccessors(TCoordinate coord);
 
-        [Pure]
-        public abstract IEnumerable<C> GetPredecessors(C coord);
+		public abstract IEnumerable<TCoordinate> GetPredecessors(TCoordinate coord);
 
-        [Pure]
-        public bool Lays(Edge<C> edge)
-        {
-            return Lays(edge.from) && Lays(edge.to);
-        }
+		public virtual bool Lays(Edge<TCoordinate> edge)
+		{
+			return Lays(edge.from) && Lays(edge.to)
+			       && GetSuccessors(edge.from).Contains(edge.to);
+		}
 
-        [Pure]
-        public virtual bool Exists(Edge<C> edge)
-        {
-            Contract.Requires(Lays(edge));
-            return GetSuccessors(edge.from).Contains(edge.to);
-        }
-            
-        [Pure]
-        public IEnumerable<Edge<C>> GetOutgoing(C coord)
-        {
-            Contract.Requires(Lays(coord));
-            return GetSuccessors(coord).Select(x => new Edge<C>(coord, x));
-        }
+		public IEnumerable<Edge<TCoordinate>> GetOutgoing(TCoordinate coord)
+		{
+			return GetSuccessors(coord).Select(x => new Edge<TCoordinate>(coord, x));
+		}
 
-        [Pure]
-        public IEnumerable<Edge<C>> GetIncoming(C coord)
-        {
-            Contract.Requires(Lays(coord));
-            return GetPredecessors(coord).Select(x => new Edge<C>(x, coord));
-        }
+		public IEnumerable<Edge<TCoordinate>> GetIncoming(TCoordinate coord)
+		{
+			return GetPredecessors(coord).Select(x => new Edge<TCoordinate>(x, coord));
+		}
 
-        [Pure]
-        public IEnumerable<Edge<C>> GetAdjacent(C coord)
-        {
-            Contract.Requires(Lays(coord));
-            return GetOutgoing(coord).Concat(GetIncoming(coord));
-        }
-    }
-
-    [ContractClassFor(typeof(Topology<>))]
-    internal abstract class ContractTopology<C>: Topology<C>
-        where C: ICoordinate<C>
-    {
-        #region Overrides of Topology<C>
-
-        public override IEnumerable<C> GetSuccessors(C coord)
-        {
-            Contract.Requires(Lays(coord));
-            throw new NotImplementedException();
-        }
-
-        public override IEnumerable<C> GetPredecessors(C coord)
-        {
-            Contract.Requires(Lays(coord));
-            throw new NotImplementedException();
-        }
-
-        #endregion
-    }
+		public IEnumerable<Edge<TCoordinate>> GetAdjacent(TCoordinate coord)
+		{
+			return GetOutgoing(coord).Concat(GetIncoming(coord));
+		}
+	}
 }

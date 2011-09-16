@@ -2,17 +2,17 @@
 
 namespace CommonTest
 {
-    [TestFixture]
-    public abstract class TestBase
-    {
-        #region Setup/Teardown
+	[TestFixture]
+	public abstract class TestBase
+	{
+		#region Setup/Teardown
 
-        [SetUp]
-        public virtual void SetUp() {}
+		[SetUp]
+		public virtual void SetUp() {}
 
-        #endregion
+		#endregion
 
-        [TestFixtureSetUp]
-        public virtual void FixtureSetUp() {}
-    }
+		[TestFixtureSetUp]
+		public virtual void FixtureSetUp() {}
+	}
 }

@@ -1,12 +1,12 @@
 namespace SILibrary.General.Background
 {
-    public class EmptyData
-    {
-        static EmptyData()
-        {
-            Instance = new EmptyData();
-        }
+	public class EmptyData
+	{
+		static EmptyData()
+		{
+			Instance = new EmptyData();
+		}
 
-        public static EmptyData Instance { get; private set; }
-    }
+		public static EmptyData Instance { get; private set; }
+	}
 }
