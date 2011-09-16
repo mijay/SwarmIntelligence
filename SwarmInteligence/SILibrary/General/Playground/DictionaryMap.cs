@@ -4,7 +4,7 @@ using SwarmIntelligence.Core.Playground;
 using SwarmIntelligence.Core.Space;
 using SwarmIntelligence.Infrastructure.MemoryManagement;
 
-namespace SILibrary.General
+namespace SILibrary.General.Playground
 {
 	public class DictionaryMap<TCoordinate, TNodeData, TEdgeData>: MapBase<TCoordinate, TNodeData, TEdgeData>
 		where TCoordinate: ICoordinate<TCoordinate>

@@ -1,6 +1,7 @@
 ﻿using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Playground;
 using SwarmIntelligence.Core.Space;
+using SwarmIntelligence.Infrastructure.MemoryManagement;
 
 namespace SwarmIntelligence.Infrastructure.TurnProcessing
 {
@@ -14,10 +15,10 @@ namespace SwarmIntelligence.Infrastructure.TurnProcessing
 			outlook = new Outlook<TCoordinate, TNodeData, TEdgeData>(world, this);
 		}
 
-		internal void ProcessTurn(TCoordinate coordinate, Cell<TCoordinate, TNodeData, TEdgeData> cell)
+		internal void ProcessTurn(TCoordinate coordinate, CellBase<TCoordinate, TNodeData, TEdgeData> cell)
 		{
 			outlook.Coordinate = coordinate;
-			outlook.Cell = cell;
+			outlook.CellBase = cell;
 			ProcessTurn(outlook);
 		}
 	}

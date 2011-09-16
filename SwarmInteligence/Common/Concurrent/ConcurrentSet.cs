@@ -8,6 +8,16 @@ namespace Common.Concurrent
 	{
 		private readonly ConcurrentDictionary<T, object> dictionary = new ConcurrentDictionary<T, object>();
 
+		public bool IsEmpty
+		{
+			get { return dictionary.IsEmpty; }
+		}
+
+		public int Count
+		{
+			get { return dictionary.Count; }
+		}
+
 		public bool Add(T value)
 		{
 			return dictionary.TryAdd(value, new object());
@@ -19,7 +29,7 @@ namespace Common.Concurrent
 			return dictionary.TryRemove(value, out _);
 		}
 
-		public void Clean()
+		public void Clear()
 		{
 			dictionary.Clear();
 		}

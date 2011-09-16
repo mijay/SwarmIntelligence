@@ -20,8 +20,5 @@ namespace SwarmIntelligence.Core.Playground
 
 		public abstract Map<TCoordinate, TNodeData, TEdgeData> Map { get; }
 		public abstract TCoordinate Coordinate { get; }
-
-		public abstract void Add(Ant<TCoordinate, TNodeData, TEdgeData> ant);
-		public abstract bool Remove(Ant<TCoordinate, TNodeData, TEdgeData> ant);
 	}
 }

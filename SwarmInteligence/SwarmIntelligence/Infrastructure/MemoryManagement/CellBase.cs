@@ -29,6 +29,9 @@ namespace SwarmIntelligence.Infrastructure.MemoryManagement
 			get { return coordinate; }
 		}
 
+		public abstract void Add(Ant<TCoordinate, TNodeData, TEdgeData> ant);
+		public abstract void Remove(Ant<TCoordinate, TNodeData, TEdgeData> ant);
+
 		internal void SetCoordinate(TCoordinate newCoord)
 		{
 			coordinate = newCoord;

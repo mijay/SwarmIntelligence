@@ -29,12 +29,14 @@ namespace SwarmIntelligence.Core.Playground
 
 		#region Implementation of ISparseMappint<in TCoordinate,Cell<TCoordinate,TNodeData,TEdgeData>>
 
+		[Pure]
 		public virtual bool Has(TCoordinate key)
 		{
 			Cell<TCoordinate, TNodeData, TEdgeData> cell;
 			return TryGet(key, out cell);
 		}
 
+		[Pure]
 		public abstract bool TryGet(TCoordinate key, out Cell<TCoordinate, TNodeData, TEdgeData> data);
 
 		#endregion

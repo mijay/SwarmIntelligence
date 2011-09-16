@@ -2,7 +2,7 @@
 
 namespace SwarmIntelligence.Infrastructure.MemoryManagement
 {
-	public abstract class CellProvider<TCoordinate, TNodeData, TEdgeData>: ICellProvider<TCoordinate, TNodeData, TEdgeData>
+	public abstract class CellProviderBase<TCoordinate, TNodeData, TEdgeData>: ICellProvider<TCoordinate, TNodeData, TEdgeData>
 		where TCoordinate: ICoordinate<TCoordinate>
 	{
 		protected abstract CellBase<TCoordinate, TNodeData, TEdgeData> ReuseOrBuild();

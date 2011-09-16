@@ -3,6 +3,7 @@ using System.Linq;
 using Common.Collections;
 using SwarmIntelligence.Core.Playground;
 using SwarmIntelligence.Core.Space;
+using SwarmIntelligence.Internal;
 
 namespace SwarmIntelligence.Infrastructure.MemoryManagement
 {
@@ -24,7 +25,7 @@ namespace SwarmIntelligence.Infrastructure.MemoryManagement
 		{
 			this
 				.Select(x => x.Value)
-				.Cast<CellBase<TCoordinate, TNodeData, TEdgeData>>()
+				.Select(x => x.Base())
 				.Where(x => x.IsEmpty)
 				.ForEach(x => {
 				         	Remove(x.Coordinate);
@@ -46,7 +47,6 @@ namespace SwarmIntelligence.Infrastructure.MemoryManagement
 		}
 
 		protected abstract void Remove(TCoordinate coordinate);
-
 		protected abstract Cell<TCoordinate, TNodeData, TEdgeData> GetOrAdd(TCoordinate coordinate,
 		                                                                    Cell<TCoordinate, TNodeData, TEdgeData> cell);
 	}

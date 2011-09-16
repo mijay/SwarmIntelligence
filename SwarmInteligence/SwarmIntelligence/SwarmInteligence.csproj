@@ -70,18 +70,21 @@
     <Compile Include="Core\DataLayer.cs" />
     <Compile Include="Core\Space\Edge.cs" />
     <Compile Include="Core\Space\Topology.cs" />
+    <Compile Include="Infrastructure\Logging\ILog.cs" />
     <Compile Include="Infrastructure\MemoryManagement\CellBase.cs" />
-    <Compile Include="Infrastructure\MemoryManagement\CellProvider.cs" />
+    <Compile Include="Infrastructure\MemoryManagement\CellProviderBase.cs" />
     <Compile Include="Infrastructure\MemoryManagement\ICellProvider.cs" />
     <Compile Include="Infrastructure\MemoryManagement\MapBase.cs" />
     <Compile Include="Infrastructure\TurnProcessing\AntBase.cs" />
     <Compile Include="Infrastructure\TurnProcessing\Outlook.cs" />
+    <Compile Include="Internal\Helpers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Core\Playground\Ant.cs" />
     <Compile Include="Core\Playground\Cell.cs" />
     <Compile Include="Core\Space\ICoordinate.cs" />
     <Compile Include="Core\Interfaces\IMapping.cs" />
     <Compile Include="Core\Playground\Map.cs" />
+    <Compile Include="Runner.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">
