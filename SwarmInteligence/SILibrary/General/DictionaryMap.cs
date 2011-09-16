@@ -2,37 +2,45 @@
 using System.Collections.Generic;
 using SwarmIntelligence.Core.Playground;
 using SwarmIntelligence.Core.Space;
+using SwarmIntelligence.Infrastructure.MemoryManagement;
 
 namespace SILibrary.General
 {
-	public class DictionaryMap<C, B, E>: Map<C, B, E>
-		where C: ICoordinate<C>
+	public class DictionaryMap<TCoordinate, TNodeData, TEdgeData>: MapBase<TCoordinate, TNodeData, TEdgeData>
+		where TCoordinate: ICoordinate<TCoordinate>
 	{
-		public readonly ConcurrentDictionary<C, Cell<C, B, E>> data = new ConcurrentDictionary<C, Cell<C, B, E>>();
+		public readonly ConcurrentDictionary<TCoordinate, Cell<TCoordinate, TNodeData, TEdgeData>> dictionary =
+			new ConcurrentDictionary<TCoordinate, Cell<TCoordinate, TNodeData, TEdgeData>>();
 
-		#region Overrides of Map<C,B>
+		public DictionaryMap(Topology<TCoordinate> topology, ICellProvider<TCoordinate, TNodeData, TEdgeData> cellProvider)
+			: base(topology, cellProvider) {}
 
-		public DictionaryMap(Topology<C> topology): base(topology) {}
+		#region Overrides of Map<TCoordinate,TNodeData,TEdgeData>
 
-		public override Cell<C, B, E> this[C key]
+		public override bool TryGet(TCoordinate key, out Cell<TCoordinate, TNodeData, TEdgeData> data)
 		{
-			get { return data.GetOrAdd(key, delegate { return new Cell<C, B, E>(); }); }
+			return dictionary.TryGetValue(key, out data);
 		}
 
-		public override bool IsInitialized(C key)
+		public override IEnumerator<KeyValuePair<TCoordinate, Cell<TCoordinate, TNodeData, TEdgeData>>> GetEnumerator()
 		{
-			return data.ContainsKey(key);
+			return dictionary.GetEnumerator();
 		}
 
-		public override void Free(C key)
+		#endregion
+
+		#region Overrides of MapBase<TCoordinate,TNodeData,TEdgeData>
+
+		protected override void Remove(TCoordinate coordinate)
 		{
-			Cell<C, B, E> cell;
-			data.TryRemove(key, out cell);
+			Cell<TCoordinate, TNodeData, TEdgeData> _;
+			dictionary.TryRemove(coordinate, out _);
 		}
 
-		public override IEnumerable<KeyValuePair<C, Cell<C, B, E>>> GetInitialized()
+		protected override Cell<TCoordinate, TNodeData, TEdgeData> GetOrAdd(TCoordinate coordinate,
+		                                                                    Cell<TCoordinate, TNodeData, TEdgeData> cell)
 		{
-			return data;
+			return dictionary.GetOrAdd(coordinate, cell);
 		}
 
 		#endregion

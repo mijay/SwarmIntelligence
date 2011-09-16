@@ -17,6 +17,11 @@ namespace SwarmIntelligence.Core.Space
 			       && GetSuccessors(edge.from).Contains(edge.to);
 		}
 
+		public virtual IEnumerable<TCoordinate> GetAdjacent(TCoordinate coord)
+		{
+			return GetSuccessors(coord).Union(GetPredecessors(coord));
+		}
+
 		public IEnumerable<Edge<TCoordinate>> GetOutgoing(TCoordinate coord)
 		{
 			return GetSuccessors(coord).Select(x => new Edge<TCoordinate>(coord, x));
@@ -27,7 +32,7 @@ namespace SwarmIntelligence.Core.Space
 			return GetPredecessors(coord).Select(x => new Edge<TCoordinate>(x, coord));
 		}
 
-		public IEnumerable<Edge<TCoordinate>> GetAdjacent(TCoordinate coord)
+		public IEnumerable<Edge<TCoordinate>> GetAdjacentEdges(TCoordinate coord)
 		{
 			return GetOutgoing(coord).Concat(GetIncoming(coord));
 		}

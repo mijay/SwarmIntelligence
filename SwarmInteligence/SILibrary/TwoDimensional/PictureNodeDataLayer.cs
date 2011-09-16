@@ -1,33 +1,22 @@
 using System;
 using System.Diagnostics.Contracts;
 using System.Drawing;
+using SwarmIntelligence.Core;
 using Utils.Drawing;
 
 namespace SILibrary.TwoDimensional
 {
-	public class PictureNodeDataLayer: NodeDataLayer<Coordinates2D, Color>, IDisposable
+	public class PictureNodeDataLayer: DataLayer<Coordinates2D, Color>, IDisposable
 	{
-		private readonly FastBitmap data;
+		private readonly FastBitmap bitmap;
 		private bool disposed;
 
-		public PictureNodeDataLayer(Bitmap data, SurfaceTopology topology)
-			: base(topology)
+		public PictureNodeDataLayer(Bitmap data)
 		{
-			Contract.Requires(data != null && topology != null);
-			Contract.Requires(topology.TopLeft.Equals(new Coordinates2D(0, 0))
-			                  && topology.BottomRight.Equals(new Coordinates2D(data.Width - 1, data.Height - 1)));
+			Contract.Requires(data != null);
 
-			this.data = new FastBitmap(data);
+			bitmap = new FastBitmap(data);
 		}
-
-		#region Overrides of NodeDataLayer<Coordinates2D,Color>
-
-		public override Color this[Coordinates2D key]
-		{
-			get { return data.GetColor(key.x, key.y); }
-		}
-
-		#endregion
 
 		#region Implementation of IDisposable
 
@@ -35,7 +24,7 @@ namespace SILibrary.TwoDimensional
 		{
 			if(disposed)
 				return;
-			data.Dispose();
+			bitmap.Dispose();
 			GC.SuppressFinalize(this);
 			disposed = true;
 		}
@@ -43,6 +32,20 @@ namespace SILibrary.TwoDimensional
 		~PictureNodeDataLayer()
 		{
 			Dispose();
+		}
+
+		#endregion
+
+		#region Overrides of DataLayer<Coordinates2D,Color>
+
+		public override Color Get(Coordinates2D key)
+		{
+			return bitmap.GetColor(key.x, key.y);
+		}
+
+		public override void Set(Coordinates2D key, Color data)
+		{
+			throw new NotSupportedException();
 		}
 
 		#endregion

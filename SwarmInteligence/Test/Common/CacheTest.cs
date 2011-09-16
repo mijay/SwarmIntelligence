@@ -78,5 +78,11 @@ namespace Test.Common
 			Assert.That(localCache.GetOrAdd(key1.Object, func1), Is.EqualTo(val1));
 			Assert.That(localCache.GetOrAdd(key2.Object, func2), Is.EqualTo(val2));
 		}
+
+		[Test]
+		public void RemoveWorks()
+		{
+			Assert.Fail();
+		}
 	}
 }

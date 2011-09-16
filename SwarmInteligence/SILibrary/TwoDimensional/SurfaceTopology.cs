@@ -22,7 +22,7 @@ namespace SILibrary.TwoDimensional
 
 		public override bool Lays(Edge<Coordinates2D> edge)
 		{
-			return true;
+			return Lays(edge.from) && Lays(edge.to);
 		}
 	}
 }

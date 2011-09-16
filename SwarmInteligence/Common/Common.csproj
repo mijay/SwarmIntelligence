@@ -78,6 +78,7 @@
     <Compile Include="DisposableBase.cs" />
     <Compile Include="Collections\EnumerableExtension.cs" />
     <Compile Include="ICloneable.cs" />
+    <Compile Include="Memoization\IMemoizedFunc.cs" />
     <Compile Include="Memoization\IMemoizer.cs" />
     <Compile Include="Memoization\Memoizer.cs" />
     <Compile Include="Cache\StaticCache.cs" />

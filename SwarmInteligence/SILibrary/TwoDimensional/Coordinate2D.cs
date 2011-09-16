@@ -1,4 +1,3 @@
-using System;
 using SwarmIntelligence.Core.Space;
 
 namespace SILibrary.TwoDimensional
@@ -26,12 +25,14 @@ namespace SILibrary.TwoDimensional
 			return other.x == x && other.y == y;
 		}
 
-		#endregion
-
-		object ICloneable.Clone()
+		public override int GetHashCode()
 		{
-			return Clone();
+			unchecked {
+				return (x.GetHashCode() * 397) ^ y.GetHashCode();
+			}
 		}
+
+		#endregion
 
 		public override string ToString()
 		{
@@ -41,13 +42,6 @@ namespace SILibrary.TwoDimensional
 		public override bool Equals(object obj)
 		{
 			return obj is Coordinates2D && Equals((Coordinates2D) obj);
-		}
-
-		public override int GetHashCode()
-		{
-			unchecked {
-				return (x.GetHashCode() * 397) ^ y.GetHashCode();
-			}
 		}
 	}
 }

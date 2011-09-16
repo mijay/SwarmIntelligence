@@ -25,6 +25,17 @@ namespace Common.Cache
 			return (TVal) result;
 		}
 
+		public void AddOrUpdate<TKey, TVal>(TKey key, TVal value)
+		{
+			cache.AddOrUpdate(key, value, (oldVal, newVal) => newVal);
+		}
+
+		public void Remove<TKey>(TKey key)
+		{
+			object _;
+			cache.TryRemove(key, out _);
+		}
+
 		#endregion
 	}
 }

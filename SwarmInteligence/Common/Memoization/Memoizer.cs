@@ -14,19 +14,70 @@ namespace Common.Memoization
 
 		#region Implementation of IMemoizer
 
-		public Func<TVal> Memoize<TVal>(Func<TVal> func)
+		public IMemoizedFunc<TVal> Memoize<TVal>(Func<TVal> func)
 		{
-			return () => cache.GetOrAdd(Tuple.Create(func), tuple => tuple.Item1());
+			return new MemoizedFunc<TVal>(cache, func);
 		}
 
-		public Func<TArg, TVal> Memoize<TArg, TVal>(Func<TArg, TVal> func)
+		public IMemoizedFunc<TArg, TVal> Memoize<TArg, TVal>(Func<TArg, TVal> func)
 		{
-			return arg => cache.GetOrAdd(Tuple.Create(func, arg), tuple => tuple.Item1(tuple.Item2));
+			return new MemoizedFunc<TArg, TVal>(cache, func);
 		}
 
-		public Func<TArg1, TArg2, TVal> Memoize<TArg1, TArg2, TVal>(Func<TArg1, TArg2, TVal> func)
+		#endregion
+
+		#region Nested type: MemoizedFunc
+
+		private class MemoizedFunc<TVal>: IMemoizedFunc<TVal>
 		{
-			return (arg1, arg2) => cache.GetOrAdd(Tuple.Create(func, arg1, arg2), tuple => tuple.Item1(tuple.Item2, tuple.Item3));
+			private readonly Func<TVal> builder;
+			private readonly IKeyValueCache keyValueCache;
+
+			public MemoizedFunc(IKeyValueCache keyValueCache, Func<TVal> builder)
+			{
+				this.keyValueCache = keyValueCache;
+				this.builder = builder;
+			}
+
+			#region Implementation of IMemoizedFunc<TVal>
+
+			public TVal Get()
+			{
+				return keyValueCache.GetOrAdd(Tuple.Create(builder), tuple => builder());
+			}
+
+			public void Refresh()
+			{
+				keyValueCache.Remove(Tuple.Create(builder));
+			}
+
+			#endregion
+		}
+
+		private class MemoizedFunc<TArg, TVal>: IMemoizedFunc<TArg, TVal>
+		{
+			private readonly Func<TArg, TVal> builder;
+			private readonly IKeyValueCache keyValueCache;
+
+			public MemoizedFunc(IKeyValueCache keyValueCache, Func<TArg, TVal> builder)
+			{
+				this.keyValueCache = keyValueCache;
+				this.builder = builder;
+			}
+
+			#region Implementation of IMemoizedFunc<T>
+
+			public TVal Get(TArg arg)
+			{
+				return keyValueCache.GetOrAdd(Tuple.Create(builder, arg), tuple => builder(tuple.Item2));
+			}
+
+			public void Refresh(TArg arg)
+			{
+				keyValueCache.Remove(Tuple.Create(builder, arg));
+			}
+
+			#endregion
 		}
 
 		#endregion

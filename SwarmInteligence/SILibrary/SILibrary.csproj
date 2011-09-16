@@ -58,13 +58,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="General\Background\CachedEdgeDataLayer.cs" />
-    <Compile Include="General\Background\CachedNodeDataLayer.cs" />
-    <Compile Include="General\Background\DelegateEdgeDataLayer.cs" />
-    <Compile Include="General\Background\DelegateNodeDataLayer.cs" />
+    <Compile Include="General\Background\CachedDataLayer.cs" />
+    <Compile Include="General\Background\DelegateDataLayer.cs" />
     <Compile Include="General\Background\EmptyData.cs" />
-    <Compile Include="General\Background\EmptyEdgeDataLayer.cs" />
-    <Compile Include="General\Background\EmptyNodeDataLayer.cs" />
+    <Compile Include="General\Background\EmptyDataLayer.cs" />
     <Compile Include="General\DictionaryMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="General\BiConnectedTopologyBase.cs" />

@@ -25,7 +25,7 @@ namespace Test.ContextIndependendAnt
 
 			var topology = new EightConnectedSurfaceTopology(min, max);
 			var map = new DictionaryMap<Coordinates2D, EmptyData, EmptyData>(topology);
-			var nodeDataLayer = new EmptyNodeDataLayer<Coordinates2D>(topology);
+			var nodeDataLayer = new EmptyDataLayer<Coordinates2D>();
 			var edgeDataLayer = new EmptyEdgeDataLayer<Coordinates2D>(topology);
 
 			world = new World<Coordinates2D, EmptyData, EmptyData>(topology, nodeDataLayer, edgeDataLayer, map);
