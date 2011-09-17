@@ -12,11 +12,11 @@ namespace SILibrary.General.Playground
 		private readonly ConcurrentBag<CellBase<TCoordinate, TNodeData, TEdgeData>> bag =
 			new ConcurrentBag<CellBase<TCoordinate, TNodeData, TEdgeData>>();
 
-		private readonly Func<CellBase<TCoordinate, TNodeData, TEdgeData>> cellBuilder;
+		private readonly Func<MapBase<TCoordinate, TNodeData, TEdgeData>, CellBase<TCoordinate, TNodeData, TEdgeData>> cellBuilder;
 
-		public CellProvider(Func<CellBase<TCoordinate, TNodeData, TEdgeData>> cellBuilder)
+		public CellProvider(Func<MapBase<TCoordinate, TNodeData, TEdgeData>, CellBase<TCoordinate, TNodeData, TEdgeData>> cellBuilder)
 		{
-			Contract.Requires(cellBuilder != null && cellBuilder() != null);
+			Contract.Requires(cellBuilder != null);
 			this.cellBuilder = cellBuilder;
 		}
 
@@ -25,12 +25,12 @@ namespace SILibrary.General.Playground
 		protected override CellBase<TCoordinate, TNodeData, TEdgeData> ReuseOrBuild()
 		{
 			CellBase<TCoordinate, TNodeData, TEdgeData> result;
-			return bag.TryTake(out result) ? result : cellBuilder();
+			return bag.TryTake(out result) ? result : cellBuilder(Context);
 		}
 
-		public override void Return(CellBase<TCoordinate, TNodeData, TEdgeData> cell)
+		protected override void ReturnForReuse(CellBase<TCoordinate, TNodeData, TEdgeData> cellBase)
 		{
-			bag.Add(cell);
+			bag.Add(cellBase);
 		}
 
 		#endregion

@@ -32,11 +32,11 @@ namespace Test.Common
 			                         	return vals[index];
 			                         };
 
-			Func<string, int> cached = memoizer.Memoize(func);
+			IMemoizedFunc<string, int> cached = memoizer.Memoize(func);
 
 			for(int i = 0; i < 3; ++i)
 				for(int j = 0; j < keys.Length; ++j)
-					Assert.That(cached(keys[j]), Is.EqualTo(vals[j]));
+					Assert.That(cached.Get(keys[j]), Is.EqualTo(vals[j]));
 		}
 
 		[Test]
@@ -48,13 +48,13 @@ namespace Test.Common
 			Func<int, decimal> func1 = GetFuncForCache(key, val1);
 			Func<int, decimal> func2 = GetFuncForCache(key, val2);
 
-			Func<int, decimal> cached1 = memoizer.Memoize(func1);
-			Func<int, decimal> cached2 = memoizer.Memoize(func2);
+			IMemoizedFunc<int, decimal> cached1 = memoizer.Memoize(func1);
+			IMemoizedFunc<int, decimal> cached2 = memoizer.Memoize(func2);
 
-			Assert.That(cached1(key), Is.EqualTo(val1));
-			Assert.That(cached2(key), Is.EqualTo(val2));
-			Assert.That(cached1(key), Is.EqualTo(val1));
-			Assert.That(cached2(key), Is.EqualTo(val2));
+			Assert.That(cached1.Get(key), Is.EqualTo(val1));
+			Assert.That(cached2.Get(key), Is.EqualTo(val2));
+			Assert.That(cached1.Get(key), Is.EqualTo(val1));
+			Assert.That(cached2.Get(key), Is.EqualTo(val2));
 		}
 
 		[Test]
@@ -63,10 +63,16 @@ namespace Test.Common
 			const string key = "key";
 			const char value = '6';
 			Func<string, char> func = GetFuncForCache(key, value);
-			Func<string, char> cached = memoizer.Memoize(func);
+			IMemoizedFunc<string, char> cached = memoizer.Memoize(func);
 
-			Assert.That(cached(key), Is.EqualTo(value));
-			Assert.That(cached(key), Is.EqualTo(value));
+			Assert.That(cached.Get(key), Is.EqualTo(value));
+			Assert.That(cached.Get(key), Is.EqualTo(value));
+		}
+
+		[Test]
+		public void RefreshWorks()
+		{
+			Assert.Fail();
 		}
 	}
 }

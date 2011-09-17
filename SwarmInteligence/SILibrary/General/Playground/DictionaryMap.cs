@@ -13,7 +13,9 @@ namespace SILibrary.General.Playground
 			new ConcurrentDictionary<TCoordinate, Cell<TCoordinate, TNodeData, TEdgeData>>();
 
 		public DictionaryMap(Topology<TCoordinate> topology, ICellProvider<TCoordinate, TNodeData, TEdgeData> cellProvider)
-			: base(topology, cellProvider) {}
+			: base(topology, cellProvider)
+		{
+		}
 
 		#region Overrides of Map<TCoordinate,TNodeData,TEdgeData>
 

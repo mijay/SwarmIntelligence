@@ -7,6 +7,9 @@ namespace Common.Cache
 		protected static readonly ConcurrentDictionary<object, object> cache =
 			new ConcurrentDictionary<object, object>();
 
-		public StaticCache(): base(cache) {}
+		public StaticCache()
+			: base(cache)
+		{
+		}
 	}
 }

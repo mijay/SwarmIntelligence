@@ -5,7 +5,7 @@ using SwarmIntelligence.Infrastructure.MemoryManagement;
 
 namespace SwarmIntelligence.Infrastructure.TurnProcessing
 {
-	public abstract class AntBase<TCoordinate, TNodeData, TEdgeData> : Ant<TCoordinate, TNodeData, TEdgeData>
+	public abstract class AntBase<TCoordinate, TNodeData, TEdgeData>: Ant<TCoordinate, TNodeData, TEdgeData>
 		where TCoordinate: ICoordinate<TCoordinate>
 	{
 		internal readonly Outlook<TCoordinate, TNodeData, TEdgeData> outlook;

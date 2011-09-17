@@ -7,21 +7,22 @@ namespace SwarmIntelligence.Infrastructure.MemoryManagement
 	public abstract class CellBase<TCoordinate, TNodeData, TEdgeData>: Cell<TCoordinate, TNodeData, TEdgeData>
 		where TCoordinate: ICoordinate<TCoordinate>
 	{
-		private readonly MapBase<TCoordinate, TNodeData, TEdgeData> map;
 		private TCoordinate coordinate;
 
-		protected CellBase(MapBase<TCoordinate, TNodeData, TEdgeData> map)
+		protected CellBase(MapBase<TCoordinate, TNodeData, TEdgeData> mapBase)
 		{
-			Contract.Requires(map != null);
+			Contract.Requires(mapBase != null);
 
-			this.map = map;
+			MapBase = mapBase;
 		}
+
+		public MapBase<TCoordinate, TNodeData, TEdgeData> MapBase { get; private set; }
 
 		public abstract bool IsEmpty { get; }
 
 		public override Map<TCoordinate, TNodeData, TEdgeData> Map
 		{
-			get { return map; }
+			get { return MapBase; }
 		}
 
 		public override TCoordinate Coordinate

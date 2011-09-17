@@ -2,5 +2,7 @@
 
 namespace SwarmIntelligence.Core.Interfaces
 {
-	public interface IEnumerableMapping<TKey, TData>: IMapping<TKey, TData>, IEnumerable<KeyValuePair<TKey, TData>> {}
+	public interface IEnumerableMapping<TKey, TData>: IMapping<TKey, TData>, IEnumerable<KeyValuePair<TKey, TData>>
+	{
+	}
 }

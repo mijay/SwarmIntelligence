@@ -29,5 +29,16 @@ namespace SwarmIntelligence.Internal
 #endif
 			return (AntBase<TCoordinate, TNodeData, TEdgeData>) ant;
 		}
+
+		public static MapBase<TCoordinate, TNodeData, TEdgeData> Base<TCoordinate, TNodeData, TEdgeData>(
+			this Map<TCoordinate, TNodeData, TEdgeData> map)
+			where TCoordinate: ICoordinate<TCoordinate>
+		{
+#if DEBUG
+			if(!(map is MapBase<TCoordinate, TNodeData, TEdgeData>))
+				throw new InvalidOperationException(string.Format("Map of wrong type {0} found!!", map.GetType()));
+#endif
+			return (MapBase<TCoordinate, TNodeData, TEdgeData>) map;
+		}
 	}
 }

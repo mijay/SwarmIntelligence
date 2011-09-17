@@ -12,14 +12,17 @@ namespace SwarmIntelligence.Infrastructure.MemoryManagement
 	{
 		private readonly ICellProvider<TCoordinate, TNodeData, TEdgeData> cellProvider;
 
-		protected MapBase(Topology<TCoordinate> topology, ICellProvider<TCoordinate, TNodeData, TEdgeData> cellProvider): base(topology)
+		protected MapBase(Topology<TCoordinate> topology, ICellProvider<TCoordinate, TNodeData, TEdgeData> cellProvider)
+			: base(topology)
 		{
 			Contract.Requires(cellProvider != null);
 
 			this.cellProvider = cellProvider;
 		}
 
-		public virtual void OnTurnBegin() {}
+		public virtual void OnTurnBegin()
+		{
+		}
 
 		public virtual void OnTurnEnd()
 		{
@@ -47,7 +50,6 @@ namespace SwarmIntelligence.Infrastructure.MemoryManagement
 		}
 
 		protected abstract void Remove(TCoordinate coordinate);
-		protected abstract Cell<TCoordinate, TNodeData, TEdgeData> GetOrAdd(TCoordinate coordinate,
-		                                                                    Cell<TCoordinate, TNodeData, TEdgeData> cell);
+		protected abstract Cell<TCoordinate, TNodeData, TEdgeData> GetOrAdd(TCoordinate coordinate, Cell<TCoordinate, TNodeData, TEdgeData> cell);
 	}
 }

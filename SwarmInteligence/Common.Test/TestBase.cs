@@ -8,11 +8,15 @@ namespace CommonTest
 		#region Setup/Teardown
 
 		[SetUp]
-		public virtual void SetUp() {}
+		public virtual void SetUp()
+		{
+		}
 
 		#endregion
 
 		[TestFixtureSetUp]
-		public virtual void FixtureSetUp() {}
+		public virtual void FixtureSetUp()
+		{
+		}
 	}
 }

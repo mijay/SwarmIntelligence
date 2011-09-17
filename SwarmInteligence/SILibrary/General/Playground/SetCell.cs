@@ -12,7 +12,10 @@ namespace SILibrary.General.Playground
 		private readonly ConcurrentSet<Ant<TCoordinate, TNodeData, TEdgeData>> set =
 			new ConcurrentSet<Ant<TCoordinate, TNodeData, TEdgeData>>();
 
-		public SetCell(MapBase<TCoordinate, TNodeData, TEdgeData> map): base(map) {}
+		public SetCell(MapBase<TCoordinate, TNodeData, TEdgeData> map)
+			: base(map)
+		{
+		}
 
 		#region Overrides of Cell<TCoordinate,TNodeData,TEdgeData>
 
@@ -41,5 +44,10 @@ namespace SILibrary.General.Playground
 		}
 
 		#endregion
+
+		public static CellProvider<TCoordinate, TNodeData, TEdgeData> Provider()
+		{
+			return new CellProvider<TCoordinate, TNodeData, TEdgeData>(map => new SetCell<TCoordinate, TNodeData, TEdgeData>(map));
+		}
 	}
 }

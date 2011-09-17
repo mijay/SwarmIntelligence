@@ -84,5 +84,11 @@ namespace Test.Common
 		{
 			Assert.Fail();
 		}
+
+		[Test]
+		public void AddOrUpdateWorks()
+		{
+			Assert.Fail();
+		}
 	}
 }

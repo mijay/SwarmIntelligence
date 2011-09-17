@@ -6,8 +6,13 @@ namespace Common
 	{
 		protected bool Disposed { get; private set; }
 
-		protected virtual void DisposeManaged() {}
-		protected virtual void DisposeUnmanaged() {}
+		protected virtual void DisposeManaged()
+		{
+		}
+
+		protected virtual void DisposeUnmanaged()
+		{
+		}
 
 		~DisposableBase()
 		{

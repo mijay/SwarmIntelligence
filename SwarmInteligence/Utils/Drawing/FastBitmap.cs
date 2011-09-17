@@ -46,7 +46,7 @@ namespace Utils.Drawing
 		public FastBitmap(Bitmap bmp)
 		{
 			if(bmp == null)
-				throw new ArgumentNullException("bitmap");
+				throw new ArgumentNullException("bmp");
 
 			_bitmap = bmp;
 			_size = new Point(bmp.Width, bmp.Height);

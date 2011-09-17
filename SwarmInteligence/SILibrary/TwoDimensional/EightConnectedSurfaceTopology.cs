@@ -6,7 +6,10 @@ namespace SILibrary.TwoDimensional
 {
 	public class EightConnectedSurfaceTopology: SurfaceTopology
 	{
-		public EightConnectedSurfaceTopology(Coordinates2D topLeft, Coordinates2D bottomRight): base(topLeft, bottomRight) {}
+		public EightConnectedSurfaceTopology(Coordinates2D topLeft, Coordinates2D bottomRight)
+			: base(topLeft, bottomRight)
+		{
+		}
 
 		protected override IEnumerable<Coordinates2D> GetNeighbours(Coordinates2D coord)
 		{

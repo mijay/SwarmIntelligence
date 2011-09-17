@@ -68,8 +68,6 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\ContainerFactoryTest.cs" />
-    <Compile Include="Common\ExtractorTest.cs" />
     <Compile Include="ContextIndependendAnt\PerfomanceTest.cs" />
     <Compile Include="ContextIndependendAnt\Test.cs" />
     <Compile Include="ContextIndependendAnt\TestAnt.cs" />

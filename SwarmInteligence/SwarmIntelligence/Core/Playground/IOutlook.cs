@@ -3,7 +3,7 @@
 namespace SwarmIntelligence.Core.Playground
 {
 	public interface IOutlook<TCoordinate, TNodeData, TEdgeData>
-		where TCoordinate : ICoordinate<TCoordinate>
+		where TCoordinate: ICoordinate<TCoordinate>
 	{
 		World<TCoordinate, TNodeData, TEdgeData> World { get; }
 		TCoordinate Coordinate { get; }
