@@ -1,0 +1,17 @@
+
+*.obj
+*.user
+*.aps
+*.pch
+*.suo
+*.bak
+*.cache
+*.log
+[Bb]in
+[Dd]ebug*/
+*.lib
+*.sbr
+obj/
+[Rr]elease*/
+_ReSharper*/
+[Tt]est[Rr]esult*
