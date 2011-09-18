@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
+using Common;
 using SwarmIntelligence.Core.Interfaces;
 using SwarmIntelligence.Core.Space;
 
@@ -13,12 +13,10 @@ namespace SwarmIntelligence.Core.Playground
 	{
 		protected Map(Topology<TCoordinate> topology)
 		{
-			Contract.Requires(topology != null);
-
+			Requires.NotNull(topology);
 			Topology = topology;
 		}
 
-		[Pure]
 		public Topology<TCoordinate> Topology { get; private set; }
 
 		#region Implementation of IMapping<in TCoordinate,out Cell<TCoordinate,TNodeData,TEdgeData>>
@@ -29,14 +27,12 @@ namespace SwarmIntelligence.Core.Playground
 
 		#region Implementation of ISparseMappint<in TCoordinate,Cell<TCoordinate,TNodeData,TEdgeData>>
 
-		[Pure]
 		public virtual bool Has(TCoordinate key)
 		{
 			Cell<TCoordinate, TNodeData, TEdgeData> cell;
 			return TryGet(key, out cell);
 		}
 
-		[Pure]
 		public abstract bool TryGet(TCoordinate key, out Cell<TCoordinate, TNodeData, TEdgeData> data);
 
 		#endregion

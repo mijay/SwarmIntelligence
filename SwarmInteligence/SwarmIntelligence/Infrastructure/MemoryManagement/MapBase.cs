@@ -1,5 +1,5 @@
-using System.Diagnostics.Contracts;
 using System.Linq;
+using Common;
 using Common.Collections;
 using SwarmIntelligence.Core.Playground;
 using SwarmIntelligence.Core.Space;
@@ -15,8 +15,7 @@ namespace SwarmIntelligence.Infrastructure.MemoryManagement
 		protected MapBase(Topology<TCoordinate> topology, ICellProvider<TCoordinate, TNodeData, TEdgeData> cellProvider)
 			: base(topology)
 		{
-			Contract.Requires(cellProvider != null);
-
+			Requires.NotNull(cellProvider);
 			this.cellProvider = cellProvider;
 		}
 

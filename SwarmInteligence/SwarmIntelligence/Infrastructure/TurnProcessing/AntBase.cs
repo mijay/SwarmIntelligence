@@ -1,4 +1,5 @@
-﻿using SwarmIntelligence.Core;
+﻿using Common;
+using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Playground;
 using SwarmIntelligence.Core.Space;
 using SwarmIntelligence.Infrastructure.MemoryManagement;
@@ -12,13 +13,15 @@ namespace SwarmIntelligence.Infrastructure.TurnProcessing
 
 		protected AntBase(World<TCoordinate, TNodeData, TEdgeData> world)
 		{
+			Requires.NotNull(world);
 			outlook = new Outlook<TCoordinate, TNodeData, TEdgeData>(world, this);
 		}
 
-		internal void ProcessTurn(TCoordinate coordinate, CellBase<TCoordinate, TNodeData, TEdgeData> cell)
+		internal void ProcessTurn(CellBase<TCoordinate, TNodeData, TEdgeData> cell)
 		{
-			outlook.Coordinate = coordinate;
+			Requires.NotNull(cell);
 			outlook.CellBase = cell;
+			outlook.Coordinate = cell.Coordinate;
 			ProcessTurn(outlook);
 		}
 	}

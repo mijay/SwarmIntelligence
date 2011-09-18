@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using System.Threading;
+using Common;
 using SwarmIntelligence.Core.Space;
 
 namespace SwarmIntelligence.Infrastructure.MemoryManagement
@@ -22,7 +22,7 @@ namespace SwarmIntelligence.Infrastructure.MemoryManagement
 
 		public void UseContext(MapBase<TCoordinate, TNodeData, TEdgeData> mapBase)
 		{
-			Contract.Requires(mapBase != null);
+			Requires.NotNull(mapBase);
 
 			Interlocked.CompareExchange(ref context, mapBase, null);
 			if(context != mapBase)
@@ -31,22 +31,16 @@ namespace SwarmIntelligence.Infrastructure.MemoryManagement
 
 		public void Return(CellBase<TCoordinate, TNodeData, TEdgeData> cell)
 		{
-			//todo: сделать уже свой хэлпер для таких случаев + пусть он и проверку контрактов делает
-#if DEBUG
-			if(context == null)
-				throw new InvalidOperationException("Call UseContext first");
-			if(cell.MapBase == context)
-				throw new ArgumentException("Cell is from invalid map!");
-#endif
+			Requires.NotNull<InvalidOperationException>(context);
+
+			Requires.True(cell.MapBase != context);
 			ReturnForReuse(cell);
 		}
 
 		public CellBase<TCoordinate, TNodeData, TEdgeData> Get(TCoordinate coordinate)
 		{
-#if DEBUG
-			if(context == null)
-				throw new InvalidOperationException("Call UseContext first");
-#endif
+			Requires.NotNull<InvalidOperationException>(context);
+
 			CellBase<TCoordinate, TNodeData, TEdgeData> result = ReuseOrBuild();
 			result.SetCoordinate(coordinate);
 			return result;

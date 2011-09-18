@@ -1,3 +1,4 @@
+using Common;
 using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Playground;
 using SwarmIntelligence.Core.Space;
@@ -10,6 +11,7 @@ namespace SwarmIntelligence.Infrastructure.TurnProcessing
 	{
 		public Outlook(World<TCoordinate, TNodeData, TEdgeData> world, Ant<TCoordinate, TNodeData, TEdgeData> me)
 		{
+			Requires.NotNull(world, me);
 			World = world;
 			Me = me;
 		}

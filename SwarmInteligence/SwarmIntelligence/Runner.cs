@@ -11,8 +11,8 @@ namespace SwarmIntelligence
 	public class Runner<TCoordinate, TNodeData, TEdgeData>
 		where TCoordinate: ICoordinate<TCoordinate>
 	{
-		private readonly World<TCoordinate, TNodeData, TEdgeData> world;
 		private readonly MapBase<TCoordinate, TNodeData, TEdgeData> mapBase;
+		private readonly World<TCoordinate, TNodeData, TEdgeData> world;
 
 		public Runner(World<TCoordinate, TNodeData, TEdgeData> world)
 		{
@@ -30,14 +30,15 @@ namespace SwarmIntelligence
 
 		private static void RunTurn(AntContext[] contexts)
 		{
-			contexts.ForEach(x => x.Ant.ProcessTurn(x.Coordinate, x.Cell));
+			contexts.ForEach(x => x.Ant.ProcessTurn(x.Cell));
 		}
 
 		private AntContext[] SelectContext()
 		{
 			return mapBase
 				.AsParallel()
-				.SelectMany(x => x.Value.Select(ant => new AntContext { Ant = ant.Base(), Cell = x.Value.Base(), Coordinate = x.Key }))
+				.Select(x => x.Value.Base())
+				.SelectMany(cellBase => cellBase.Select(ant => new AntContext { Ant = ant.Base(), Cell = cellBase }))
 				.ToArray();
 		}
 
@@ -47,7 +48,6 @@ namespace SwarmIntelligence
 		{
 			public AntBase<TCoordinate, TNodeData, TEdgeData> Ant;
 			public CellBase<TCoordinate, TNodeData, TEdgeData> Cell;
-			public TCoordinate Coordinate;
 		}
 
 		#endregion

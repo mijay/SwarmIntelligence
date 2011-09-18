@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Common;
 
 namespace SwarmIntelligence.Core.Space
 {
@@ -17,23 +18,31 @@ namespace SwarmIntelligence.Core.Space
 			       && GetSuccessors(edge.from).Contains(edge.to);
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <remarks>Performance critical that method should be overridden.</remarks>
 		public virtual IEnumerable<TCoordinate> GetAdjacent(TCoordinate coord)
 		{
+			Requires.True(Lays(coord));
 			return GetSuccessors(coord).Union(GetPredecessors(coord));
 		}
 
 		public IEnumerable<Edge<TCoordinate>> GetOutgoing(TCoordinate coord)
 		{
+			Requires.True(Lays(coord));
 			return GetSuccessors(coord).Select(x => new Edge<TCoordinate>(coord, x));
 		}
 
 		public IEnumerable<Edge<TCoordinate>> GetIncoming(TCoordinate coord)
 		{
+			Requires.True(Lays(coord));
 			return GetPredecessors(coord).Select(x => new Edge<TCoordinate>(x, coord));
 		}
 
 		public IEnumerable<Edge<TCoordinate>> GetAdjacentEdges(TCoordinate coord)
 		{
+			Requires.True(Lays(coord));
 			return GetOutgoing(coord).Concat(GetIncoming(coord));
 		}
 	}

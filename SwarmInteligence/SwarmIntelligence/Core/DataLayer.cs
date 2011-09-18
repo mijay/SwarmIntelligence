@@ -1,4 +1,5 @@
-﻿using SwarmIntelligence.Core.Interfaces;
+﻿using System;
+using SwarmIntelligence.Core.Interfaces;
 
 namespace SwarmIntelligence.Core
 {
@@ -18,6 +19,10 @@ namespace SwarmIntelligence.Core
 
 		#region Implementation of IMutableMapping<in TKey,TData>
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <exception cref="NotSupportedException">Method is not supported in current implementation.</exception>
 		public abstract void Set(TKey key, TData data);
 
 		#endregion

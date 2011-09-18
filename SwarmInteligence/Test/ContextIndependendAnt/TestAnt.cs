@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics.Contracts;
+using Common;
 using SILibrary.General.Background;
 using SILibrary.TwoDimensional;
 using SwarmIntelligence.Core;
@@ -15,7 +15,7 @@ namespace Test.ContextIndependendAnt
 		public TestAnt(World<Coordinates2D, EmptyData, EmptyData> world, params Coordinates2D[] points)
 			: base(world)
 		{
-			Contract.Requires(points != null);
+			Requires.NotNull(points);
 			this.points = new Queue<Coordinates2D>(points);
 		}
 

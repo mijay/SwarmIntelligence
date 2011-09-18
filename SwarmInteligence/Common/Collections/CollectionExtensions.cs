@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 
 namespace Common.Collections
 {
@@ -7,7 +6,7 @@ namespace Common.Collections
 	{
 		public static ICollection<T> AsReadonly<T>(this ICollection<T> collection)
 		{
-			Contract.Requires(collection != null);
+			Requires.NotNull(collection);
 			return new ReadOnlyCollection<T>(collection);
 		}
 	}

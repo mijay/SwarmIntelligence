@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.Contracts;
+﻿using System;
+using Common;
 using SwarmIntelligence.Core.Playground;
 using SwarmIntelligence.Core.Space;
 
@@ -8,11 +9,11 @@ namespace SwarmIntelligence.Infrastructure.MemoryManagement
 		where TCoordinate: ICoordinate<TCoordinate>
 	{
 		private TCoordinate coordinate;
+		private bool initialized;
 
 		protected CellBase(MapBase<TCoordinate, TNodeData, TEdgeData> mapBase)
 		{
-			Contract.Requires(mapBase != null);
-
+			Requires.NotNull(mapBase);
 			MapBase = mapBase;
 		}
 
@@ -27,7 +28,11 @@ namespace SwarmIntelligence.Infrastructure.MemoryManagement
 
 		public override TCoordinate Coordinate
 		{
-			get { return coordinate; }
+			get
+			{
+				Requires.True<InvalidOperationException>(initialized);
+				return coordinate;
+			}
 		}
 
 		public abstract void Add(Ant<TCoordinate, TNodeData, TEdgeData> ant);
@@ -36,6 +41,7 @@ namespace SwarmIntelligence.Infrastructure.MemoryManagement
 		internal void SetCoordinate(TCoordinate newCoord)
 		{
 			coordinate = newCoord;
+			initialized = true;
 		}
 	}
 }

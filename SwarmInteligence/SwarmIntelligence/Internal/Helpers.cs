@@ -1,4 +1,5 @@
 using System;
+using Common;
 using SwarmIntelligence.Core.Playground;
 using SwarmIntelligence.Core.Space;
 using SwarmIntelligence.Infrastructure.MemoryManagement;
@@ -12,10 +13,7 @@ namespace SwarmIntelligence.Internal
 			this Cell<TCoordinate, TNodeData, TEdgeData> cell)
 			where TCoordinate: ICoordinate<TCoordinate>
 		{
-#if DEBUG
-			if(!(cell is CellBase<TCoordinate, TNodeData, TEdgeData>))
-				throw new InvalidOperationException(string.Format("Cell of wrong type {0} found!!", cell.GetType()));
-#endif
+			Requires.True(cell is CellBase<TCoordinate, TNodeData, TEdgeData>);
 			return (CellBase<TCoordinate, TNodeData, TEdgeData>) cell;
 		}
 
@@ -23,10 +21,7 @@ namespace SwarmIntelligence.Internal
 			this Ant<TCoordinate, TNodeData, TEdgeData> ant)
 			where TCoordinate: ICoordinate<TCoordinate>
 		{
-#if DEBUG
-			if(!(ant is AntBase<TCoordinate, TNodeData, TEdgeData>))
-				throw new InvalidOperationException(string.Format("Ant of wrong type {0} found!!", ant.GetType()));
-#endif
+			Requires.True(ant is AntBase<TCoordinate, TNodeData, TEdgeData>);
 			return (AntBase<TCoordinate, TNodeData, TEdgeData>) ant;
 		}
 
@@ -34,10 +29,7 @@ namespace SwarmIntelligence.Internal
 			this Map<TCoordinate, TNodeData, TEdgeData> map)
 			where TCoordinate: ICoordinate<TCoordinate>
 		{
-#if DEBUG
-			if(!(map is MapBase<TCoordinate, TNodeData, TEdgeData>))
-				throw new InvalidOperationException(string.Format("Map of wrong type {0} found!!", map.GetType()));
-#endif
+			Requires.True(map is MapBase<TCoordinate, TNodeData, TEdgeData>);
 			return (MapBase<TCoordinate, TNodeData, TEdgeData>) map;
 		}
 	}

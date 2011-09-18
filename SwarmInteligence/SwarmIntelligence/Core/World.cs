@@ -1,4 +1,4 @@
-using System.Diagnostics.Contracts;
+using Common;
 using SwarmIntelligence.Core.Playground;
 using SwarmIntelligence.Core.Space;
 
@@ -11,8 +11,7 @@ namespace SwarmIntelligence.Core
 		             DataLayer<Edge<TCoordinate>, TEdgeData> edgesData,
 		             Map<TCoordinate, TNodeData, TEdgeData> map)
 		{
-			Contract.Requires(nodesData != null && edgesData != null && map != null);
-
+			Requires.NotNull(nodesData, edgesData, map);
 			Topology = map.Topology;
 			NodesData = nodesData;
 			EdgesData = edgesData;

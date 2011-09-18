@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Concurrent;
-using System.Diagnostics.Contracts;
+using Common;
 using SwarmIntelligence.Core.Space;
 using SwarmIntelligence.Infrastructure.MemoryManagement;
 
@@ -16,7 +16,7 @@ namespace SILibrary.General.Playground
 
 		public CellProvider(Func<MapBase<TCoordinate, TNodeData, TEdgeData>, CellBase<TCoordinate, TNodeData, TEdgeData>> cellBuilder)
 		{
-			Contract.Requires(cellBuilder != null);
+			Requires.NotNull(cellBuilder);
 			this.cellBuilder = cellBuilder;
 		}
 

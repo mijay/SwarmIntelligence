@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 
 namespace Common
 {
@@ -10,7 +9,7 @@ namespace Common
 
 		public Comparer(Func<T, T, int> comparer)
 		{
-			Contract.Requires(comparer != null);
+			Requires.NotNull(comparer);
 			this.comparer = comparer;
 		}
 

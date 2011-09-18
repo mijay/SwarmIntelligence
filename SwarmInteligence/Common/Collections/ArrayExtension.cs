@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 
@@ -18,7 +17,7 @@ namespace Common.Collections
 		/// </summary>
 		public static IEnumerable<T[]> SplitIntoPieces<T>(this T[] data, int maxLength)
 		{
-			Contract.Requires(data != null);
+			Requires.NotNull(data);
 
 			if(maxLength == -1 || maxLength >= data.Length) {
 				yield return data;
@@ -41,7 +40,7 @@ namespace Common.Collections
 		/// </summary>
 		public static IEnumerable<KeyValuePair<string, IEnumerable<byte>>> CutLines(this byte[] data)
 		{
-			Contract.Requires(data != null);
+			Requires.NotNull(data);
 
 			int lineBegin = 0;
 			for(int position = 0; position < data.Length; ++position)

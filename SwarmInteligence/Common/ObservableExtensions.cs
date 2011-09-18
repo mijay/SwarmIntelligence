@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using System.Linq;
 
 namespace Common
@@ -10,14 +9,13 @@ namespace Common
 		public static IObservable<TSource> RepeatWhile<TSource>(this IObservable<TSource> source,
 		                                                        Func<bool> condition)
 		{
-			Contract.Requires(source != null && condition != null);
-
+			Requires.NotNull(source, condition);
 			return ProduceWhile(source, condition).Concat();
 		}
 
 		private static IEnumerable<IObservable<TSource>> ProduceWhile<TSource>(IObservable<TSource> source, Func<bool> condition)
 		{
-			Contract.Requires(source != null && condition != null);
+			Requires.NotNull(source, condition);
 			do {
 				yield return source;
 			} while(condition());

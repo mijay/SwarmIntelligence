@@ -8,6 +8,12 @@ namespace Test.Common
 	public class CacheTest: CacheTestBase
 	{
 		[Test]
+		public void AddOrUpdateWorks()
+		{
+			Assert.Fail();
+		}
+
+		[Test]
 		public void CacheCalledWithDifferentFactoryButSameKey_OnlyFirstFactoryCalled()
 		{
 			const string key1 = "one";
@@ -50,6 +56,12 @@ namespace Test.Common
 		}
 
 		[Test]
+		public void RemoveWorks()
+		{
+			Assert.Fail();
+		}
+
+		[Test]
 		public void TwoKeysSameButNotEqual_CacheDoesntDifferThem()
 		{
 			const int key1 = 11;
@@ -77,18 +89,6 @@ namespace Test.Common
 
 			Assert.That(localCache.GetOrAdd(key1.Object, func1), Is.EqualTo(val1));
 			Assert.That(localCache.GetOrAdd(key2.Object, func2), Is.EqualTo(val2));
-		}
-
-		[Test]
-		public void RemoveWorks()
-		{
-			Assert.Fail();
-		}
-
-		[Test]
-		public void AddOrUpdateWorks()
-		{
-			Assert.Fail();
 		}
 	}
 }
