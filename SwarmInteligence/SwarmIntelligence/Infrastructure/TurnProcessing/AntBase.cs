@@ -1,28 +1,32 @@
 ﻿using Common;
 using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Playground;
-using SwarmIntelligence.Core.Space;
 using SwarmIntelligence.Infrastructure.MemoryManagement;
 
 namespace SwarmIntelligence.Infrastructure.TurnProcessing
 {
-	public abstract class AntBase<TCoordinate, TNodeData, TEdgeData>: Ant<TCoordinate, TNodeData, TEdgeData>
-		where TCoordinate: ICoordinate<TCoordinate>
+	public abstract class AntBase<TCoordinate, TNodeData, TEdgeData>: IAnt<TCoordinate, TNodeData, TEdgeData>
 	{
-		internal readonly Outlook<TCoordinate, TNodeData, TEdgeData> outlook;
-
 		protected AntBase(World<TCoordinate, TNodeData, TEdgeData> world)
 		{
 			Requires.NotNull(world);
-			outlook = new Outlook<TCoordinate, TNodeData, TEdgeData>(world, this);
+			Outlook = new Outlook<TCoordinate, TNodeData, TEdgeData>(world, this);
 		}
+
+		internal Outlook<TCoordinate, TNodeData, TEdgeData> Outlook { get; private set; }
 
 		internal void ProcessTurn(CellBase<TCoordinate, TNodeData, TEdgeData> cell)
 		{
 			Requires.NotNull(cell);
-			outlook.CellBase = cell;
-			outlook.Coordinate = cell.Coordinate;
-			ProcessTurn(outlook);
+			Outlook.CellBase = cell;
+			Outlook.Coordinate = cell.Coordinate;
+			ProcessTurn(Outlook);
 		}
+
+		#region Implementation of IAnt<TCoordinate,TNodeData,TEdgeData>
+
+		public abstract void ProcessTurn(IOutlook<TCoordinate, TNodeData, TEdgeData> outlook);
+
+		#endregion
 	}
 }

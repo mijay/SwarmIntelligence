@@ -1,7 +1,6 @@
 using System.Linq;
 using Common.Collections;
 using SwarmIntelligence.Core;
-using SwarmIntelligence.Core.Space;
 using SwarmIntelligence.Infrastructure.MemoryManagement;
 using SwarmIntelligence.Infrastructure.TurnProcessing;
 using SwarmIntelligence.Internal;
@@ -9,7 +8,6 @@ using SwarmIntelligence.Internal;
 namespace SwarmIntelligence
 {
 	public class Runner<TCoordinate, TNodeData, TEdgeData>
-		where TCoordinate: ICoordinate<TCoordinate>
 	{
 		private readonly MapBase<TCoordinate, TNodeData, TEdgeData> mapBase;
 		private readonly World<TCoordinate, TNodeData, TEdgeData> world;

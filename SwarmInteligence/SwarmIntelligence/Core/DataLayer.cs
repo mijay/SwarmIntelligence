@@ -1,5 +1,5 @@
 ﻿using System;
-using SwarmIntelligence.Core.Interfaces;
+using SwarmIntelligence.Core.Basic;
 
 namespace SwarmIntelligence.Core
 {

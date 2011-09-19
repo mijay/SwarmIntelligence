@@ -7,10 +7,9 @@ using SwarmIntelligence.Infrastructure.MemoryManagement;
 namespace SILibrary.General.Playground
 {
 	public class DictionaryMap<TCoordinate, TNodeData, TEdgeData>: MapBase<TCoordinate, TNodeData, TEdgeData>
-		where TCoordinate: ICoordinate<TCoordinate>
 	{
-		public readonly ConcurrentDictionary<TCoordinate, Cell<TCoordinate, TNodeData, TEdgeData>> dictionary =
-			new ConcurrentDictionary<TCoordinate, Cell<TCoordinate, TNodeData, TEdgeData>>();
+		public readonly ConcurrentDictionary<TCoordinate, ICell<TCoordinate, TNodeData, TEdgeData>> dictionary =
+			new ConcurrentDictionary<TCoordinate, ICell<TCoordinate, TNodeData, TEdgeData>>();
 
 		public DictionaryMap(Topology<TCoordinate> topology, ICellProvider<TCoordinate, TNodeData, TEdgeData> cellProvider)
 			: base(topology, cellProvider)
@@ -19,12 +18,12 @@ namespace SILibrary.General.Playground
 
 		#region Overrides of Map<TCoordinate,TNodeData,TEdgeData>
 
-		public override bool TryGet(TCoordinate key, out Cell<TCoordinate, TNodeData, TEdgeData> data)
+		public override bool TryGet(TCoordinate key, out ICell<TCoordinate, TNodeData, TEdgeData> data)
 		{
 			return dictionary.TryGetValue(key, out data);
 		}
 
-		public override IEnumerator<KeyValuePair<TCoordinate, Cell<TCoordinate, TNodeData, TEdgeData>>> GetEnumerator()
+		public override IEnumerator<KeyValuePair<TCoordinate, ICell<TCoordinate, TNodeData, TEdgeData>>> GetEnumerator()
 		{
 			return dictionary.GetEnumerator();
 		}
@@ -35,12 +34,12 @@ namespace SILibrary.General.Playground
 
 		protected override void Remove(TCoordinate coordinate)
 		{
-			Cell<TCoordinate, TNodeData, TEdgeData> _;
+			ICell<TCoordinate, TNodeData, TEdgeData> _;
 			dictionary.TryRemove(coordinate, out _);
 		}
 
-		protected override Cell<TCoordinate, TNodeData, TEdgeData> GetOrAdd(TCoordinate coordinate,
-		                                                                    Cell<TCoordinate, TNodeData, TEdgeData> cell)
+		protected override ICell<TCoordinate, TNodeData, TEdgeData> GetOrAdd(TCoordinate coordinate,
+		                                                                     ICell<TCoordinate, TNodeData, TEdgeData> cell)
 		{
 			return dictionary.GetOrAdd(coordinate, cell);
 		}

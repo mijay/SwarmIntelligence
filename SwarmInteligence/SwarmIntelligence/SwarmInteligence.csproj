@@ -63,9 +63,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\Playground\IOutlook.cs" />
-    <Compile Include="Core\Interfaces\IEnumerableMapping.cs" />
-    <Compile Include="Core\Interfaces\IMutableMapping.cs" />
-    <Compile Include="Core\Interfaces\ISparseMappint.cs" />
+    <Compile Include="Core\Basic\IEnumerableMapping.cs" />
+    <Compile Include="Core\Basic\IMutableMapping.cs" />
+    <Compile Include="Core\Basic\ISparseMappint.cs" />
     <Compile Include="Core\World.cs" />
     <Compile Include="Core\DataLayer.cs" />
     <Compile Include="Core\Space\Edge.cs" />
@@ -79,10 +79,10 @@
     <Compile Include="Infrastructure\TurnProcessing\Outlook.cs" />
     <Compile Include="Internal\Helpers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Core\Playground\Ant.cs" />
-    <Compile Include="Core\Playground\Cell.cs" />
+    <Compile Include="Core\Playground\IAnt.cs" />
+    <Compile Include="Core\Playground\ICell.cs" />
     <Compile Include="Core\Space\ICoordinate.cs" />
-    <Compile Include="Core\Interfaces\IMapping.cs" />
+    <Compile Include="Core\Basic\IMapping.cs" />
     <Compile Include="Core\Playground\Map.cs" />
     <Compile Include="Runner.cs" />
   </ItemGroup>

@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Threading;
 using Common;
-using SwarmIntelligence.Core.Space;
 
 namespace SwarmIntelligence.Infrastructure.MemoryManagement
 {
 	public abstract class CellProviderBase<TCoordinate, TNodeData, TEdgeData>: ICellProvider<TCoordinate, TNodeData, TEdgeData>
-		where TCoordinate: ICoordinate<TCoordinate>
 	{
 		private MapBase<TCoordinate, TNodeData, TEdgeData> context;
 

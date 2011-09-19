@@ -8,7 +8,6 @@ using SwarmIntelligence.Internal;
 namespace SwarmIntelligence.Infrastructure.MemoryManagement
 {
 	public abstract class MapBase<TCoordinate, TNodeData, TEdgeData>: Map<TCoordinate, TNodeData, TEdgeData>
-		where TCoordinate: ICoordinate<TCoordinate>
 	{
 		private readonly ICellProvider<TCoordinate, TNodeData, TEdgeData> cellProvider;
 
@@ -35,9 +34,9 @@ namespace SwarmIntelligence.Infrastructure.MemoryManagement
 				         });
 		}
 
-		public override Cell<TCoordinate, TNodeData, TEdgeData> Get(TCoordinate key)
+		public override ICell<TCoordinate, TNodeData, TEdgeData> Get(TCoordinate key)
 		{
-			Cell<TCoordinate, TNodeData, TEdgeData> cell;
+			ICell<TCoordinate, TNodeData, TEdgeData> cell;
 			if(TryGet(key, out cell))
 				return cell;
 
@@ -49,6 +48,6 @@ namespace SwarmIntelligence.Infrastructure.MemoryManagement
 		}
 
 		protected abstract void Remove(TCoordinate coordinate);
-		protected abstract Cell<TCoordinate, TNodeData, TEdgeData> GetOrAdd(TCoordinate coordinate, Cell<TCoordinate, TNodeData, TEdgeData> cell);
+		protected abstract ICell<TCoordinate, TNodeData, TEdgeData> GetOrAdd(TCoordinate coordinate, ICell<TCoordinate, TNodeData, TEdgeData> cell);
 	}
 }

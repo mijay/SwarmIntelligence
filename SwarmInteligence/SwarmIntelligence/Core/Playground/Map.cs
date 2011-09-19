@@ -1,15 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Common;
-using SwarmIntelligence.Core.Interfaces;
+using SwarmIntelligence.Core.Basic;
 using SwarmIntelligence.Core.Space;
 
 namespace SwarmIntelligence.Core.Playground
 {
 	public abstract class Map<TCoordinate, TNodeData, TEdgeData>:
-		ISparseMappint<TCoordinate, Cell<TCoordinate, TNodeData, TEdgeData>>,
-		IEnumerableMapping<TCoordinate, Cell<TCoordinate, TNodeData, TEdgeData>>
-		where TCoordinate: ICoordinate<TCoordinate>
+		ISparseMappint<TCoordinate, ICell<TCoordinate, TNodeData, TEdgeData>>,
+		IEnumerableMapping<TCoordinate, ICell<TCoordinate, TNodeData, TEdgeData>>
 	{
 		protected Map(Topology<TCoordinate> topology)
 		{
@@ -21,7 +20,7 @@ namespace SwarmIntelligence.Core.Playground
 
 		#region Implementation of IMapping<in TCoordinate,out Cell<TCoordinate,TNodeData,TEdgeData>>
 
-		public abstract Cell<TCoordinate, TNodeData, TEdgeData> Get(TCoordinate key);
+		public abstract ICell<TCoordinate, TNodeData, TEdgeData> Get(TCoordinate key);
 
 		#endregion
 
@@ -29,17 +28,17 @@ namespace SwarmIntelligence.Core.Playground
 
 		public virtual bool Has(TCoordinate key)
 		{
-			Cell<TCoordinate, TNodeData, TEdgeData> cell;
+			ICell<TCoordinate, TNodeData, TEdgeData> cell;
 			return TryGet(key, out cell);
 		}
 
-		public abstract bool TryGet(TCoordinate key, out Cell<TCoordinate, TNodeData, TEdgeData> data);
+		public abstract bool TryGet(TCoordinate key, out ICell<TCoordinate, TNodeData, TEdgeData> data);
 
 		#endregion
 
 		#region Implementation of IEnumerable
 
-		public abstract IEnumerator<KeyValuePair<TCoordinate, Cell<TCoordinate, TNodeData, TEdgeData>>> GetEnumerator();
+		public abstract IEnumerator<KeyValuePair<TCoordinate, ICell<TCoordinate, TNodeData, TEdgeData>>> GetEnumerator();
 
 		IEnumerator IEnumerable.GetEnumerator()
 		{

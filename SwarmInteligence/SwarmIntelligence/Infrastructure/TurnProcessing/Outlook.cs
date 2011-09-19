@@ -7,9 +7,8 @@ using SwarmIntelligence.Infrastructure.MemoryManagement;
 namespace SwarmIntelligence.Infrastructure.TurnProcessing
 {
 	public class Outlook<TCoordinate, TNodeData, TEdgeData>: IOutlook<TCoordinate, TNodeData, TEdgeData>
-		where TCoordinate: ICoordinate<TCoordinate>
 	{
-		public Outlook(World<TCoordinate, TNodeData, TEdgeData> world, Ant<TCoordinate, TNodeData, TEdgeData> me)
+		public Outlook(World<TCoordinate, TNodeData, TEdgeData> world, IAnt<TCoordinate, TNodeData, TEdgeData> me)
 		{
 			Requires.NotNull(world, me);
 			World = world;
@@ -28,10 +27,10 @@ namespace SwarmIntelligence.Infrastructure.TurnProcessing
 		public Map<TCoordinate, TNodeData, TEdgeData> Map { get; private set; }
 		public DataLayer<TCoordinate, TNodeData> NodesData { get; private set; }
 		public DataLayer<Edge<TCoordinate>, TEdgeData> EdgesData { get; private set; }
-		public Ant<TCoordinate, TNodeData, TEdgeData> Me { get; private set; }
+		public IAnt<TCoordinate, TNodeData, TEdgeData> Me { get; private set; }
 		public TCoordinate Coordinate { get; set; }
 
-		public Cell<TCoordinate, TNodeData, TEdgeData> Cell
+		public ICell<TCoordinate, TNodeData, TEdgeData> Cell
 		{
 			get { return CellBase; }
 		}

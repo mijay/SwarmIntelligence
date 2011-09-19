@@ -91,7 +91,7 @@ namespace Test.ContextIndependendAnt
 			timer.Stop();
 			Debug.WriteLine(string.Format("jumps - {0}; ants - {1}; time - {2} ms", jumps, ants, timer.ElapsedMilliseconds));
 
-			KeyValuePair<Coordinates2D, Cell<Coordinates2D, EmptyData, EmptyData>> keyValuePair =
+			KeyValuePair<Coordinates2D, ICell<Coordinates2D, EmptyData, EmptyData>> keyValuePair =
 				world.Map.Single();
 			Assert.That(keyValuePair.Key, Is.EqualTo(lastStep));
 			CollectionAssert.AreEquivalent(seededAnts, keyValuePair.Value);

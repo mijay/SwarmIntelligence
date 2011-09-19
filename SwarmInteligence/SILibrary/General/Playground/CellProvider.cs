@@ -1,13 +1,11 @@
 using System;
 using System.Collections.Concurrent;
 using Common;
-using SwarmIntelligence.Core.Space;
 using SwarmIntelligence.Infrastructure.MemoryManagement;
 
 namespace SILibrary.General.Playground
 {
 	public class CellProvider<TCoordinate, TNodeData, TEdgeData>: CellProviderBase<TCoordinate, TNodeData, TEdgeData>
-		where TCoordinate: ICoordinate<TCoordinate>
 	{
 		private readonly ConcurrentBag<CellBase<TCoordinate, TNodeData, TEdgeData>> bag =
 			new ConcurrentBag<CellBase<TCoordinate, TNodeData, TEdgeData>>();

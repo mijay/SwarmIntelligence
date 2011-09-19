@@ -19,9 +19,9 @@ namespace Test.ContextIndependendAnt
 			this.points = new Queue<Coordinates2D>(points);
 		}
 
-		#region Overrides of Ant<Coordinates2D,EmptyData,EmptyData>
+		#region Overrides of IAnt<Coordinates2D,EmptyData,EmptyData>
 
-		protected override void ProcessTurn(IOutlook<Coordinates2D, EmptyData, EmptyData> outlook)
+		public override void ProcessTurn(IOutlook<Coordinates2D, EmptyData, EmptyData> outlook)
 		{
 			outlook.MoveTo(points.Dequeue());
 		}
