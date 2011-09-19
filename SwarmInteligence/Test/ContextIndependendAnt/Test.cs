@@ -12,6 +12,7 @@ using SwarmIntelligence;
 using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Playground;
 using SwarmIntelligence.Core.Space;
+using SwarmIntelligence.Specialized;
 
 namespace Test.ContextIndependendAnt
 {
@@ -56,19 +57,20 @@ namespace Test.ContextIndependendAnt
 
 		private IEnumerable<TestAnt> SeedAnts(int antsNumber, int timesAntJumps, params Coordinates2D[] lastAntSteps)
 		{
-			return EnumerableExtension
-				.Repeat(() => SeedAnt(timesAntJumps, lastAntSteps), antsNumber)
-				.ToArray();
+			using(IMapModifier<Coordinates2D, EmptyData, EmptyData> mapModifier = world.Map.GetModifier())
+				return EnumerableExtension
+					.Repeat(() => SeedAnt(mapModifier, timesAntJumps, lastAntSteps), antsNumber)
+					.ToArray();
 		}
 
-		private TestAnt SeedAnt(int timesAntJumps, params Coordinates2D[] lastAntSteps)
+		private TestAnt SeedAnt(IMapModifier<Coordinates2D, EmptyData, EmptyData> mapModifier, int timesAntJumps, Coordinates2D[] lastAntSteps)
 		{
 			Coordinates2D initialPosition = GenerateCoordinate();
 			var testAnt = new TestAnt(world, EnumerableExtension
 			                                 	.Repeat(GenerateCoordinate, timesAntJumps)
 			                                 	.Concat(lastAntSteps)
 			                                 	.ToArray());
-			world.Map.Get(initialPosition).Add(testAnt);
+			mapModifier.AddAt(testAnt, initialPosition);
 			return testAnt;
 		}
 

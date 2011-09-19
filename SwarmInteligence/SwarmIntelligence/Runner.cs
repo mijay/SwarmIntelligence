@@ -1,4 +1,5 @@
 using System.Linq;
+using Common;
 using Common.Collections;
 using SwarmIntelligence.Core;
 using SwarmIntelligence.Infrastructure.MemoryManagement;
@@ -14,6 +15,7 @@ namespace SwarmIntelligence
 
 		public Runner(World<TCoordinate, TNodeData, TEdgeData> world)
 		{
+			Requires.NotNull(world);
 			this.world = world;
 			mapBase = world.Map.Base();
 		}

@@ -86,6 +86,8 @@
     <Compile Include="Core\Basic\IMapping.cs" />
     <Compile Include="Core\Playground\IMap.cs" />
     <Compile Include="Runner.cs" />
+    <Compile Include="Specialized\IMapModifier.cs" />
+    <Compile Include="Specialized\MapModifierHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">
