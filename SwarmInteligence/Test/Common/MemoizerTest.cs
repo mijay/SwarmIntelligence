@@ -1,4 +1,5 @@
 using System;
+using Common;
 using Common.Memoization;
 using NUnit.Framework;
 
@@ -72,7 +73,22 @@ namespace Test.Common
 		[Test]
 		public void RefreshWorks()
 		{
-			Assert.Fail();
+			const string key = "key";
+			const char value = '6';
+
+			MutableTuple<bool> wasCalled;
+			Func<string, char> func = GetFuncForSingleCall(key, value, out wasCalled);
+			IMemoizedFunc<string, char> cached = memoizer.Memoize(func);
+
+			Assert.That(cached.Get(key), Is.EqualTo(value));
+			Assert.That(wasCalled.Item1);
+			wasCalled.Item1 = false;
+
+			cached.Refresh(key);
+
+			Assert.That(cached.Get(key), Is.EqualTo(value));
+			Assert.That(wasCalled.Item1);
+			Assert.That(cached.Get(key), Is.EqualTo(value));
 		}
 	}
 }
