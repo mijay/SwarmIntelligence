@@ -6,7 +6,6 @@ namespace SwarmIntelligence.Core.Space
 		public readonly TCoordinate to;
 
 		public Edge(TCoordinate from, TCoordinate to)
-			: this()
 		{
 			this.from = from;
 			this.to = to;

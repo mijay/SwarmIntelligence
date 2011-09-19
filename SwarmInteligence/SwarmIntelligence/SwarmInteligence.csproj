@@ -83,7 +83,7 @@
     <Compile Include="Core\Playground\ICell.cs" />
     <Compile Include="Core\Space\ICoordinate.cs" />
     <Compile Include="Core\Basic\IMapping.cs" />
-    <Compile Include="Core\Playground\Map.cs" />
+    <Compile Include="Core\Playground\IMap.cs" />
     <Compile Include="Runner.cs" />
   </ItemGroup>
   <ItemGroup>

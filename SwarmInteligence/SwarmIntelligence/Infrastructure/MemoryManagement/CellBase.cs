@@ -21,7 +21,7 @@ namespace SwarmIntelligence.Infrastructure.MemoryManagement
 
 		#region ICell<TCoordinate,TNodeData,TEdgeData> Members
 
-		public Map<TCoordinate, TNodeData, TEdgeData> Map
+		public IMap<TCoordinate, TNodeData, TEdgeData> Map
 		{
 			get { return MapBase; }
 		}

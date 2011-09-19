@@ -24,7 +24,7 @@ namespace SwarmIntelligence.Infrastructure.TurnProcessing
 		#region Implementation of IOutlook<TCoordinate,TNodeData,TEdgeData>
 
 		public World<TCoordinate, TNodeData, TEdgeData> World { get; private set; }
-		public Map<TCoordinate, TNodeData, TEdgeData> Map { get; private set; }
+		public IMap<TCoordinate, TNodeData, TEdgeData> Map { get; private set; }
 		public DataLayer<TCoordinate, TNodeData> NodesData { get; private set; }
 		public DataLayer<Edge<TCoordinate>, TEdgeData> EdgesData { get; private set; }
 		public IAnt<TCoordinate, TNodeData, TEdgeData> Me { get; private set; }

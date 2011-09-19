@@ -22,7 +22,7 @@ namespace SwarmIntelligence.Internal
 		}
 
 		public static MapBase<TCoordinate, TNodeData, TEdgeData> Base<TCoordinate, TNodeData, TEdgeData>(
-			this Map<TCoordinate, TNodeData, TEdgeData> map)
+			this IMap<TCoordinate, TNodeData, TEdgeData> map)
 		{
 			Requires.True(map is MapBase<TCoordinate, TNodeData, TEdgeData>);
 			return (MapBase<TCoordinate, TNodeData, TEdgeData>) map;

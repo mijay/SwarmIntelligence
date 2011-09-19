@@ -8,7 +8,7 @@ namespace SwarmIntelligence.Core
 	{
 		public World(DataLayer<TCoordinate, TNodeData> nodesData,
 		             DataLayer<Edge<TCoordinate>, TEdgeData> edgesData,
-		             Map<TCoordinate, TNodeData, TEdgeData> map)
+		             IMap<TCoordinate, TNodeData, TEdgeData> map)
 		{
 			Requires.NotNull(nodesData, edgesData, map);
 			Topology = map.Topology;
@@ -20,6 +20,6 @@ namespace SwarmIntelligence.Core
 		public Topology<TCoordinate> Topology { get; private set; }
 		public DataLayer<TCoordinate, TNodeData> NodesData { get; private set; }
 		public DataLayer<Edge<TCoordinate>, TEdgeData> EdgesData { get; private set; }
-		public Map<TCoordinate, TNodeData, TEdgeData> Map { get; private set; }
+		public IMap<TCoordinate, TNodeData, TEdgeData> Map { get; private set; }
 	}
 }
