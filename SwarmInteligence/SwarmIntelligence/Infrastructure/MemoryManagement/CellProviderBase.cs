@@ -18,7 +18,7 @@ namespace SwarmIntelligence.Infrastructure.MemoryManagement
 
 		#region Implementation of ICellProvider<TCoordinate,TNodeData,TEdgeData>
 
-		public void UseContext(MapBase<TCoordinate, TNodeData, TEdgeData> mapBase)
+		public void SetContext(MapBase<TCoordinate, TNodeData, TEdgeData> mapBase)
 		{
 			Requires.NotNull(mapBase);
 
@@ -30,8 +30,8 @@ namespace SwarmIntelligence.Infrastructure.MemoryManagement
 		public void Return(CellBase<TCoordinate, TNodeData, TEdgeData> cell)
 		{
 			Requires.NotNull<InvalidOperationException>(context);
+			Requires.True(cell.MapBase == context);
 
-			Requires.True(cell.MapBase != context);
 			ReturnForReuse(cell);
 		}
 
