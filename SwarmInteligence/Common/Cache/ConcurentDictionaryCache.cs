@@ -26,7 +26,7 @@ namespace Common.Cache
 
 		public void AddOrUpdate<TKey, TVal>(TKey key, TVal value)
 		{
-			cache.AddOrUpdate(key, value, (oldVal, newVal) => newVal);
+			cache.AddOrUpdate(key, value, (_, oldVal) => value);
 		}
 
 		public void Remove<TKey>(TKey key)

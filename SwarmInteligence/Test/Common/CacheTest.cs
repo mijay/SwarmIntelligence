@@ -11,7 +11,15 @@ namespace Test.Common
 		[Test]
 		public void AddOrUpdateWorks()
 		{
-			Assert.Fail();
+			const string key = "a";
+			const int value = 1;
+			const int value2 = 2;
+
+			localCache.AddOrUpdate(key, value);
+			Assert.That(localCache.GetOrAdd<string, int>(key, _ => { throw new Exception(); }), Is.EqualTo(value));
+
+			localCache.AddOrUpdate(key, value2);
+			Assert.That(localCache.GetOrAdd<string, int>(key, _ => { throw new Exception(); }), Is.EqualTo(value2));
 		}
 
 		[Test]
