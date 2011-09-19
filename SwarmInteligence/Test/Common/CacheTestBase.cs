@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using Common;
 using Common.Cache;
 using CommonTest;
 using NUnit.Framework;
@@ -20,12 +21,24 @@ namespace Test.Common
 
 		protected ConcurentDictionaryCache localCache;
 
-		protected static Func<TKey, TVal> GetFuncForCache<TKey, TVal>(TKey key, TVal value)
+		protected static Func<TKey, TVal> GetFuncForSingleCall<TKey, TVal>(TKey key, TVal value)
 		{
 			bool firstCall = true;
 			return a => {
 			       	Assert.IsTrue(firstCall);
 			       	firstCall = false;
+			       	Assert.That(a, Is.EqualTo(key));
+			       	return value;
+			       };
+		}
+
+		protected static Func<TKey, TVal> GetFuncForSingleCall<TKey, TVal>(TKey key, TVal value, out MutableTuple<bool> wasCalled)
+		{
+			wasCalled = MutableTuple.Create(false);
+			var wasCalledLocal = wasCalled;
+			return a => {
+			       	Assert.IsFalse(wasCalledLocal.Item1);
+					wasCalledLocal.Item1 = true;
 			       	Assert.That(a, Is.EqualTo(key));
 			       	return value;
 			       };

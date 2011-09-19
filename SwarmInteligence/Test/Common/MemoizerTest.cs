@@ -45,8 +45,8 @@ namespace Test.Common
 			const int key = 100;
 			const decimal val1 = 897;
 			const decimal val2 = 7;
-			Func<int, decimal> func1 = GetFuncForCache(key, val1);
-			Func<int, decimal> func2 = GetFuncForCache(key, val2);
+			Func<int, decimal> func1 = GetFuncForSingleCall(key, val1);
+			Func<int, decimal> func2 = GetFuncForSingleCall(key, val2);
 
 			IMemoizedFunc<int, decimal> cached1 = memoizer.Memoize(func1);
 			IMemoizedFunc<int, decimal> cached2 = memoizer.Memoize(func2);
@@ -62,7 +62,7 @@ namespace Test.Common
 		{
 			const string key = "key";
 			const char value = '6';
-			Func<string, char> func = GetFuncForCache(key, value);
+			Func<string, char> func = GetFuncForSingleCall(key, value);
 			IMemoizedFunc<string, char> cached = memoizer.Memoize(func);
 
 			Assert.That(cached.Get(key), Is.EqualTo(value));
