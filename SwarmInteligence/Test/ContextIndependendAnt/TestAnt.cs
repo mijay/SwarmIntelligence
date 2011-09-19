@@ -2,6 +2,7 @@
 using Common;
 using SILibrary.General.Background;
 using SILibrary.TwoDimensional;
+using SwarmIntelligence;
 using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Playground;
 using SwarmIntelligence.Infrastructure.TurnProcessing;
@@ -23,7 +24,7 @@ namespace Test.ContextIndependendAnt
 
 		public override void ProcessTurn(IOutlook<Coordinates2D, EmptyData, EmptyData> outlook)
 		{
-			outlook.MoveTo(points.Dequeue());
+			this.MoveTo(points.Dequeue());
 		}
 
 		#endregion

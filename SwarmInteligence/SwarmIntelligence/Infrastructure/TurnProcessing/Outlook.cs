@@ -3,6 +3,7 @@ using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Playground;
 using SwarmIntelligence.Core.Space;
 using SwarmIntelligence.Infrastructure.MemoryManagement;
+using SwarmIntelligence.Internal;
 
 namespace SwarmIntelligence.Infrastructure.TurnProcessing
 {
@@ -12,14 +13,14 @@ namespace SwarmIntelligence.Infrastructure.TurnProcessing
 		{
 			Requires.NotNull(world, me);
 			World = world;
-			Map = world.Map;
+			Map = world.Map.Base();
 			NodesData = world.NodesData;
 			EdgesData = world.EdgesData;
 
 			Me = me;
 		}
 
-		public CellBase<TCoordinate, TNodeData, TEdgeData> CellBase { get; set; }
+		public CellBase<TCoordinate, TNodeData, TEdgeData> CellBase { get; internal set; }
 
 		#region Implementation of IOutlook<TCoordinate,TNodeData,TEdgeData>
 
@@ -28,7 +29,7 @@ namespace SwarmIntelligence.Infrastructure.TurnProcessing
 		public DataLayer<TCoordinate, TNodeData> NodesData { get; private set; }
 		public DataLayer<Edge<TCoordinate>, TEdgeData> EdgesData { get; private set; }
 		public IAnt<TCoordinate, TNodeData, TEdgeData> Me { get; private set; }
-		public TCoordinate Coordinate { get; set; }
+		public TCoordinate Coordinate { get; internal set; }
 
 		public ICell<TCoordinate, TNodeData, TEdgeData> Cell
 		{

@@ -53,6 +53,8 @@ namespace SwarmIntelligence.Infrastructure.MemoryManagement
 		public abstract bool IsEmpty { get; }
 		public abstract IEnumerator<IAnt<TCoordinate, TNodeData, TEdgeData>> GetEnumerator();
 		public abstract void Add(IAnt<TCoordinate, TNodeData, TEdgeData> ant);
+
+		/// <exception cref="ArgumentOutOfRangeException"><paramref name="ant"/> does not contained in current <see cref="ICell{TCoordinate,TNodeData,TEdgeData}"/></exception>
 		public abstract void Remove(IAnt<TCoordinate, TNodeData, TEdgeData> ant);
 
 		#endregion

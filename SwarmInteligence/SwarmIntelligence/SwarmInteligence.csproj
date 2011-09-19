@@ -62,6 +62,7 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Actions.cs" />
     <Compile Include="Core\Playground\IOutlook.cs" />
     <Compile Include="Core\Basic\IEnumerableMapping.cs" />
     <Compile Include="Core\Basic\IMutableMapping.cs" />
