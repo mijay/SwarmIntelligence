@@ -1,3 +1,4 @@
+using System.Diagnostics.Contracts;
 using Common;
 using SwarmIntelligence.Core.Playground;
 using SwarmIntelligence.Infrastructure.MemoryManagement;
@@ -10,7 +11,7 @@ namespace SwarmIntelligence.Specialized
 		public static IMapModifier<TCoordinate, TNodeData, TEdgeData> GetModifier<TCoordinate, TNodeData, TEdgeData>(
 			this IMap<TCoordinate, TNodeData, TEdgeData> map)
 		{
-			Requires.NotNull(map);
+			Contract.Requires(map != null);
 			return new MapModifier<TCoordinate, TNodeData, TEdgeData>(map.Base());
 		}
 
@@ -22,20 +23,24 @@ namespace SwarmIntelligence.Specialized
 
 			public MapModifier(MapBase<TCoordinate, TNodeData, TEdgeData> mapBase)
 			{
+				Contract.Requires(mapBase != null);
 				this.mapBase = mapBase;
 			}
 
 			#region Implementation of IMutableMap<TCoordinate,TNodeData,TEdgeData>
 
+			public IMap<TCoordinate, TNodeData, TEdgeData> Map
+			{
+				get { return mapBase; }
+			}
+
 			public void AddAt(IAnt<TCoordinate, TNodeData, TEdgeData> ant, TCoordinate coordinate)
 			{
-				Requires.NotNull(ant);
 				mapBase.Get(coordinate).Base().Add(ant);
 			}
 
 			public void RemoveAt(IAnt<TCoordinate, TNodeData, TEdgeData> ant, TCoordinate coordinate)
 			{
-				Requires.NotNull(ant);
 				mapBase.Get(coordinate).Base().Remove(ant);
 			}
 

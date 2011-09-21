@@ -91,6 +91,7 @@
     <Compile Include="Core\Playground\IMap.cs" />
     <Compile Include="Runner.cs" />
     <Compile Include="Specialized\IMapModifier.cs" />
+    <Compile Include="Contracts\IMapModifierContract.cs" />
     <Compile Include="Specialized\MapModifierHelper.cs" />
   </ItemGroup>
   <ItemGroup>
