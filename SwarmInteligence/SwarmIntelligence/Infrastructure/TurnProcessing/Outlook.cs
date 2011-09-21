@@ -11,7 +11,7 @@ namespace SwarmIntelligence.Infrastructure.TurnProcessing
 	{
 		public Outlook(World<TCoordinate, TNodeData, TEdgeData> world, IAnt<TCoordinate, TNodeData, TEdgeData> me)
 		{
-			Contract.Requires(world != null && me != null)
+			Contract.Requires(world != null && me != null);
 			World = world;
 			Map = world.Map.Base();
 			NodesData = world.NodesData;

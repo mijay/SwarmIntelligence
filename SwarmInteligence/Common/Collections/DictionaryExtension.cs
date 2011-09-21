@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using System.Linq;
 
 namespace Common.Collections
 {
@@ -41,6 +42,14 @@ namespace Common.Collections
 				dictionary.Add(key, result);
 			}
 			return result;
+		}
+
+		[Pure]
+		public static IDictionary<TKey, TVal2> MapValues<TKey, TVal1, TVal2>(this IDictionary<TKey, TVal1> dictionary,
+		                                                                     Func<TKey, TVal1, TVal2> func)
+		{
+			Contract.Requires(dictionary != null && func != null);
+			return dictionary.ToDictionary(pair => pair.Key, pair => func(pair.Key, pair.Value));
 		}
 	}
 }
