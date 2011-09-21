@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using Common;
 using SwarmIntelligence.Core.Playground;
 
@@ -13,10 +14,11 @@ namespace SwarmIntelligence.Infrastructure.MemoryManagement
 
 		protected CellBase(MapBase<TCoordinate, TNodeData, TEdgeData> mapBase)
 		{
-			Requires.NotNull(mapBase);
+			Contract.Requires(mapBase != null);
 			MapBase = mapBase;
 		}
 
+		[Pure]
 		public MapBase<TCoordinate, TNodeData, TEdgeData> MapBase { get; private set; }
 
 		#region ICell<TCoordinate,TNodeData,TEdgeData> Members
@@ -50,7 +52,9 @@ namespace SwarmIntelligence.Infrastructure.MemoryManagement
 
 		#region Abstract Methods
 
+		[Pure]
 		public abstract bool IsEmpty { get; }
+
 		public abstract IEnumerator<IAnt<TCoordinate, TNodeData, TEdgeData>> GetEnumerator();
 		public abstract void Add(IAnt<TCoordinate, TNodeData, TEdgeData> ant);
 

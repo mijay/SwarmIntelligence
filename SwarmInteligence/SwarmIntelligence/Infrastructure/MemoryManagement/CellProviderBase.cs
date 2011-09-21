@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading;
-using Common;
 
 namespace SwarmIntelligence.Infrastructure.MemoryManagement
 {
@@ -8,42 +7,30 @@ namespace SwarmIntelligence.Infrastructure.MemoryManagement
 	{
 		private MapBase<TCoordinate, TNodeData, TEdgeData> context;
 
-		protected MapBase<TCoordinate, TNodeData, TEdgeData> Context
+		#region ICellProvider<TCoordinate,TNodeData,TEdgeData> Members
+
+		public MapBase<TCoordinate, TNodeData, TEdgeData> Context
 		{
 			get { return context; }
+			set
+			{
+				Interlocked.CompareExchange(ref context, value, null);
+				if(context != value)
+					throw new InvalidOperationException("CellProvider was already been initialized");
+			}
 		}
 
-		protected abstract CellBase<TCoordinate, TNodeData, TEdgeData> ReuseOrBuild();
-		protected abstract void ReturnForReuse(CellBase<TCoordinate, TNodeData, TEdgeData> cellBase);
-
-		#region Implementation of ICellProvider<TCoordinate,TNodeData,TEdgeData>
-
-		public void SetContext(MapBase<TCoordinate, TNodeData, TEdgeData> mapBase)
-		{
-			Requires.NotNull(mapBase);
-
-			Interlocked.CompareExchange(ref context, mapBase, null);
-			if(context != mapBase)
-				throw new InvalidOperationException("CellProvider was already been initialized");
-		}
-
-		public void Return(CellBase<TCoordinate, TNodeData, TEdgeData> cell)
-		{
-			Requires.NotNull<InvalidOperationException>(context);
-			Requires.True(cell.MapBase == context);
-
-			ReturnForReuse(cell);
-		}
+		public abstract void Return(CellBase<TCoordinate, TNodeData, TEdgeData> cell);
 
 		public CellBase<TCoordinate, TNodeData, TEdgeData> Get(TCoordinate coordinate)
 		{
-			Requires.NotNull<InvalidOperationException>(context);
-
 			CellBase<TCoordinate, TNodeData, TEdgeData> result = ReuseOrBuild();
 			result.SetCoordinate(coordinate);
 			return result;
 		}
 
 		#endregion
+
+		protected abstract CellBase<TCoordinate, TNodeData, TEdgeData> ReuseOrBuild();
 	}
 }

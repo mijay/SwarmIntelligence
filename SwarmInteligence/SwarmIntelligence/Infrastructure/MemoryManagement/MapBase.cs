@@ -18,7 +18,7 @@ namespace SwarmIntelligence.Infrastructure.MemoryManagement
 			Requires.NotNull(topology, cellProvider);
 			Topology = topology;
 			this.cellProvider = cellProvider;
-			cellProvider.SetContext(this);
+			cellProvider.Context = this;
 		}
 
 		#region IMap<TCoordinate,TNodeData,TEdgeData> Members

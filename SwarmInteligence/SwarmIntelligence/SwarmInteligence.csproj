@@ -78,6 +78,7 @@
     <Compile Include="Infrastructure\MemoryManagement\CellBase.cs" />
     <Compile Include="Infrastructure\MemoryManagement\CellProviderBase.cs" />
     <Compile Include="Infrastructure\MemoryManagement\ICellProvider.cs" />
+    <Compile Include="Contracts\ICellProviderContract.cs" />
     <Compile Include="Infrastructure\MemoryManagement\MapBase.cs" />
     <Compile Include="Infrastructure\TurnProcessing\AntBase.cs" />
     <Compile Include="Infrastructure\TurnProcessing\Outlook.cs" />

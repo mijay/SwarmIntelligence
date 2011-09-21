@@ -1,8 +1,11 @@
-﻿namespace SwarmIntelligence.Infrastructure.MemoryManagement
+﻿using System.Diagnostics.Contracts;
+
+namespace SwarmIntelligence.Infrastructure.MemoryManagement
 {
 	public interface ICellProvider<TCoordinate, TNodeData, TEdgeData>
 	{
-		void SetContext(MapBase<TCoordinate, TNodeData, TEdgeData> mapBase);
+		MapBase<TCoordinate, TNodeData, TEdgeData> Context { [Pure] get; set; }
+
 		void Return(CellBase<TCoordinate, TNodeData, TEdgeData> cell);
 		CellBase<TCoordinate, TNodeData, TEdgeData> Get(TCoordinate coordinate);
 	}

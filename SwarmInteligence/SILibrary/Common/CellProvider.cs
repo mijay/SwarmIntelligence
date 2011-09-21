@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Concurrent;
-using Common;
+using System.Diagnostics.Contracts;
 using SwarmIntelligence.Infrastructure.MemoryManagement;
 
 namespace SILibrary.Common
@@ -14,7 +14,7 @@ namespace SILibrary.Common
 
 		public CellProvider(Func<MapBase<TCoordinate, TNodeData, TEdgeData>, CellBase<TCoordinate, TNodeData, TEdgeData>> cellBuilder)
 		{
-			Requires.NotNull(cellBuilder);
+			Contract.Requires(cellBuilder != null);
 			this.cellBuilder = cellBuilder;
 		}
 
@@ -26,7 +26,7 @@ namespace SILibrary.Common
 			return bag.TryTake(out result) ? result : cellBuilder(Context);
 		}
 
-		protected override void ReturnForReuse(CellBase<TCoordinate, TNodeData, TEdgeData> cellBase)
+		public override void Return(CellBase<TCoordinate, TNodeData, TEdgeData> cellBase)
 		{
 			bag.Add(cellBase);
 		}
