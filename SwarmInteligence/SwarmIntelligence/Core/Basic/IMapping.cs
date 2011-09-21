@@ -5,7 +5,7 @@ namespace SwarmIntelligence.Core.Basic
 	public interface IMapping<in TKey, out TData>
 	{
 		/// <summary>
-		/// TDOD
+		/// TODO
 		/// </summary>
 		/// <param name="key"></param>
 		/// <returns></returns>

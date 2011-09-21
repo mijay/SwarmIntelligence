@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
-using Common;
 using Common.Collections;
+using SwarmIntelligence.Contracts;
 
 namespace SwarmIntelligence.Core.Space
 {
@@ -60,30 +60,5 @@ namespace SwarmIntelligence.Core.Space
 			Contract.Requires(Lays(coord));
 			return GetOutgoing(coord).Concat(GetIncoming(coord));
 		}
-	}
-
-	[ContractClassFor(typeof(Topology<>))]
-	public class TopologyContract<TCoordinate>: Topology<TCoordinate>
-	{
-		#region Overrides of Topology<TCoordinate>
-
-		public override bool Lays(TCoordinate coord)
-		{
-			throw new UreachableCodeException();
-		}
-
-		public override IEnumerable<TCoordinate> GetSuccessors(TCoordinate coord)
-		{
-			Contract.Requires(Lays(coord));
-			throw new UreachableCodeException();
-		}
-
-		public override IEnumerable<TCoordinate> GetPredecessors(TCoordinate coord)
-		{
-			Contract.Requires(Lays(coord));
-			throw new UreachableCodeException();
-		}
-
-		#endregion
 	}
 }

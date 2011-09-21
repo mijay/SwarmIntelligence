@@ -63,10 +63,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Actions.cs" />
+    <Compile Include="Contracts\IAntContract.cs" />
+    <Compile Include="Contracts\IMapContract.cs" />
     <Compile Include="Core\Playground\IOutlook.cs" />
     <Compile Include="Core\Basic\IEnumerableMapping.cs" />
     <Compile Include="Core\Basic\IMutableMapping.cs" />
     <Compile Include="Core\Basic\ISparseMappint.cs" />
+    <Compile Include="Contracts\TopologyContract.cs" />
     <Compile Include="Core\World.cs" />
     <Compile Include="Core\DataLayer.cs" />
     <Compile Include="Core\Space\Edge.cs" />
