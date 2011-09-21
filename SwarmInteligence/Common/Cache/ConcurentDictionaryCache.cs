@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Diagnostics.Contracts;
 
 namespace Common.Cache
 {
@@ -9,7 +10,7 @@ namespace Common.Cache
 
 		public ConcurentDictionaryCache(ConcurrentDictionary<object, object> cache)
 		{
-			Requires.NotNull(cache);
+			Contract.Requires(cache != null);
 			this.cache = cache;
 		}
 

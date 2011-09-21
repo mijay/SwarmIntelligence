@@ -35,10 +35,10 @@ namespace Test.Common
 		protected static Func<TKey, TVal> GetFuncForSingleCall<TKey, TVal>(TKey key, TVal value, out MutableTuple<bool> wasCalled)
 		{
 			wasCalled = MutableTuple.Create(false);
-			var wasCalledLocal = wasCalled;
+			MutableTuple<bool> wasCalledLocal = wasCalled;
 			return a => {
 			       	Assert.IsFalse(wasCalledLocal.Item1);
-					wasCalledLocal.Item1 = true;
+			       	wasCalledLocal.Item1 = true;
 			       	Assert.That(a, Is.EqualTo(key));
 			       	return value;
 			       };

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 
 namespace Common.Collections
 {
@@ -11,8 +12,7 @@ namespace Common.Collections
 		/// </summary>
 		public static void SetAt<T>(this IList<T> list, int index, T elem)
 		{
-			Requires.NotNull(list);
-			Requires.True(index >= 0);
+			Contract.Requires(list != null && index >= 0);
 			if(list.Count > index)
 				list[index] = elem;
 			else {
@@ -25,15 +25,17 @@ namespace Common.Collections
 		/// <summary>
 		/// Build read-only <see cref="IList{T}"/> from data given in <paramref name="list"/>.
 		/// </summary>
+		[Pure]
 		public static IList<T> AsReadOnly<T>(this IList<T> list)
 		{
-			Requires.NotNull(list);
+			Contract.Requires(list != null);
 			return new ReadOnlyList<T>(list);
 		}
 
 		/// <summary>
 		/// Figures out if given list is null or if it is empty.
 		/// </summary>
+		[Pure]
 		public static bool IsNullOrEmpty<T>(this IList<T> data)
 		{
 			return data == null || data.Count == 0;

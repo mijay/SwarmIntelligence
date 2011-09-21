@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 
 namespace Common.Collections
 {
@@ -12,7 +13,7 @@ namespace Common.Collections
 		public static IDictionary<TKey, TVal> With<TKey, TVal>(this IDictionary<TKey, TVal> dictionary, TKey key,
 		                                                       TVal val)
 		{
-			Requires.NotNull(dictionary);
+			Contract.Requires(dictionary != null);
 			dictionary.Add(key, val);
 			return dictionary;
 		}
@@ -20,10 +21,11 @@ namespace Common.Collections
 		/// <summary>
 		/// Get value from <paramref name="dictionary"/> by the <paramref name="key"/>. If such value do not exist then return <paramref name="defaultVal"/>.
 		/// </summary>
+		[Pure]
 		public static TVal GetOrDefault<TKey, TVal>(this IDictionary<TKey, TVal> dictionary, TKey key,
 		                                            TVal defaultVal = default(TVal))
 		{
-			Requires.NotNull(dictionary);
+			Contract.Requires(dictionary != null);
 			TVal result;
 			if(!dictionary.TryGetValue(key, out result))
 				result = defaultVal;
@@ -32,7 +34,7 @@ namespace Common.Collections
 
 		public static TVal GetOrAdd<TKey, TVal>(this IDictionary<TKey, TVal> dictionary, TKey key, Func<TVal> valueGetter)
 		{
-			Requires.NotNull(dictionary, valueGetter);
+			Contract.Requires(dictionary != null && valueGetter != null);
 			TVal result;
 			if(!dictionary.TryGetValue(key, out result)) {
 				result = valueGetter();

@@ -1,8 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.Contracts;
+using SILibrary.Contracts;
 using SwarmIntelligence.Core.Space;
 
 namespace SILibrary.General
 {
+	[ContractClass(typeof(BiConnectedTopologyBaseContract<>))]
 	public abstract class BiConnectedTopologyBase<TCoordinate>: Topology<TCoordinate>
 	{
 		public override IEnumerable<TCoordinate> GetSuccessors(TCoordinate coord)

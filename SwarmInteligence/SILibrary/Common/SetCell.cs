@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using Common.Concurrent;
 using SwarmIntelligence.Core.Playground;
 using SwarmIntelligence.Infrastructure.MemoryManagement;
@@ -13,6 +14,7 @@ namespace SILibrary.Common
 		public SetCell(MapBase<TCoordinate, TNodeData, TEdgeData> map)
 			: base(map)
 		{
+			Contract.Requires(map != null);
 		}
 
 		#region Overrides of Cell<TCoordinate,TNodeData,TEdgeData>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 
@@ -15,9 +16,10 @@ namespace Common.Collections
 		/// size of each is not more then <paramref name="maxLength"/>.
 		/// (Size of each except the last is equal to <paramref name="maxLength"/>, size of the last can be less).
 		/// </summary>
+		[Pure]
 		public static IEnumerable<T[]> SplitIntoPieces<T>(this T[] data, int maxLength)
 		{
-			Requires.NotNull(data);
+			Contract.Requires(data != null && maxLength > 0);
 
 			if(maxLength == -1 || maxLength >= data.Length) {
 				yield return data;
@@ -38,9 +40,10 @@ namespace Common.Collections
 		/// This method tries to cut a string lines from the head of the <paramref name="data"/>.
 		/// Each line is returned as a pair: line and enumerator over all data after this line (tail of the <paramref name="data"/>).
 		/// </summary>
+		[Pure]
 		public static IEnumerable<KeyValuePair<string, IEnumerable<byte>>> CutLines(this byte[] data)
 		{
-			Requires.NotNull(data);
+			Contract.Requires(data != null);
 
 			int lineBegin = 0;
 			for(int position = 0; position < data.Length; ++position)

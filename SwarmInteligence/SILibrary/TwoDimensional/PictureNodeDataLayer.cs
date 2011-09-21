@@ -1,6 +1,6 @@
 using System;
+using System.Diagnostics.Contracts;
 using System.Drawing;
-using Common;
 using SwarmIntelligence.Core;
 using Utils.Drawing;
 
@@ -13,7 +13,7 @@ namespace SILibrary.TwoDimensional
 
 		public PictureNodeDataLayer(Bitmap data)
 		{
-			Requires.NotNull(data);
+			Contract.Requires(data != null);
 			bitmap = new FastBitmap(data);
 		}
 

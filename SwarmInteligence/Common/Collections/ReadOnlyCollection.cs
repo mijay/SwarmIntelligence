@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 
 namespace Common.Collections
 {
@@ -10,7 +11,7 @@ namespace Common.Collections
 
 		public ReadOnlyCollection(ICollection<T> innerCollection)
 		{
-			Requires.NotNull(innerCollection);
+			Contract.Requires(innerCollection != null);
 			this.innerCollection = innerCollection;
 		}
 

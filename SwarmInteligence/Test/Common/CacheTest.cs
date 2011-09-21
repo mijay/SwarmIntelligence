@@ -53,6 +53,12 @@ namespace Test.Common
 		}
 
 		[Test]
+		public void KeyIsNotInCache_RemoveIt_NoExceptionOccures()
+		{
+			Assert.DoesNotThrow(() => localCache.Remove("12"));
+		}
+
+		[Test]
 		public void MultipleCacheCall_OnlyOneFactoryCall()
 		{
 			Tuple<string> key = Tuple.Create("some");
@@ -65,30 +71,15 @@ namespace Test.Common
 		}
 
 		[Test]
-		public void RemoveWorks()
-		{
-			const string key = "12";
-			const decimal value = 178;
-			localCache.GetOrAdd(key, _ => value);
-			
-			localCache.Remove(key);
-
-			MutableTuple<bool> wasCalled;
-			var func = GetFuncForSingleCall(key, value, out wasCalled);
-			Assert.That(localCache.GetOrAdd(key, func), Is.EqualTo(value));
-			Assert.That(wasCalled.Item1);
-		}
-
-		[Test]
 		public void RemoveOneKey_OtherIsNotAffected()
 		{
 			const string key1 = "12";
 			const string key2 = "123";
 			const decimal value1 = 178;
 			const decimal value2 = 78;
-			var func1 = GetFuncForSingleCall(key1, value1);
+			Func<string, decimal> func1 = GetFuncForSingleCall(key1, value1);
 			localCache.GetOrAdd(key1, func1);
-			var func2 = GetFuncForSingleCall(key2, value2);
+			Func<string, decimal> func2 = GetFuncForSingleCall(key2, value2);
 			localCache.GetOrAdd(key2, func2);
 
 			localCache.Remove(key2);
@@ -96,9 +87,18 @@ namespace Test.Common
 		}
 
 		[Test]
-		public void KeyIsNotInCache_RemoveIt_NoExceptionOccures()
+		public void RemoveWorks()
 		{
-			Assert.DoesNotThrow(() => localCache.Remove("12"));
+			const string key = "12";
+			const decimal value = 178;
+			localCache.GetOrAdd(key, _ => value);
+
+			localCache.Remove(key);
+
+			MutableTuple<bool> wasCalled;
+			Func<string, decimal> func = GetFuncForSingleCall(key, value, out wasCalled);
+			Assert.That(localCache.GetOrAdd(key, func), Is.EqualTo(value));
+			Assert.That(wasCalled.Item1);
 		}
 
 		[Test]
