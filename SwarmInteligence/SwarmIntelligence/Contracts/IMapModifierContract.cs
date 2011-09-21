@@ -6,7 +6,7 @@ using SwarmIntelligence.Specialized;
 namespace SwarmIntelligence.Contracts
 {
 	[ContractClassFor(typeof(IMapModifier<,,>))]
-	public abstract class IMapModifierContract<TCoordinate, TNodeData, TEdgeData> : IMapModifier<TCoordinate, TNodeData, TEdgeData>
+	public abstract class IMapModifierContract<TCoordinate, TNodeData, TEdgeData>: IMapModifier<TCoordinate, TNodeData, TEdgeData>
 	{
 		#region Implementation of IDisposable
 

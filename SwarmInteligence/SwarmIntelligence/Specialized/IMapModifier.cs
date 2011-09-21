@@ -2,7 +2,6 @@
 using System.Diagnostics.Contracts;
 using SwarmIntelligence.Contracts;
 using SwarmIntelligence.Core.Playground;
-using System.Linq;
 
 namespace SwarmIntelligence.Specialized
 {

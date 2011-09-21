@@ -19,7 +19,7 @@ namespace SwarmIntelligence
 		}
 
 		public static void RemoveFrom<TCoordinate, TNodeData, TEdgeData>(this AntBase<TCoordinate, TNodeData, TEdgeData> antBase,
-		                                                            IAnt<TCoordinate, TNodeData, TEdgeData> ant, TCoordinate coordinate)
+		                                                                 IAnt<TCoordinate, TNodeData, TEdgeData> ant, TCoordinate coordinate)
 		{
 			antBase.Outlook.Map.Get(coordinate).Base().Remove(ant);
 		}

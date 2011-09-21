@@ -1,4 +1,4 @@
-using Common;
+using System.Diagnostics.Contracts;
 using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Playground;
 using SwarmIntelligence.Core.Space;
@@ -11,7 +11,7 @@ namespace SwarmIntelligence.Infrastructure.TurnProcessing
 	{
 		public Outlook(World<TCoordinate, TNodeData, TEdgeData> world, IAnt<TCoordinate, TNodeData, TEdgeData> me)
 		{
-			Requires.NotNull(world, me);
+			Contract.Requires(world != null && me != null)
 			World = world;
 			Map = world.Map.Base();
 			NodesData = world.NodesData;

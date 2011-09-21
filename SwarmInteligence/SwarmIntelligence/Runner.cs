@@ -1,5 +1,5 @@
+using System.Diagnostics.Contracts;
 using System.Linq;
-using Common;
 using Common.Collections;
 using SwarmIntelligence.Core;
 using SwarmIntelligence.Infrastructure.MemoryManagement;
@@ -15,7 +15,7 @@ namespace SwarmIntelligence
 
 		public Runner(World<TCoordinate, TNodeData, TEdgeData> world)
 		{
-			Requires.NotNull(world);
+			Contract.Requires(world != null);
 			this.world = world;
 			mapBase = world.Map.Base();
 		}

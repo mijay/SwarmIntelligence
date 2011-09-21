@@ -5,7 +5,7 @@ using SwarmIntelligence.Infrastructure.MemoryManagement;
 namespace SwarmIntelligence.Contracts
 {
 	[ContractClassFor(typeof(ICellProvider<,,>))]
-	public abstract class ICellProviderContract<TCoordinate, TNodeData, TEdgeData> : ICellProvider<TCoordinate, TNodeData, TEdgeData>
+	public abstract class ICellProviderContract<TCoordinate, TNodeData, TEdgeData>: ICellProvider<TCoordinate, TNodeData, TEdgeData>
 	{
 		#region Implementation of ICellProvider<TCoordinate,TNodeData,TEdgeData>
 

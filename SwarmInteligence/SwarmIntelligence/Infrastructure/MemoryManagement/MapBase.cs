@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
-using Common;
 using Common.Collections;
 using SwarmIntelligence.Core.Playground;
 using SwarmIntelligence.Core.Space;
@@ -15,7 +15,7 @@ namespace SwarmIntelligence.Infrastructure.MemoryManagement
 
 		protected MapBase(Topology<TCoordinate> topology, ICellProvider<TCoordinate, TNodeData, TEdgeData> cellProvider)
 		{
-			Requires.NotNull(topology, cellProvider);
+			Contract.Requires(topology != null && cellProvider != null && cellProvider.Context == null);
 			Topology = topology;
 			this.cellProvider = cellProvider;
 			cellProvider.Context = this;
@@ -23,14 +23,14 @@ namespace SwarmIntelligence.Infrastructure.MemoryManagement
 
 		#region IMap<TCoordinate,TNodeData,TEdgeData> Members
 
-		public ICell<TCoordinate, TNodeData, TEdgeData> Get(TCoordinate key)
+		public ICell<TCoordinate, TNodeData, TEdgeData> Get(TCoordinate coordinate)
 		{
 			ICell<TCoordinate, TNodeData, TEdgeData> cell;
-			if(TryGet(key, out cell))
+			if(TryGet(coordinate, out cell))
 				return cell;
 
-			CellBase<TCoordinate, TNodeData, TEdgeData> createdCell = cellProvider.Get(key);
-			cell = GetOrAdd(key, createdCell);
+			CellBase<TCoordinate, TNodeData, TEdgeData> createdCell = cellProvider.Get(coordinate);
+			cell = GetOrAdd(coordinate, createdCell);
 			if(createdCell != cell)
 				cellProvider.Return(createdCell);
 			return cell;
@@ -53,7 +53,7 @@ namespace SwarmIntelligence.Infrastructure.MemoryManagement
 
 		#region Abstract methods
 
-		public abstract bool TryGet(TCoordinate key, out ICell<TCoordinate, TNodeData, TEdgeData> data);
+		public abstract bool TryGet(TCoordinate coordinate, out ICell<TCoordinate, TNodeData, TEdgeData> cell);
 		public abstract IEnumerator<KeyValuePair<TCoordinate, ICell<TCoordinate, TNodeData, TEdgeData>>> GetEnumerator();
 		protected abstract void Remove(TCoordinate coordinate);
 		protected abstract ICell<TCoordinate, TNodeData, TEdgeData> GetOrAdd(TCoordinate coordinate, ICell<TCoordinate, TNodeData, TEdgeData> cell);

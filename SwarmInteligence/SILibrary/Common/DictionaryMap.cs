@@ -18,9 +18,9 @@ namespace SILibrary.Common
 
 		#region Overrides of Map<TCoordinate,TNodeData,TEdgeData>
 
-		public override bool TryGet(TCoordinate key, out ICell<TCoordinate, TNodeData, TEdgeData> data)
+		public override bool TryGet(TCoordinate coordinate, out ICell<TCoordinate, TNodeData, TEdgeData> cell)
 		{
-			return dictionary.TryGetValue(key, out data);
+			return dictionary.TryGetValue(coordinate, out cell);
 		}
 
 		public override IEnumerator<KeyValuePair<TCoordinate, ICell<TCoordinate, TNodeData, TEdgeData>>> GetEnumerator()

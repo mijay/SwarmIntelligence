@@ -1,4 +1,4 @@
-﻿using Common;
+﻿using System.Diagnostics.Contracts;
 using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Playground;
 using SwarmIntelligence.Infrastructure.MemoryManagement;
@@ -9,7 +9,7 @@ namespace SwarmIntelligence.Infrastructure.TurnProcessing
 	{
 		protected AntBase(World<TCoordinate, TNodeData, TEdgeData> world)
 		{
-			Requires.NotNull(world);
+			Contract.Requires(world != null);
 			Outlook = new Outlook<TCoordinate, TNodeData, TEdgeData>(world, this);
 		}
 
@@ -17,7 +17,7 @@ namespace SwarmIntelligence.Infrastructure.TurnProcessing
 
 		internal void ProcessTurn(CellBase<TCoordinate, TNodeData, TEdgeData> cell)
 		{
-			Requires.NotNull(cell);
+			Contract.Requires(cell != null);
 			Outlook.CellBase = cell;
 			Outlook.Coordinate = cell.Coordinate;
 			ProcessTurn(Outlook);
