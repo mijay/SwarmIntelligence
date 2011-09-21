@@ -4,7 +4,8 @@ using SwarmIntelligence.Infrastructure.MemoryManagement;
 
 namespace SwarmIntelligence.Contracts
 {
-	public class ICellProviderContract<TCoordinate, TNodeData, TEdgeData>: ICellProvider<TCoordinate, TNodeData, TEdgeData>
+	[ContractClassFor(typeof(ICellProvider<,,>))]
+	public abstract class ICellProviderContract<TCoordinate, TNodeData, TEdgeData> : ICellProvider<TCoordinate, TNodeData, TEdgeData>
 	{
 		#region Implementation of ICellProvider<TCoordinate,TNodeData,TEdgeData>
 
@@ -15,7 +16,7 @@ namespace SwarmIntelligence.Contracts
 			{
 				Contract.Requires(value != null);
 				Contract.Requires(Context == null);
-				Contract.Ensures(Context != null);
+				Contract.Ensures(Context == value);
 				throw new UreachableCodeException();
 			}
 		}

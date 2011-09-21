@@ -5,7 +5,7 @@ using SwarmIntelligence.Core.Playground;
 namespace SwarmIntelligence.Contracts
 {
 	[ContractClassFor(typeof(IAnt<,,>))]
-	public class IAntContract<TCoordinate, TNodeData, TEdgeData>: IAnt<TCoordinate, TNodeData, TEdgeData>
+	public abstract class IAntContract<TCoordinate, TNodeData, TEdgeData> : IAnt<TCoordinate, TNodeData, TEdgeData>
 	{
 		#region Implementation of IAnt<TCoordinate,TNodeData,TEdgeData>
 

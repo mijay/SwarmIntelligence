@@ -8,7 +8,7 @@ using SwarmIntelligence.Core.Space;
 namespace SwarmIntelligence.Contracts
 {
 	[ContractClassFor(typeof(IMap<,,>))]
-	public class IMapContract<TCoordinate, TNodeData, TEdgeData>: IMap<TCoordinate, TNodeData, TEdgeData>
+	public abstract class IMapContract<TCoordinate, TNodeData, TEdgeData> : IMap<TCoordinate, TNodeData, TEdgeData>
 	{
 		#region Implementation of IMapping<in TCoordinate,out ICell<TCoordinate,TNodeData,TEdgeData>>
 

@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 
 namespace Common.Collections
 {
 	public static class EnumerableExtension
 	{
+		[Pure]
 		public static bool IsEmpty<T>(this IEnumerable<T> source)
 		{
-			Requires.NotNull(source);
+			Contract.Requires(source != null);
 			return source.Take(1).Count() == 0;
 		}
 

@@ -6,7 +6,7 @@ using SwarmIntelligence.Core.Space;
 namespace SwarmIntelligence.Contracts
 {
 	[ContractClassFor(typeof(Topology<>))]
-	public class TopologyContract<TCoordinate>: Topology<TCoordinate>
+	public abstract class TopologyContract<TCoordinate>: Topology<TCoordinate>
 	{
 		#region Overrides of Topology<TCoordinate>
 
