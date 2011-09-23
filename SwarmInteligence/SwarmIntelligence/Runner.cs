@@ -3,6 +3,7 @@ using System.Linq;
 using Common.Collections;
 using SwarmIntelligence.Core;
 using SwarmIntelligence.Infrastructure.GrabgeCollection;
+using SwarmIntelligence.Infrastructure.Logging;
 using SwarmIntelligence.Infrastructure.MemoryManagement;
 using SwarmIntelligence.Infrastructure.TurnProcessing;
 using SwarmIntelligence.Internal;
@@ -26,9 +27,11 @@ namespace SwarmIntelligence
 
 		public void DoTurn()
 		{
+			world.Log.Log(CommonLogTypes.TurnStarted);
 			AntContext[] contexts = SelectContext();
 			RunTurn(contexts);
 			garbageCollector.Collect();
+			world.Log.Log(CommonLogTypes.TurnDone);
 		}
 
 		private static void RunTurn(AntContext[] contexts)

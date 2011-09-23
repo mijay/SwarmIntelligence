@@ -72,7 +72,8 @@
     <Compile Include="Core\Space\Edge.cs" />
     <Compile Include="Core\Space\Topology.cs" />
     <Compile Include="Infrastructure\GrabgeCollection\GarbageCollector.cs" />
-    <Compile Include="Infrastructure\Logging\ILog.cs" />
+    <Compile Include="Infrastructure\Logging\CommonLogTypes.cs" />
+    <Compile Include="Core\ILog.cs" />
     <Compile Include="Infrastructure\MemoryManagement\CellBase.cs" />
     <Compile Include="Infrastructure\MemoryManagement\CellProviderBase.cs" />
     <Compile Include="Infrastructure\MemoryManagement\ICellProvider.cs" />

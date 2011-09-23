@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Playground;
 using SwarmIntelligence.Core.Space;
+using SwarmIntelligence.Infrastructure.Logging;
 using SwarmIntelligence.Internal;
 
 namespace SwarmIntelligence.Infrastructure.MemoryManagement
@@ -10,12 +12,14 @@ namespace SwarmIntelligence.Infrastructure.MemoryManagement
 	public abstract class MapBase<TCoordinate, TNodeData, TEdgeData>: IMap<TCoordinate, TNodeData, TEdgeData>
 	{
 		private readonly ICellProvider<TCoordinate, TNodeData, TEdgeData> cellProvider;
+		private readonly ILog log;
 
-		protected MapBase(Topology<TCoordinate> topology, ICellProvider<TCoordinate, TNodeData, TEdgeData> cellProvider)
+		protected MapBase(Topology<TCoordinate> topology, ICellProvider<TCoordinate, TNodeData, TEdgeData> cellProvider, ILog log)
 		{
 			Contract.Requires(topology != null && cellProvider != null && cellProvider.Context == null);
 			Topology = topology;
 			this.cellProvider = cellProvider;
+			this.log = log;
 			cellProvider.Context = this;
 		}
 
@@ -46,6 +50,8 @@ namespace SwarmIntelligence.Infrastructure.MemoryManagement
 			cell = GetOrAdd(coordinate, createdCell);
 			if(createdCell != cell)
 				cellProvider.Return(createdCell);
+
+			log.Log(CommonLogTypes.CellBuilded, coordinate);
 			return cell;
 		}
 
@@ -58,6 +64,8 @@ namespace SwarmIntelligence.Infrastructure.MemoryManagement
 				return;
 			Remove(coordinate);
 			cellProvider.Return(cell.Base());
+
+			log.Log(CommonLogTypes.CellFreed, coordinate);
 		}
 
 		#endregion
