@@ -16,7 +16,7 @@ namespace SwarmIntelligence.Infrastructure.TurnProcessing
 			MapBase = world.Map.Base();
 			NodesData = world.NodesData;
 			EdgesData = world.EdgesData;
-
+			Log = world.Log;
 			Me = me;
 		}
 
@@ -30,6 +30,7 @@ namespace SwarmIntelligence.Infrastructure.TurnProcessing
 		public DataLayer<Edge<TCoordinate>, TEdgeData> EdgesData { get; private set; }
 		public IAnt<TCoordinate, TNodeData, TEdgeData> Me { get; private set; }
 		public TCoordinate Coordinate { get; internal set; }
+		public ILog Log { get; internal set; }
 
 		public IMap<TCoordinate, TNodeData, TEdgeData> Map
 		{

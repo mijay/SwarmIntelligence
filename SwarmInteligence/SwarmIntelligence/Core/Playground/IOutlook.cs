@@ -25,5 +25,8 @@ namespace SwarmIntelligence.Core.Playground
 
 		[Pure]
 		TCoordinate Coordinate { get; }
+
+		[Pure]
+		ILog Log { get; }
 	}
 }

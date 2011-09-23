@@ -17,7 +17,7 @@ namespace SwarmIntelligence
 			antBase.Outlook.CellBase = targetCell;
 			antBase.Outlook.Coordinate = to;
 
-			antBase.Outlook.World.Log.Log(CommonLogTypes.AntMoved, antBase, from, to);
+			antBase.Outlook.Log.Log(CommonLogTypes.AntMoved, antBase, from, to);
 		}
 
 		public static void AddTo<TCoordinate, TNodeData, TEdgeData>(this AntBase<TCoordinate, TNodeData, TEdgeData> antBase,
@@ -25,7 +25,7 @@ namespace SwarmIntelligence
 		{
 			antBase.Outlook.MapBase.Get(coordinate).Base().Add(ant);
 
-			antBase.Outlook.World.Log.Log(CommonLogTypes.AntAdded, antBase, coordinate);
+			antBase.Outlook.Log.Log(CommonLogTypes.AntAdded, antBase, coordinate);
 		}
 
 		public static void RemoveFrom<TCoordinate, TNodeData, TEdgeData>(this AntBase<TCoordinate, TNodeData, TEdgeData> antBase,
@@ -33,7 +33,7 @@ namespace SwarmIntelligence
 		{
 			antBase.Outlook.MapBase.Get(coordinate).Base().Remove(ant);
 
-			antBase.Outlook.World.Log.Log(CommonLogTypes.AntRemoved, antBase, coordinate);
+			antBase.Outlook.Log.Log(CommonLogTypes.AntRemoved, antBase, coordinate);
 		}
 	}
 }
