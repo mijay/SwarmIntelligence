@@ -9,7 +9,10 @@ namespace SwarmIntelligence
 		public static void MoveTo<TCoordinate, TNodeData, TEdgeData>(this AntBase<TCoordinate, TNodeData, TEdgeData> antBase, TCoordinate to)
 		{
 			antBase.Outlook.CellBase.Remove(antBase);
-			antBase.Outlook.Map.Get(to).Base().Add(antBase);
+			var targetCell = antBase.Outlook.Map.Get(to).Base();
+			targetCell.Add(antBase);
+			antBase.Outlook.CellBase = targetCell;
+			antBase.Outlook.Coordinate = to;
 		}
 
 		public static void AddTo<TCoordinate, TNodeData, TEdgeData>(this AntBase<TCoordinate, TNodeData, TEdgeData> antBase,
