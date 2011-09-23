@@ -12,6 +12,7 @@ using SwarmIntelligence;
 using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Playground;
 using SwarmIntelligence.Core.Space;
+using SwarmIntelligence.Infrastructure.GrabgeCollection;
 using SwarmIntelligence.Specialized;
 
 namespace Test.ContextIndependendAnt
@@ -33,7 +34,7 @@ namespace Test.ContextIndependendAnt
 
 			world = new World<Coordinates2D, EmptyData, EmptyData>(nodeDataLayer, edgeDataLayer, map);
 
-			runner = new Runner<Coordinates2D, EmptyData, EmptyData>(world);
+			runner = new Runner<Coordinates2D, EmptyData, EmptyData>(world, new GarbageCollector<Coordinates2D, EmptyData, EmptyData>());
 		}
 
 		#endregion
@@ -93,10 +94,9 @@ namespace Test.ContextIndependendAnt
 			timer.Stop();
 			Debug.WriteLine(string.Format("jumps - {0}; ants - {1}; time - {2} ms", jumps, ants, timer.ElapsedMilliseconds));
 
-			KeyValuePair<Coordinates2D, ICell<Coordinates2D, EmptyData, EmptyData>> keyValuePair =
-				world.Map.Single();
-			Assert.That(keyValuePair.Key, Is.EqualTo(lastStep));
-			CollectionAssert.AreEquivalent(seededAnts, keyValuePair.Value);
+			ICell<Coordinates2D, EmptyData, EmptyData> cell = world.Map.Single();
+			Assert.That(cell.Coordinate, Is.EqualTo(lastStep));
+			CollectionAssert.AreEquivalent(seededAnts, cell);
 		}
 	}
 }

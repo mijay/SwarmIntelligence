@@ -7,21 +7,19 @@ namespace SwarmIntelligence.Core.Playground
 {
 	[ContractClass(typeof(IMapContract<,,>))]
 	public interface IMap<TCoordinate, TNodeData, TEdgeData>
-		: IEnumerable<KeyValuePair<TCoordinate, ICell<TCoordinate, TNodeData, TEdgeData>>>
+		: IEnumerable<ICell<TCoordinate, TNodeData, TEdgeData>>
 	{
 		[Pure]
 		Topology<TCoordinate> Topology { get; }
 
-		[Pure]
-		bool Has(TCoordinate key);
-
-		/// <remarks>
-		///		Using of this method is preferable than using <see cref="Has"/> and then <see cref="IMutableMapping{TKey,TData}.Get"/>
-		///		because it guaranties absence of race conditions.
-		/// </remarks>
+		/// <summary>
+		/// Checks does the <see cref="ICell{TCoordinate,TNodeData,TEdgeData}"/> exists in <see cref="IMap{TCoordinate,TNodeData,TEdgeData}"/>
+		/// at <paramref name="coordinate"/>. And if true returns it.
+		/// </summary>
+		/// <param name="coordinate">Coordinate to check.</param>
+		/// <param name="cell"><see cref="ICell{TCoordinate,TNodeData,TEdgeData}"/> found in <see cref="IMap{TCoordinate,TNodeData,TEdgeData}"/> at given coordinate.</param>
+		/// <returns>true if <paramref name="cell"/> was found. Otherwise - false.</returns>
 		[Pure]
 		bool TryGet(TCoordinate coordinate, out ICell<TCoordinate, TNodeData, TEdgeData> cell);
-
-		ICell<TCoordinate, TNodeData, TEdgeData> Get(TCoordinate coordinate);
 	}
 }

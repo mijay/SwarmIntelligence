@@ -10,26 +10,7 @@ namespace SwarmIntelligence.Contracts
 	[ContractClassFor(typeof(IMap<,,>))]
 	public abstract class IMapContract<TCoordinate, TNodeData, TEdgeData>: IMap<TCoordinate, TNodeData, TEdgeData>
 	{
-		#region Implementation of IMapping<in TCoordinate,out ICell<TCoordinate,TNodeData,TEdgeData>>
-
-		public ICell<TCoordinate, TNodeData, TEdgeData> Get(TCoordinate coordinate)
-		{
-			Contract.Requires(Topology.Lays(coordinate));
-			Contract.Ensures(Contract.Result<ICell<TCoordinate, TNodeData, TEdgeData>>() != null);
-			Contract.Ensures(Contract.Result<ICell<TCoordinate, TNodeData, TEdgeData>>().Coordinate.Equals(coordinate));
-			Contract.Ensures(Contract.Result<ICell<TCoordinate, TNodeData, TEdgeData>>().Map == this);
-			throw new UreachableCodeException();
-		}
-
-		#endregion
-
-		#region Implementation of ISparseMappint<in TCoordinate,ICell<TCoordinate,TNodeData,TEdgeData>>
-
-		public bool Has(TCoordinate key)
-		{
-			Contract.Requires(Topology.Lays(key));
-			throw new UreachableCodeException();
-		}
+		#region IMap<TCoordinate,TNodeData,TEdgeData> Members
 
 		public bool TryGet(TCoordinate coordinate, out ICell<TCoordinate, TNodeData, TEdgeData> cell)
 		{
@@ -40,11 +21,12 @@ namespace SwarmIntelligence.Contracts
 			throw new UreachableCodeException();
 		}
 
-		#endregion
+		public Topology<TCoordinate> Topology
+		{
+			get { throw new UreachableCodeException(); }
+		}
 
-		#region Implementation of IEnumerable
-
-		public IEnumerator<KeyValuePair<TCoordinate, ICell<TCoordinate, TNodeData, TEdgeData>>> GetEnumerator()
+		public IEnumerator<ICell<TCoordinate, TNodeData, TEdgeData>> GetEnumerator()
 		{
 			throw new UreachableCodeException();
 		}
@@ -52,15 +34,6 @@ namespace SwarmIntelligence.Contracts
 		IEnumerator IEnumerable.GetEnumerator()
 		{
 			return GetEnumerator();
-		}
-
-		#endregion
-
-		#region Implementation of IMap<TCoordinate,TNodeData,TEdgeData>
-
-		public Topology<TCoordinate> Topology
-		{
-			get { throw new UreachableCodeException(); }
 		}
 
 		#endregion

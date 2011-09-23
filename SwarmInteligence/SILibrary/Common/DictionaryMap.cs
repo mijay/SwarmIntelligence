@@ -23,9 +23,9 @@ namespace SILibrary.Common
 			return dictionary.TryGetValue(coordinate, out cell);
 		}
 
-		public override IEnumerator<KeyValuePair<TCoordinate, ICell<TCoordinate, TNodeData, TEdgeData>>> GetEnumerator()
+		public override IEnumerator<ICell<TCoordinate, TNodeData, TEdgeData>> GetEnumerator()
 		{
-			return dictionary.GetEnumerator();
+			return dictionary.Values.GetEnumerator();
 		}
 
 		#endregion

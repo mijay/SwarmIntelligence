@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
-using System.Linq;
-using Common.Collections;
 using SwarmIntelligence.Core.Playground;
 using SwarmIntelligence.Core.Space;
 using SwarmIntelligence.Internal;
@@ -23,8 +21,23 @@ namespace SwarmIntelligence.Infrastructure.MemoryManagement
 
 		#region IMap<TCoordinate,TNodeData,TEdgeData> Members
 
-		public ICell<TCoordinate, TNodeData, TEdgeData> Get(TCoordinate coordinate)
+		public Topology<TCoordinate> Topology { get; private set; }
+		public abstract bool TryGet(TCoordinate coordinate, out ICell<TCoordinate, TNodeData, TEdgeData> cell);
+		public abstract IEnumerator<ICell<TCoordinate, TNodeData, TEdgeData>> GetEnumerator();
+
+		IEnumerator IEnumerable.GetEnumerator()
 		{
+			return GetEnumerator();
+		}
+
+		#endregion
+
+		#region Internal interface
+
+		internal ICell<TCoordinate, TNodeData, TEdgeData> Get(TCoordinate coordinate)
+		{
+			Contract.Requires(Topology.Lays(coordinate));
+
 			ICell<TCoordinate, TNodeData, TEdgeData> cell;
 			if(TryGet(coordinate, out cell))
 				return cell;
@@ -36,44 +49,24 @@ namespace SwarmIntelligence.Infrastructure.MemoryManagement
 			return cell;
 		}
 
-		public bool Has(TCoordinate key)
+		internal void Free(TCoordinate coordinate)
 		{
-			ICell<TCoordinate, TNodeData, TEdgeData> _;
-			return TryGet(key, out _);
-		}
+			Contract.Requires(Topology.Lays(coordinate));
 
-		IEnumerator IEnumerable.GetEnumerator()
-		{
-			return GetEnumerator();
+			ICell<TCoordinate, TNodeData, TEdgeData> cell;
+			if(!TryGet(coordinate, out cell))
+				return;
+			Remove(coordinate);
+			cellProvider.Return(cell.Base());
 		}
-
-		public Topology<TCoordinate> Topology { get; private set; }
 
 		#endregion
 
 		#region Abstract methods
 
-		public abstract bool TryGet(TCoordinate coordinate, out ICell<TCoordinate, TNodeData, TEdgeData> cell);
-		public abstract IEnumerator<KeyValuePair<TCoordinate, ICell<TCoordinate, TNodeData, TEdgeData>>> GetEnumerator();
 		protected abstract void Remove(TCoordinate coordinate);
 		protected abstract ICell<TCoordinate, TNodeData, TEdgeData> GetOrAdd(TCoordinate coordinate, ICell<TCoordinate, TNodeData, TEdgeData> cell);
 
 		#endregion
-
-		public virtual void OnTurnBegin()
-		{
-		}
-
-		public virtual void OnTurnEnd()
-		{
-			this
-				.Select(x => x.Value)
-				.Select(x => x.Base())
-				.Where(x => x.IsEmpty)
-				.ForEach(x => {
-				         	Remove(x.Coordinate);
-				         	cellProvider.Return(x);
-				         });
-		}
 	}
 }

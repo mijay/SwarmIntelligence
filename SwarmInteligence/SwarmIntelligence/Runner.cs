@@ -2,6 +2,7 @@ using System.Diagnostics.Contracts;
 using System.Linq;
 using Common.Collections;
 using SwarmIntelligence.Core;
+using SwarmIntelligence.Infrastructure.GrabgeCollection;
 using SwarmIntelligence.Infrastructure.MemoryManagement;
 using SwarmIntelligence.Infrastructure.TurnProcessing;
 using SwarmIntelligence.Internal;
@@ -12,20 +13,22 @@ namespace SwarmIntelligence
 	{
 		private readonly MapBase<TCoordinate, TNodeData, TEdgeData> mapBase;
 		private readonly World<TCoordinate, TNodeData, TEdgeData> world;
+		private readonly IGarbageCollector<TCoordinate, TNodeData, TEdgeData> garbageCollector;
 
-		public Runner(World<TCoordinate, TNodeData, TEdgeData> world)
+		public Runner(World<TCoordinate, TNodeData, TEdgeData> world, IGarbageCollector<TCoordinate, TNodeData, TEdgeData> garbageCollector)
 		{
-			Contract.Requires(world != null);
+			Contract.Requires(world != null && garbageCollector != null);
 			this.world = world;
 			mapBase = world.Map.Base();
+			this.garbageCollector = garbageCollector;
+			garbageCollector.AttachTo(mapBase);
 		}
 
 		public void DoTurn()
 		{
-			mapBase.OnTurnBegin();
 			AntContext[] contexts = SelectContext();
 			RunTurn(contexts);
-			mapBase.OnTurnEnd();
+			garbageCollector.Collect();
 		}
 
 		private static void RunTurn(AntContext[] contexts)
@@ -37,7 +40,7 @@ namespace SwarmIntelligence
 		{
 			return mapBase
 				.AsParallel()
-				.Select(x => x.Value.Base())
+				.Select(cell => cell.Base())
 				.SelectMany(cellBase => cellBase.Select(ant => new AntContext { Ant = ant.Base(), Cell = cellBase }))
 				.ToArray();
 		}
