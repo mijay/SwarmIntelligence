@@ -13,6 +13,7 @@ using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Playground;
 using SwarmIntelligence.Core.Space;
 using SwarmIntelligence.Infrastructure.GrabgeCollection;
+using SwarmIntelligence.Infrastructure.Logging;
 using SwarmIntelligence.Specialized;
 
 namespace Test.ContextIndependendAnt
@@ -26,13 +27,14 @@ namespace Test.ContextIndependendAnt
 			base.SetUp();
 			random = new Random();
 
+			var logger = new Logger();
 			var topology = new EightConnectedSurfaceTopology(min, max);
 			CellProvider<Coordinates2D, EmptyData, EmptyData> cellProvider = SetCell<Coordinates2D, EmptyData, EmptyData>.Provider();
-			var map = new DictionaryMap<Coordinates2D, EmptyData, EmptyData>(topology, cellProvider);
+			var map = new DictionaryMap<Coordinates2D, EmptyData, EmptyData>(topology, cellProvider, logger);
 			var nodeDataLayer = new EmptyDataLayer<Coordinates2D>();
 			var edgeDataLayer = new EmptyDataLayer<Edge<Coordinates2D>>();
 
-			world = new World<Coordinates2D, EmptyData, EmptyData>(nodeDataLayer, edgeDataLayer, map);
+			world = new World<Coordinates2D, EmptyData, EmptyData>(nodeDataLayer, edgeDataLayer, map, logger);
 
 			runner = new Runner<Coordinates2D, EmptyData, EmptyData>(world, new GarbageCollector<Coordinates2D, EmptyData, EmptyData>());
 		}

@@ -1,4 +1,5 @@
 using System.Diagnostics.Contracts;
+using System.Runtime.CompilerServices;
 using SwarmIntelligence.Core.Playground;
 using SwarmIntelligence.Infrastructure.MemoryManagement;
 using SwarmIntelligence.Infrastructure.TurnProcessing;

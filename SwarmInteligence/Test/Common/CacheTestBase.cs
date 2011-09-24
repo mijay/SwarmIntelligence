@@ -14,12 +14,12 @@ namespace Test.Common
 		public override void SetUp()
 		{
 			base.SetUp();
-			localCache = new ConcurentDictionaryCache(new ConcurrentDictionary<object, object>());
+			localCache = new ConcurrentDictionaryCache(new ConcurrentDictionary<object, object>());
 		}
 
 		#endregion
 
-		protected ConcurentDictionaryCache localCache;
+		protected ConcurrentDictionaryCache localCache;
 
 		protected static Func<TKey, TVal> GetFuncForSingleCall<TKey, TVal>(TKey key, TVal value)
 		{

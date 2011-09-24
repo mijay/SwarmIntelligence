@@ -2,7 +2,7 @@
 
 namespace Common.Cache
 {
-	public class LocalCache: ConcurentDictionaryCache
+	public class LocalCache: ConcurrentDictionaryCache
 	{
 		public LocalCache()
 			: base(new ConcurrentDictionary<object, object>())

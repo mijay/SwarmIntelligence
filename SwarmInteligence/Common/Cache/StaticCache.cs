@@ -2,7 +2,7 @@
 
 namespace Common.Cache
 {
-	public class StaticCache: ConcurentDictionaryCache
+	public class StaticCache: ConcurrentDictionaryCache
 	{
 		protected static readonly ConcurrentDictionary<object, object> cache =
 			new ConcurrentDictionary<object, object>();

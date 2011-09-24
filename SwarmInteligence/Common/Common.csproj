@@ -66,7 +66,7 @@
   <ItemGroup>
     <Compile Include="Cache\LocalCache.cs" />
     <Compile Include="Collections\ArrayExtension.cs" />
-    <Compile Include="Cache\ConcurentDictionaryCache.cs" />
+    <Compile Include="Cache\ConcurrentDictionaryCache.cs" />
     <Compile Include="Cache\IKeyValueCache.cs" />
     <Compile Include="Collections\CollectionExtensions.cs" />
     <Compile Include="Collections\DictionaryExtension.cs" />
