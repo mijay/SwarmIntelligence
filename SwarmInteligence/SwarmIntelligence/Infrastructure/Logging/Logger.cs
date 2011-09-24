@@ -14,13 +14,12 @@ namespace SwarmIntelligence.Infrastructure.Logging
 
 		#region Implementation of ILog
 
-		public void Log<T>(T eventType, params object[] eventArgs)
-			where T: struct
+		public void Log(string eventType, params object[] eventArgs)
 		{
 			Contract.Requires(eventArgs != null);
 			@lock.EnterWriteLock();
 			recordId++;
-			log.Add(new LogRecord(recordId, eventArgs));
+			log.Add(new LogRecord(recordId, eventType, eventArgs));
 			@lock.ExitWriteLock();
 		}
 
