@@ -74,6 +74,7 @@
     <Compile Include="Collections\ReadOnlyCollection.cs" />
     <Compile Include="Collections\ReadOnlyList.cs" />
     <Compile Include="Comparer.cs" />
+    <Compile Include="Concurrent\ChunkedArray.cs" />
     <Compile Include="Concurrent\ConcurrentLinkedList.cs" />
     <Compile Include="Concurrent\ConcurrentSet.cs" />
     <Compile Include="DisposableBase.cs" />
