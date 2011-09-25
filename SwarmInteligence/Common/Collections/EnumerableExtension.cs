@@ -77,6 +77,19 @@ namespace Common.Collections
 		}
 
 		[Pure]
+		public static bool TrySingle<T>(this IEnumerable<T> source, out T elem)
+		{
+			Contract.Requires(source != null);
+			var top = source.Take(2).ToArray();
+			if(top.Length == 1) {
+				elem = top[0];
+				return true;
+			}
+			elem = default(T);
+			return false;
+		}
+
+		[Pure]
 		public static IEnumerable<KeyValuePair<T1, T2>> LazyZip<T1, T2>(this IEnumerable<T1> left, IEnumerable<T2> right)
 		{
 			Contract.Requires(left != null && right != null);

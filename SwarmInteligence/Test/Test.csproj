@@ -68,9 +68,9 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ContextIndependendAnt\PerfomanceTest.cs" />
-    <Compile Include="ContextIndependendAnt\Test.cs" />
-    <Compile Include="ContextIndependendAnt\TestAnt.cs" />
+    <Compile Include="SwarmInteligence\ContextIndependendAnt\PerfomanceTest.cs" />
+    <Compile Include="SwarmInteligence\ContextIndependendAnt\Test.cs" />
+    <Compile Include="SwarmInteligence\ContextIndependendAnt\TestAnt.cs" />
     <Compile Include="Common\CacheTest.cs" />
     <Compile Include="Common\CacheTestBase.cs" />
     <Compile Include="EightConnectedSurfaceTest.cs" />
@@ -78,6 +78,7 @@
     <Compile Include="FourConnectedSurfaceTest.cs" />
     <Compile Include="Common\MemoizerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SwarmInteligence\SequentialTurnProcessingTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common.Test\Common.Test.csproj">
