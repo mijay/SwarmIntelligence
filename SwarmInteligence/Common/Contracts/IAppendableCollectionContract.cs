@@ -24,7 +24,7 @@ namespace Common.Contracts
 
 		#region Implementation of IAppendableCollection<T>
 
-		public T this[int index]
+		public T this[long index]
 		{
 			get
 			{
@@ -33,11 +33,11 @@ namespace Common.Contracts
 			}
 		}
 
-		public int Count
+		public long Count
 		{
 			get
 			{
-				Contract.Ensures(Contract.Result<int>() >= 0);
+				Contract.Ensures(Contract.Result<long>() >= 0);
 				throw new UreachableCodeException();
 			}
 		}
@@ -53,7 +53,7 @@ namespace Common.Contracts
 			throw new UreachableCodeException();
 		}
 
-		public IEnumerable<T> ReadFrom(int index)
+		public IEnumerable<T> ReadFrom(long index)
 		{
 			Contract.Requires(index >= 0 && index < Count);
 			throw new UreachableCodeException();

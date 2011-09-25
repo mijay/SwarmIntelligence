@@ -7,10 +7,10 @@ namespace Common.Concurrent
 	[ContractClass(typeof(IAppendableCollectionContract<>))]
 	public interface IAppendableCollection<T>: IEnumerable<T>
 	{
-		T this[int index] { get; }
-		int Count { get; }
+		T this[long index] { get; }
+		long Count { get; }
 		void Append(T value);
 		void Append(IEnumerable<T> values);
-		IEnumerable<T> ReadFrom(int index);
+		IEnumerable<T> ReadFrom(long index);
 	}
 }

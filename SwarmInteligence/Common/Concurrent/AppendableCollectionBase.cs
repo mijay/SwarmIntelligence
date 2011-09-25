@@ -24,11 +24,11 @@ namespace Common.Concurrent
 
 		#region Implementation of IAppendableCollection<T>
 
-		public abstract T this[int index] { get; }
-		public abstract int Count { get; }
+		public abstract T this[long index] { get; }
+		public abstract long Count { get; }
 		public abstract void Append(T value);
 		public abstract void Append(IEnumerable<T> values);
-		public abstract IEnumerable<T> ReadFrom(int index);
+		public abstract IEnumerable<T> ReadFrom(long index);
 
 		#endregion
 	}

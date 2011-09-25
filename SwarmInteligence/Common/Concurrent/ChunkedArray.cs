@@ -12,7 +12,7 @@ namespace Common.Concurrent
 
 		private readonly int chunkSize;
 		private readonly ReaderWriterLockSlim lockSlim = new ReaderWriterLockSlim();
-		private int count;
+		private long count;
 
 		public ChunkedArray(int chunkSize)
 		{
@@ -21,17 +21,17 @@ namespace Common.Concurrent
 			chunkList.Append(new T[chunkSize]);
 		}
 
-		public override int Count
+		public override long Count
 		{
 			get { return count; }
 		}
 
-		public override T this[int index]
+		public override T this[long index]
 		{
 			get
 			{
-				int chunkNumber = index / chunkSize;
-				int indexInChunk = index % chunkSize;
+				long chunkNumber = index / chunkSize;
+				long indexInChunk = index % chunkSize;
 				return chunkList[chunkNumber][indexInChunk];
 			}
 		}
@@ -43,13 +43,13 @@ namespace Common.Concurrent
 			lockSlim.ExitWriteLock();
 		}
 
-		public override IEnumerable<T> ReadFrom(int index)
+		public override IEnumerable<T> ReadFrom(long index)
 		{
-			int chunkNumber = index / chunkSize;
+			long chunkNumber = index / chunkSize;
 			IEnumerator<T[]> chunks = chunkList.ReadFrom(chunkNumber).GetEnumerator();
 			T[] arrayChunk = null;
 			while(index < count) {
-				int numberInChunk = index % chunkSize;
+				long numberInChunk = index % chunkSize;
 				if(numberInChunk == 0 || arrayChunk == null) {
 					chunks.MoveNext();
 					arrayChunk = chunks.Current;
@@ -69,8 +69,8 @@ namespace Common.Concurrent
 
 		private void AppendInternal(T data)
 		{
-			int chunkNumber = count / chunkSize;
-			int indexInChunk = count % chunkSize;
+			long chunkNumber = count / chunkSize;
+			long indexInChunk = count % chunkSize;
 			chunkList[chunkNumber][indexInChunk] = data;
 			count++;
 			if(indexInChunk == chunkSize - 1)

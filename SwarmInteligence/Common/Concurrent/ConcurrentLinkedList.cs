@@ -9,7 +9,7 @@ namespace Common.Concurrent
 	{
 		private readonly ConcurrentLinkedListNode first;
 		private readonly ReaderWriterLockSlim lockSlim = new ReaderWriterLockSlim();
-		private int count;
+		private long count;
 		private ConcurrentLinkedListNode last;
 
 		public ConcurrentLinkedList()
@@ -17,7 +17,7 @@ namespace Common.Concurrent
 			last = first = new ConcurrentLinkedListNode();
 		}
 
-		public override T this[int index]
+		public override T this[long index]
 		{
 			get
 			{
@@ -28,7 +28,7 @@ namespace Common.Concurrent
 			}
 		}
 
-		public override int Count
+		public override long Count
 		{
 			get { return count; }
 		}
@@ -47,7 +47,7 @@ namespace Common.Concurrent
 			lockSlim.ExitWriteLock();
 		}
 
-		public override IEnumerable<T> ReadFrom(int index)
+		public override IEnumerable<T> ReadFrom(long index)
 		{
 			ConcurrentLinkedListNode current = first;
 			for(; index > 0; index--)
