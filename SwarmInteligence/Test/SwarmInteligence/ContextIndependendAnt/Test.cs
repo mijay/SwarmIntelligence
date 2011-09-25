@@ -3,40 +3,23 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Common.Collections;
-using CommonTest;
 using NUnit.Framework;
-using SILibrary.Common;
 using SILibrary.General.Background;
 using SILibrary.TwoDimensional;
-using SwarmIntelligence;
-using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Playground;
-using SwarmIntelligence.Core.Space;
-using SwarmIntelligence.Infrastructure.GrabgeCollection;
-using SwarmIntelligence.Infrastructure.Logging;
 using SwarmIntelligence.Specialized;
 
 namespace Test.SwarmInteligence.ContextIndependendAnt
 {
-	public class Test: TestBase
+	public class Test: SwarmIntelligenceTestBase
 	{
 		#region Setup/Teardown
 
 		public override void SetUp()
 		{
 			base.SetUp();
+			InitializeWorld(min, max);
 			random = new Random();
-
-			var logger = new Logger();
-			var topology = new EightConnectedSurfaceTopology(min, max);
-			CellProvider<Coordinates2D, EmptyData, EmptyData> cellProvider = SetCell<Coordinates2D, EmptyData, EmptyData>.Provider();
-			var map = new DictionaryMap<Coordinates2D, EmptyData, EmptyData>(topology, cellProvider, logger);
-			var nodeDataLayer = new EmptyDataLayer<Coordinates2D>();
-			var edgeDataLayer = new EmptyDataLayer<Edge<Coordinates2D>>();
-
-			world = new World<Coordinates2D, EmptyData, EmptyData>(nodeDataLayer, edgeDataLayer, map, logger);
-
-			runner = new Runner<Coordinates2D, EmptyData, EmptyData>(world, new GarbageCollector<Coordinates2D, EmptyData, EmptyData>());
 		}
 
 		#endregion
@@ -52,9 +35,7 @@ namespace Test.SwarmInteligence.ContextIndependendAnt
 			max = new Coordinates2D(maxX, maxY);
 		}
 
-		private World<Coordinates2D, EmptyData, EmptyData> world;
 		private Random random;
-		private Runner<Coordinates2D, EmptyData, EmptyData> runner;
 		private readonly Coordinates2D min;
 		private readonly Coordinates2D max;
 
@@ -66,7 +47,8 @@ namespace Test.SwarmInteligence.ContextIndependendAnt
 					.ToArray();
 		}
 
-		private TestAnt SeedAnt(IMapModifier<Coordinates2D, EmptyData, EmptyData> mapModifier, int timesAntJumps, Coordinates2D[] lastAntSteps)
+		private TestAnt SeedAnt(IMapModifier<Coordinates2D, EmptyData, EmptyData> mapModifier, int timesAntJumps,
+		                        IEnumerable<Coordinates2D> lastAntSteps)
 		{
 			Coordinates2D initialPosition = GenerateCoordinate();
 			var testAnt = new TestAnt(world, EnumerableExtension
