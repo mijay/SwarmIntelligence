@@ -91,6 +91,8 @@
     <Compile Include="ObservableExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Requires.cs" />
+    <Compile Include="Tasks\TaskCompletionSourceExtensions.cs" />
+    <Compile Include="Tasks\TaskExtensions.cs" />
     <Compile Include="Tasks\TaskFactoryExtension.cs" />
     <Compile Include="TypeExtensions.cs" />
     <Compile Include="UreachableCodeException.cs" />

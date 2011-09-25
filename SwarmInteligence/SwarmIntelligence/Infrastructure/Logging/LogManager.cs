@@ -1,9 +1,9 @@
 ﻿using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
 using Common.Concurrent;
 using SwarmIntelligence.Core;
+using Common.Tasks;
 
 namespace SwarmIntelligence.Infrastructure.Logging
 {
@@ -16,9 +16,21 @@ namespace SwarmIntelligence.Infrastructure.Logging
 		public LogManager()
 		{
 			Log = new Logger(logAppendQueue);
+
+			Task.Factory
+				.StartNewDelayed(300)
+				.Then(() => LaunchLogProcessing());
 		}
 
 		public ILog Log { get; private set; }
+
+		private Task LaunchLogProcessing()
+		{
+			return Task.Factory
+				.StartNew(ProcessLog)
+				.Then(() => Task.Factory.StartNewDelayed(100))
+				.Then(() => LaunchLogProcessing());
+		}
 
 		private void ProcessLog()
 		{
