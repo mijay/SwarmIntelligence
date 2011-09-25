@@ -17,13 +17,13 @@ namespace Test.SwarmInteligence
 
 		protected void InitializeWorld(Coordinates2D min, Coordinates2D max)
 		{
-			var logger = new Logger();
+			var logger = new LogManager();
 			var topology = new FourConnectedSurfaceTopology(min, max);
 			CellProvider<Coordinates2D, EmptyData, EmptyData> cellProvider = SetCell<Coordinates2D, EmptyData, EmptyData>.Provider();
-			var map = new DictionaryMap<Coordinates2D, EmptyData, EmptyData>(topology, cellProvider, logger);
+			var map = new DictionaryMap<Coordinates2D, EmptyData, EmptyData>(topology, cellProvider, logger.Log);
 			var nodeDataLayer = new EmptyDataLayer<Coordinates2D>();
 			var edgeDataLayer = new EmptyDataLayer<Edge<Coordinates2D>>();
-			world = new World<Coordinates2D, EmptyData, EmptyData>(nodeDataLayer, edgeDataLayer, map, logger);
+			world = new World<Coordinates2D, EmptyData, EmptyData>(nodeDataLayer, edgeDataLayer, map, logger.Log);
 			runner = new Runner<Coordinates2D, EmptyData, EmptyData>(world, new GarbageCollector<Coordinates2D, EmptyData, EmptyData>());
 		}
 	}

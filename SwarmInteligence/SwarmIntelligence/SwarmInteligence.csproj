@@ -65,6 +65,7 @@
     <Compile Include="Actions.cs" />
     <Compile Include="Contracts\IAntContract.cs" />
     <Compile Include="Contracts\IMapContract.cs" />
+    <Compile Include="Contracts\ILogContract.cs" />
     <Compile Include="Core\Playground\IOutlook.cs" />
     <Compile Include="Contracts\TopologyContract.cs" />
     <Compile Include="Core\World.cs" />
@@ -75,7 +76,9 @@
     <Compile Include="Infrastructure\Logging\CommonLogTypes.cs" />
     <Compile Include="Core\ILog.cs" />
     <Compile Include="Infrastructure\Logging\Logger.cs" />
+    <Compile Include="Infrastructure\Logging\LogManager.cs" />
     <Compile Include="Infrastructure\Logging\LogRecord.cs" />
+    <Compile Include="Infrastructure\Logging\TmpLogRecord.cs" />
     <Compile Include="Infrastructure\MemoryManagement\CellBase.cs" />
     <Compile Include="Infrastructure\MemoryManagement\CellProviderBase.cs" />
     <Compile Include="Infrastructure\MemoryManagement\ICellProvider.cs" />

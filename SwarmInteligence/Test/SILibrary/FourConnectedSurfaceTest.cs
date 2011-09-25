@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using SILibrary.TwoDimensional;
 
-namespace Test
+namespace Test.SILibrary
 {
 	public class FourConnectedSurfaceTest: TestBase
 	{

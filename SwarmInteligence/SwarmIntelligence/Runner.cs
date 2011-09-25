@@ -18,7 +18,7 @@ namespace SwarmIntelligence
 
 		public Runner(World<TCoordinate, TNodeData, TEdgeData> world, IGarbageCollector<TCoordinate, TNodeData, TEdgeData> garbageCollector)
 		{
-			Contract.Requires(world != null && garbageCollector != null);
+			Contract.Requires(world != null && garbageCollector != null && garbageCollector.MapBase == null);
 			this.world = world;
 			mapBase = world.Map.Base();
 			this.garbageCollector = garbageCollector;

@@ -1,12 +1,16 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using Common.Collections;
 using NUnit.Framework;
 using SILibrary.General.Background;
 using SILibrary.TwoDimensional;
+using SwarmIntelligence;
+using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Playground;
+using SwarmIntelligence.Infrastructure.TurnProcessing;
 using SwarmIntelligence.Specialized;
 
 namespace Test.SwarmInteligence.ContextIndependendAnt
@@ -81,6 +85,27 @@ namespace Test.SwarmInteligence.ContextIndependendAnt
 			ICell<Coordinates2D, EmptyData, EmptyData> cell = world.Map.Single();
 			Assert.That(cell.Coordinate, Is.EqualTo(lastStep));
 			CollectionAssert.AreEquivalent(seededAnts, cell);
+		}
+
+		private class TestAnt : AntBase<Coordinates2D, EmptyData, EmptyData>
+		{
+			private readonly Queue<Coordinates2D> points;
+
+			public TestAnt(World<Coordinates2D, EmptyData, EmptyData> world, params Coordinates2D[] points)
+				: base(world)
+			{
+				Contract.Requires(points != null);
+				this.points = new Queue<Coordinates2D>(points);
+			}
+
+			#region Overrides of IAnt<Coordinates2D,EmptyData,EmptyData>
+
+			public override void ProcessTurn(IOutlook<Coordinates2D, EmptyData, EmptyData> outlook)
+			{
+				this.MoveTo(points.Dequeue());
+			}
+
+			#endregion
 		}
 	}
 }

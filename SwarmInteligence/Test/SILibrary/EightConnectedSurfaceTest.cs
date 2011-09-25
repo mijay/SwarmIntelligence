@@ -2,7 +2,7 @@ using CommonTest;
 using NUnit.Framework;
 using SILibrary.TwoDimensional;
 
-namespace Test
+namespace Test.SILibrary
 {
 	public class EightConnectedSurfaceTest: TestBase
 	{

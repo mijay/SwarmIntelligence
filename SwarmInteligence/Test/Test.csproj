@@ -71,7 +71,6 @@
     <Compile Include="SwarmInteligence\ActionsTest.cs" />
     <Compile Include="SwarmInteligence\ContextIndependendAnt\PerfomanceTest.cs" />
     <Compile Include="SwarmInteligence\ContextIndependendAnt\Test.cs" />
-    <Compile Include="SwarmInteligence\ContextIndependendAnt\TestAnt.cs" />
     <Compile Include="Common\CacheTest.cs" />
     <Compile Include="Common\CacheTestBase.cs" />
     <Compile Include="SILibrary\EightConnectedSurfaceTest.cs" />

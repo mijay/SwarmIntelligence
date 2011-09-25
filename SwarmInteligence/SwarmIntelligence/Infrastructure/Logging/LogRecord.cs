@@ -1,17 +1,20 @@
-﻿namespace SwarmIntelligence.Infrastructure.Logging
+﻿using System.Diagnostics.Contracts;
+
+namespace SwarmIntelligence.Infrastructure.Logging
 {
 	public struct LogRecord
 	{
-		public readonly long id;
-		public readonly string type;
 		public readonly object[] arguments;
+		public readonly ulong id;
+		public readonly string type;
 
-		public LogRecord(long id, string type, object[] arguments)
+		internal LogRecord(ulong id, TmpLogRecord tmpLogRecord)
 			: this()
 		{
+			Contract.Requires(id > 0 && tmpLogRecord.eventArgs != null && !string.IsNullOrEmpty(tmpLogRecord.eventType));
 			this.id = id;
-			this.type = type;
-			this.arguments = arguments;
+			type = tmpLogRecord.eventType;
+			arguments = tmpLogRecord.eventArgs;
 		}
 	}
 }
