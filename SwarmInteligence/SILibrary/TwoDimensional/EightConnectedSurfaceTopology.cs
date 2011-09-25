@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Common.Collections;
+using Common.Collections.Extensions;
 
 namespace SILibrary.TwoDimensional
 {

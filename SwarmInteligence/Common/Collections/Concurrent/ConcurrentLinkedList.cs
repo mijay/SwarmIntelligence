@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Threading;
-using Common.Collections;
+using Common.Collections.Extensions;
 
-namespace Common.Concurrent
+namespace Common.Collections.Concurrent
 {
-	public class ConcurrentLinkedList<T>: AppendableCollectionBase<T>
+	public class ConcurrentLinkedList<T>: TailableCollectionBase<T>, IAppendableCollection<T>
 	{
 		private readonly ConcurrentLinkedListNode first;
 		private readonly ReaderWriterLockSlim lockSlim = new ReaderWriterLockSlim();
@@ -16,6 +16,8 @@ namespace Common.Concurrent
 		{
 			last = first = new ConcurrentLinkedListNode();
 		}
+
+		#region IAppendableCollection<T> Members
 
 		public override T this[long index]
 		{
@@ -33,14 +35,14 @@ namespace Common.Concurrent
 			get { return count; }
 		}
 
-		public override void Append(T value)
+		public void Append(T value)
 		{
 			lockSlim.EnterWriteLock();
 			AddInternal(value);
 			lockSlim.ExitWriteLock();
 		}
 
-		public override void Append(IEnumerable<T> values)
+		public void Append(IEnumerable<T> values)
 		{
 			lockSlim.EnterWriteLock();
 			values.ForEach(AddInternal);
@@ -57,6 +59,8 @@ namespace Common.Concurrent
 				current = current.Next;
 			}
 		}
+
+		#endregion
 
 		private void AddInternal(T value)
 		{

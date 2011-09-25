@@ -1,6 +1,7 @@
 using System.Diagnostics.Contracts;
 using System.Linq;
 using Common.Collections;
+using Common.Collections.Extensions;
 using SwarmIntelligence.Core;
 using SwarmIntelligence.Infrastructure.GrabgeCollection;
 using SwarmIntelligence.Infrastructure.Logging;

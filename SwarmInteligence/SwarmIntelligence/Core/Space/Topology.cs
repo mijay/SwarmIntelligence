@@ -2,6 +2,7 @@
 using System.Diagnostics.Contracts;
 using System.Linq;
 using Common.Collections;
+using Common.Collections.Extensions;
 using SwarmIntelligence.Contracts;
 
 namespace SwarmIntelligence.Core.Space

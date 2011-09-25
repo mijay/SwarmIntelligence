@@ -1,12 +1,17 @@
 ﻿using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Common.Concurrent;
+using Common.Collections.Concurrent;
 using SwarmIntelligence.Core;
 using Common.Tasks;
 
 namespace SwarmIntelligence.Infrastructure.Logging
 {
+	public interface ILogJournal
+	{
+		
+	}
+
 	public class LogManager
 	{
 		private readonly ConcurrentQueue<TmpLogRecord> logAppendQueue = new ConcurrentQueue<TmpLogRecord>();

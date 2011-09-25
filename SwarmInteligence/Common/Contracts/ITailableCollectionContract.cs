@@ -1,12 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
-using Common.Concurrent;
+using Common.Collections;
 
 namespace Common.Contracts
 {
-	[ContractClassFor(typeof(IAppendableCollection<>))]
-	public abstract class IAppendableCollectionContract<T>: IAppendableCollection<T>
+	[ContractClassFor(typeof(ITailableCollection<>))]
+	public abstract class ITailableCollectionContract<T> : ITailableCollection<T>
 	{
 		#region Implementation of IEnumerable
 
@@ -40,17 +40,6 @@ namespace Common.Contracts
 				Contract.Ensures(Contract.Result<long>() >= 0);
 				throw new UreachableCodeException();
 			}
-		}
-
-		public void Append(T value)
-		{
-			throw new UreachableCodeException();
-		}
-
-		public void Append(IEnumerable<T> values)
-		{
-			Contract.Requires(values != null);
-			throw new UreachableCodeException();
 		}
 
 		public IEnumerable<T> ReadFrom(long index)

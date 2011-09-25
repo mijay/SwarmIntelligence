@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using Common.Collections;
+using Common.Collections.Extensions;
 using NUnit.Framework;
 using SILibrary.General.Background;
 using SILibrary.TwoDimensional;

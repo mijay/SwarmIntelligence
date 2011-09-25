@@ -65,23 +65,24 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cache\LocalCache.cs" />
-    <Compile Include="Collections\ArrayExtension.cs" />
+    <Compile Include="Collections\Extensions\ArrayExtension.cs" />
     <Compile Include="Cache\ConcurrentDictionaryCache.cs" />
     <Compile Include="Cache\IKeyValueCache.cs" />
-    <Compile Include="Collections\CollectionExtensions.cs" />
-    <Compile Include="Collections\DictionaryExtension.cs" />
-    <Compile Include="Collections\ListExtension.cs" />
-    <Compile Include="Collections\ReadOnlyCollection.cs" />
-    <Compile Include="Collections\ReadOnlyList.cs" />
+    <Compile Include="Collections\Extensions\CollectionExtensions.cs" />
+    <Compile Include="Collections\Extensions\DictionaryExtension.cs" />
+    <Compile Include="Collections\Extensions\ListExtension.cs" />
+    <Compile Include="Collections\ReadOnly\ReadOnlyCollection.cs" />
+    <Compile Include="Collections\ReadOnly\ReadOnlyList.cs" />
     <Compile Include="Comparer.cs" />
-    <Compile Include="Concurrent\AppendableCollectionBase.cs" />
-    <Compile Include="Concurrent\ChunkedArray.cs" />
-    <Compile Include="Concurrent\ConcurrentLinkedList.cs" />
-    <Compile Include="Concurrent\ConcurrentSet.cs" />
-    <Compile Include="Concurrent\IAppendableCollection.cs" />
-    <Compile Include="Contracts\IAppendableCollectionContract.cs" />
+    <Compile Include="Collections\TailableCollectionBase.cs" />
+    <Compile Include="Collections\Concurrent\ChunkedArray.cs" />
+    <Compile Include="Collections\Concurrent\ConcurrentLinkedList.cs" />
+    <Compile Include="Collections\Concurrent\ConcurrentSet.cs" />
+    <Compile Include="Collections\ITailableCollection.cs" />
+    <Compile Include="Collections\IAppendableCollection.cs" />
+    <Compile Include="Contracts\ITailableCollectionContract.cs" />
     <Compile Include="DisposableBase.cs" />
-    <Compile Include="Collections\EnumerableExtension.cs" />
+    <Compile Include="Collections\Extensions\EnumerableExtension.cs" />
     <Compile Include="ICloneable.cs" />
     <Compile Include="Memoization\IMemoizedFunc.cs" />
     <Compile Include="Memoization\IMemoizer.cs" />

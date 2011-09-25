@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Threading;
-using Common.Collections;
+using Common.Collections.Extensions;
 
-namespace Common.Concurrent
+namespace Common.Collections.Concurrent
 {
-	public class ChunkedArray<T>: AppendableCollectionBase<T>
+	public class ChunkedArray<T>: TailableCollectionBase<T>, IAppendableCollection<T>
 	{
 		private readonly ConcurrentLinkedList<T[]> chunkList
 			= new ConcurrentLinkedList<T[]>();
@@ -20,6 +20,8 @@ namespace Common.Concurrent
 			this.chunkSize = chunkSize;
 			chunkList.Append(new T[chunkSize]);
 		}
+
+		#region IAppendableCollection<T> Members
 
 		public override long Count
 		{
@@ -36,7 +38,7 @@ namespace Common.Concurrent
 			}
 		}
 
-		public override void Append(IEnumerable<T> values)
+		public void Append(IEnumerable<T> values)
 		{
 			lockSlim.EnterWriteLock();
 			values.ForEach(AppendInternal);
@@ -60,12 +62,14 @@ namespace Common.Concurrent
 			}
 		}
 
-		public override void Append(T value)
+		public void Append(T value)
 		{
 			lockSlim.EnterWriteLock();
 			AppendInternal(value);
 			lockSlim.ExitWriteLock();
 		}
+
+		#endregion
 
 		private void AppendInternal(T data)
 		{

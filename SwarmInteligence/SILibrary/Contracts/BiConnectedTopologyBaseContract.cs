@@ -2,6 +2,7 @@
 using System.Diagnostics.Contracts;
 using Common;
 using Common.Collections;
+using Common.Collections.Extensions;
 using SILibrary.General;
 
 namespace SILibrary.Contracts

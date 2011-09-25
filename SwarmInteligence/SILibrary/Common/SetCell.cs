@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.Contracts;
-using Common.Concurrent;
+using Common.Collections.Concurrent;
 using SwarmIntelligence.Core.Playground;
 using SwarmIntelligence.Infrastructure.MemoryManagement;
 

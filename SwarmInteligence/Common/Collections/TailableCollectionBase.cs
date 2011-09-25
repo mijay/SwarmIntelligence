@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Common.Concurrent
+namespace Common.Collections
 {
-	public abstract class AppendableCollectionBase<T>: IAppendableCollection<T>
+	public abstract class TailableCollectionBase<T>: ITailableCollection<T>
 	{
 		#region Implementation of IEnumerable
 
@@ -15,6 +15,7 @@ namespace Common.Concurrent
 			                        	: ReadFrom(0);
 			return result.GetEnumerator();
 		}
+
 		IEnumerator IEnumerable.GetEnumerator()
 		{
 			return GetEnumerator();
@@ -26,8 +27,6 @@ namespace Common.Concurrent
 
 		public abstract T this[long index] { get; }
 		public abstract long Count { get; }
-		public abstract void Append(T value);
-		public abstract void Append(IEnumerable<T> values);
 		public abstract IEnumerable<T> ReadFrom(long index);
 
 		#endregion
