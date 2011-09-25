@@ -1,92 +1,80 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Threading;
+using Common.Collections;
 
 namespace Common.Concurrent
 {
-	public class ChunkedArray<T>: IEnumerable<T>
+	public class ChunkedArray<T>: AppendableCollectionBase<T>
 	{
-		private readonly ConcurrentLinkedList<ArrayChunk> chunkList
-			= new ConcurrentLinkedList<ArrayChunk>();
+		private readonly ConcurrentLinkedList<T[]> chunkList
+			= new ConcurrentLinkedList<T[]>();
 
 		private readonly int chunkSize;
 		private readonly ReaderWriterLockSlim lockSlim = new ReaderWriterLockSlim();
-		private int length;
+		private int count;
 
 		public ChunkedArray(int chunkSize)
 		{
-			this.chunkSize = chunkSize;
 			Contract.Requires(chunkSize > 0);
-			chunkList.Add(new ArrayChunk(chunkSize));
+			this.chunkSize = chunkSize;
+			chunkList.Append(new T[chunkSize]);
 		}
 
-		public int Length
+		public override int Count
 		{
-			get { return length; }
+			get { return count; }
 		}
 
-		public T this[int index]
+		public override T this[int index]
 		{
 			get
 			{
-				Contract.Requires(index > 0 && index < Length);
 				int chunkNumber = index / chunkSize;
 				int indexInChunk = index % chunkSize;
-				return chunkList[chunkNumber].Data[indexInChunk];
+				return chunkList[chunkNumber][indexInChunk];
 			}
 		}
 
-		public void Add(T data)
+		public override void Append(IEnumerable<T> values)
 		{
 			lockSlim.EnterWriteLock();
-			int chunkNumber = length / chunkSize;
-			int indexInChunk = length % chunkSize;
-			chunkList[chunkNumber].Data[indexInChunk] = data;
-			length++;
-			if(indexInChunk == chunkSize - 1)
-				chunkList.Add(new ArrayChunk(chunkSize));
+			values.ForEach(AppendInternal);
 			lockSlim.ExitWriteLock();
 		}
 
-		#region Nested type: ArrayChunk
-
-		private class ArrayChunk
+		public override IEnumerable<T> ReadFrom(int index)
 		{
-			public ArrayChunk(int dataSize)
-			{
-				Data = new T[dataSize];
-			}
-
-			public int Length { get; set; }
-			public T[] Data { get; private set; }
-		}
-
-		#endregion
-
-		#region Implementation of IEnumerable
-
-		public IEnumerator<T> GetEnumerator()
-		{
-			int index = 0;
-			IEnumerator<ArrayChunk> chunks = chunkList.GetEnumerator();
-			ArrayChunk arrayChunk = null;
-			while(index < length) {
+			int chunkNumber = index / chunkSize;
+			IEnumerator<T[]> chunks = chunkList.ReadFrom(chunkNumber).GetEnumerator();
+			T[] arrayChunk = null;
+			while(index < count) {
 				int numberInChunk = index % chunkSize;
-				if(numberInChunk == 0) {
+				if(numberInChunk == 0 || arrayChunk == null) {
 					chunks.MoveNext();
 					arrayChunk = chunks.Current;
 				}
-				yield return arrayChunk.Data[numberInChunk];
+				yield return arrayChunk[numberInChunk];
+
 				index++;
 			}
 		}
 
-		IEnumerator IEnumerable.GetEnumerator()
+		public override void Append(T value)
 		{
-			return GetEnumerator();
+			lockSlim.EnterWriteLock();
+			AppendInternal(value);
+			lockSlim.ExitWriteLock();
 		}
 
-		#endregion
+		private void AppendInternal(T data)
+		{
+			int chunkNumber = count / chunkSize;
+			int indexInChunk = count % chunkSize;
+			chunkList[chunkNumber][indexInChunk] = data;
+			count++;
+			if(indexInChunk == chunkSize - 1)
+				chunkList.Append(new T[chunkSize]);
+		}
 	}
 }

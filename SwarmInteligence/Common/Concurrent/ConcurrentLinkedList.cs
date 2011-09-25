@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Threading;
@@ -6,7 +5,7 @@ using Common.Collections;
 
 namespace Common.Concurrent
 {
-	public class ConcurrentLinkedList<T>: IEnumerable<T>
+	public class ConcurrentLinkedList<T>: AppendableCollectionBase<T>
 	{
 		private readonly ConcurrentLinkedListNode first;
 		private readonly ReaderWriterLockSlim lockSlim = new ReaderWriterLockSlim();
@@ -18,11 +17,10 @@ namespace Common.Concurrent
 			last = first = new ConcurrentLinkedListNode();
 		}
 
-		public T this[int index]
+		public override T this[int index]
 		{
 			get
 			{
-				Contract.Requires(index >= 0 && index < Count);
 				ConcurrentLinkedListNode result = first;
 				for(int i = 0; i < index; i++)
 					result = result.Next;
@@ -30,24 +28,34 @@ namespace Common.Concurrent
 			}
 		}
 
-		public int Count
+		public override int Count
 		{
 			get { return count; }
 		}
 
-		public void Add(T value)
+		public override void Append(T value)
 		{
 			lockSlim.EnterWriteLock();
 			AddInternal(value);
 			lockSlim.ExitWriteLock();
 		}
 
-		public void AddRange(IEnumerable<T> values)
+		public override void Append(IEnumerable<T> values)
 		{
-			Contract.Requires(values != null);
 			lockSlim.EnterWriteLock();
 			values.ForEach(AddInternal);
 			lockSlim.ExitWriteLock();
+		}
+
+		public override IEnumerable<T> ReadFrom(int index)
+		{
+			ConcurrentLinkedListNode current = first;
+			for(; index > 0; index--)
+				current = current.Next;
+			while(!current.IsLast) {
+				yield return current.Value;
+				current = current.Next;
+			}
 		}
 
 		private void AddInternal(T value)
@@ -77,24 +85,6 @@ namespace Common.Concurrent
 				Value = valueOfCurrent;
 				Next = next;
 			}
-		}
-
-		#endregion
-
-		#region Implementation of IEnumerable
-
-		public IEnumerator<T> GetEnumerator()
-		{
-			ConcurrentLinkedListNode current = first;
-			while(!current.IsLast) {
-				yield return current.Value;
-				current = current.Next;
-			}
-		}
-
-		IEnumerator IEnumerable.GetEnumerator()
-		{
-			return GetEnumerator();
 		}
 
 		#endregion
