@@ -2,25 +2,22 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Common.Collections.Concurrent;
-using SwarmIntelligence.Core;
 using Common.Tasks;
+using SwarmIntelligence.Core;
 
 namespace SwarmIntelligence.Infrastructure.Logging
 {
-	public interface ILogJournal
-	{
-		
-	}
-
 	public class LogManager
 	{
 		private readonly ConcurrentQueue<TmpLogRecord> logAppendQueue = new ConcurrentQueue<TmpLogRecord>();
+		private readonly LogJournal logJournal;
 		private readonly ChunkedArray<LogRecord> logRecords = new ChunkedArray<LogRecord>(10 * 1024);
 		private long logRecordIndex = -1;
 
 		public LogManager()
 		{
 			Log = new Logger(logAppendQueue);
+			logJournal = new LogJournal(logRecords);
 
 			Task.Factory
 				.StartNewDelayed(300)
@@ -28,6 +25,11 @@ namespace SwarmIntelligence.Infrastructure.Logging
 		}
 
 		public ILog Log { get; private set; }
+
+		public ILogJournal Journal
+		{
+			get { return logJournal; }
+		}
 
 		private Task LaunchLogProcessing()
 		{
@@ -42,11 +44,14 @@ namespace SwarmIntelligence.Infrastructure.Logging
 			if(logAppendQueue.IsEmpty)
 				return;
 
-			//var firstExclusiveIndex = logRecordIndex;
+			var lastOldRecord = logRecordIndex;
 			IEnumerable<LogRecord> newRecords = DequeueAllAppended();
-			//var lastInclusiveIndex = logRecordIndex;
+			var lastNewRecord = logRecordIndex;
 
 			logRecords.Append(newRecords);
+
+			//todo: стартовать не просто так, а гарантированно в отдельном потоке и гарантированно по порядку в этом потоке!
+			Task.Factory.StartNew(() => logJournal.NotifyRecordsAdded(lastOldRecord + 1, lastNewRecord));
 		}
 
 		private IEnumerable<LogRecord> DequeueAllAppended()

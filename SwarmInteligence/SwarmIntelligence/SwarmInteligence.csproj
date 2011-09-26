@@ -75,7 +75,9 @@
     <Compile Include="Infrastructure\GrabgeCollection\GarbageCollector.cs" />
     <Compile Include="Infrastructure\Logging\CommonLogTypes.cs" />
     <Compile Include="Core\ILog.cs" />
+    <Compile Include="Infrastructure\Logging\ILogJournal.cs" />
     <Compile Include="Infrastructure\Logging\Logger.cs" />
+    <Compile Include="Infrastructure\Logging\LogJournal.cs" />
     <Compile Include="Infrastructure\Logging\LogManager.cs" />
     <Compile Include="Infrastructure\Logging\LogRecord.cs" />
     <Compile Include="Infrastructure\Logging\TmpLogRecord.cs" />
