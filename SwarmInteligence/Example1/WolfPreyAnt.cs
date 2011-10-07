@@ -30,9 +30,13 @@ namespace Example1
             int j;
             if (_wolf)
             {
-                for (i = cell.Coordinate.x - WolfSpeed; i <= cell.Coordinate.x + WolfSpeed; i++)
+                var mini = cell.Coordinate.x - WolfSpeed >= 0 ? cell.Coordinate.x - WolfSpeed : 0;
+                var maxi = cell.Coordinate.x + WolfSpeed <= 10 ? cell.Coordinate.x + WolfSpeed : 10;
+                var minj = cell.Coordinate.y - WolfSpeed >= 0 ? cell.Coordinate.x - WolfSpeed : 0;
+                var maxj = cell.Coordinate.y + WolfSpeed <= 10 ? cell.Coordinate.y + WolfSpeed : 10;
+                for (i = mini; i <= maxi; i++)
                 {
-                    for (j = cell.Coordinate.y - WolfSpeed; j <= cell.Coordinate.y; j++)
+                    for (j = minj; j <= maxj; j++)
                     {
                         ICell<Coordinates2D, EmptyData, EmptyData> data;
                         if (cell.Coordinate.x == i || cell.Coordinate.y == j ||
@@ -45,9 +49,13 @@ namespace Example1
             }
             else
             {
-                for (i = cell.Coordinate.x - PreySpeed; i <= cell.Coordinate.x + PreySpeed; i++)
+                var mini = cell.Coordinate.x - PreySpeed >= 0 ? cell.Coordinate.x - PreySpeed : 0;
+                var maxi = cell.Coordinate.x + PreySpeed <= 10 ? cell.Coordinate.x + PreySpeed : 10;
+                var minj = cell.Coordinate.y - PreySpeed >= 0 ? cell.Coordinate.x - PreySpeed : 0;
+                var maxj = cell.Coordinate.y + PreySpeed <= 10 ? cell.Coordinate.y + PreySpeed : 10;
+                for (i = mini; i <= maxi; i++)
                 {
-                    for (j = cell.Coordinate.y - PreySpeed; j <= cell.Coordinate.y + PreySpeed; j++)
+                    for (j = minj; j <= maxj; j++)
                     {
                         ICell<Coordinates2D, EmptyData, EmptyData> data;
                         if (cell.Coordinate.x == i || cell.Coordinate.y == j ||
