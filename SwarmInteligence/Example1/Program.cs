@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using Common.Collections.Extensions;
 using SILibrary.Common;
@@ -7,6 +6,7 @@ using SILibrary.General.Background;
 using SILibrary.TwoDimensional;
 using SwarmIntelligence;
 using SwarmIntelligence.Core;
+using SwarmIntelligence.Core.Playground;
 using SwarmIntelligence.Core.Space;
 using SwarmIntelligence.Infrastructure.GrabgeCollection;
 using SwarmIntelligence.Infrastructure.Logging;
@@ -44,7 +44,7 @@ namespace Example1
             }
         }
 
-        private static IEnumerable<WolfPreyAnt> SeedAnts(int count)
+        private static IAnt<Coordinates2D, EmptyData, EmptyData>[] SeedAnts(int count)
         {
             using (var mapModifier = _world.Map.GetModifier())
                 return EnumerableExtension.Repeat(() => SeedAnt(mapModifier), count).ToArray();
@@ -57,10 +57,10 @@ namespace Example1
             return new Coordinates2D(x, y);
         }
 
-        private static WolfPreyAnt SeedAnt(IMapModifier<Coordinates2D, EmptyData, EmptyData> mapModifier)
+        private static IAnt<Coordinates2D, EmptyData, EmptyData> SeedAnt(IMapModifier<Coordinates2D, EmptyData, EmptyData> mapModifier)
         {
             var initialCoordinates = GenerateCoordinates();
-            var ant = Random.NextDouble() > 0.5 ? new WolfPreyAnt(_world, true) : new WolfPreyAnt(_world, false);
+            var ant = Random.NextDouble() > 0.5 ? (IAnt<Coordinates2D, EmptyData, EmptyData>) new WolfAnt(_world) : new PreyAnt(_world);
             mapModifier.AddAt(ant, initialCoordinates);
             return ant;
         }
