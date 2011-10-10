@@ -58,6 +58,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Common\CellsBrowser.cs" />
     <Compile Include="General\Background\CachedDataLayer.cs" />
     <Compile Include="General\Background\DelegateDataLayer.cs" />
     <Compile Include="General\Background\EmptyData.cs" />

@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Common.Collections.Extensions;
 using SILibrary.General.Background;
 using SILibrary.TwoDimensional;
+using SILibrary.Common;
 using SwarmIntelligence;
 using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Playground;
@@ -20,32 +22,24 @@ namespace Example1
 
         public override void ProcessTurn(IOutlook<Coordinates2D, EmptyData, EmptyData> outlook)
         {
-            var cell = outlook.Cell;
             var isAntExists = false;
 
-            for (var i = Math.Max(cell.Coordinate.x - Speed, 0); i <= Math.Min(cell.Coordinate.x + Speed, 10); ++i)
+            var cells = CellsBrowser.GetCellsWithRadius(outlook, Speed, new Coordinates2D(0, 0), new Coordinates2D(10, 10));
+            foreach (var cell in cells.Where(cell => cell.OfType<PreyAnt>().IsNotEmpty()))
             {
-                for (var j = Math.Max(cell.Coordinate.y - Speed, 0); j <= Math.Min(cell.Coordinate.y + Speed, 10); ++j)
+                if (cell.OfType<PreyAnt>().IsNotEmpty())
                 {
-                    var point = new Coordinates2D(i, j);
-
-                    if (point.Equals(cell.Coordinate))
-                        continue;
-
-                    ICell<Coordinates2D, EmptyData, EmptyData> data;
-                    if (outlook.Map.TryGet(point, out data) && data.OfType<PreyAnt>().IsNotEmpty())
-                    {
-                        isAntExists = true;
-                        this.MoveTo(point);
-                    }
+                    isAntExists = true;
+                    this.MoveTo(cell.Coordinate);
+                    break;
                 }
             }
 
             if (!isAntExists)
             {
                 var random = new Random();
-                var x = random.Next(Math.Max(cell.Coordinate.x - Speed, 0), Math.Min(cell.Coordinate.x + Speed, 10));
-                var y = random.Next(Math.Max(cell.Coordinate.y - Speed, 0), Math.Min(cell.Coordinate.y + Speed, 10));
+                var x = random.Next(Math.Max(outlook.Cell.Coordinate.x - Speed, 0), Math.Min(outlook.Cell.Coordinate.x + Speed, 10));
+                var y = random.Next(Math.Max(outlook.Cell.Coordinate.y - Speed, 0), Math.Min(outlook.Cell.Coordinate.y + Speed, 10));
                 this.MoveTo(new Coordinates2D(x, y));
             }
         }
