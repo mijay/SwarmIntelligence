@@ -52,8 +52,8 @@ namespace Example1
 
         private static Coordinates2D GenerateCoordinates()
         {
-            var x = Random.Next(-10, 10);
-            var y = Random.Next(-10, 10);
+            var x = Random.Next(0, 10);
+            var y = Random.Next(0, 10);
             return new Coordinates2D(x, y);
         }
 
