@@ -109,5 +109,13 @@ namespace Common.Collections.Extensions
 					hasLeft ? leftEnumerator.Current : default(T1),
 					hasRight ? rightEnumerator.Current : default(T2));
 		}
+
+		[Pure]
+		public static ISet<T> ToSet<T>(this IEnumerable<T> source)
+		{
+			Contract.Requires(source != null);
+
+			return new HashSet<T>(source);
+		}
 	}
 }

@@ -28,7 +28,7 @@ namespace SILibrary.TwoDimensional
 		public override int GetHashCode()
 		{
 			unchecked {
-				return (x.GetHashCode() * 397) ^ y.GetHashCode();
+				return (x * 397) ^ y;
 			}
 		}
 
@@ -41,7 +41,21 @@ namespace SILibrary.TwoDimensional
 
 		public override bool Equals(object obj)
 		{
-			return obj is Coordinates2D && Equals((Coordinates2D) obj);
+			if(ReferenceEquals(null, obj))
+				return false;
+			if(obj.GetType() != typeof(Coordinates2D))
+				return false;
+			return Equals((Coordinates2D) obj);
+		}
+
+		public static bool operator ==(Coordinates2D left, Coordinates2D right)
+		{
+			return left.Equals(right);
+		}
+
+		public static bool operator !=(Coordinates2D left, Coordinates2D right)
+		{
+			return !left.Equals(right);
 		}
 	}
 }
