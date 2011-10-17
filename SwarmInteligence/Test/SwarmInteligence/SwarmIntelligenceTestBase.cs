@@ -14,10 +14,11 @@ namespace Test.SwarmInteligence
 	{
 		protected World<Coordinates2D, EmptyData, EmptyData> world;
 		protected Runner<Coordinates2D, EmptyData, EmptyData> runner;
+		protected LogManager logger;
 
 		protected void InitializeWorld(Coordinates2D min, Coordinates2D max)
 		{
-			var logger = new LogManager();
+			logger = new LogManager();
 			var topology = new FourConnectedSurfaceTopology(min, max);
 			CellProvider<Coordinates2D, EmptyData, EmptyData> cellProvider = SetCell<Coordinates2D, EmptyData, EmptyData>.Provider();
 			var map = new DictionaryMap<Coordinates2D, EmptyData, EmptyData>(topology, cellProvider, logger.Log);

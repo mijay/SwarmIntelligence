@@ -33,9 +33,9 @@ namespace SwarmIntelligence.Infrastructure.Logging
 
 		private Task LaunchLogProcessing()
 		{
+			ProcessLog();
 			return Task.Factory
-				.StartNew(ProcessLog)
-				.Then(() => Task.Factory.StartNewDelayed(100))
+				.StartNewDelayed(100)
 				.Then(() => LaunchLogProcessing());
 		}
 
