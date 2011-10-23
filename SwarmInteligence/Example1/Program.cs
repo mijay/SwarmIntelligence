@@ -46,7 +46,7 @@ namespace Example1
 
         private static IAnt<Coordinates2D, EmptyData, EmptyData>[] SeedAnts(int count)
         {
-            using (var mapModifier = _world.Map.GetModifier())
+            using (var mapModifier = _world.GetModifier())
                 return EnumerableExtension.Repeat(() => SeedAnt(mapModifier), count).ToArray();
         }
 

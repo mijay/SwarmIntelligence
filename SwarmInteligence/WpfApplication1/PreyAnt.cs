@@ -15,7 +15,8 @@ namespace WpfApplication1
 
     internal class PreyAnt : AntBase<Coordinates2D, EmptyData, EmptyData>
     {
-        private const int Speed = 2;
+    	private static readonly Random random = new Random();
+    	private const int Speed = 2;
 
         public PreyAnt(World<Coordinates2D, EmptyData, EmptyData> world)
             : base(world)
@@ -35,7 +36,7 @@ namespace WpfApplication1
                 .Except(cellsWithWolfs)
                 .ToArray();
 
-            Coordinates2D cellToGo = cellsToGoInto[new Random().Next(cellsToGoInto.Length)];
+            Coordinates2D cellToGo = cellsToGoInto[random.Next(cellsToGoInto.Length)];
             this.MoveTo(cellToGo);
         }
     }

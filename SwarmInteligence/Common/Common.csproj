@@ -71,6 +71,7 @@
     <Compile Include="Collections\Extensions\CollectionExtensions.cs" />
     <Compile Include="Collections\Extensions\DictionaryExtension.cs" />
     <Compile Include="Collections\Extensions\ListExtension.cs" />
+    <Compile Include="Collections\MultiMap.cs" />
     <Compile Include="Collections\ReadOnly\ReadOnlyCollection.cs" />
     <Compile Include="Collections\ReadOnly\ReadOnlyList.cs" />
     <Compile Include="Comparer.cs" />

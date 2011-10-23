@@ -6,6 +6,7 @@ namespace SwarmIntelligence.Infrastructure.Logging
 	public interface ILogJournal
 	{
 		ITailableCollection<LogRecord> Records { get; }
-		event Action<long, long> OnRecordsAdded;
+		event Action<long, long> OnRecordsAddedChunked;
+		event Action<LogRecord[]> OnRecordsAdded;
 	}
 }

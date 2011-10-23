@@ -51,5 +51,14 @@ namespace Common.Collections.Extensions
 			Contract.Requires(dictionary != null && func != null);
 			return dictionary.ToDictionary(pair => pair.Key, pair => func(pair.Key, pair.Value));
 		}
+
+		public static TValue RemoveAndReturn<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key)
+		{
+			Contract.Requires(dictionary != null);
+			Contract.Requires(dictionary.ContainsKey(key));
+			TValue result = dictionary[key];
+			dictionary.Remove(key);
+			return result;
+		}
 	}
 }

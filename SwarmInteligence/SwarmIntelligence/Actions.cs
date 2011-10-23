@@ -1,5 +1,6 @@
 using SwarmIntelligence.Core.Playground;
 using SwarmIntelligence.Infrastructure.Logging;
+using SwarmIntelligence.Infrastructure.MemoryManagement;
 using SwarmIntelligence.Infrastructure.TurnProcessing;
 using SwarmIntelligence.Internal;
 
@@ -9,9 +10,9 @@ namespace SwarmIntelligence
 	{
 		public static void MoveTo<TCoordinate, TNodeData, TEdgeData>(this AntBase<TCoordinate, TNodeData, TEdgeData> antBase, TCoordinate to)
 		{
-			var from = antBase.Outlook.CellBase.Coordinate;
+			TCoordinate from = antBase.Outlook.CellBase.Coordinate;
 			antBase.Outlook.CellBase.Remove(antBase);
-			var targetCell = antBase.Outlook.MapBase.Get(to).Base();
+			CellBase<TCoordinate, TNodeData, TEdgeData> targetCell = antBase.Outlook.MapBase.Get(to).Base();
 			targetCell.Add(antBase);
 
 			antBase.Outlook.CellBase = targetCell;
@@ -29,11 +30,13 @@ namespace SwarmIntelligence
 		}
 
 		public static void RemoveFrom<TCoordinate, TNodeData, TEdgeData>(this AntBase<TCoordinate, TNodeData, TEdgeData> antBase,
-		                                                                 IAnt<TCoordinate, TNodeData, TEdgeData> ant, TCoordinate coordinate)
+		                                                                 TCoordinate coordinate,
+		                                                                 IAnt<TCoordinate, TNodeData, TEdgeData> ant)
 		{
 			antBase.Outlook.MapBase.Get(coordinate).Base().Remove(ant);
+			ant.Base().Remove();
 
-			antBase.Outlook.Log.Log(CommonLogTypes.AntRemoved, antBase, coordinate);
+			antBase.Outlook.Log.Log(CommonLogTypes.AntRemoved, ant, coordinate);
 		}
 	}
 }

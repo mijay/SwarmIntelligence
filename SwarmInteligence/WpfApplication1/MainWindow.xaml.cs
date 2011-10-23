@@ -1,192 +1,145 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Documents;
+using System.Windows.Media;
 using System.Windows.Shapes;
+using Common.Collections;
 using Common.Collections.Extensions;
-using SILibrary.Common;
-using SILibrary.General.Background;
 using SILibrary.TwoDimensional;
-using SwarmIntelligence;
-using SwarmIntelligence.Core;
-using SwarmIntelligence.Core.Playground;
-using SwarmIntelligence.Core.Space;
-using SwarmIntelligence.Infrastructure.GrabgeCollection;
 using SwarmIntelligence.Infrastructure.Logging;
-using SwarmIntelligence.Specialized;
 
 namespace WpfApplication1
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    public partial class MainWindow : Window
-    {
-        private static World<Coordinates2D, EmptyData, EmptyData> _world;
-        private static Runner<Coordinates2D, EmptyData, EmptyData> _runner;
-        private static LogManager _logger = new LogManager();
-        private static readonly Coordinates2D Min = new Coordinates2D(-10, -10);
-        private static readonly Coordinates2D Max = new Coordinates2D(10, 10);
-        private static List<Ellipse> ellipses = new List<Ellipse>();
+	/// <summary>
+	/// Interaction logic for MainWindow.xaml
+	/// </summary>
+	public partial class MainWindow: Window
+	{
+		private static readonly MultiMap<Tuple<Coordinates2D, bool>, Ellipse> ellipses
+			= new MultiMap<Tuple<Coordinates2D, bool>, Ellipse>();
 
-        private static double stepX;
-        private static double stepY;
+		private static double stepX;
+		private static double stepY;
 
-        private static readonly Random Random = new Random();
+		private readonly Model model;
 
-        private SynchronizationContext uiContext;
-        private Thread t;
+		public MainWindow()
+		{
+			InitializeComponent();
+			DrawGrid();
 
-        private int count = 0;
+			model = new Model(new Coordinates2D(-10, -10), new Coordinates2D(10, 10), 2, 9);
 
-        public MainWindow()
-        {
-            InitializeComponent();
+			SynchronizationContext uiContext = SynchronizationContext.Current;
+			model.OnNewRecords += records => uiContext.Send(_ => ProcessLog(records), new object());
 
-            stepX = (gridVisual.Width - 2)/(Max.x - Min.x + 1);
-            stepY = (gridVisual.Height - 2)/(Max.y - Min.y + 1);
+			Task.Factory
+				.StartNew(model.Initialize)
+				.ContinueWith(_ => {
+				              	nextStep.IsEnabled = true;
+				              	nextStep.Click += (o, a) => model.Turn();
+				              },
+				              CancellationToken.None,
+				              TaskContinuationOptions.OnlyOnRanToCompletion,
+				              TaskScheduler.FromCurrentSynchronizationContext());
+		}
 
-            //draw grid
+		private void ProcessLog(IEnumerable<LogRecord> newRecords)
+		{
+			foreach(LogRecord newRecord in newRecords) {
+				textBox1.Text += string.Format("{0}: {1}\n",
+				                               newRecord.type, newRecord.arguments
+				                                               	.Select(x => x.ToString())
+				                                               	.JoinStrings(", "));
 
-            for (var i = 0; i <= Max.x - Min.x + 1; ++i)
-            {
-                var line = new Line();
-                line.X1 = line.X2 = i*stepX + 1;
-                line.Y1 = 0;
-                line.Y2 = (Max.y - Min.y + 1)*stepY;
-                line.Stroke = System.Windows.Media.Brushes.Black;
-                line.StrokeThickness = 2;
+				if(newRecord.type == CommonLogTypes.AntMoved) {
+					var from = (Coordinates2D) newRecord.arguments[1];
+					var to = (Coordinates2D) newRecord.arguments[2];
+					bool isWolf = newRecord.arguments[0] is WolfAnt;
 
-                gridVisual.Children.Add(line);
-            }
+					Ellipse ellipse;
+					Contract.Assert(ellipses.RemoveFirst(Tuple.Create(from, isWolf), out ellipse));
+					gridVisual.Children.Remove(ellipse);
 
-            for (var i = 0; i <= Max.y - Min.y + 1; ++i)
-            {
-                var line = new Line();
-                line.Y1 = line.Y2 = i*stepY + 1;
-                line.X1 = 0;
-                line.X2 = (Max.x - Min.x + 1)*stepX;
-                line.Stroke = System.Windows.Media.Brushes.Black;
-                line.StrokeThickness = 2;
+					AddEllipse(isWolf, to);
+				} else if(newRecord.type == CommonLogTypes.AntAdded) {
+					var to = (Coordinates2D) newRecord.arguments[1];
+					bool isWolf = newRecord.arguments[0] is WolfAnt;
 
-                gridVisual.Children.Add(line);
-            }
+					AddEllipse(isWolf, to);
+				} else if(newRecord.type == CommonLogTypes.AntRemoved) {
+					var from = (Coordinates2D) newRecord.arguments[1];
+					Contract.Assert(newRecord.arguments[0] is PreyAnt);
 
-                uiContext = SynchronizationContext.Current;
-            t = new Thread(Initialize);
-            t.Start();
-        }
+					Ellipse ellipse;
+					Contract.Assert(ellipses.RemoveFirst(Tuple.Create(from, false), out ellipse));
+					gridVisual.Children.Remove(ellipse);
 
-        private static IAnt<Coordinates2D, EmptyData, EmptyData>[] SeedAnts(int count)
-        {
-            using (var mapModifier = _world.Map.GetModifier())
-                return EnumerableExtension.Repeat(() => SeedAnt(mapModifier), count).ToArray();
-        }
+					gridVisual.Children.Add(BuildCycle(false, from, Brushes.Gray));
+				}
+			}
 
-        private static Coordinates2D GenerateCoordinates()
-        {
-            var x = Random.Next(-10, 10);
-            var y = Random.Next(-10, 10);
-            return new Coordinates2D(x, y);
-        }
+			textBox1.ScrollToEnd();
+		}
 
-        private static IAnt<Coordinates2D, EmptyData, EmptyData> SeedAnt(IMapModifier<Coordinates2D, EmptyData, EmptyData> mapModifier)
-        {
-            var initialCoordinates = GenerateCoordinates();
-            var ant = Random.NextDouble() > 0.5 ? (IAnt<Coordinates2D, EmptyData, EmptyData>)new WolfAnt(_world) : new PreyAnt(_world);
-            mapModifier.AddAt(ant, initialCoordinates);
-            return ant;
-        }
+		private void AddEllipse(bool isWolf, Coordinates2D point)
+		{
+			Ellipse circle = BuildCycle(isWolf, point, isWolf ? Brushes.Red : Brushes.Green);
+			gridVisual.Children.Add(circle);
+			ellipses.Add(Tuple.Create(point, isWolf), circle);
+		}
 
-        private void Initialize()
-        {
-            var topology = new EightConnectedSurfaceTopology(Min, Max);
-            var cellProvider = SetCell<Coordinates2D, EmptyData, EmptyData>.Provider();
-            var map = new DictionaryMap<Coordinates2D, EmptyData, EmptyData>(topology, cellProvider, _logger.Log);
-            var nodeDataLayer = new EmptyDataLayer<Coordinates2D>();
-            var edgeDataLayer = new EmptyDataLayer<Edge<Coordinates2D>>();
+		private static Ellipse BuildCycle(bool isWolf, Coordinates2D point, SolidColorBrush solidColorBrush)
+		{
+			int modifier = isWolf ? 1 : -1;
+			return new Ellipse
+			       {
+			       	Margin = new Thickness
+			       	         {
+			       	         	Top = 2 * point.y * stepY + 0.25 * stepY * modifier,
+			       	         	Left = 2 * point.x * stepX + 0.25 * stepX * modifier
+			       	         },
+			       	Stroke = solidColorBrush,
+			       	Width = stepX / 2,
+			       	Height = stepY / 2,
+			       	StrokeThickness = 2
+			       };
+		}
 
-            _world = new World<Coordinates2D, EmptyData, EmptyData>(nodeDataLayer, edgeDataLayer, map, _logger.Log);
-            _runner = new Runner<Coordinates2D, EmptyData, EmptyData>(_world, new GarbageCollector<Coordinates2D, EmptyData, EmptyData>());
+		private void DrawGrid()
+		{
+			var min1 = new Coordinates2D(-10, -10);
+			var max1 = new Coordinates2D(10, 10);
+			stepX = (gridVisual.Width - 2) / (max1.x - min1.x + 1);
+			stepY = (gridVisual.Height - 2) / (max1.y - min1.y + 1);
 
-            var ants = SeedAnts(10);
+			//draw grid
 
-        }
+			for(int i = 0; i <= max1.x - min1.x + 1; ++i) {
+				var line = new Line();
+				line.X1 = line.X2 = i * stepX + 1;
+				line.Y1 = 0;
+				line.Y2 = (max1.y - min1.y + 1) * stepY;
+				line.Stroke = Brushes.Black;
+				line.StrokeThickness = 2;
 
-        private void closeWindow(object sender, EventArgs e)
-        {
-            t.Interrupt();
-        }
+				gridVisual.Children.Add(line);
+			}
 
-        private void textBox1_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
-        {
-            string text = textBox1.Text;
-            var logs = new List<string>(text.Split('\n'));
-            foreach (var ellipse in ellipses)
-            {
-                gridVisual.Children.Remove(ellipse);
-            }
+			for(int i = 0; i <= max1.y - min1.y + 1; ++i) {
+				var line = new Line();
+				line.Y1 = line.Y2 = i * stepY + 1;
+				line.X1 = 0;
+				line.X2 = (max1.x - min1.x + 1) * stepX;
+				line.Stroke = Brushes.Black;
+				line.StrokeThickness = 2;
 
-            var sublogs = logs.Skip(logs.Count - 10 - 1).Take(10);
-            foreach (var log in sublogs)
-            {
-                Regex r = new Regex("x: (\\-?\\d+), y: (\\-?\\d+)\\)$");
-                Match m = r.Match(log);
-                var x = 0;
-                var y = 0;
-                if (m.Success)
-                {
-                    x = Convert.ToInt32(m.Groups[1].ToString());
-                    y = Convert.ToInt32(m.Groups[2].ToString());
-                }
-
-                Ellipse circle = new Ellipse();
-                if (log.IndexOf("WpfApplication1.WolfAnt") != -1)
-                {
-                    circle = new Ellipse { Margin = new Thickness { Top = 2 * y * stepY - 0.25 * stepY, Left = 2 * x * stepX - 0.25 * stepX } };
-                    circle.Stroke = System.Windows.Media.Brushes.Red;
-                } else if (log.IndexOf("WpfApplication1.PreyAnt") != -1)
-                {
-                    circle = new Ellipse { Margin = new Thickness { Top = 2 * y * stepY + 0.25 * stepY, Left = 2 * x * stepX + 0.25 * stepX} };
-                    circle.Stroke = System.Windows.Media.Brushes.Green;
-                }
-
-                circle.Width = stepX / 2;
-                circle.Height = stepY / 2;
-                circle.StrokeThickness = 2;
-
-                ellipses.Add(circle);
-
-                gridVisual.Children.Add(circle);
-            }
-        }
-
-        private void nextStep_Click(object sender, RoutedEventArgs e)
-        {
-            _runner.DoTurn();
-
-            _logger.Journal.OnRecordsAdded +=
-                (begin, end) =>
-                    {
-                        LogRecord[] newRecords = _logger.Journal
-                            .Records
-                            .ReadFrom(begin)
-                            .Take((int) (end - begin + 1))
-                            .Where(x => x.type == "AntMoved")
-                            .ToArray();
-
-                        foreach (var newRecord in newRecords)
-                        {
-                            uiContext.Send(
-                                d =>
-                                textBox1.Text +=
-                                newRecord.type + ": " + newRecord.arguments[0] + "(" + newRecord.arguments[1] + ", " +
-                                newRecord.arguments[2] + ")" + "\n", null);
-                        }
-                    };
-        }
-    }
+				gridVisual.Children.Add(line);
+			}
+		}
+	}
 }

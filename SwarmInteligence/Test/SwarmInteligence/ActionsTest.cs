@@ -57,7 +57,7 @@ namespace Test.SwarmInteligence
 		[Test]
 		public void AntCanMoveTwiceInATurn()
 		{
-			using(IMapModifier<Coordinates2D, EmptyData, EmptyData> modifier = world.Map.GetModifier())
+			using(IMapModifier<Coordinates2D, EmptyData, EmptyData> modifier = world.GetModifier())
 				modifier.AddAt(new TestAnt(world), new Coordinates2D(3, 3));
 			runner.DoTurn();
 		}

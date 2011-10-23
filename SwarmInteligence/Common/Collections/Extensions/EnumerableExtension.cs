@@ -80,7 +80,7 @@ namespace Common.Collections.Extensions
 		public static bool TrySingle<T>(this IEnumerable<T> source, out T elem)
 		{
 			Contract.Requires(source != null);
-			var top = source.Take(2).ToArray();
+			T[] top = source.Take(2).ToArray();
 			if(top.Length == 1) {
 				elem = top[0];
 				return true;
@@ -116,6 +116,13 @@ namespace Common.Collections.Extensions
 			Contract.Requires(source != null);
 
 			return new HashSet<T>(source);
+		}
+
+		[Pure]
+		public static string JoinStrings(this IEnumerable<string> source, string separator)
+		{
+			Contract.Requires(source != null);
+			return string.Join(separator, source);
 		}
 	}
 }

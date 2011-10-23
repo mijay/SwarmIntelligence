@@ -14,7 +14,7 @@ using SwarmIntelligence.Specialized;
 
 namespace Test.SwarmInteligence
 {
-	public class LoggerTest : SwarmIntelligenceTestBase
+	public class LoggerTest: SwarmIntelligenceTestBase
 	{
 		#region Setup/Teardown
 
@@ -29,11 +29,12 @@ namespace Test.SwarmInteligence
 
 		private static int number;
 
-		private class TestAnt : AntBase<Coordinates2D, EmptyData, EmptyData>
+		private class TestAnt: AntBase<Coordinates2D, EmptyData, EmptyData>
 		{
 			private readonly Random r = new Random();
 
-			public TestAnt(World<Coordinates2D, EmptyData, EmptyData> world) : base(world)
+			public TestAnt(World<Coordinates2D, EmptyData, EmptyData> world)
+				: base(world)
 			{
 			}
 
@@ -53,27 +54,21 @@ namespace Test.SwarmInteligence
 		{
 			var logRecords = new List<LogRecord>();
 			logger.Journal.OnRecordsAdded +=
-				(begin, end) => {
-					lock (logRecords) {
-						LogRecord[] newRecords = logger.Journal
-							.Records
-							.ReadFrom(begin)
-							.Take((int) (end - begin + 1))
-							.Where(x => x.type == "test")
-							.ToArray();
+				newRecords => {
+					lock(logRecords) {
 						logRecords.AddRange(newRecords);
 					}
 				};
 
-			using (IMapModifier<Coordinates2D, EmptyData, EmptyData> modifier = world.Map.GetModifier())
+			using(IMapModifier<Coordinates2D, EmptyData, EmptyData> modifier = world.GetModifier())
 				modifier.AddAt(new TestAnt(world), new Coordinates2D(1, 1));
 
-			for (int i = 0; i < 1000; i++)
+			for(int i = 0; i < 1000; i++)
 				runner.DoTurn();
 			Thread.Sleep(200); // тк добавление в лог асинхронное и отложенное
 
-			CollectionAssert.AreEqual(Enumerable.Range(1, 1000).ToArray(), 
-				logRecords.Select(x => (int) x.arguments[0]).ToArray());
+			CollectionAssert.AreEqual(Enumerable.Range(1, 1000).ToArray(),
+			                          logRecords.Select(x => (int) x.arguments[0]).ToArray());
 		}
 	}
 }

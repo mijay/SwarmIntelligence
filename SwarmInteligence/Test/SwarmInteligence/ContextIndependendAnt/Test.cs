@@ -46,7 +46,7 @@ namespace Test.SwarmInteligence.ContextIndependendAnt
 
 		private IEnumerable<TestAnt> SeedAnts(int antsNumber, int timesAntJumps, params Coordinates2D[] lastAntSteps)
 		{
-			using(IMapModifier<Coordinates2D, EmptyData, EmptyData> mapModifier = world.Map.GetModifier())
+			using(IMapModifier<Coordinates2D, EmptyData, EmptyData> mapModifier = world.GetModifier())
 				return EnumerableExtension
 					.Repeat(() => SeedAnt(mapModifier, timesAntJumps, lastAntSteps), antsNumber)
 					.ToArray();

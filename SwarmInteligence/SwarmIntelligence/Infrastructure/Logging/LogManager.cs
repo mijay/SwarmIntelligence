@@ -44,23 +44,24 @@ namespace SwarmIntelligence.Infrastructure.Logging
 			if(logAppendQueue.IsEmpty)
 				return;
 
-			var lastOldRecord = logRecordIndex;
-			IEnumerable<LogRecord> newRecords = DequeueAllAppended();
-			var lastNewRecord = logRecordIndex;
+			long lastOldRecord = logRecordIndex;
+			LogRecord[] newRecords = DequeueAllAppended();
+			long lastNewRecord = logRecordIndex;
 
 			logRecords.Append(newRecords);
 
-			//todo: стартовать не просто так, а гарантированно в отдельном потоке и гарантированно по порядку в этом потоке!
-			Task.Factory.StartNew(() => logJournal.NotifyRecordsAdded(lastOldRecord + 1, lastNewRecord));
+			Task.Factory.StartNew(
+				() => logJournal.NotifyRecordsAdded(newRecords, lastOldRecord + 1, lastNewRecord),
+				TaskCreationOptions.LongRunning | TaskCreationOptions.PreferFairness);
 		}
 
-		private IEnumerable<LogRecord> DequeueAllAppended()
+		private LogRecord[] DequeueAllAppended()
 		{
 			var newRecords = new List<LogRecord>(logAppendQueue.Count);
 			TmpLogRecord tmpLogRecord;
 			while(logAppendQueue.TryDequeue(out tmpLogRecord))
 				newRecords.Add(new LogRecord(++logRecordIndex, tmpLogRecord));
-			return newRecords;
+			return newRecords.ToArray();
 		}
 	}
 }

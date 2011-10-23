@@ -55,7 +55,7 @@ namespace Test.SwarmInteligence
 		public void ƒва—уществаЌа арте_ќба»дут¬÷ентр_ќдин¬идит„то÷ентр”же«ан€т()
 		{
 			bool antInCenterFound = false;
-			using(IMapModifier<Coordinates2D, EmptyData, EmptyData> modifier = world.Map.GetModifier()) {
+			using(IMapModifier<Coordinates2D, EmptyData, EmptyData> modifier = world.GetModifier()) {
 				var ant = new TestAnt(world);
 				ant.AntInCenterFound += () => {
 				                        	Assert.IsFalse(antInCenterFound);
