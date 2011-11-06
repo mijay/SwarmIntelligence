@@ -1,6 +1,5 @@
 using System.Diagnostics.Contracts;
 using System.Linq;
-using Common.Collections;
 using Common.Collections.Extensions;
 using SwarmIntelligence.Core;
 using SwarmIntelligence.Infrastructure.GrabgeCollection;
@@ -13,26 +12,27 @@ namespace SwarmIntelligence
 {
 	public class Runner<TCoordinate, TNodeData, TEdgeData>
 	{
-		private readonly MapBase<TCoordinate, TNodeData, TEdgeData> mapBase;
-		private readonly World<TCoordinate, TNodeData, TEdgeData> world;
 		private readonly IGarbageCollector<TCoordinate, TNodeData, TEdgeData> garbageCollector;
+		private readonly MapBase<TCoordinate, TNodeData, TEdgeData> mapBase;
 
 		public Runner(World<TCoordinate, TNodeData, TEdgeData> world, IGarbageCollector<TCoordinate, TNodeData, TEdgeData> garbageCollector)
 		{
 			Contract.Requires(world != null && garbageCollector != null && garbageCollector.MapBase == null);
-			this.world = world;
+			World = world;
 			mapBase = world.Map.Base();
 			this.garbageCollector = garbageCollector;
 			garbageCollector.AttachTo(mapBase);
 		}
 
+		public World<TCoordinate, TNodeData, TEdgeData> World { get; private set; }
+
 		public void DoTurn()
 		{
-			world.Log.Log(CommonLogTypes.TurnStarted);
+			World.Log.Log(CommonLogTypes.TurnStarted);
 			AntContext[] contexts = SelectContext();
 			RunTurn(contexts);
 			garbageCollector.Collect();
-			world.Log.Log(CommonLogTypes.TurnDone);
+			World.Log.Log(CommonLogTypes.TurnDone);
 		}
 
 		private static void RunTurn(AntContext[] contexts)

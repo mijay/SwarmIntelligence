@@ -1,13 +1,11 @@
 using System;
 using System.Collections.Generic;
-using SILibrary.Common;
+using SILibrary.General;
 using SILibrary.General.Background;
 using SILibrary.TwoDimensional;
 using SwarmIntelligence;
 using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Playground;
-using SwarmIntelligence.Core.Space;
-using SwarmIntelligence.Infrastructure.GrabgeCollection;
 using SwarmIntelligence.Infrastructure.Logging;
 using SwarmIntelligence.Specialized;
 
@@ -20,7 +18,6 @@ namespace WpfApplication1
 		private readonly int preyCount;
 		private readonly Random random = new Random();
 		private readonly int wolfCount;
-		private LogManager logger;
 		private Runner<Coordinates2D, EmptyData, EmptyData> runner;
 		private World<Coordinates2D, EmptyData, EmptyData> world;
 
@@ -51,17 +48,13 @@ namespace WpfApplication1
 
 		public void Initialize()
 		{
-			logger = new LogManager();
-			logger.Journal.OnRecordsAdded += OnNewRecords;
-
-			var topology = new EightConnectedSurfaceTopology(min, max);
-			CellProvider<Coordinates2D, EmptyData, EmptyData> cellProvider = SetCell<Coordinates2D, EmptyData, EmptyData>.Provider();
-			var map = new DictionaryMap<Coordinates2D, EmptyData, EmptyData>(topology, cellProvider, logger.Log);
-			var nodeDataLayer = new EmptyDataLayer<Coordinates2D>();
-			var edgeDataLayer = new EmptyDataLayer<Edge<Coordinates2D>>();
-
-			world = new World<Coordinates2D, EmptyData, EmptyData>(nodeDataLayer, edgeDataLayer, map, logger.Log);
-			runner = new Runner<Coordinates2D, EmptyData, EmptyData>(world, new GarbageCollector<Coordinates2D, EmptyData, EmptyData>());
+			ILogJournal logJournal;
+			runner = SystemBuilder
+				.Create<Coordinates2D, EmptyData, EmptyData>()
+				.WithTopology(new EightConnectedSurfaceTopology(min, max))
+				.Build(out logJournal);
+			logJournal.OnRecordsAdded += OnNewRecords;
+			world = runner.World;
 
 			SeedAnts(wolfCount, true);
 			SeedAnts(preyCount, false);

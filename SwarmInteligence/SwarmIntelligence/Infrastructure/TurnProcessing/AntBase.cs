@@ -13,8 +13,10 @@ namespace SwarmIntelligence.Infrastructure.TurnProcessing
 		{
 			Contract.Requires(world != null);
 			Outlook = new Outlook<TCoordinate, TNodeData, TEdgeData>(world, this);
+			Log = world.Log;
 		}
 
+		protected ILog Log { get; private set; }
 		internal Outlook<TCoordinate, TNodeData, TEdgeData> Outlook { get; private set; }
 
 		internal void ProcessTurn(CellBase<TCoordinate, TNodeData, TEdgeData> cell)

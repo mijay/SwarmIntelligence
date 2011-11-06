@@ -53,10 +53,10 @@ namespace Test.SwarmInteligence
 		public void SimpleTest()
 		{
 			var logRecords = new List<LogRecord>();
-			logger.Journal.OnRecordsAdded +=
+			journal.OnRecordsAdded +=
 				newRecords => {
 					lock(logRecords) {
-						logRecords.AddRange(newRecords);
+						logRecords.AddRange(newRecords.Where(x => x.type == "test"));
 					}
 				};
 
