@@ -74,12 +74,16 @@ namespace WpfApplication1
 				} else if(newRecord.type == CommonLogTypes.AntRemoved) {
 					var from = (Coordinates2D) newRecord.arguments[1];
 					//Contract.Assert(newRecord.arguments[0] is PreyAnt);
+				    var isWolf = true;
+                    if (newRecord.arguments[0] is PreyAnt)
+                        isWolf = false;
 
 					Ellipse ellipse;
-					Contract.Assert(ellipses.RemoveFirst(Tuple.Create(from, false), out ellipse));
+				    ellipses.RemoveFirst(Tuple.Create(from, false), out ellipse);
+					//Contract.Assert(ellipses.RemoveFirst(Tuple.Create(from, false), out ellipse));
 					gridVisual.Children.Remove(ellipse);
 
-					gridVisual.Children.Add(BuildCycle(false, from, Brushes.Gray));
+					gridVisual.Children.Add(BuildCycle(isWolf, from, Brushes.Gray));
 				}
 			}
 

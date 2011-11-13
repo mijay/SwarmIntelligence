@@ -41,6 +41,7 @@ namespace WpfApplication1
             {
                 var emptyCells = GetEmptySuborbCells(outlook, reproductionRadius);
                 Reproducing(outlook.World, weight, false, emptyCells[random.Next(emptyCells.Length)]);
+                weight = 3;
             } else
             {
                 weight++;
