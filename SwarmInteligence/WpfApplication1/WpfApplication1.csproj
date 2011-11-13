@@ -77,6 +77,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Animal.cs" />
     <Compile Include="Model.cs" />
     <Compile Include="WolfAnt.cs" />
     <Page Include="MainWindow.xaml">

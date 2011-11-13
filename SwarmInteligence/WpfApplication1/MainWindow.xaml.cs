@@ -73,7 +73,7 @@ namespace WpfApplication1
 					AddEllipse(isWolf, to);
 				} else if(newRecord.type == CommonLogTypes.AntRemoved) {
 					var from = (Coordinates2D) newRecord.arguments[1];
-					Contract.Assert(newRecord.arguments[0] is PreyAnt);
+					//Contract.Assert(newRecord.arguments[0] is PreyAnt);
 
 					Ellipse ellipse;
 					Contract.Assert(ellipses.RemoveFirst(Tuple.Create(from, false), out ellipse));

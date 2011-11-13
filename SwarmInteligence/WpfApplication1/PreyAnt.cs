@@ -13,13 +13,13 @@ using SwarmIntelligence.Infrastructure.TurnProcessing;
 namespace WpfApplication1
 {
 
-    internal class PreyAnt : AntBase<Coordinates2D, EmptyData, EmptyData>
+    internal class PreyAnt : Animal
     {
     	private static readonly Random random = new Random();
     	private const int Speed = 2;
 
-        public PreyAnt(World<Coordinates2D, EmptyData, EmptyData> world)
-            : base(world)
+        public PreyAnt(World<Coordinates2D, EmptyData, EmptyData> world, double weight)
+            : base(world, weight)
         {
         }
 
@@ -37,6 +37,18 @@ namespace WpfApplication1
                 .ToArray();
 
             Coordinates2D cellToGo = cellsToGoInto[random.Next(cellsToGoInto.Length)];
+            if (weight == 6)
+            {
+                var emptyCells = GetEmptySuborbCells(outlook, reproductionRadius);
+                Reproducing(outlook.World, weight, false, emptyCells[random.Next(emptyCells.Length)]);
+            } else
+            {
+                weight++;
+                if (weight > 6)
+                {
+                    weight = 6;
+                }
+            }
             this.MoveTo(cellToGo);
         }
     }

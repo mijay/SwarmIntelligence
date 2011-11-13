@@ -39,5 +39,6 @@ namespace SILibrary.TwoDimensional
 				        })
 				.NotNull();
 		}
+
 	}
 }

@@ -41,8 +41,8 @@ namespace WpfApplication1
 			using(IMapModifier<Coordinates2D, EmptyData, EmptyData> mapModifier = world.GetModifier())
 				for(int i = 0; i < count; i++)
 					mapModifier.AddAt(isWolf
-					                  	? (IAnt<Coordinates2D, EmptyData, EmptyData>) new WolfAnt(world)
-					                  	: new PreyAnt(world),
+					                  	? (IAnt<Coordinates2D, EmptyData, EmptyData>) new WolfAnt(world, 3)
+					                  	: new PreyAnt(world, 3),
 					                  GenerateCoordinates());
 		}
 
