@@ -1,56 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Common.Collections.Extensions;
-using SILibrary.General.Background;
+﻿using SILibrary.General.Background;
 using SILibrary.TwoDimensional;
 using SwarmIntelligence;
 using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Playground;
-using SwarmIntelligence.Infrastructure.TurnProcessing;
 
 namespace WpfApplication1
 {
+	public class PreyAnt: Animal
+	{
+		public PreyAnt(World<Coordinates2D, EmptyData, EmptyData> world, int weight)
+			: base(world, weight, 2)
+		{
+		}
 
-    internal class PreyAnt : Animal
-    {
-    	private static readonly Random random = new Random();
-    	private const int Speed = 2;
+		public override void ProcessTurn(IOutlook<Coordinates2D, EmptyData, EmptyData> outlook)
+		{
+			MoveToCellWithoutWolf(outlook, speed);
 
-        public PreyAnt(World<Coordinates2D, EmptyData, EmptyData> world, double weight)
-            : base(world, weight)
-        {
-        }
+			if(Weight < 6)
+				Weight++;
+			else {
+				Weight = 3;
+				AddCloneToEmptyCell(outlook, reproductionRadius);
+			}
+		}
 
-        public override void ProcessTurn(IOutlook<Coordinates2D, EmptyData, EmptyData> outlook)
-        {
-            Coordinates2D[] cellsWithWolfs = outlook.Cell
-                .GetSuburbCells(Speed)
-                .Where(cell => cell.OfType<WolfAnt>().IsNotEmpty())
-                .Select(cell => cell.Coordinate)
-                .ToArray();
+		private void MoveToCellWithoutWolf(IOutlook<Coordinates2D, EmptyData, EmptyData> outlook, int radius)
+		{
+			Coordinates2D[] cellsWithouWolfs = CellWithoutAnimalOfType<WolfAnt>(outlook, radius);
+			Coordinates2D cellToGo = cellsWithouWolfs[Random.Next(cellsWithouWolfs.Length)];
+			this.MoveTo(cellToGo);
+		}
 
-            Coordinates2D[] cellsToGoInto = outlook.Cell
-                .GetSuburb(Speed)
-                .Except(cellsWithWolfs)
-                .ToArray();
-
-            Coordinates2D cellToGo = cellsToGoInto[random.Next(cellsToGoInto.Length)];
-            if (weight == 6)
-            {
-                var emptyCells = GetEmptySuborbCells(outlook, reproductionRadius);
-                Reproducing(outlook.World, weight, false, emptyCells[random.Next(emptyCells.Length)]);
-                weight = 3;
-            } else
-            {
-                weight++;
-                if (weight > 6)
-                {
-                    weight = 6;
-                }
-            }
-            this.MoveTo(cellToGo);
-        }
-    }
+		private void AddCloneToEmptyCell(IOutlook<Coordinates2D, EmptyData, EmptyData> outlook, int radius)
+		{
+			Coordinates2D[] emptyCells = GetEmptySuburbCells(outlook, radius);
+			Coordinates2D cellToAdd = emptyCells[Random.Next(emptyCells.Length)];
+			this.AddTo(new PreyAnt(World, Weight / 2), cellToAdd);
+		}
+	}
 }

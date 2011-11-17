@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using Common.Collections.Extensions;
 using SILibrary.General.Background;
@@ -7,64 +6,60 @@ using SILibrary.TwoDimensional;
 using SwarmIntelligence;
 using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Playground;
-using SwarmIntelligence.Infrastructure.TurnProcessing;
 
 namespace WpfApplication1
 {
-	internal class WolfAnt: Animal
+	public class WolfAnt: Animal
 	{
-		private static readonly Random random = new Random();
-		private const int Speed = 3;
-	    private const double MassPrey = 0.5;
+		private const double MassPrey = 0.5;
 
-		public WolfAnt(World<Coordinates2D, EmptyData, EmptyData> world, double weight)
-			: base(world, weight)
+		public WolfAnt(World<Coordinates2D, EmptyData, EmptyData> world, int weight)
+			: base(world, weight, 3)
 		{
 		}
 
 		public override void ProcessTurn(IOutlook<Coordinates2D, EmptyData, EmptyData> outlook)
 		{
 			ICell<Coordinates2D, EmptyData, EmptyData>[] cellsWithPreys = outlook.Cell
-				.GetSuburbCells(Speed)
+				.GetSuburbCells(speed)
 				.Where(cell => cell.OfType<PreyAnt>().IsNotEmpty())
 				.ToArray();
 
-		    Coordinates2D newCoordinate;
-		    new Coordinates2D();
-
-		    if(cellsWithPreys.IsNotEmpty()) {
+			if(cellsWithPreys.IsNotEmpty()) {
 				ICell<Coordinates2D, EmptyData, EmptyData> target = cellsWithPreys.First();
-                var newWeight = target.OfType<PreyAnt>().First().weight * MassPrey + weight;
-                if (newWeight > 6)
-                {
-                    newWeight = 6;
-                }
-			    weight = newWeight;
-			    newCoordinate = target.Coordinate;
-				this.RemoveFrom(target.Coordinate, target.OfType<PreyAnt>().First());
+				EatPreysAt(target);
 			} else {
+				Weight--;
 				Coordinates2D[] allCells = outlook.Cell
-					.GetSuburb(Speed)
+					.GetSuburb(speed)
 					.ToArray();
-
-			    weight--;
-				Coordinates2D cellToGo = allCells[random.Next(allCells.Length)];
-			    newCoordinate = cellToGo;
+				Coordinates2D cellToGo = allCells[Random.Next(allCells.Length)];
+				this.MoveTo(cellToGo);
 			}
 
-            if (weight == 6)
-            {
-                var emptyCells = GetEmptySuborbCells(outlook, reproductionRadius);
-                Reproducing(outlook.World, weight, true, emptyCells[random.Next(emptyCells.Length)]);
-                weight = 3;
+			if(Weight == 6) {
+				Weight = 3;
+				AddCloneToEmptyCell(outlook);
+			} else if(Weight <= 0)
+				this.RemoveFrom(outlook.Coordinate, this);
+		}
 
-            } else if (weight == 0)
-            {
-                this.RemoveFrom(outlook.Coordinate, this);
-            } else
-            {
-                this.MoveTo(newCoordinate);
-            }
+		private void AddCloneToEmptyCell(IOutlook<Coordinates2D, EmptyData, EmptyData> outlook)
+		{
+			Coordinates2D[] emptyCells = GetEmptySuburbCells(outlook, reproductionRadius);
+			Coordinates2D cellToAddTo = emptyCells[Random.Next(emptyCells.Length)];
+			this.AddTo(new WolfAnt(outlook.World, Weight), cellToAddTo);
+		}
+
+		private void EatPreysAt(ICell<Coordinates2D, EmptyData, EmptyData> target)
+		{
+			double preyWeight = 0;
+			foreach(PreyAnt preyAnt in target.OfType<PreyAnt>()) {
+				preyWeight += preyAnt.Weight;
+				this.RemoveFrom(target.Coordinate, preyAnt);
+			}
+			Weight = (int) Math.Min(6, preyWeight * MassPrey + Weight);
+			this.MoveTo(target.Coordinate);
 		}
 	}
 }

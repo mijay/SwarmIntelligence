@@ -14,8 +14,10 @@ namespace SwarmIntelligence.Infrastructure.TurnProcessing
 			Contract.Requires(world != null);
 			Outlook = new Outlook<TCoordinate, TNodeData, TEdgeData>(world, this);
 			Log = world.Log;
+			World = world;
 		}
 
+		protected World<TCoordinate, TNodeData, TEdgeData> World { get; private set; }
 		protected ILog Log { get; private set; }
 		internal Outlook<TCoordinate, TNodeData, TEdgeData> Outlook { get; private set; }
 

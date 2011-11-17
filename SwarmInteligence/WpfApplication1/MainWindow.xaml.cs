@@ -35,17 +35,19 @@ namespace WpfApplication1
 			model = new Model(new Coordinates2D(-10, -10), new Coordinates2D(10, 10), 2, 9);
 
 			SynchronizationContext uiContext = SynchronizationContext.Current;
+			TaskScheduler uiContextScheduler = TaskScheduler.FromCurrentSynchronizationContext();
 			model.OnNewRecords += records => uiContext.Send(_ => ProcessLog(records), new object());
+
+			nextStep.Click += (o, a) => {
+			                  	nextStep.IsEnabled = false;
+			                  	Task.Factory
+			                  		.StartNew(model.Turn)
+			                  		.ContinueWith(_ => { nextStep.IsEnabled = true; }, uiContextScheduler);
+			                  };
 
 			Task.Factory
 				.StartNew(model.Initialize)
-				.ContinueWith(_ => {
-				              	nextStep.IsEnabled = true;
-				              	nextStep.Click += (o, a) => model.Turn();
-				              },
-				              CancellationToken.None,
-				              TaskContinuationOptions.OnlyOnRanToCompletion,
-				              TaskScheduler.FromCurrentSynchronizationContext());
+				.ContinueWith(_ => { nextStep.IsEnabled = true; }, uiContextScheduler);
 		}
 
 		private void ProcessLog(IEnumerable<LogRecord> newRecords)
@@ -73,17 +75,13 @@ namespace WpfApplication1
 					AddEllipse(isWolf, to);
 				} else if(newRecord.type == CommonLogTypes.AntRemoved) {
 					var from = (Coordinates2D) newRecord.arguments[1];
-					//Contract.Assert(newRecord.arguments[0] is PreyAnt);
-				    var isWolf = true;
-                    if (newRecord.arguments[0] is PreyAnt)
-                        isWolf = false;
+					bool isWolf = newRecord.arguments[0] is WolfAnt;
 
 					Ellipse ellipse;
-				    ellipses.RemoveFirst(Tuple.Create(from, false), out ellipse);
-					//Contract.Assert(ellipses.RemoveFirst(Tuple.Create(from, false), out ellipse));
+					Contract.Assert(ellipses.RemoveFirst(Tuple.Create(from, isWolf), out ellipse));
 					gridVisual.Children.Remove(ellipse);
 
-					gridVisual.Children.Add(BuildCycle(isWolf, from, Brushes.Gray));
+					gridVisual.Children.Add(BuildCycle(isWolf, from, isWolf ? Brushes.BlueViolet : Brushes.Gray));
 				}
 			}
 
@@ -92,7 +90,7 @@ namespace WpfApplication1
 
 		private void AddEllipse(bool isWolf, Coordinates2D point)
 		{
-			Ellipse circle = BuildCycle(isWolf, point, isWolf ? Brushes.Red : Brushes.Green);
+			Ellipse circle = BuildCycle(isWolf, point, isWolf ? Brushes.DarkRed : Brushes.DarkGreen);
 			gridVisual.Children.Add(circle);
 			ellipses.Add(Tuple.Create(point, isWolf), circle);
 		}
