@@ -1,0 +1,118 @@
+\documentclass[14pt]{beamer}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian,english]{babel}
+\usepackage{tabularx}
+\usetheme{Warsaw}
+
+
+\title{Система поддержки алгоритмов коллективного разума}
+\author[Конончук Д.О.]{Дмитрий Конончук}
+\institute{
+    Уральский Государственный Университет им. А.М.Горького \vspace{0.9em}
+
+    Научный руководитель: Окуловский Юрий Сергеевич \vspace{0.9em}
+}
+\date{\footnotesize 2010}
+\begin{document}
+
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\begin{frame}[c]
+    \frametitle{Типичные аналогии}
+    \begin{columns}
+        \begin{column}{60mm}
+            \center{
+                \includegraphics[width=40mm]{1.png}
+                
+                Муравейник
+            }
+        \end{column}
+        \begin{column}{60mm}
+            \center{
+                \includegraphics[width=40mm]{2.png}
+
+                Улей
+            }
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Первое упоминание}
+    \LARGE
+    \begin{center}
+        1989 \vspace{1cm}
+
+        Gerardo Beni, Jing Wang \vspace{1cm}
+
+        Swarm Intelligence in Cellular Robotic Systems
+    \end{center}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Преимущества фреймворков}
+    \begin{itemize}
+        \item Простота реализации приложений.
+        \item Упрощение повторного использования кода.
+        \item Упрощение сравнения приложений.
+        \item Лучшая реализация сервисных функций.
+        \item Структурированный подход к предметной области.
+        \item Однотипный подход для решения многих задач.
+        \item Упрощение обучения.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Основные свойства АКР}
+    \begin{itemize}
+        \item Алгоритм работает в некотором адресуемом пространстве.
+        \item Единственная активная сущность --- агент.
+        \item Агент может перемещаться по пространству и изменять данные, ассоциированные с его ячейками.
+        \item Все действия агентов на каждой итерации независимы друг от друга.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[<+->]
+    \frametitle{Требования к системе}
+    \begin{enumerate}
+        \item Единая и удобная программная модель.
+        \item Высокая производительность.
+        \item Распараллеливание и распределение.
+        \item Визуализация.
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Задачи}
+    \setbeamercovered{transparent=50}
+    \begin{enumerate}
+        \item<1> Разработка единой архитектуры.
+        \item<1> Улучшение ее юзабилити.
+        \item<1> Ее оптимизация под распараллеливание и транзакции.
+        \item<1-2> Реализация транзакций.
+        \item<1> Реализация распараллеливания и распределения.
+        \item<1> Реализация визуализации.
+        \item<1>  $\cdots$
+    \end{enumerate}
+\end{frame}
+
+%\begin{frame}
+%    \frametitle{Технологии}
+%    \begin{description}
+%        \item[Архитектура:] SOLID
+%        \item[Платформа:] C\# .NET 4.0
+%        \item[Контракты:] CodeContracts
+%        \item[Распараллеливание:] PLINQ, TPL, LINQ to Events
+%        \item[Распределение:] WCF
+%    \end{description}
+%\end{frame}
+
+\begin{frame}
+    \begin{center}
+        Спасибо за внимание
+    \end{center}
+\end{frame}
+\end{document}
