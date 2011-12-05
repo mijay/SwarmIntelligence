@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example1", "Example1\Exampl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfApplication1", "WpfApplication1\WpfApplication1.csproj", "{920B8278-6167-49F4-9A75-077FD0622980}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example2", "Example2\Example2.csproj", "{C922FA30-7571-4FD4-89E1-30F4BBCDD29F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -107,6 +109,16 @@ Global
 		{920B8278-6167-49F4-9A75-077FD0622980}.Release|Mixed Platforms.Build.0 = Release|x86
 		{920B8278-6167-49F4-9A75-077FD0622980}.Release|x86.ActiveCfg = Release|x86
 		{920B8278-6167-49F4-9A75-077FD0622980}.Release|x86.Build.0 = Release|x86
+		{C922FA30-7571-4FD4-89E1-30F4BBCDD29F}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{C922FA30-7571-4FD4-89E1-30F4BBCDD29F}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{C922FA30-7571-4FD4-89E1-30F4BBCDD29F}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{C922FA30-7571-4FD4-89E1-30F4BBCDD29F}.Debug|x86.ActiveCfg = Debug|x86
+		{C922FA30-7571-4FD4-89E1-30F4BBCDD29F}.Debug|x86.Build.0 = Debug|x86
+		{C922FA30-7571-4FD4-89E1-30F4BBCDD29F}.Release|Any CPU.ActiveCfg = Release|x86
+		{C922FA30-7571-4FD4-89E1-30F4BBCDD29F}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{C922FA30-7571-4FD4-89E1-30F4BBCDD29F}.Release|Mixed Platforms.Build.0 = Release|x86
+		{C922FA30-7571-4FD4-89E1-30F4BBCDD29F}.Release|x86.ActiveCfg = Release|x86
+		{C922FA30-7571-4FD4-89E1-30F4BBCDD29F}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
