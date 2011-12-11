@@ -8,17 +8,17 @@ namespace SILibrary.General
 	[ContractClass(typeof(BiConnectedTopologyBaseContract<>))]
 	public abstract class BiConnectedTopologyBase<TCoordinate>: Topology<TCoordinate>
 	{
-		public override IEnumerable<TCoordinate> GetSuccessors(TCoordinate coord)
+		public override sealed IEnumerable<TCoordinate> GetSuccessors(TCoordinate coord)
 		{
 			return GetNeighbours(coord);
 		}
 
-		public override IEnumerable<TCoordinate> GetPredecessors(TCoordinate coord)
+		public override sealed IEnumerable<TCoordinate> GetPredecessors(TCoordinate coord)
 		{
 			return GetNeighbours(coord);
 		}
 
-		public override IEnumerable<TCoordinate> GetAdjacent(TCoordinate coord)
+		public override sealed IEnumerable<TCoordinate> GetAdjacent(TCoordinate coord)
 		{
 			return GetNeighbours(coord);
 		}

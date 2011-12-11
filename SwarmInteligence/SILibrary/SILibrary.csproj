@@ -60,6 +60,8 @@
   <ItemGroup>
     <Compile Include="General\ISystemDeclaration.cs" />
     <Compile Include="General\SystemBuilder.cs" />
+    <Compile Include="Graph\OrgraphTopology.cs" />
+    <Compile Include="Graph\GraphCoordinate.cs" />
     <Compile Include="TwoDimensional\CellSuburb.cs" />
     <Compile Include="General\Background\CachedDataLayer.cs" />
     <Compile Include="General\Background\DelegateDataLayer.cs" />

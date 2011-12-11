@@ -28,9 +28,6 @@ namespace SwarmIntelligence.Core.Space
 			       && GetSuccessors(edge.from).Contains(edge.to);
 		}
 
-		/// <summary>
-		/// 
-		/// </summary>
 		/// <remarks>Performance critical that method should be overridden.</remarks>
 		[Pure]
 		public virtual IEnumerable<TCoordinate> GetAdjacent(TCoordinate coord)
