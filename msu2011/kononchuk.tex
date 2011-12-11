@@ -1,0 +1,198 @@
+\documentclass[14pt]{beamer}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian,english]{babel}
+\usepackage{tabularx}
+\usetheme{Warsaw}
+
+
+\title{Система поддержки алгоритмов коллективного разума}
+\author[Конончук Д.О.]{Дмитрий Конончук}
+\institute{
+    Уральский Федеральный Университет \vspace{0.9em}
+
+    Научный руководитель: Окуловский Юрий Сергеевич \vspace{0.9em}
+}
+\date{\footnotesize 2011}
+\begin{document}
+
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\begin{frame}
+    \frametitle{Принцип АКР}
+    Множество простых агентов в совокупности решают сложную задачу.
+
+    \vspace{2ex}
+    Аналогии в естественном мире: муравейник, улей\dots
+\end{frame}
+
+\begin{frame}
+    \frametitle{Основополагающие работы}
+    \begin{center}
+        {\fontsize{16pt}{16pt}Ant Colony Optimization}
+
+        {\small
+            1996 {\it Dorigo M., Maniezzo V., Colorni A.} The Ant System: Optimization by a colony of cooperating agents.
+        }
+
+        \vspace{6ex}
+        {\fontsize{16pt}{16pt}Particle Swarm Optimization}
+
+        {\small
+            2001 {\it Kennedy J., Eberhart R. C.} Swarm intelligence.
+        }
+    \end{center}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Основные свойства АКР}
+    \begin{itemize}
+        \item Алгоритм итеративный.
+        \item Оперирует агентами, расположенными в некотором дискретном пространстве.
+        \item Агенты атомарны и децентрализованы.
+        \item С точками пространства ассоциированы данные.
+        \item Агент может перемещаться по пространству, читать и модифицировать данные.
+        \item Все действия агентов на каждой итерации независимы друг от друга.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Реализация АКР}
+    {\bf Хочется реализовать: } логику агентов.
+
+    \vspace{2ex}
+    \pause
+    {\bf Приходится реализовывать: } пространство, размещение данных на нем, механику перемещений агентов,~\dots
+\end{frame}
+
+\begin{frame}
+    \frametitle{Задачи фреймворка}
+    \begin{enumerate}
+        \item Единая компонентная программная модель.
+        \item Размещение агентов и данных в пространстве.
+        \item Механика перемещений и изменений данных.
+        \item Логгирование и статистика.
+        \item Визуализация.
+        \item Реализация часто используемых компонентов.
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Проблемы}
+    \begin{itemize}[<+->]
+        \item Нетривиальные пространства:
+        \begin{itemize}[<.->]
+            \item большие,
+            \item бесконечные,
+            \item сложно вычислимые,
+            \item динамические.
+        \end{itemize}
+        \item Изоляция действий агентов.
+        \item Распараллеливание вычислений.
+        \item Визуализация абстрактных пространств.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Реализация}
+    \begin{description}
+        \item[Платформа:] C\# .NET 4.0
+        \item[Визуализация:] WPF
+        \item[Распараллеливание:] TPL, PLINQ
+        \item[Контракты:] CodeContracts
+    \end{description}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Преимущества фреймворка}
+    \begin{itemize}
+        \item Простота создания приложений.
+        \item Лучшая реализация сервисных функций.
+        \item Структурированный подход к предметной области.
+        \item Упрощение обучения.
+        %\item Упрощение повторного использования кода.
+        \item Возможность сравнения приложений.
+    \end{itemize}
+\end{frame}
+
+%\begin{frame}
+%    \frametitle{Технологии}
+%    \begin{description}
+%        \item[Архитектура:] SOLID
+%        \item[Платформа:] C\# .NET 4.0
+%        \item[Контракты:] CodeContracts
+%        \item[Распараллеливание:] PLINQ, TPL, LINQ to Events
+%        \item[Распределение:] WCF
+%    \end{description}
+%\end{frame}
+
+\begin{frame}
+    \begin{center}
+        Спасибо за внимание
+    \end{center}
+\end{frame}
+
+%\begin{frame}
+%    \frametitle{АКР vs МАА}
+%    \begin{columns}[t]
+%        \begin{column}{60mm}
+%            \center{
+%                {\LARGE АКР}
+%
+%                \vspace{2ex}
+%                \fontsize{10pt}{10pt}
+%                \begin{itemize}[<+->]
+%                    \item Множество децентрализованых агентов.
+%                    \item Агенты расположены в пространстве.
+%                    \item Агенты взаимодействуют через данные.
+%                    \item Агенты принимают решения независимо.
+%                    \item Вычисления через движение.
+%                \end{itemize}
+%            }
+%        \end{column}
+%        \begin{column}{60mm}
+%            \center{
+%                {\LARGE МАА}
+%
+%                \vspace{2ex}
+%                \fontsize{10pt}{10pt}
+%                \setcounter{beamerpauses}{1}
+%                \begin{itemize}[<+->]
+%                    \item Множество децентрализованых агентов.
+%                    \item Агенты абстрактны.\newline
+%                    \item Агенты взаимодействуют через сообщения.
+%                    \item Агенты полностью независимы.\newline
+%                    \item Вычисления через коммуникацию.
+%                \end{itemize}
+%            }
+%        \end{column}
+%    \end{columns}
+%\end{frame}
+
+%\begin{frame}
+%    \frametitle{АКР vs МАА}
+%    \begin{columns}[t]
+%        \begin{column}{60mm}
+%            \center{
+%                {\LARGE АКР}
+%
+%                \vspace{2ex}
+%                \fontsize{10pt}{10pt}
+%                Задачи поиска и оптимизации.
+%            }
+%        \end{column}
+%        \begin{column}{60mm}
+%            \center{
+%                {\LARGE МАА}
+%
+%                \vspace{2ex}
+%                \fontsize{10pt}{10pt}
+%                Задачи распределения ресурсов и составления расписаний.
+%            }
+%        \end{column}
+%    \end{columns}
+%\end{frame}
+
+\end{document}
