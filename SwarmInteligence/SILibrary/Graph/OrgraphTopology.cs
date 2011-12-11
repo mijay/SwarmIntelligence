@@ -43,27 +43,19 @@ namespace SILibrary.Graph
 		}
 
 		/// <summary>
-		/// Creates the oriented graph by the adjacency list.
-		/// All nodes will be numerated as 0..(nodes count - 1).
-		/// Each element in adjacency list is edge described as (start node number, end node number).
+		/// Creates the oriented graph by the edges list.
+		/// Each element in edges list is edge described as (start node number, end node number).
 		/// </summary>
-		public static OrgraphTopology ByAdjacencyList(IEnumerable<Tuple<int, int>> adjacencyList)
+		public static OrgraphTopology ByEdgesList(IEnumerable<Tuple<int, int>> edgesList)
 		{
-			Contract.Requires(adjacencyList != null);
-			Contract.Requires(Contract.ForAll(adjacencyList, pair => pair.Item1 >= 0 && pair.Item2 >= 0));
-			Contract.Requires(adjacencyList.Distinct().Count() == adjacencyList.Count());
+			Contract.Requires(edgesList != null);
+			Contract.Requires(Contract.ForAll(edgesList, pair => pair.Item1 >= 0 && pair.Item2 >= 0));
+			Contract.Requires(edgesList.Distinct().Count() == edgesList.Count());
 
-			int maxNodeIndex = adjacencyList
-				.SelectMany(x => new[] { x.Item1, x.Item2 })
-				.Max();
-			IEnumerable<GraphCoordinate> nodes = Enumerable
-				.Range(0, maxNodeIndex + 1)
-				.Select(x => new GraphCoordinate(x));
-			IEnumerable<Edge<GraphCoordinate>> edges = adjacencyList
+			IEnumerable<Edge<GraphCoordinate>> edges = edgesList
 				.Select(x => new Edge<GraphCoordinate>(new GraphCoordinate(x.Item1),
 				                                       new GraphCoordinate(x.Item2)));
-			return new OrgraphTopology(new HashSet<GraphCoordinate>(nodes),
-			                           new HashSet<Edge<GraphCoordinate>>(edges));
+			return new OrgraphTopology(new HashSet<Edge<GraphCoordinate>>(edges));
 		}
 
 		public override bool Lays(GraphCoordinate coord)
