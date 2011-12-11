@@ -11,13 +11,13 @@ namespace SILibrary.Graph
 		public GraphTopology(ISet<Edge<GraphCoordinate>> edges)
 			: base(edges)
 		{
-			Contract.Requires(Contract.ForAll(edges, edge => edges.Contains(new Edge<GraphCoordinate>(edge.to, edge.from))));|
+			Contract.Requires(Contract.ForAll(edges, edge => edges.Contains(new Edge<GraphCoordinate>(edge.to, edge.from))));
 		}
 
 		public GraphTopology(ISet<GraphCoordinate> nodes, ISet<Edge<GraphCoordinate>> edges)
 			: base(nodes, edges)
 		{
-			Contract.Requires(Contract.ForAll(edges, edge => edges.Contains(new Edge<GraphCoordinate>(edge.to, edge.from))));|
+			Contract.Requires(Contract.ForAll(edges, edge => edges.Contains(new Edge<GraphCoordinate>(edge.to, edge.from))));
 		}
 
 		/// <summary>
