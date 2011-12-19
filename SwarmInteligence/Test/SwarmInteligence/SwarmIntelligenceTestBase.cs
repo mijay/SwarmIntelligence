@@ -16,10 +16,12 @@ namespace Test.SwarmInteligence
 
 		protected void InitializeWorld(Coordinates2D min, Coordinates2D max)
 		{
-			runner = SystemBuilder
+			var tuple = SystemBuilder
 				.Create<Coordinates2D, EmptyData, EmptyData>()
 				.WithTopology(new FourConnectedSurfaceTopology(min, max))
-				.Build(out journal);
+				.Build();
+			runner = tuple.Item1;
+			journal = tuple.Item2;
 			world = runner.World;
 		}
 	}

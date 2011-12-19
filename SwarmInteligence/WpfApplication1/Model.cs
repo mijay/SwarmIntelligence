@@ -48,14 +48,15 @@ namespace WpfApplication1
 
 		public void Initialize()
 		{
-			ILogJournal logJournal;
-			runner = SystemBuilder
+			var tuple = SystemBuilder
 				.Create<Coordinates2D, EmptyData, EmptyData>()
 				.WithTopology(new EightConnectedSurfaceTopology(min, max))
-				.Build(out logJournal);
-			logJournal.OnRecordsAdded += OnNewRecords;
-			world = runner.World;
+				.Build();
+			var logJournal = tuple.Item2;
+			runner = tuple.Item1;
+			world = tuple.Item1.World;
 
+			logJournal.OnRecordsAdded += OnNewRecords;
 			SeedAnts(wolfCount, true);
 			SeedAnts(preyCount, false);
 		}

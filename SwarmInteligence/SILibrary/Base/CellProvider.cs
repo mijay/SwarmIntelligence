@@ -3,7 +3,7 @@ using System.Collections.Concurrent;
 using System.Diagnostics.Contracts;
 using SwarmIntelligence.Infrastructure.MemoryManagement;
 
-namespace SILibrary.Common
+namespace SILibrary.Base
 {
 	public class CellProvider<TCoordinate, TNodeData, TEdgeData>: CellProviderBase<TCoordinate, TNodeData, TEdgeData>
 	{

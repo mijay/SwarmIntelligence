@@ -58,6 +58,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="General\Background\DictionaryDataLayer.cs" />
     <Compile Include="General\ISystemDeclaration.cs" />
     <Compile Include="General\SystemBuilder.cs" />
     <Compile Include="Graph\GraphTopology.cs" />
@@ -68,9 +69,9 @@
     <Compile Include="General\Background\DelegateDataLayer.cs" />
     <Compile Include="General\Background\EmptyData.cs" />
     <Compile Include="General\Background\EmptyDataLayer.cs" />
-    <Compile Include="Common\CellProvider.cs" />
-    <Compile Include="Common\DictionaryMap.cs" />
-    <Compile Include="Common\SetCell.cs" />
+    <Compile Include="Base\CellProvider.cs" />
+    <Compile Include="Base\DictionaryMap.cs" />
+    <Compile Include="Base\SetCell.cs" />
     <Compile Include="Contracts\BiConnectedTopologyBaseContract.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="General\BiConnectedTopologyBase.cs" />

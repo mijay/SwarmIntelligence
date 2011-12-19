@@ -1,5 +1,5 @@
 using System;
-using SILibrary.Common;
+using SILibrary.Base;
 using SILibrary.General.Background;
 using SwarmIntelligence;
 using SwarmIntelligence.Core;
@@ -15,18 +15,22 @@ namespace SILibrary.General
 	{
 		public static ISystemDeclaration<TCoordinate, TNodeData, TEdgeData> Create<TCoordinate, TNodeData, TEdgeData>()
 		{
-			var result = new SystemDeclaration<TCoordinate, TNodeData, TEdgeData>
-			             {
-			             	GarbageCollector = new GarbageCollector<TCoordinate, TNodeData, TEdgeData>(),
-			             	CellProvider = SetCell<TCoordinate, TNodeData, TEdgeData>.Provider(),
-			             	MapType = typeof(DictionaryMap<TCoordinate, TNodeData, TEdgeData>),
-							LogManager = new LogManager()
-			             };
-			if(typeof(TEdgeData) == typeof(EmptyData))
-				result.EdgeDataLayer = (DataLayer<Edge<TCoordinate>, TEdgeData>) ((object) new EmptyDataLayer<Edge<TCoordinate>>());
-			if(typeof(TNodeData) == typeof(EmptyData))
-				result.NodeDataLayer = (DataLayer<TCoordinate, TNodeData>) ((object) new EmptyDataLayer<TCoordinate>());
-			return result;
+			return new SystemDeclaration<TCoordinate, TNodeData, TEdgeData>
+			       {
+			       	GarbageCollector = new GarbageCollector<TCoordinate, TNodeData, TEdgeData>(),
+			       	CellProvider = SetCell<TCoordinate, TNodeData, TEdgeData>.Provider(),
+			       	MapType = typeof(DictionaryMap<TCoordinate, TNodeData, TEdgeData>),
+			       	LogManager = new LogManager(),
+			       	EdgeDataLayer = GetDataLayer<Edge<TCoordinate>, TEdgeData>(),
+			       	NodeDataLayer = GetDataLayer<TCoordinate, TNodeData>()
+			       };
+		}
+
+		private static DataLayer<TCoordinate, TData> GetDataLayer<TCoordinate, TData>()
+		{
+			if(typeof(TData) == typeof(EmptyData))
+				return (DataLayer<TCoordinate, TData>) ((object) new EmptyDataLayer<TCoordinate>());
+			return new DictionaryDataLayer<TCoordinate, TData>();
 		}
 
 		#region Nested type: SystemDeclaration
@@ -61,12 +65,12 @@ namespace SILibrary.General
 				return this;
 			}
 
-			public Runner<TCoordinate, TNodeData, TEdgeData> Build(out ILogJournal logJournal)
+			public Tuple<Runner<TCoordinate, TNodeData, TEdgeData>, ILogJournal> Build()
 			{
-				logJournal = LogManager.Journal;
 				var map = (IMap<TCoordinate, TNodeData, TEdgeData>) Activator.CreateInstance(MapType, Topology, CellProvider, LogManager.Log);
-				var world = new World<TCoordinate, TNodeData, TEdgeData>(NodeDataLayer,EdgeDataLayer, map, LogManager.Log);
-				return new Runner<TCoordinate, TNodeData, TEdgeData>(world, GarbageCollector);
+				var world = new World<TCoordinate, TNodeData, TEdgeData>(NodeDataLayer, EdgeDataLayer, map, LogManager.Log);
+				var runner = new Runner<TCoordinate, TNodeData, TEdgeData>(world, GarbageCollector);
+				return Tuple.Create(runner, LogManager.Journal);
 			}
 
 			#endregion
