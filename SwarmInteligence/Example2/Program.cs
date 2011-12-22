@@ -1,29 +1,35 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using SILibrary.General;
 using SILibrary.General.Background;
 using SILibrary.Graph;
+using SILibrary.TwoDimensional;
 using SwarmIntelligence;
 using SwarmIntelligence.Core;
+using SwarmIntelligence.Core.Space;
 using SwarmIntelligence.Infrastructure.Logging;
 
 namespace Example2
 {
-	internal class Program
-	{
-		private static World<GraphCoordinate, OdorData, EmptyData> world;
-		private static Runner<GraphCoordinate, OdorData, EmptyData> runner;
-		private static ILogJournal logger;
+    class Programnew
+    {
+        private static World<GraphCoordinate, EmptyData, DictionaryDataLayer<Edge<GraphCoordinate>, double>> _world;
+        private static Runner<GraphCoordinate, EmptyData, DictionaryDataLayer<Edge<GraphCoordinate>, double>> _runner;
+        private static ILogJournal _logger;
 
-		private static void Main(string[] args)
-		{
-			Tuple<Runner<GraphCoordinate, OdorData, EmptyData>, ILogJournal> tuple = SystemBuilder
-				.Create<GraphCoordinate, OdorData, EmptyData>()
-				.WithTopology(new GraphTopology(null))
-				.Build();
+        public static void Main(string[] args)
+        {
+            Tuple<Runner<GraphCoordinate, EmptyData, DictionaryDataLayer<Edge<GraphCoordinate>, double>>, ILogJournal>
+                tuple = SystemBuilder
+                    .Create<GraphCoordinate, EmptyData, DictionaryDataLayer<Edge<GraphCoordinate>, double>>()
+                    .WithTopology(new GraphTopology(null))
+                    .Build();
 
-			logger = tuple.Item2;
-			runner = tuple.Item1;
-			world = tuple.Item1.World;
-		}
-	}
+            _runner = tuple.Item1;
+            _logger = tuple.Item2;
+            _world = _runner.World;
+        }
+    }
 }
