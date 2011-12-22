@@ -15,7 +15,7 @@ namespace Example2
 {
     internal class Emmet : AntBase<GraphCoordinate, EmptyData, DictionaryDataLayer<WeightEdge<GraphCoordinate>, double>>
     {
-        private readonly List<GraphCoordinate> _tabuList = new List<GraphCoordinate>();
+        private List<GraphCoordinate> _tabuList = new List<GraphCoordinate>();
         private readonly SortedDictionary<GraphCoordinate, double> _notVisitedVertex = new SortedDictionary<GraphCoordinate, double>();
         private double _denumerator;
         private readonly double _alpha;
@@ -49,10 +49,15 @@ namespace Example2
         private void GetNotVisitedVertex(IOutlook<GraphCoordinate, EmptyData, DictionaryDataLayer<WeightEdge<GraphCoordinate>, double>> outlook)
         {
             var adjacent = outlook.World.Topology.GetAdjacent(outlook.Cell.Coordinate).Where(x => !_tabuList.Contains(x));
+            if (adjacent.Count() == 0)
+            {
+                _tabuList = new List<GraphCoordinate>();
+                _lenPath = 0;
+            }
             _denumerator = 0;
             foreach (var coordinate in adjacent)
             {
-                WeightEdge<GraphCoordinate> edge = ((GraphTopology)outlook.World.Topology).GetAdjacentEdge(outlook.Cell.Coordinate, coordinate);
+                var edge = ((GraphTopology)outlook.World.Topology).GetAdjacentEdge(outlook.Cell.Coordinate, coordinate);
                 var t = Math.Pow(outlook.World.EdgesData.Get(edge).Get(edge), _alpha);
                 var w = 1 / Math.Pow(edge.weight, _beta);
                 var numerator = t + w;
@@ -60,7 +65,7 @@ namespace Example2
                 _denumerator += numerator;
             }
 
-            double prevPart = 0;
+            var prevPart = 0.0;
             foreach (var node in _notVisitedVertex.Keys)
             {
                 _notVisitedVertex[node] /= _denumerator;
