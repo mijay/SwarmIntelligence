@@ -13,7 +13,7 @@ using SwarmIntelligence.Infrastructure.TurnProcessing;
 
 namespace Example2
 {
-    internal class Emmet : AntBase<GraphCoordinate, EmptyData, double>
+    internal class Emmet : AntBase<GraphCoordinate, EmptyData, TupleDataEdge>
     {
         private List<GraphCoordinate> tabuList = new List<GraphCoordinate>();
         private readonly SortedDictionary<GraphCoordinate, double> notVisitedVertex = new SortedDictionary<GraphCoordinate, double>();
@@ -24,14 +24,14 @@ namespace Example2
         private double k;
         private static readonly Random Random = new Random();
 
-        public Emmet(World<GraphCoordinate, EmptyData, double> world, double alpha, double beta, double k) : base(world)
+        public Emmet(World<GraphCoordinate, EmptyData, TupleDataEdge> world, double alpha, double beta, double k) : base(world)
         {
             this.alpha = alpha;
             this.beta = beta;
             this.k = k;
         }
 
-        public override void ProcessTurn(IOutlook<GraphCoordinate, EmptyData, double> outlook)
+        public override void ProcessTurn(IOutlook<GraphCoordinate, EmptyData, TupleDataEdge> outlook)
         {
             GetNotVisitedVertex(outlook);
             var point = Random.NextDouble();
@@ -40,13 +40,13 @@ namespace Example2
                     pair => pair.Key, pair => pair.Value);
             var coordinate = sortNodes.Where(sortNode => point < sortNode.Value).First().Key;
             this.MoveTo(coordinate);
-            var edge = (WeightEdge<GraphCoordinate>) outlook.World.Topology.GetAdjacentEdges(outlook.Cell.Coordinate).Where(x => x.to.Equals(coordinate));
-            lenPath += edge.weight;
+            var edge = outlook.World.Topology.GetAdjacentEdges(outlook.Cell.Coordinate).Where(x => x.to.Equals(coordinate)).First();
+            lenPath += outlook.World.EdgesData.Get(edge).Weight;
 
-            outlook.World.EdgesData.Set(edge, k / lenPath);
+            outlook.World.EdgesData.Set(edge, new TupleDataEdge(outlook.World.EdgesData.Get(edge).Weight, outlook.World.EdgesData.Get(edge).Odor + k / lenPath));
         }
 
-        private void GetNotVisitedVertex(IOutlook<GraphCoordinate, EmptyData, double> outlook)
+        private void GetNotVisitedVertex(IOutlook<GraphCoordinate, EmptyData, TupleDataEdge> outlook)
         {
             var adjacent = outlook.World.Topology.GetAdjacent(outlook.Cell.Coordinate).Where(x => !tabuList.Contains(x));
             if (adjacent.Count() == 0)
@@ -58,8 +58,8 @@ namespace Example2
             foreach (var coordinate in adjacent)
             {
                 var edge = ((GraphTopology)outlook.World.Topology).GetAdjacentEdge(outlook.Cell.Coordinate, coordinate);
-                var t = Math.Pow(outlook.World.EdgesData.Get(edge), alpha);
-                var w = 1 / Math.Pow(edge.weight, beta);
+                var t = Math.Pow(outlook.World.EdgesData.Get(edge).Odor, alpha);
+                var w = 1 / Math.Pow(outlook.World.EdgesData.Get(edge).Weight, beta);
                 var numerator = t + w;
                 notVisitedVertex.Add(coordinate, numerator);
                 denumerator += numerator;

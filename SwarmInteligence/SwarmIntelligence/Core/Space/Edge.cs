@@ -2,7 +2,7 @@ using System.Diagnostics.Contracts;
 
 namespace SwarmIntelligence.Core.Space
 {
-	public class Edge<TCoordinate>
+	public struct Edge<TCoordinate>
 	{
 		public readonly TCoordinate from;
 		public readonly TCoordinate to;
@@ -15,14 +15,4 @@ namespace SwarmIntelligence.Core.Space
 			this.to = to;
 		}
 	}
-
-    public class WeightEdge<TCoordinate>: Edge<TCoordinate>
-    {
-        public readonly double weight;
-
-        public WeightEdge(TCoordinate from, TCoordinate to, double weight) : base(from, to)
-        {
-            this.weight = weight;
-        }
-    }
 }

@@ -15,15 +15,15 @@ namespace Example2
 {
     class Programnew
     {
-        private static World<GraphCoordinate, EmptyData, DictionaryDataLayer<Edge<GraphCoordinate>, double>> world;
-        private static Runner<GraphCoordinate, EmptyData, DictionaryDataLayer<Edge<GraphCoordinate>, double>> runner;
+        private static World<GraphCoordinate, EmptyData, DictionaryDataLayer<Edge<GraphCoordinate>, TupleDataEdge>> world;
+        private static Runner<GraphCoordinate, EmptyData, DictionaryDataLayer<Edge<GraphCoordinate>, TupleDataEdge>> runner;
         private static ILogJournal logger;
 
         public static void Main(string[] args)
         {
-            Tuple<Runner<GraphCoordinate, EmptyData, DictionaryDataLayer<Edge<GraphCoordinate>, double>>, ILogJournal>
+            Tuple<Runner<GraphCoordinate, EmptyData, DictionaryDataLayer<Edge<GraphCoordinate>, TupleDataEdge>>, ILogJournal>
                 tuple = SystemBuilder
-                    .Create<GraphCoordinate, EmptyData, DictionaryDataLayer<Edge<GraphCoordinate>, double>>()
+                    .Create<GraphCoordinate, EmptyData, DictionaryDataLayer<Edge<GraphCoordinate>, TupleDataEdge>>()
                     .WithTopology(new GraphTopology(null))
                     .Build();
 
