@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Common;
 using SILibrary.General.Background;
 using SILibrary.Graph;
 using SwarmIntelligence;
@@ -16,7 +17,7 @@ namespace Example2
     internal class Emmet : AntBase<GraphCoordinate, EmptyData, TupleDataEdge>
     {
         private List<GraphCoordinate> tabuList = new List<GraphCoordinate>();
-        private readonly SortedDictionary<GraphCoordinate, double> notVisitedVertex = new SortedDictionary<GraphCoordinate, double>();
+        private List<MutablePair<GraphCoordinate, double >> notVisitedVertex = new List<MutablePair<GraphCoordinate, double>>();
         private double denumerator;
         private readonly double alpha;
         private readonly double beta;
@@ -35,41 +36,40 @@ namespace Example2
         {
             GetNotVisitedVertex(outlook);
             var point = Random.NextDouble();
-            var sortNodes =
-                (from entry in notVisitedVertex orderby entry.Value ascending select entry).ToDictionary(
-                    pair => pair.Key, pair => pair.Value);
-            var coordinate = sortNodes.Where(sortNode => point < sortNode.Value).First().Key;
+            var coordinate =
+                notVisitedVertex.OrderBy(entry => entry.Value).First(sortedNode => point < sortedNode.Value).Key;
             this.MoveTo(coordinate);
-            var edge = outlook.World.Topology.GetAdjacentEdges(outlook.Cell.Coordinate).Where(x => x.to.Equals(coordinate)).First();
+            var edge = new Edge<GraphCoordinate>(outlook.Cell.Coordinate, coordinate);
             lenPath += outlook.World.EdgesData.Get(edge).Weight;
 
-            outlook.World.EdgesData.Set(edge, new TupleDataEdge(outlook.World.EdgesData.Get(edge).Weight, outlook.World.EdgesData.Get(edge).Odor + k / lenPath));
+            outlook.World.EdgesData[edge] = new TupleDataEdge(outlook.World.EdgesData.Get(edge).Weight,
+                                                              outlook.World.EdgesData.Get(edge).Odor + k/lenPath);
+            tabuList.Add(coordinate);
         }
 
         private void GetNotVisitedVertex(IOutlook<GraphCoordinate, EmptyData, TupleDataEdge> outlook)
         {
-            var adjacent = outlook.World.Topology.GetAdjacent(outlook.Cell.Coordinate).Where(x => !tabuList.Contains(x));
-            if (adjacent.Count() == 0)
+            var adjacentEdge = outlook.World.Topology.GetAdjacentEdges(outlook.Cell.Coordinate).Where(x => !tabuList.Contains(x.to));
+            if (adjacentEdge.Count() == 0)
             {
-                tabuList = new List<GraphCoordinate>();
+                tabuList.Clear();
                 lenPath = 0;
             }
             denumerator = 0;
-            foreach (var coordinate in adjacent)
+
+            foreach (var edge in adjacentEdge)
             {
-                var edge = ((GraphTopology)outlook.World.Topology).GetAdjacentEdge(outlook.Cell.Coordinate, coordinate);
                 var t = Math.Pow(outlook.World.EdgesData.Get(edge).Odor, alpha);
-                var w = 1 / Math.Pow(outlook.World.EdgesData.Get(edge).Weight, beta);
+                var w = 1/Math.Pow(outlook.World.EdgesData.Get(edge).Weight, beta);
                 var numerator = t + w;
-                notVisitedVertex.Add(coordinate, numerator);
-                denumerator += numerator;
+                notVisitedVertex.Add(new MutablePair<GraphCoordinate, double>(edge.to, numerator));
             }
 
             var prevPart = 0.0;
-            foreach (var node in notVisitedVertex.Keys)
+            foreach (var t in notVisitedVertex)
             {
-                notVisitedVertex[node] /= denumerator;
-                prevPart += notVisitedVertex[node];
+                t.Value /= denumerator;
+                prevPart += t.Value;
             }
         }
     }
