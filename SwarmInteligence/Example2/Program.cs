@@ -15,9 +15,9 @@ namespace Example2
 {
     class Programnew
     {
-        private static World<GraphCoordinate, EmptyData, DictionaryDataLayer<Edge<GraphCoordinate>, double>> _world;
-        private static Runner<GraphCoordinate, EmptyData, DictionaryDataLayer<Edge<GraphCoordinate>, double>> _runner;
-        private static ILogJournal _logger;
+        private static World<GraphCoordinate, EmptyData, DictionaryDataLayer<Edge<GraphCoordinate>, double>> world;
+        private static Runner<GraphCoordinate, EmptyData, DictionaryDataLayer<Edge<GraphCoordinate>, double>> runner;
+        private static ILogJournal logger;
 
         public static void Main(string[] args)
         {
@@ -27,9 +27,9 @@ namespace Example2
                     .WithTopology(new GraphTopology(null))
                     .Build();
 
-            _runner = tuple.Item1;
-            _logger = tuple.Item2;
-            _world = _runner.World;
+            runner = tuple.Item1;
+            logger = tuple.Item2;
+            world = runner.World;
         }
     }
 }

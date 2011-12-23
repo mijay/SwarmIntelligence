@@ -13,63 +13,63 @@ using SwarmIntelligence.Infrastructure.TurnProcessing;
 
 namespace Example2
 {
-    internal class Emmet : AntBase<GraphCoordinate, EmptyData, DictionaryDataLayer<WeightEdge<GraphCoordinate>, double>>
+    internal class Emmet : AntBase<GraphCoordinate, EmptyData, double>
     {
-        private List<GraphCoordinate> _tabuList = new List<GraphCoordinate>();
-        private readonly SortedDictionary<GraphCoordinate, double> _notVisitedVertex = new SortedDictionary<GraphCoordinate, double>();
-        private double _denumerator;
-        private readonly double _alpha;
-        private readonly double _beta;
-        private readonly double _k;
-        private double _lenPath = 0;
+        private List<GraphCoordinate> tabuList = new List<GraphCoordinate>();
+        private readonly SortedDictionary<GraphCoordinate, double> notVisitedVertex = new SortedDictionary<GraphCoordinate, double>();
+        private double denumerator;
+        private readonly double alpha;
+        private readonly double beta;
+        private double lenPath = 0;
+        private double k;
         private static readonly Random Random = new Random();
 
-        public Emmet(World<GraphCoordinate, EmptyData, DictionaryDataLayer<WeightEdge<GraphCoordinate>, double>> world, double alpha, double beta, double k) : base(world)
+        public Emmet(World<GraphCoordinate, EmptyData, double> world, double alpha, double beta, double k) : base(world)
         {
-            _alpha = alpha;
-            _beta = beta;
-            _k = k;
+            this.alpha = alpha;
+            this.beta = beta;
+            this.k = k;
         }
 
-        public override void ProcessTurn(IOutlook<GraphCoordinate, EmptyData, DictionaryDataLayer<WeightEdge<GraphCoordinate>, double>> outlook)
+        public override void ProcessTurn(IOutlook<GraphCoordinate, EmptyData, double> outlook)
         {
             GetNotVisitedVertex(outlook);
             var point = Random.NextDouble();
             var sortNodes =
-                (from entry in _notVisitedVertex orderby entry.Value ascending select entry).ToDictionary(
+                (from entry in notVisitedVertex orderby entry.Value ascending select entry).ToDictionary(
                     pair => pair.Key, pair => pair.Value);
             var coordinate = sortNodes.Where(sortNode => point < sortNode.Value).First().Key;
             this.MoveTo(coordinate);
             var edge = (WeightEdge<GraphCoordinate>) outlook.World.Topology.GetAdjacentEdges(outlook.Cell.Coordinate).Where(x => x.to.Equals(coordinate));
-            _lenPath += edge.weight;
+            lenPath += edge.weight;
 
-            outlook.World.EdgesData.Get(edge).Set(edge, _k / _lenPath);
+            outlook.World.EdgesData.Set(edge, k / lenPath);
         }
 
-        private void GetNotVisitedVertex(IOutlook<GraphCoordinate, EmptyData, DictionaryDataLayer<WeightEdge<GraphCoordinate>, double>> outlook)
+        private void GetNotVisitedVertex(IOutlook<GraphCoordinate, EmptyData, double> outlook)
         {
-            var adjacent = outlook.World.Topology.GetAdjacent(outlook.Cell.Coordinate).Where(x => !_tabuList.Contains(x));
+            var adjacent = outlook.World.Topology.GetAdjacent(outlook.Cell.Coordinate).Where(x => !tabuList.Contains(x));
             if (adjacent.Count() == 0)
             {
-                _tabuList = new List<GraphCoordinate>();
-                _lenPath = 0;
+                tabuList = new List<GraphCoordinate>();
+                lenPath = 0;
             }
-            _denumerator = 0;
+            denumerator = 0;
             foreach (var coordinate in adjacent)
             {
                 var edge = ((GraphTopology)outlook.World.Topology).GetAdjacentEdge(outlook.Cell.Coordinate, coordinate);
-                var t = Math.Pow(outlook.World.EdgesData.Get(edge).Get(edge), _alpha);
-                var w = 1 / Math.Pow(edge.weight, _beta);
+                var t = Math.Pow(outlook.World.EdgesData.Get(edge), alpha);
+                var w = 1 / Math.Pow(edge.weight, beta);
                 var numerator = t + w;
-                _notVisitedVertex.Add(coordinate, numerator);
-                _denumerator += numerator;
+                notVisitedVertex.Add(coordinate, numerator);
+                denumerator += numerator;
             }
 
             var prevPart = 0.0;
-            foreach (var node in _notVisitedVertex.Keys)
+            foreach (var node in notVisitedVertex.Keys)
             {
-                _notVisitedVertex[node] /= _denumerator;
-                prevPart += _notVisitedVertex[node];
+                notVisitedVertex[node] /= denumerator;
+                prevPart += notVisitedVertex[node];
             }
         }
     }
