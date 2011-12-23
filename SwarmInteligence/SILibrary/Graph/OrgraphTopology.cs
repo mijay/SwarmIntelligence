@@ -82,10 +82,5 @@ namespace SILibrary.Graph
 		{
 			return edges.Contains((Edge<GraphCoordinate>)edge);
 		}
-
-        public Edge<GraphCoordinate> GetAdjacentEdge(GraphCoordinate from, GraphCoordinate to)
-        {
-            return edges.Where(e => (e.from.Equals(from) && e.to.Equals(to))).First();
-        }
 	}
 }
