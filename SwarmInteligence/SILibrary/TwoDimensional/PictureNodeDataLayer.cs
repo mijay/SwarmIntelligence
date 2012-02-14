@@ -18,10 +18,10 @@ namespace SILibrary.TwoDimensional
 
 		public PictureNodeDataLayer(SurfaceTopology topology, Bitmap data)
 		{
-			this.topology = topology;
 			Contract.Requires(topology != null && data != null);
 			Contract.Requires(topology.BottomRight.x - topology.TopLeft.x == data.Width);
 			Contract.Requires(topology.BottomRight.y - topology.TopLeft.y == data.Height);
+			this.topology = topology;
 			bitmap = new FastBitmap(data);
 		}
 
@@ -34,22 +34,17 @@ namespace SILibrary.TwoDimensional
 
 		#endregion
 
-		private Color GetColor(Coordinates2D key)
-		{
-			return bitmap.GetColor(key.x, key.y);
-		}
-
 		#region Implementation of INodesDataLayer<Coordinates2D,Color>
 
 		public IEnumerator<KeyValuePair<Coordinates2D, Color>> GetEnumerator()
 		{
-			return topology.GetAllPoints().Select(x => new KeyValuePair<Coordinates2D, Color>(x, GetColor(x))).GetEnumerator();
+			return topology.GetAllPoints().Select(x => new KeyValuePair<Coordinates2D, Color>(x, Get(x))).GetEnumerator();
 		}
 
 		public bool TryGet(Coordinates2D key, out Color value)
 		{
 			Requires.True<IndexOutOfRangeException>(Topology.Lays(key));
-			value = GetColor(key);
+			value = Get(key);
 			return true;
 		}
 
@@ -61,6 +56,11 @@ namespace SILibrary.TwoDimensional
 		public Topology<Coordinates2D> Topology
 		{
 			get { return topology; }
+		}
+
+		public Color Get(Coordinates2D key)
+		{
+			return bitmap.GetColor(key.x, key.y);
 		}
 
 		#endregion

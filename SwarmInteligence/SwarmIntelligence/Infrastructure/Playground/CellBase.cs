@@ -9,7 +9,22 @@ namespace SwarmIntelligence.Infrastructure.Playground
 	public abstract class CellBase<TCoordinate, TNodeData, TEdgeData>: ICell<TCoordinate, TNodeData, TEdgeData>
 		where TCoordinate: ICoordinate<TCoordinate>
 	{
+		protected CellBase(Map<TCoordinate, TNodeData, TEdgeData> map, TCoordinate coordinate)
+		{
+			Coordinate = coordinate;
+			Map = map;
+		}
+
+		internal Map<TCoordinate, TNodeData, TEdgeData> Map { get; private set; }
+
 		#region ICell<TCoordinate,TNodeData,TEdgeData> Members
+
+		public TCoordinate Coordinate { get; internal set; }
+
+		IMap<TCoordinate, TNodeData, TEdgeData> ICell<TCoordinate, TNodeData, TEdgeData>.Map
+		{
+			get { return Map; }
+		}
 
 		public abstract IEnumerator<IAnt<TCoordinate, TNodeData, TEdgeData>> GetEnumerator();
 

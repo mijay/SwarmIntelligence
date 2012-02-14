@@ -5,7 +5,7 @@ using System.Diagnostics.Contracts;
 using System.Linq;
 using Common.Collections.Extensions;
 using NUnit.Framework;
-using SILibrary.General.Background;
+using SILibrary.Base;
 using SILibrary.TwoDimensional;
 using SwarmIntelligence;
 using SwarmIntelligence.Core;
@@ -103,7 +103,7 @@ namespace Test.SwarmInteligence.ContextIndependendAnt
 			timer.Stop();
 			Debug.WriteLine(string.Format("jumps - {0}; ants - {1}; time - {2} ms", jumps, ants, timer.ElapsedMilliseconds));
 
-			ICell<Coordinates2D, EmptyData, EmptyData> cell = world.Map.Single();
+			ICell<Coordinates2D, EmptyData, EmptyData> cell = world.Map.Single().Value;
 			Assert.That(cell.Coordinate, Is.EqualTo(lastStep));
 			CollectionAssert.AreEquivalent(seededAnts, cell);
 		}

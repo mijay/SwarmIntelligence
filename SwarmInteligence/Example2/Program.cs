@@ -1,25 +1,24 @@
 ﻿using System;
+using SILibrary.Base;
 using SILibrary.General;
-using SILibrary.General.Background;
 using SILibrary.Graph;
 using SwarmIntelligence;
 using SwarmIntelligence.Core;
-using SwarmIntelligence.Core.Space;
 using SwarmIntelligence.Infrastructure.Logging;
 
 namespace Example2
 {
 	internal class Programnew
 	{
-		private static World<GraphCoordinate, EmptyData, DictionaryDataLayer<Edge<GraphCoordinate>, TupleDataEdge>> world;
-		private static Runner<GraphCoordinate, EmptyData, DictionaryDataLayer<Edge<GraphCoordinate>, TupleDataEdge>> runner;
+		private static World<GraphCoordinate, EmptyData, EdgeData> world;
+		private static Runner<GraphCoordinate, EmptyData, EdgeData> runner;
 		private static ILogJournal logger;
 
 		public static void Main(string[] args)
 		{
-			Tuple<Runner<GraphCoordinate, EmptyData, DictionaryDataLayer<Edge<GraphCoordinate>, TupleDataEdge>>, ILogJournal>
+			Tuple<Runner<GraphCoordinate, EmptyData, EdgeData>, ILogJournal>
 				tuple = SystemBuilder
-					.Create<GraphCoordinate, EmptyData, DictionaryDataLayer<Edge<GraphCoordinate>, TupleDataEdge>>()
+					.Create<GraphCoordinate, EmptyData, EdgeData>()
 					.WithTopology(new GraphTopology(null))
 					.Build();
 

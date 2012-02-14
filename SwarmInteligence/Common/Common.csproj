@@ -98,7 +98,7 @@
     <Compile Include="Tasks\TaskExtensions.cs" />
     <Compile Include="Tasks\TaskFactoryExtension.cs" />
     <Compile Include="TypeExtensions.cs" />
-    <Compile Include="UreachableCodeException.cs" />
+    <Compile Include="UnreachableCodeException.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

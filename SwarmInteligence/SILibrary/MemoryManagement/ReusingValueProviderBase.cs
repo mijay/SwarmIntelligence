@@ -21,12 +21,12 @@ namespace SILibrary.MemoryManagement
 				Modify(result, key);
 				return result;
 			}
-			return Create();
+			return Create(key);
 		}
 
 		#endregion
 
-		protected abstract TValue Create();
+		protected abstract TValue Create(TKey key);
 		protected abstract void Modify(TValue value, TKey newKey);
 	}
 }

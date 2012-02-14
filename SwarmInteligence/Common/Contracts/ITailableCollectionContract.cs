@@ -12,7 +12,7 @@ namespace Common.Contracts
 
 		public IEnumerator<T> GetEnumerator()
 		{
-			throw new UreachableCodeException();
+			throw new UnreachableCodeException();
 		}
 
 		IEnumerator IEnumerable.GetEnumerator()
@@ -29,7 +29,7 @@ namespace Common.Contracts
 			get
 			{
 				Contract.Requires(index >= 0 && index < Count);
-				throw new UreachableCodeException();
+				throw new UnreachableCodeException();
 			}
 		}
 
@@ -38,14 +38,14 @@ namespace Common.Contracts
 			get
 			{
 				Contract.Ensures(Contract.Result<long>() >= 0);
-				throw new UreachableCodeException();
+				throw new UnreachableCodeException();
 			}
 		}
 
 		public IEnumerable<T> ReadFrom(long index)
 		{
 			Contract.Requires(index >= 0 && index < Count);
-			throw new UreachableCodeException();
+			throw new UnreachableCodeException();
 		}
 
 		#endregion

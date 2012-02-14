@@ -13,19 +13,19 @@ namespace SwarmIntelligence.Contracts
 
 		public override bool Lays(TCoordinate coord)
 		{
-			throw new UreachableCodeException();
+			throw new UnreachableCodeException();
 		}
 
 		public override IEnumerable<TCoordinate> GetSuccessors(TCoordinate coord)
 		{
 			Contract.Requires(Lays(coord));
-			throw new UreachableCodeException();
+			throw new UnreachableCodeException();
 		}
 
 		public override IEnumerable<TCoordinate> GetPredecessors(TCoordinate coord)
 		{
 			Contract.Requires(Lays(coord));
-			throw new UreachableCodeException();
+			throw new UnreachableCodeException();
 		}
 
 		#endregion

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Common;
 using Common.Collections.Extensions;
-using SILibrary.General.Background;
+using SILibrary.Base;
 using SILibrary.Graph;
 using SwarmIntelligence;
 using SwarmIntelligence.Core;
@@ -12,7 +12,7 @@ using SwarmIntelligence.Infrastructure.Playground;
 
 namespace Example2
 {
-	internal class Emmet: AntBase<GraphCoordinate, EmptyData, TupleDataEdge>
+	internal class Emmet: AntBase<GraphCoordinate, EmptyData, EdgeData>
 	{
 		private static readonly Random random = new Random();
 		private readonly double alpha;
@@ -23,7 +23,7 @@ namespace Example2
 		private double denumerator;
 		private double lenPath;
 
-		public Emmet(World<GraphCoordinate, EmptyData, TupleDataEdge> world, double alpha, double beta, double k)
+		public Emmet(World<GraphCoordinate, EmptyData, EdgeData> world, double alpha, double beta, double k)
 			: base(world)
 		{
 			this.alpha = alpha;
@@ -41,9 +41,9 @@ namespace Example2
 				.Key;
 			var edge = new Edge<GraphCoordinate>(Coordinate, coordinate);
 
-			TupleDataEdge edgeData = World.EdgesData.Get(edge);
-			lenPath += edgeData.Weight;
-			edgeData.Odor += k / lenPath;
+			EdgeData data = World.EdgesData.Get(edge);
+			lenPath += data.Weight;
+			data.Odor += k / lenPath;
 
 			this.MoveTo(coordinate);
 			tabuList.Add(coordinate);
@@ -62,9 +62,9 @@ namespace Example2
 			denumerator = 0;
 
 			foreach(var edge in adjacentEdge) {
-				TupleDataEdge edgeData = World.EdgesData.Get(edge);
-				double t = Math.Pow(edgeData.Odor, alpha);
-				double w = 1 / Math.Pow(edgeData.Weight, beta);
+				EdgeData data = World.EdgesData.Get(edge);
+				double t = Math.Pow(data.Odor, alpha);
+				double w = 1 / Math.Pow(data.Weight, beta);
 				double numerator = t + w;
 				notVisitedVertex.Add(new MutablePair<GraphCoordinate, double>(edge.to, numerator));
 			}

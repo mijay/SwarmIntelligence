@@ -12,7 +12,7 @@ namespace SwarmIntelligence.Contracts
 		public void Collect(MappingBase<TKey, TValue> mappingBase)
 		{
 			Contract.Requires(mappingBase != null);
-			throw new UreachableCodeException();
+			throw new UnreachableCodeException();
 		}
 
 		#endregion

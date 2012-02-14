@@ -14,7 +14,7 @@ namespace SILibrary.Contracts
 		protected override IEnumerable<TCoordinate> GetNeighbours(TCoordinate coord)
 		{
 			Contract.Ensures(!Contract.Result<IEnumerable<TCoordinate>>().IsEmpty());
-			throw new UreachableCodeException();
+			throw new UnreachableCodeException();
 		}
 	}
 }

@@ -21,13 +21,13 @@ namespace SwarmIntelligence.Infrastructure.Playground
 		protected internal World<TCoordinate, TNodeData, TEdgeData> World { get; private set; }
 		protected internal ILog Log { get; private set; }
 
-		internal void ProcessTurn(KeyValuePair<TCoordinate, CellBase<TCoordinate, TNodeData, TEdgeData>> pair)
+		internal void ProcessTurn(CellBase<TCoordinate, TNodeData, TEdgeData> cell)
 		{
-			Contract.Requires(pair.Value != null);
+			Contract.Requires(cell != null && cell.Map == World.Map);
 			if(removed)
 				return;
-			Cell = pair.Value;
-			Coordinate = pair.Key;
+			Cell = cell;
+			Coordinate = cell.Coordinate;
 			ProcessTurn();
 		}
 

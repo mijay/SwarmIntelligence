@@ -14,12 +14,12 @@ namespace SwarmIntelligence.Contracts
 		public bool TryGet(TKey coordinate, out TValue value)
 		{
 			Contract.Ensures(Contract.Result<bool>() ? !Contract.ValueAtReturn(out value).Equals(default(TValue)) : true);
-			throw new UreachableCodeException();
+			throw new UnreachableCodeException();
 		}
 
 		public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
 		{
-			throw new UreachableCodeException();
+			throw new UnreachableCodeException();
 		}
 
 		IEnumerator IEnumerable.GetEnumerator()

@@ -25,6 +25,11 @@ namespace SwarmIntelligence.Infrastructure.Data
 
 		public Topology<TCoordinates> Topology { get; private set; }
 
+		public TNodeData Get(TCoordinates key)
+		{
+			return mappingBase.Get(key);
+		}
+
 		public bool TryGet(TCoordinates key, out TNodeData value)
 		{
 			Requires.True<IndexOutOfRangeException>(Topology.Lays(key));

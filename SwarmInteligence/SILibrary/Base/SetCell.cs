@@ -12,6 +12,11 @@ namespace SILibrary.Base
 		private readonly ConcurrentSet<IAnt<TCoordinate, TNodeData, TEdgeData>> set =
 			new ConcurrentSet<IAnt<TCoordinate, TNodeData, TEdgeData>>();
 
+		public SetCell(Map<TCoordinate, TNodeData, TEdgeData> map, TCoordinate coordinate)
+			: base(map, coordinate)
+		{
+		}
+
 		#region Overrides of Cell<TCoordinate,TNodeData,TEdgeData>
 
 		public override IEnumerator<IAnt<TCoordinate, TNodeData, TEdgeData>> GetEnumerator()

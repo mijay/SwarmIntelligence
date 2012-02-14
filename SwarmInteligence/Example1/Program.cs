@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
 using Common.Collections.Extensions;
+using SILibrary.Base;
 using SILibrary.General;
-using SILibrary.General.Background;
 using SILibrary.TwoDimensional;
 using SwarmIntelligence;
 using SwarmIntelligence.Core;

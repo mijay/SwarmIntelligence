@@ -4,7 +4,6 @@ using Common.Collections.Extensions;
 using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Space;
 using SwarmIntelligence.Infrastructure.Logging;
-using SwarmIntelligence.Infrastructure.MemoryManagement;
 using SwarmIntelligence.Infrastructure.Playground;
 using SwarmIntelligence.Internal;
 
@@ -13,16 +12,13 @@ namespace SwarmIntelligence
 	public class Runner<TCoordinate, TNodeData, TEdgeData>
 		where TCoordinate: ICoordinate<TCoordinate>
 	{
-		private readonly IGarbageCollector<TCoordinate, TNodeData, TEdgeData> garbageCollector;
 		private readonly Map<TCoordinate, TNodeData, TEdgeData> map;
 
-		public Runner(World<TCoordinate, TNodeData, TEdgeData> world, IGarbageCollector<TCoordinate, TNodeData, TEdgeData> garbageCollector)
+		public Runner(World<TCoordinate, TNodeData, TEdgeData> world)
 		{
-			Contract.Requires(world != null && garbageCollector != null && garbageCollector.Map == null);
+			Contract.Requires(world != null);
 			World = world;
 			map = world.Map.Base();
-			this.garbageCollector = garbageCollector;
-			garbageCollector.AttachTo(map);
 		}
 
 		public World<TCoordinate, TNodeData, TEdgeData> World { get; private set; }
@@ -32,7 +28,6 @@ namespace SwarmIntelligence
 			World.Log.Log(CommonLogTypes.TurnStarted);
 			AntContext[] contexts = SelectContext();
 			RunTurn(contexts);
-			garbageCollector.Collect();
 			World.Log.Log(CommonLogTypes.TurnDone);
 		}
 
@@ -45,7 +40,7 @@ namespace SwarmIntelligence
 		{
 			return map
 				.AsParallel()
-				.Select(cell => cell.Base())
+				.Select(cell => cell.Value.Base())
 				.SelectMany(cellBase => cellBase.Select(ant => new AntContext { Ant = ant.Base(), Cell = cellBase }))
 				.ToArray();
 		}

@@ -12,7 +12,7 @@ namespace SwarmIntelligence.Contracts
 		public void Log(string eventType, params object[] eventArgs)
 		{
 			Contract.Requires(!string.IsNullOrEmpty(eventType) && eventArgs != null);
-			throw new UreachableCodeException();
+			throw new UnreachableCodeException();
 		}
 
 		#endregion

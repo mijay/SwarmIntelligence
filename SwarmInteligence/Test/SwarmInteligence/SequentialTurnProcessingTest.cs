@@ -1,7 +1,7 @@
 using System;
 using Common.Collections.Extensions;
 using NUnit.Framework;
-using SILibrary.General.Background;
+using SILibrary.Base;
 using SILibrary.TwoDimensional;
 using SwarmIntelligence;
 using SwarmIntelligence.Core;

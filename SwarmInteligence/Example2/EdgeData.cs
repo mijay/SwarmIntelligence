@@ -1,11 +1,11 @@
 ﻿namespace Example2
 {
-	internal class TupleDataEdge
+	internal class EdgeData
 	{
 		public double Odor;
 		public double Weight;
 
-		public TupleDataEdge(double weight, double odor)
+		public EdgeData(double weight, double odor)
 		{
 			Weight = weight;
 			Odor = odor;

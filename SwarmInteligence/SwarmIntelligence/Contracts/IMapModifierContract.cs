@@ -14,7 +14,7 @@ namespace SwarmIntelligence.Contracts
 
 		public void Dispose()
 		{
-			throw new UreachableCodeException();
+			throw new UnreachableCodeException();
 		}
 
 		#endregion
@@ -26,7 +26,7 @@ namespace SwarmIntelligence.Contracts
 			get
 			{
 				Contract.Ensures(Contract.Result<IMap<TCoordinate, TNodeData, TEdgeData>>() != null);
-				throw new UreachableCodeException();
+				throw new UnreachableCodeException();
 			}
 		}
 
@@ -34,7 +34,7 @@ namespace SwarmIntelligence.Contracts
 		{
 			Contract.Requires(ant != null);
 			Contract.Requires(Map.Topology.Lays(coordinate));
-			throw new UreachableCodeException();
+			throw new UnreachableCodeException();
 		}
 
 		public void RemoveAt(IAnt<TCoordinate, TNodeData, TEdgeData> ant, TCoordinate coordinate)
@@ -42,7 +42,7 @@ namespace SwarmIntelligence.Contracts
 			Contract.Requires(ant != null);
 			Contract.Requires(Map.Topology.Lays(coordinate));
 			//Contract.Requires(Map.Get(coordinate).Contains(ant));
-			throw new UreachableCodeException();
+			throw new UnreachableCodeException();
 		}
 
 		#endregion

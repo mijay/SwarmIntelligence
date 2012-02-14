@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
+using SILibrary.Base;
 using SILibrary.General;
-using SILibrary.General.Background;
 using SILibrary.TwoDimensional;
 using SwarmIntelligence;
 using SwarmIntelligence.Core;

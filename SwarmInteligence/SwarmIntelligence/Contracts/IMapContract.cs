@@ -18,13 +18,15 @@ namespace SwarmIntelligence.Contracts
 		{
 			Contract.EnsuresOnThrow<IndexOutOfRangeException>(!Topology.Lays(key));
 			Contract.Ensures(!Contract.Result<bool>() || Topology.Lays(key));
+			Contract.Ensures(!Contract.Result<bool>() || Contract.ValueAtReturn(out value).Coordinate.Equals(key));
+			Contract.Ensures(!Contract.Result<bool>() || Contract.ValueAtReturn(out value).Map == this);
 
-			throw new UreachableCodeException();
+			throw new UnreachableCodeException();
 		}
 
 		public IEnumerator<KeyValuePair<TCoordinate, ICell<TCoordinate, TNodeData, TEdgeData>>> GetEnumerator()
 		{
-			throw new UreachableCodeException();
+			throw new UnreachableCodeException();
 		}
 
 		IEnumerator IEnumerable.GetEnumerator()
@@ -34,7 +36,11 @@ namespace SwarmIntelligence.Contracts
 
 		public Topology<TCoordinate> Topology
 		{
-			get { throw new UreachableCodeException(); }
+			get
+			{
+				Contract.Ensures(Contract.Result<Topology<TCoordinate>>() != null);
+				throw new UnreachableCodeException();
+			}
 		}
 
 		#endregion

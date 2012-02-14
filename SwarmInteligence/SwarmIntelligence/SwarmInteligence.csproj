@@ -72,6 +72,7 @@
     <Compile Include="Contracts\ILogContract.cs" />
     <Compile Include="Contracts\NodesDataLayerContract.cs" />
     <Compile Include="Contracts\TopologyContract.cs" />
+    <Compile Include="Core\Data\IDataLayer.cs" />
     <Compile Include="Core\Data\IEdgesDataLayer.cs" />
     <Compile Include="Core\Data\INodesDataLayer.cs" />
     <Compile Include="Core\IMapping.cs" />

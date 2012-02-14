@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Common.Collections.Extensions;
-using SILibrary.General.Background;
+using SILibrary.Base;
 using SILibrary.TwoDimensional;
 using SwarmIntelligence;
 using SwarmIntelligence.Core;
@@ -56,7 +56,7 @@ namespace WpfApplication1
 			double preyWeight = 0;
 			foreach(PreyAnt preyAnt in target.OfType<PreyAnt>()) {
 				preyWeight += preyAnt.Weight;
-				this.Kill(target.Coordinate, preyAnt);
+				this.Kill(preyAnt);
 			}
 			Weight = (int) Math.Min(6, preyWeight * MassPrey + Weight);
 			this.MoveTo(target.Coordinate);
