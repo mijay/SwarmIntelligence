@@ -6,10 +6,17 @@ using SwarmIntelligence.Contracts;
 
 namespace SwarmIntelligence.Core.Space
 {
+	/// <summary>
+	/// Class that represents the topology of the space specified by coordinates of type <typeparamref name="TCoordinate"/>
+	/// </summary>
+	/// <typeparam name="TCoordinate">Type of coordinates in represented space.</typeparam>
 	[ContractClass(typeof(TopologyContract<>))]
 	public abstract class Topology<TCoordinate>
 		where TCoordinate: ICoordinate<TCoordinate>
 	{
+		/// <summary>
+		/// Checks if the <paramref name="coord"/> lays in space.
+		/// </summary>
 		[Pure]
 		public abstract bool Lays(TCoordinate coord);
 

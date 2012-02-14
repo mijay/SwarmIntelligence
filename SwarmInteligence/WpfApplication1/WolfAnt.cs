@@ -18,9 +18,9 @@ namespace WpfApplication1
 		{
 		}
 
-		public override void ProcessTurn(IOutlook<Coordinates2D, EmptyData, EmptyData> outlook)
+		public override void ProcessTurn()
 		{
-			ICell<Coordinates2D, EmptyData, EmptyData>[] cellsWithPreys = outlook.Cell
+			ICell<Coordinates2D, EmptyData, EmptyData>[] cellsWithPreys = Cell
 				.GetSuburbCells(speed)
 				.Where(cell => cell.OfType<PreyAnt>().IsNotEmpty())
 				.ToArray();
@@ -30,7 +30,7 @@ namespace WpfApplication1
 				EatPreysAt(target);
 			} else {
 				Weight--;
-				Coordinates2D[] allCells = outlook.Cell
+				Coordinates2D[] allCells = Cell
 					.GetSuburb(speed)
 					.ToArray();
 				Coordinates2D cellToGo = allCells[Random.Next(allCells.Length)];
@@ -39,16 +39,16 @@ namespace WpfApplication1
 
 			if(Weight == 6) {
 				Weight = 3;
-				AddCloneToEmptyCell(outlook);
+				AddCloneToEmptyCell();
 			} else if(Weight <= 0)
-				this.RemoveFrom(outlook.Coordinate, this);
+				this.RemoveFrom(Coordinate, this);
 		}
 
-		private void AddCloneToEmptyCell(IOutlook<Coordinates2D, EmptyData, EmptyData> outlook)
+		private void AddCloneToEmptyCell()
 		{
-			Coordinates2D[] emptyCells = GetEmptySuburbCells(outlook, reproductionRadius);
+			Coordinates2D[] emptyCells = GetEmptySuburbCells(reproductionRadius);
 			Coordinates2D cellToAddTo = emptyCells[Random.Next(emptyCells.Length)];
-			this.AddTo(new WolfAnt(outlook.World, Weight), cellToAddTo);
+			this.AddTo(new WolfAnt(World, Weight), cellToAddTo);
 		}
 
 		private void EatPreysAt(ICell<Coordinates2D, EmptyData, EmptyData> target)

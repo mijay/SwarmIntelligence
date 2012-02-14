@@ -69,7 +69,6 @@
     <Compile Include="Contracts\IAntContract.cs" />
     <Compile Include="Contracts\IMapContract.cs" />
     <Compile Include="Contracts\ILogContract.cs" />
-    <Compile Include="Core\Playground\IOutlook.cs" />
     <Compile Include="Contracts\TopologyContract.cs" />
     <Compile Include="Core\World.cs" />
     <Compile Include="Core\DataLayer.cs" />
@@ -92,7 +91,6 @@
     <Compile Include="Contracts\IGarbageCollectorContract.cs" />
     <Compile Include="Infrastructure\MemoryManagement\MapBase.cs" />
     <Compile Include="Infrastructure\TurnProcessing\AntBase.cs" />
-    <Compile Include="Infrastructure\TurnProcessing\Outlook.cs" />
     <Compile Include="Internal\Helpers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Core\Playground\IAnt.cs" />

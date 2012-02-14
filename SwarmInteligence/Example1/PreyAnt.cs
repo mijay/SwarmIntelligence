@@ -5,7 +5,6 @@ using SILibrary.General.Background;
 using SILibrary.TwoDimensional;
 using SwarmIntelligence;
 using SwarmIntelligence.Core;
-using SwarmIntelligence.Core.Playground;
 using SwarmIntelligence.Infrastructure.TurnProcessing;
 
 namespace Example1
@@ -19,15 +18,15 @@ namespace Example1
 		{
 		}
 
-		public override void ProcessTurn(IOutlook<Coordinates2D, EmptyData, EmptyData> outlook)
+		public override void ProcessTurn()
 		{
-			Coordinates2D[] cellsWithWolfs = outlook.Cell
+			Coordinates2D[] cellsWithWolfs = Cell
 				.GetSuburbCells(Speed)
 				.Where(cell => cell.OfType<WolfAnt>().IsNotEmpty())
 				.Select(cell => cell.Coordinate)
 				.ToArray();
 
-			Coordinates2D[] cellsToGoInto = outlook.Cell
+			Coordinates2D[] cellsToGoInto = Cell
 				.GetSuburb(Speed)
 				.Except(cellsWithWolfs)
 				.ToArray();

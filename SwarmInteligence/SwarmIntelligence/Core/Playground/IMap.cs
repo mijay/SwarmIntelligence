@@ -5,10 +5,19 @@ using SwarmIntelligence.Core.Space;
 
 namespace SwarmIntelligence.Core.Playground
 {
+	/// <summary>
+	/// Class that represents the <see cref="ICell{TCoordinate,TNodeData,TEdgeData}"/>s associated with points in current space.
+	/// </summary>
+	/// <typeparam name="TCoordinate">Type of coordinates in represented space.</typeparam>
+	/// <typeparam name="TNodeData">Type of data associated with points in current space.</typeparam>
+	/// <typeparam name="TEdgeData">Type of data associated with edges between point in current space.</typeparam>
 	[ContractClass(typeof(IMapContract<,,>))]
 	public interface IMap<TCoordinate, TNodeData, TEdgeData>: IEnumerable<ICell<TCoordinate, TNodeData, TEdgeData>>
 		where TCoordinate: ICoordinate<TCoordinate>
 	{
+		/// <summary>
+		/// <see cref="Topology{TCoordinate}"/> of the current sapce.
+		/// </summary>
 		[Pure]
 		Topology<TCoordinate> Topology { get; }
 
@@ -18,7 +27,7 @@ namespace SwarmIntelligence.Core.Playground
 		/// </summary>
 		/// <param name="coordinate">Coordinate to check.</param>
 		/// <param name="cell"><see cref="ICell{TCoordinate,TNodeData,TEdgeData}"/> found in <see cref="IMap{TCoordinate,TNodeData,TEdgeData}"/> at given coordinate.</param>
-		/// <returns>true if <paramref name="cell"/> was found. Otherwise - false.</returns>
+		/// <returns><c>true</c> if <paramref name="cell"/> was found. Otherwise - <c>false</c>.</returns>
 		[Pure]
 		bool TryGet(TCoordinate coordinate, out ICell<TCoordinate, TNodeData, TEdgeData> cell);
 	}

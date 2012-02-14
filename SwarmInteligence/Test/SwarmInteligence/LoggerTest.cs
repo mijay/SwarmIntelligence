@@ -7,7 +7,6 @@ using SILibrary.General.Background;
 using SILibrary.TwoDimensional;
 using SwarmIntelligence;
 using SwarmIntelligence.Core;
-using SwarmIntelligence.Core.Playground;
 using SwarmIntelligence.Infrastructure.Logging;
 using SwarmIntelligence.Infrastructure.TurnProcessing;
 using SwarmIntelligence.Specialized;
@@ -38,12 +37,12 @@ namespace Test.SwarmInteligence
 			{
 			}
 
-			public override void ProcessTurn(IOutlook<Coordinates2D, EmptyData, EmptyData> outlook)
+			public override void ProcessTurn()
 			{
 				int x = r.Next(0, 101);
 				int y = r.Next(0, 101);
 
-				outlook.Log.Log("test", Interlocked.Increment(ref number));
+				Log.Log("test", Interlocked.Increment(ref number));
 
 				this.MoveTo(new Coordinates2D(x, y));
 			}

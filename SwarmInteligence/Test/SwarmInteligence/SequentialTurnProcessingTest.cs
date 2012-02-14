@@ -34,13 +34,13 @@ namespace Test.SwarmInteligence
 
 			#region Overrides of AntBase<Coordinates2D,EmptyData,EmptyData>
 
-			public override void ProcessTurn(IOutlook<Coordinates2D, EmptyData, EmptyData> outlook)
+			public override void ProcessTurn()
 			{
 				var center = new Coordinates2D(2, 2);
 
 				ICell<Coordinates2D, EmptyData, EmptyData> cell;
 				IAnt<Coordinates2D, EmptyData, EmptyData> ant;
-				if(outlook.Map.TryGet(center, out cell)
+				if(World.Map.TryGet(center, out cell)
 				   && cell.TrySingle(out ant))
 					AntInCenterFound();
 				else

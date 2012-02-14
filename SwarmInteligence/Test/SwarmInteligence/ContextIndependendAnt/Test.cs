@@ -83,7 +83,7 @@ namespace Test.SwarmInteligence.ContextIndependendAnt
 
 			#region Overrides of IAnt<Coordinates2D,EmptyData,EmptyData>
 
-			public override void ProcessTurn(IOutlook<Coordinates2D, EmptyData, EmptyData> outlook)
+			public override void ProcessTurn()
 			{
 				this.MoveTo(points.Dequeue());
 			}

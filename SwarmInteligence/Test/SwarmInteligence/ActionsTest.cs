@@ -31,24 +31,22 @@ namespace Test.SwarmInteligence
 
 			#region Overrides of AntBase<Coordinates2D,EmptyData,EmptyData>
 
-			public override void ProcessTurn(IOutlook<Coordinates2D, EmptyData, EmptyData> outlook)
+			public override void ProcessTurn()
 			{
-				Validate(outlook, new Coordinates2D(3, 3));
+				Validate(new Coordinates2D(3, 3));
 				this.MoveTo(new Coordinates2D(1, 1));
-				Validate(outlook, new Coordinates2D(1, 1));
+				Validate(new Coordinates2D(1, 1));
 				this.MoveTo(new Coordinates2D(2, 0));
-				Validate(outlook, new Coordinates2D(2, 0));
+				Validate(new Coordinates2D(2, 0));
 			}
 
-			private void Validate(IOutlook<Coordinates2D, EmptyData, EmptyData> outlook, Coordinates2D coordinate)
+			private void Validate(Coordinates2D coordinate)
 			{
-				Assert.AreEqual(outlook.Me, this);
+				Assert.AreEqual(Coordinate, coordinate);
 				ICell<Coordinates2D, EmptyData, EmptyData> cell;
-				Assert.That(outlook.Map.TryGet(outlook.Coordinate, out cell));
-				Assert.AreEqual(outlook.Cell, cell);
+				Assert.That(World.Map.TryGet(Coordinate, out cell));
+				Assert.AreEqual(Cell, cell);
 				Assert.That(cell.Contains(this));
-				Assert.AreEqual(cell.Coordinate, outlook.Coordinate);
-				Assert.AreEqual(cell.Coordinate, coordinate);
 			}
 
 			#endregion

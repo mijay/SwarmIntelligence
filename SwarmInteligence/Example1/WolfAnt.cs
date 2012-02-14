@@ -5,7 +5,6 @@ using SILibrary.General.Background;
 using SILibrary.TwoDimensional;
 using SwarmIntelligence;
 using SwarmIntelligence.Core;
-using SwarmIntelligence.Core.Playground;
 using SwarmIntelligence.Infrastructure.TurnProcessing;
 
 namespace Example1
@@ -19,9 +18,9 @@ namespace Example1
 		{
 		}
 
-		public override void ProcessTurn(IOutlook<Coordinates2D, EmptyData, EmptyData> outlook)
+		public override void ProcessTurn()
 		{
-			Coordinates2D[] cellsWithPreys = outlook.Cell
+			Coordinates2D[] cellsWithPreys = Cell
 				.GetSuburbCells(Speed)
 				.Where(cell => cell.OfType<PreyAnt>().IsNotEmpty())
 				.Select(cell => cell.Coordinate)
@@ -30,7 +29,7 @@ namespace Example1
 			if(cellsWithPreys.IsNotEmpty())
 				this.MoveTo(cellsWithPreys.First());
 			else {
-				Coordinates2D[] allCells = outlook.Cell
+				Coordinates2D[] allCells = Cell
 					.GetSuburb(Speed)
 					.ToArray();
 

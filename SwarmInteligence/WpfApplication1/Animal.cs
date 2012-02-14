@@ -4,7 +4,6 @@ using Common.Collections.Extensions;
 using SILibrary.General.Background;
 using SILibrary.TwoDimensional;
 using SwarmIntelligence.Core;
-using SwarmIntelligence.Core.Playground;
 using SwarmIntelligence.Infrastructure.TurnProcessing;
 
 namespace WpfApplication1
@@ -25,21 +24,21 @@ namespace WpfApplication1
 
 		public int Weight { get; protected set; }
 
-		protected static Coordinates2D[] GetEmptySuburbCells(IOutlook<Coordinates2D, EmptyData, EmptyData> outlook, int radius)
+		protected Coordinates2D[] GetEmptySuburbCells(int radius)
 		{
-			return CellWithoutAnimalOfType<Animal>(outlook, radius);
+			return CellWithoutAnimalOfType<Animal>(radius);
 		}
 
-		protected static Coordinates2D[] CellWithoutAnimalOfType<TAnimalType>(IOutlook<Coordinates2D, EmptyData, EmptyData> outlook, int radius)
+		protected Coordinates2D[] CellWithoutAnimalOfType<TAnimalType>(int radius)
 			where TAnimalType: Animal
 		{
-			Coordinates2D[] cellsWithAnimal = outlook.Cell
+			Coordinates2D[] cellsWithAnimal = Cell
 				.GetSuburbCells(radius)
 				.Where(cell => cell.OfType<TAnimalType>().IsNotEmpty())
 				.Select(cell => cell.Coordinate)
 				.ToArray();
 
-			Coordinates2D[] cellsToGoInto = outlook.Cell
+			Coordinates2D[] cellsToGoInto = Cell
 				.GetSuburb(radius)
 				.Except(cellsWithAnimal)
 				.ToArray();

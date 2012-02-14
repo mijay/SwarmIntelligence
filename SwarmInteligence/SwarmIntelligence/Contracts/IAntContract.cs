@@ -11,9 +11,22 @@ namespace SwarmIntelligence.Contracts
 	{
 		#region Implementation of IAnt<TCoordinate,TNodeData,TEdgeData>
 
-		public void ProcessTurn(IOutlook<TCoordinate, TNodeData, TEdgeData> outlook)
+		public TCoordinate Coordinate
 		{
-			Contract.Requires(outlook != null && outlook.Me == this);
+			get { throw new UreachableCodeException(); }
+		}
+
+		public ICell<TCoordinate, TNodeData, TEdgeData> Cell
+		{
+			get
+			{
+				Contract.Ensures(Contract.Result<ICell<TCoordinate, TNodeData, TEdgeData>>().Coordinate.Equals(Coordinate));
+				throw new UreachableCodeException();
+			}
+		}
+
+		public void ProcessTurn()
+		{
 			throw new UreachableCodeException();
 		}
 

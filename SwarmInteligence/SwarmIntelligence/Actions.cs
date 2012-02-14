@@ -12,24 +12,24 @@ namespace SwarmIntelligence
 		public static void MoveTo<TCoordinate, TNodeData, TEdgeData>(this AntBase<TCoordinate, TNodeData, TEdgeData> antBase, TCoordinate to)
 			where TCoordinate: ICoordinate<TCoordinate>
 		{
-			TCoordinate from = antBase.Outlook.CellBase.Coordinate;
-			antBase.Outlook.CellBase.Remove(antBase);
-			CellBase<TCoordinate, TNodeData, TEdgeData> targetCell = antBase.Outlook.MapBase.Get(to).Base();
+			TCoordinate from = antBase.Coordinate;
+			antBase.Cell.Base().Remove(antBase);
+			CellBase<TCoordinate, TNodeData, TEdgeData> targetCell = antBase.World.Map.Base().Get(to).Base();
 			targetCell.Add(antBase);
 
-			antBase.Outlook.CellBase = targetCell;
-			antBase.Outlook.Coordinate = to;
+			antBase.Cell = targetCell;
+			antBase.Coordinate = to;
 
-			antBase.Outlook.Log.Log(CommonLogTypes.AntMoved, antBase, from, to);
+			antBase.Log.Log(CommonLogTypes.AntMoved, antBase, from, to);
 		}
 
 		public static void AddTo<TCoordinate, TNodeData, TEdgeData>(this AntBase<TCoordinate, TNodeData, TEdgeData> antBase,
 		                                                            IAnt<TCoordinate, TNodeData, TEdgeData> ant, TCoordinate coordinate)
 			where TCoordinate: ICoordinate<TCoordinate>
 		{
-			antBase.Outlook.MapBase.Get(coordinate).Base().Add(ant);
+			antBase.World.Map.Base().Get(coordinate).Base().Add(ant);
 
-			antBase.Outlook.Log.Log(CommonLogTypes.AntAdded, antBase, coordinate);
+			antBase.Log.Log(CommonLogTypes.AntAdded, antBase, coordinate);
 		}
 
 		public static void RemoveFrom<TCoordinate, TNodeData, TEdgeData>(this AntBase<TCoordinate, TNodeData, TEdgeData> antBase,
@@ -37,10 +37,10 @@ namespace SwarmIntelligence
 		                                                                 IAnt<TCoordinate, TNodeData, TEdgeData> ant)
 			where TCoordinate: ICoordinate<TCoordinate>
 		{
-			antBase.Outlook.MapBase.Get(coordinate).Base().Remove(ant);
+			antBase.World.Map.Base().Get(coordinate).Base().Remove(ant);
 			ant.Base().Remove();
 
-			antBase.Outlook.Log.Log(CommonLogTypes.AntRemoved, ant, coordinate);
+			antBase.Log.Log(CommonLogTypes.AntRemoved, ant, coordinate);
 		}
 	}
 }

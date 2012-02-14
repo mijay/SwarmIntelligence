@@ -7,7 +7,6 @@ using SILibrary.General.Background;
 using SILibrary.Graph;
 using SwarmIntelligence;
 using SwarmIntelligence.Core;
-using SwarmIntelligence.Core.Playground;
 using SwarmIntelligence.Core.Space;
 using SwarmIntelligence.Infrastructure.TurnProcessing;
 
@@ -32,17 +31,17 @@ namespace Example2
 			this.k = k;
 		}
 
-		public override void ProcessTurn(IOutlook<GraphCoordinate, EmptyData, TupleDataEdge> outlook)
+		public override void ProcessTurn()
 		{
-			UpdateNotVisitedVertex(outlook);
+			UpdateNotVisitedVertex();
 			double point = random.NextDouble();
 			GraphCoordinate coordinate = notVisitedVertex
 				.OrderBy(entry => entry.Value)
 				.First(sortedNode => point < sortedNode.Value)
 				.Key;
-			var edge = new Edge<GraphCoordinate>(outlook.Cell.Coordinate, coordinate);
+			var edge = new Edge<GraphCoordinate>(Coordinate, coordinate);
 
-			TupleDataEdge edgeData = outlook.World.EdgesData.Get(edge);
+			TupleDataEdge edgeData = World.EdgesData.Get(edge);
 			lenPath += edgeData.Weight;
 			edgeData.Odor += k / lenPath;
 
@@ -50,10 +49,10 @@ namespace Example2
 			tabuList.Add(coordinate);
 		}
 
-		private void UpdateNotVisitedVertex(IOutlook<GraphCoordinate, EmptyData, TupleDataEdge> outlook)
+		private void UpdateNotVisitedVertex()
 		{
-			Edge<GraphCoordinate>[] adjacentEdge = outlook.World.Topology
-				.GetAdjacentEdges(outlook.Cell.Coordinate)
+			Edge<GraphCoordinate>[] adjacentEdge = World.Topology
+				.GetAdjacentEdges(Coordinate)
 				.Where(x => !tabuList.Contains(x.to))
 				.ToArray();
 			if(adjacentEdge.IsEmpty()) {
@@ -63,7 +62,7 @@ namespace Example2
 			denumerator = 0;
 
 			foreach(var edge in adjacentEdge) {
-				TupleDataEdge edgeData = outlook.World.EdgesData.Get(edge);
+				TupleDataEdge edgeData = World.EdgesData.Get(edge);
 				double t = Math.Pow(edgeData.Odor, alpha);
 				double w = 1 / Math.Pow(edgeData.Weight, beta);
 				double numerator = t + w;

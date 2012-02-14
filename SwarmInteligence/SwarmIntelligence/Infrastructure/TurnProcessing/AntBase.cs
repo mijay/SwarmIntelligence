@@ -14,23 +14,21 @@ namespace SwarmIntelligence.Infrastructure.TurnProcessing
 		protected AntBase(World<TCoordinate, TNodeData, TEdgeData> world)
 		{
 			Contract.Requires(world != null);
-			Outlook = new Outlook<TCoordinate, TNodeData, TEdgeData>(world, this);
 			Log = world.Log;
 			World = world;
 		}
 
-		protected World<TCoordinate, TNodeData, TEdgeData> World { get; private set; }
-		protected ILog Log { get; private set; }
-		internal Outlook<TCoordinate, TNodeData, TEdgeData> Outlook { get; private set; }
+		protected internal World<TCoordinate, TNodeData, TEdgeData> World { get; private set; }
+		protected internal ILog Log { get; private set; }
 
 		internal void ProcessTurn(CellBase<TCoordinate, TNodeData, TEdgeData> cell)
 		{
 			Contract.Requires(cell != null);
 			if(removed)
 				return;
-			Outlook.CellBase = cell;
-			Outlook.Coordinate = cell.Coordinate;
-			ProcessTurn(Outlook);
+			Cell = cell;
+			Coordinate = cell.Coordinate;
+			ProcessTurn();
 		}
 
 		public void Remove()
@@ -40,7 +38,9 @@ namespace SwarmIntelligence.Infrastructure.TurnProcessing
 
 		#region Implementation of IAnt<TCoordinate,TNodeData,TEdgeData>
 
-		public abstract void ProcessTurn(IOutlook<TCoordinate, TNodeData, TEdgeData> outlook);
+		public abstract void ProcessTurn();
+		public TCoordinate Coordinate { get; internal set; }
+		public ICell<TCoordinate, TNodeData, TEdgeData> Cell { get; internal set; }
 
 		#endregion
 	}
