@@ -2,6 +2,7 @@ using System.Diagnostics.Contracts;
 using System.Linq;
 using Common.Collections.Extensions;
 using SwarmIntelligence.Core;
+using SwarmIntelligence.Core.Space;
 using SwarmIntelligence.Infrastructure.GrabgeCollection;
 using SwarmIntelligence.Infrastructure.Logging;
 using SwarmIntelligence.Infrastructure.MemoryManagement;
@@ -11,6 +12,7 @@ using SwarmIntelligence.Internal;
 namespace SwarmIntelligence
 {
 	public class Runner<TCoordinate, TNodeData, TEdgeData>
+		where TCoordinate: ICoordinate<TCoordinate>
 	{
 		private readonly IGarbageCollector<TCoordinate, TNodeData, TEdgeData> garbageCollector;
 		private readonly MapBase<TCoordinate, TNodeData, TEdgeData> mapBase;

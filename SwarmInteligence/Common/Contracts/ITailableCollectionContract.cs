@@ -6,7 +6,7 @@ using Common.Collections;
 namespace Common.Contracts
 {
 	[ContractClassFor(typeof(ITailableCollection<>))]
-	public abstract class ITailableCollectionContract<T> : ITailableCollection<T>
+	public abstract class ITailableCollectionContract<T>: ITailableCollection<T>
 	{
 		#region Implementation of IEnumerable
 

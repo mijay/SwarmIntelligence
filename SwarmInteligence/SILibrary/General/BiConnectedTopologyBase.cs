@@ -7,6 +7,7 @@ namespace SILibrary.General
 {
 	[ContractClass(typeof(BiConnectedTopologyBaseContract<>))]
 	public abstract class BiConnectedTopologyBase<TCoordinate>: Topology<TCoordinate>
+		where TCoordinate: ICoordinate<TCoordinate>
 	{
 		public override sealed IEnumerable<TCoordinate> GetSuccessors(TCoordinate coord)
 		{

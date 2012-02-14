@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Contracts;
 using System.Linq;
-using Common.Collections;
 using Common.Collections.Extensions;
 using NUnit.Framework;
 using SILibrary.General.Background;
@@ -71,24 +70,7 @@ namespace Test.SwarmInteligence.ContextIndependendAnt
 			return new Coordinates2D(x, y);
 		}
 
-		[Test]
-		public void SimpleTest([Values(5, 10, 20, 80, 200)] int jumps, [Values(100, 1000)] int ants)
-		{
-			Coordinates2D lastStep = GenerateCoordinate();
-			IEnumerable<TestAnt> seededAnts = SeedAnts(ants, jumps - 1, lastStep);
-			var timer = new Stopwatch();
-			timer.Start();
-			for(int i = 0; i < jumps; ++i)
-				runner.DoTurn();
-			timer.Stop();
-			Debug.WriteLine(string.Format("jumps - {0}; ants - {1}; time - {2} ms", jumps, ants, timer.ElapsedMilliseconds));
-
-			ICell<Coordinates2D, EmptyData, EmptyData> cell = world.Map.Single();
-			Assert.That(cell.Coordinate, Is.EqualTo(lastStep));
-			CollectionAssert.AreEquivalent(seededAnts, cell);
-		}
-
-		private class TestAnt : AntBase<Coordinates2D, EmptyData, EmptyData>
+		private class TestAnt: AntBase<Coordinates2D, EmptyData, EmptyData>
 		{
 			private readonly Queue<Coordinates2D> points;
 
@@ -107,6 +89,23 @@ namespace Test.SwarmInteligence.ContextIndependendAnt
 			}
 
 			#endregion
+		}
+
+		[Test]
+		public void SimpleTest([Values(5, 10, 20, 80, 200)] int jumps, [Values(100, 1000)] int ants)
+		{
+			Coordinates2D lastStep = GenerateCoordinate();
+			IEnumerable<TestAnt> seededAnts = SeedAnts(ants, jumps - 1, lastStep);
+			var timer = new Stopwatch();
+			timer.Start();
+			for(int i = 0; i < jumps; ++i)
+				runner.DoTurn();
+			timer.Stop();
+			Debug.WriteLine(string.Format("jumps - {0}; ants - {1}; time - {2} ms", jumps, ants, timer.ElapsedMilliseconds));
+
+			ICell<Coordinates2D, EmptyData, EmptyData> cell = world.Map.Single();
+			Assert.That(cell.Coordinate, Is.EqualTo(lastStep));
+			CollectionAssert.AreEquivalent(seededAnts, cell);
 		}
 	}
 }

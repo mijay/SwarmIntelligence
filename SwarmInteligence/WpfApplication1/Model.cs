@@ -48,11 +48,11 @@ namespace WpfApplication1
 
 		public void Initialize()
 		{
-			var tuple = SystemBuilder
+			Tuple<Runner<Coordinates2D, EmptyData, EmptyData>, ILogJournal> tuple = SystemBuilder
 				.Create<Coordinates2D, EmptyData, EmptyData>()
 				.WithTopology(new EightConnectedSurfaceTopology(min, max))
 				.Build();
-			var logJournal = tuple.Item2;
+			ILogJournal logJournal = tuple.Item2;
 			runner = tuple.Item1;
 			world = tuple.Item1.World;
 

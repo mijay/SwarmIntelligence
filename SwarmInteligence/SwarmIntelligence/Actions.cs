@@ -1,4 +1,5 @@
 using SwarmIntelligence.Core.Playground;
+using SwarmIntelligence.Core.Space;
 using SwarmIntelligence.Infrastructure.Logging;
 using SwarmIntelligence.Infrastructure.MemoryManagement;
 using SwarmIntelligence.Infrastructure.TurnProcessing;
@@ -9,6 +10,7 @@ namespace SwarmIntelligence
 	public static class Actions
 	{
 		public static void MoveTo<TCoordinate, TNodeData, TEdgeData>(this AntBase<TCoordinate, TNodeData, TEdgeData> antBase, TCoordinate to)
+			where TCoordinate: ICoordinate<TCoordinate>
 		{
 			TCoordinate from = antBase.Outlook.CellBase.Coordinate;
 			antBase.Outlook.CellBase.Remove(antBase);
@@ -23,6 +25,7 @@ namespace SwarmIntelligence
 
 		public static void AddTo<TCoordinate, TNodeData, TEdgeData>(this AntBase<TCoordinate, TNodeData, TEdgeData> antBase,
 		                                                            IAnt<TCoordinate, TNodeData, TEdgeData> ant, TCoordinate coordinate)
+			where TCoordinate: ICoordinate<TCoordinate>
 		{
 			antBase.Outlook.MapBase.Get(coordinate).Base().Add(ant);
 
@@ -32,6 +35,7 @@ namespace SwarmIntelligence
 		public static void RemoveFrom<TCoordinate, TNodeData, TEdgeData>(this AntBase<TCoordinate, TNodeData, TEdgeData> antBase,
 		                                                                 TCoordinate coordinate,
 		                                                                 IAnt<TCoordinate, TNodeData, TEdgeData> ant)
+			where TCoordinate: ICoordinate<TCoordinate>
 		{
 			antBase.Outlook.MapBase.Get(coordinate).Base().Remove(ant);
 			ant.Base().Remove();

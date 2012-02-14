@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using SwarmIntelligence.Core.Playground;
 using System.Linq;
 using Common.Collections.Extensions;
+using SwarmIntelligence.Core.Playground;
 
 namespace SILibrary.TwoDimensional
 {
@@ -30,7 +30,7 @@ namespace SILibrary.TwoDimensional
 		public static IEnumerable<ICell<Coordinates2D, TNodeData, TEdgeData>> GetSuburbCells<TNodeData, TEdgeData>(
 			this ICell<Coordinates2D, TNodeData, TEdgeData> cell, int radius)
 		{
-			var map = cell.Map;
+			IMap<Coordinates2D, TNodeData, TEdgeData> map = cell.Map;
 			return cell
 				.GetSuburb(radius)
 				.Select(p => {
@@ -39,6 +39,5 @@ namespace SILibrary.TwoDimensional
 				        })
 				.NotNull();
 		}
-
 	}
 }

@@ -8,6 +8,7 @@ using SwarmIntelligence.Infrastructure.MemoryManagement;
 namespace SILibrary.Base
 {
 	public class DictionaryMap<TCoordinate, TNodeData, TEdgeData>: MapBase<TCoordinate, TNodeData, TEdgeData>
+		where TCoordinate: ICoordinate<TCoordinate>
 	{
 		public readonly ConcurrentDictionary<TCoordinate, ICell<TCoordinate, TNodeData, TEdgeData>> dictionary =
 			new ConcurrentDictionary<TCoordinate, ICell<TCoordinate, TNodeData, TEdgeData>>();

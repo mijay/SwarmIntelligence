@@ -1,6 +1,9 @@
-﻿namespace SwarmIntelligence.Infrastructure.MemoryManagement
+﻿using SwarmIntelligence.Core.Space;
+
+namespace SwarmIntelligence.Infrastructure.MemoryManagement
 {
 	public abstract class CellProviderBase<TCoordinate, TNodeData, TEdgeData>: ICellProvider<TCoordinate, TNodeData, TEdgeData>
+		where TCoordinate: ICoordinate<TCoordinate>
 	{
 		#region ICellProvider<TCoordinate,TNodeData,TEdgeData> Members
 

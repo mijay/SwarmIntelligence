@@ -6,8 +6,8 @@ using SwarmIntelligence.Core.Space;
 namespace SwarmIntelligence.Core.Playground
 {
 	[ContractClass(typeof(IMapContract<,,>))]
-	public interface IMap<TCoordinate, TNodeData, TEdgeData>
-		: IEnumerable<ICell<TCoordinate, TNodeData, TEdgeData>>
+	public interface IMap<TCoordinate, TNodeData, TEdgeData>: IEnumerable<ICell<TCoordinate, TNodeData, TEdgeData>>
+		where TCoordinate: ICoordinate<TCoordinate>
 	{
 		[Pure]
 		Topology<TCoordinate> Topology { get; }

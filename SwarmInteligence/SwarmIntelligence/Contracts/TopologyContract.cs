@@ -7,6 +7,7 @@ namespace SwarmIntelligence.Contracts
 {
 	[ContractClassFor(typeof(Topology<>))]
 	public abstract class TopologyContract<TCoordinate>: Topology<TCoordinate>
+		where TCoordinate: ICoordinate<TCoordinate>
 	{
 		#region Overrides of Topology<TCoordinate>
 

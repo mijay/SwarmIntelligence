@@ -10,6 +10,7 @@ using SwarmIntelligence.Internal;
 namespace SwarmIntelligence.Infrastructure.MemoryManagement
 {
 	public abstract class MapBase<TCoordinate, TNodeData, TEdgeData>: IMap<TCoordinate, TNodeData, TEdgeData>
+		where TCoordinate: ICoordinate<TCoordinate>
 	{
 		private readonly ICellProvider<TCoordinate, TNodeData, TEdgeData> cellProvider;
 		private readonly ILog log;

@@ -1,12 +1,14 @@
 ﻿using System.Diagnostics.Contracts;
 using Common;
+using SwarmIntelligence.Core.Space;
 using SwarmIntelligence.Infrastructure.GrabgeCollection;
 using SwarmIntelligence.Infrastructure.MemoryManagement;
 
 namespace SwarmIntelligence.Contracts
 {
 	[ContractClassFor(typeof(IGarbageCollector<,,>))]
-	public abstract class IGarbageCollectorContract<TCoordinate, TNodeData, TEdgeData> : IGarbageCollector<TCoordinate, TNodeData, TEdgeData>
+	public abstract class IGarbageCollectorContract<TCoordinate, TNodeData, TEdgeData>: IGarbageCollector<TCoordinate, TNodeData, TEdgeData>
+		where TCoordinate: ICoordinate<TCoordinate>
 	{
 		#region Implementation of IGarbageCollector<TCoordinate,TNodeData,TEdgeData>
 

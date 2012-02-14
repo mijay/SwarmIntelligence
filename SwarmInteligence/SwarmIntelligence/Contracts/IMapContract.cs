@@ -9,6 +9,7 @@ namespace SwarmIntelligence.Contracts
 {
 	[ContractClassFor(typeof(IMap<,,>))]
 	public abstract class IMapContract<TCoordinate, TNodeData, TEdgeData>: IMap<TCoordinate, TNodeData, TEdgeData>
+		where TCoordinate: ICoordinate<TCoordinate>
 	{
 		#region IMap<TCoordinate,TNodeData,TEdgeData> Members
 

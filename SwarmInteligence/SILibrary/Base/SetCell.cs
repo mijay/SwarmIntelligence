@@ -2,11 +2,13 @@
 using System.Diagnostics.Contracts;
 using Common.Collections.Concurrent;
 using SwarmIntelligence.Core.Playground;
+using SwarmIntelligence.Core.Space;
 using SwarmIntelligence.Infrastructure.MemoryManagement;
 
 namespace SILibrary.Base
 {
 	public class SetCell<TCoordinate, TNodeData, TEdgeData>: CellBase<TCoordinate, TNodeData, TEdgeData>
+		where TCoordinate: ICoordinate<TCoordinate>
 	{
 		private readonly ConcurrentSet<IAnt<TCoordinate, TNodeData, TEdgeData>> set =
 			new ConcurrentSet<IAnt<TCoordinate, TNodeData, TEdgeData>>();

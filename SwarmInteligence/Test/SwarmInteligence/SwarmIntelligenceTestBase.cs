@@ -1,4 +1,5 @@
-﻿using CommonTest;
+﻿using System;
+using CommonTest;
 using SILibrary.General;
 using SILibrary.General.Background;
 using SILibrary.TwoDimensional;
@@ -16,7 +17,7 @@ namespace Test.SwarmInteligence
 
 		protected void InitializeWorld(Coordinates2D min, Coordinates2D max)
 		{
-			var tuple = SystemBuilder
+			Tuple<Runner<Coordinates2D, EmptyData, EmptyData>, ILogJournal> tuple = SystemBuilder
 				.Create<Coordinates2D, EmptyData, EmptyData>()
 				.WithTopology(new FourConnectedSurfaceTopology(min, max))
 				.Build();

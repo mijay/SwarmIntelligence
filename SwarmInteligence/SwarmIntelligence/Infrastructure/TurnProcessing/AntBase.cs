@@ -1,11 +1,13 @@
 ﻿using System.Diagnostics.Contracts;
 using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Playground;
+using SwarmIntelligence.Core.Space;
 using SwarmIntelligence.Infrastructure.MemoryManagement;
 
 namespace SwarmIntelligence.Infrastructure.TurnProcessing
 {
 	public abstract class AntBase<TCoordinate, TNodeData, TEdgeData>: IAnt<TCoordinate, TNodeData, TEdgeData>
+		where TCoordinate: ICoordinate<TCoordinate>
 	{
 		private bool removed;
 

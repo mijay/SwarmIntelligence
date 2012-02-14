@@ -8,6 +8,7 @@ using SwarmIntelligence.Internal;
 namespace SwarmIntelligence.Infrastructure.TurnProcessing
 {
 	public class Outlook<TCoordinate, TNodeData, TEdgeData>: IOutlook<TCoordinate, TNodeData, TEdgeData>
+		where TCoordinate: ICoordinate<TCoordinate>
 	{
 		public Outlook(World<TCoordinate, TNodeData, TEdgeData> world, IAnt<TCoordinate, TNodeData, TEdgeData> me)
 		{

@@ -46,17 +46,17 @@ namespace SILibrary.Graph
 		/// Creates the oriented graph by the edges list.
 		/// Each element in edges list is edge described as (start node number, end node number).
 		/// </summary>
-        public static OrgraphTopology ByEdgesList(IEnumerable<Tuple<int, int>> edgesList)
-        {
-            Contract.Requires(edgesList != null);
-            Contract.Requires(Contract.ForAll(edgesList, pair => pair.Item1 >= 0 && pair.Item2 >= 0));
-            Contract.Requires(edgesList.Distinct().Count() == edgesList.Count());
+		public static OrgraphTopology ByEdgesList(IEnumerable<Tuple<int, int>> edgesList)
+		{
+			Contract.Requires(edgesList != null);
+			Contract.Requires(Contract.ForAll(edgesList, pair => pair.Item1 >= 0 && pair.Item2 >= 0));
+			Contract.Requires(edgesList.Distinct().Count() == edgesList.Count());
 
-            IEnumerable<Edge<GraphCoordinate>> edges = edgesList
-                .Select(x => new Edge<GraphCoordinate>(new GraphCoordinate(x.Item1),
-                                                       new GraphCoordinate(x.Item2)));
-            return new OrgraphTopology(new HashSet<Edge<GraphCoordinate>>(edges));
-        }
+			IEnumerable<Edge<GraphCoordinate>> edges = edgesList
+				.Select(x => new Edge<GraphCoordinate>(new GraphCoordinate(x.Item1),
+				                                       new GraphCoordinate(x.Item2)));
+			return new OrgraphTopology(new HashSet<Edge<GraphCoordinate>>(edges));
+		}
 
 		public override bool Lays(GraphCoordinate coord)
 		{
@@ -80,7 +80,7 @@ namespace SILibrary.Graph
 
 		public override bool Lays(Edge<GraphCoordinate> edge)
 		{
-			return edges.Contains((Edge<GraphCoordinate>)edge);
+			return edges.Contains(edge);
 		}
 	}
 }

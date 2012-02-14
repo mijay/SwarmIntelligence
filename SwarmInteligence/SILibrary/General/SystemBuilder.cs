@@ -14,6 +14,7 @@ namespace SILibrary.General
 	public static class SystemBuilder
 	{
 		public static ISystemDeclaration<TCoordinate, TNodeData, TEdgeData> Create<TCoordinate, TNodeData, TEdgeData>()
+			where TCoordinate: ICoordinate<TCoordinate>
 		{
 			return new SystemDeclaration<TCoordinate, TNodeData, TEdgeData>
 			       {
@@ -36,6 +37,7 @@ namespace SILibrary.General
 		#region Nested type: SystemDeclaration
 
 		private class SystemDeclaration<TCoordinate, TNodeData, TEdgeData>: ISystemDeclaration<TCoordinate, TNodeData, TEdgeData>
+			where TCoordinate: ICoordinate<TCoordinate>
 		{
 			public Topology<TCoordinate> Topology { get; set; }
 			public DataLayer<Edge<TCoordinate>, TEdgeData> EdgeDataLayer { get; set; }

@@ -1,10 +1,12 @@
 using System.Linq;
+using SwarmIntelligence.Core.Space;
 using SwarmIntelligence.Infrastructure.MemoryManagement;
 using SwarmIntelligence.Internal;
 
 namespace SwarmIntelligence.Infrastructure.GrabgeCollection
 {
 	public class GarbageCollector<TCoordinate, TNodeData, TEdgeData>: IGarbageCollector<TCoordinate, TNodeData, TEdgeData>
+		where TCoordinate: ICoordinate<TCoordinate>
 	{
 		#region Implementation of IGarbageCollector<TCoordinate,TNodeData,TEdgeData>
 

@@ -1,4 +1,3 @@
-using Common.Collections;
 using Common.Collections.Extensions;
 using CommonTest;
 using NUnit.Framework;

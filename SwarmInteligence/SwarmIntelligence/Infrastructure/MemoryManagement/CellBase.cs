@@ -4,10 +4,12 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using Common;
 using SwarmIntelligence.Core.Playground;
+using SwarmIntelligence.Core.Space;
 
 namespace SwarmIntelligence.Infrastructure.MemoryManagement
 {
 	public abstract class CellBase<TCoordinate, TNodeData, TEdgeData>: ICell<TCoordinate, TNodeData, TEdgeData>
+		where TCoordinate: ICoordinate<TCoordinate>
 	{
 		private TCoordinate coordinate;
 		private bool initialized;

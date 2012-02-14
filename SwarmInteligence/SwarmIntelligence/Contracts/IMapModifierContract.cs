@@ -1,12 +1,14 @@
 ﻿using System.Diagnostics.Contracts;
 using Common;
 using SwarmIntelligence.Core.Playground;
+using SwarmIntelligence.Core.Space;
 using SwarmIntelligence.Specialized;
 
 namespace SwarmIntelligence.Contracts
 {
 	[ContractClassFor(typeof(IMapModifier<,,>))]
 	public abstract class IMapModifierContract<TCoordinate, TNodeData, TEdgeData>: IMapModifier<TCoordinate, TNodeData, TEdgeData>
+		where TCoordinate: ICoordinate<TCoordinate>
 	{
 		#region Implementation of IDisposable
 

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
-using Common.Collections;
 using Common.Collections.Extensions;
 using SwarmIntelligence.Contracts;
 
@@ -9,6 +8,7 @@ namespace SwarmIntelligence.Core.Space
 {
 	[ContractClass(typeof(TopologyContract<>))]
 	public abstract class Topology<TCoordinate>
+		where TCoordinate: ICoordinate<TCoordinate>
 	{
 		[Pure]
 		public abstract bool Lays(TCoordinate coord);

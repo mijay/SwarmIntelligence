@@ -1,11 +1,13 @@
 ﻿using System.Diagnostics.Contracts;
 using Common;
+using SwarmIntelligence.Core.Space;
 using SwarmIntelligence.Infrastructure.MemoryManagement;
 
 namespace SwarmIntelligence.Contracts
 {
 	[ContractClassFor(typeof(ICellProvider<,,>))]
 	public abstract class ICellProviderContract<TCoordinate, TNodeData, TEdgeData>: ICellProvider<TCoordinate, TNodeData, TEdgeData>
+		where TCoordinate: ICoordinate<TCoordinate>
 	{
 		#region Implementation of ICellProvider<TCoordinate,TNodeData,TEdgeData>
 
