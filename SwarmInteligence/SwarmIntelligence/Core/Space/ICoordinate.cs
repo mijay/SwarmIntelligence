@@ -4,7 +4,6 @@ using SwarmIntelligence.Core.Playground;
 
 namespace SwarmIntelligence.Core.Space
 {
-	//todo: сейчас интерфейс нигде реально не используеться... Наверно стоит вернуть where
 	/// <summary>
 	/// Interface for representing coordinates on the <see cref="IMap{TCoordinate,TNodeData,TEdgeData}"/>.
 	/// </summary>

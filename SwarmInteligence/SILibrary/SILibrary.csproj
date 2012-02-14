@@ -58,19 +58,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="General\Background\DictionaryDataLayer.cs" />
+    <Compile Include="Base\EmptyData.cs" />
+    <Compile Include="Base\EmptyMapping.cs" />
     <Compile Include="General\ISystemDeclaration.cs" />
     <Compile Include="General\SystemBuilder.cs" />
     <Compile Include="Graph\GraphTopology.cs" />
     <Compile Include="Graph\OrgraphTopology.cs" />
     <Compile Include="Graph\GraphCoordinate.cs" />
+    <Compile Include="MemoryManagement\DummyValueProvider.cs" />
+    <Compile Include="MemoryManagement\GarbageCollector.cs" />
     <Compile Include="TwoDimensional\CellSuburb.cs" />
-    <Compile Include="General\Background\CachedDataLayer.cs" />
-    <Compile Include="General\Background\DelegateDataLayer.cs" />
-    <Compile Include="General\Background\EmptyData.cs" />
-    <Compile Include="General\Background\EmptyDataLayer.cs" />
-    <Compile Include="Base\CellProvider.cs" />
-    <Compile Include="Base\DictionaryMap.cs" />
+    <Compile Include="MemoryManagement\ReusingValueProviderBase.cs" />
+    <Compile Include="Base\DictionaryMapping.cs" />
     <Compile Include="Base\SetCell.cs" />
     <Compile Include="Contracts\BiConnectedTopologyBaseContract.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

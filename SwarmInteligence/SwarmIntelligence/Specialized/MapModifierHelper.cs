@@ -6,6 +6,7 @@ using SwarmIntelligence.Core.Playground;
 using SwarmIntelligence.Core.Space;
 using SwarmIntelligence.Infrastructure.Logging;
 using SwarmIntelligence.Infrastructure.MemoryManagement;
+using SwarmIntelligence.Infrastructure.Playground;
 using SwarmIntelligence.Internal;
 
 namespace SwarmIntelligence.Specialized
@@ -27,13 +28,13 @@ namespace SwarmIntelligence.Specialized
 		{
 			private static readonly HashSet<object> alreadyModifiedMaps = new HashSet<object>();
 			private readonly ILog log;
-			private readonly MapBase<TCoordinate, TNodeData, TEdgeData> mapBase;
+			private readonly Map<TCoordinate, TNodeData, TEdgeData> map;
 
-			public MapModifier(MapBase<TCoordinate, TNodeData, TEdgeData> mapBase, ILog log)
+			public MapModifier(Map<TCoordinate, TNodeData, TEdgeData> map, ILog log)
 			{
-				Contract.Requires(mapBase != null && log != null);
-				Requires.True(alreadyModifiedMaps.Add(mapBase));
-				this.mapBase = mapBase;
+				Contract.Requires(map != null && log != null);
+				Requires.True(alreadyModifiedMaps.Add(map));
+				this.map = map;
 				this.log = log;
 			}
 
@@ -41,18 +42,18 @@ namespace SwarmIntelligence.Specialized
 
 			public IMap<TCoordinate, TNodeData, TEdgeData> Map
 			{
-				get { return mapBase; }
+				get { return map; }
 			}
 
 			public void AddAt(IAnt<TCoordinate, TNodeData, TEdgeData> ant, TCoordinate coordinate)
 			{
-				mapBase.Get(coordinate).Base().Add(ant);
+				map.Get(coordinate).Add(ant);
 				log.Log(CommonLogTypes.AntAdded, ant, coordinate);
 			}
 
 			public void RemoveAt(IAnt<TCoordinate, TNodeData, TEdgeData> ant, TCoordinate coordinate)
 			{
-				mapBase.Get(coordinate).Base().Remove(ant);
+				map.Get(coordinate).Remove(ant);
 				log.Log(CommonLogTypes.AntRemoved, ant, coordinate);
 			}
 

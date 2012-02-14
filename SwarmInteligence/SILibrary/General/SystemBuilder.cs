@@ -1,13 +1,10 @@
 using System;
 using SILibrary.Base;
-using SILibrary.General.Background;
 using SwarmIntelligence;
 using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Playground;
 using SwarmIntelligence.Core.Space;
-using SwarmIntelligence.Infrastructure.GrabgeCollection;
 using SwarmIntelligence.Infrastructure.Logging;
-using SwarmIntelligence.Infrastructure.MemoryManagement;
 
 namespace SILibrary.General
 {
@@ -55,6 +52,16 @@ namespace SILibrary.General
 				return this;
 			}
 
+			public Tuple<Runner<TCoordinate, TNodeData, TEdgeData>, ILogJournal> Build()
+			{
+				var map = (IMap<TCoordinate, TNodeData, TEdgeData>) Activator.CreateInstance(MapType, Topology, CellProvider, LogManager.Log);
+				var world = new World<TCoordinate, TNodeData, TEdgeData>(NodeDataLayer, EdgeDataLayer, map, LogManager.Log);
+				var runner = new Runner<TCoordinate, TNodeData, TEdgeData>(world, GarbageCollector);
+				return Tuple.Create(runner, LogManager.Journal);
+			}
+
+			#endregion
+
 			public ISystemDeclaration<TCoordinate, TNodeData, TEdgeData> WithEdgeData(DataLayer<Edge<TCoordinate>, TEdgeData> dataLayer)
 			{
 				EdgeDataLayer = dataLayer;
@@ -66,16 +73,6 @@ namespace SILibrary.General
 				NodeDataLayer = dataLayer;
 				return this;
 			}
-
-			public Tuple<Runner<TCoordinate, TNodeData, TEdgeData>, ILogJournal> Build()
-			{
-				var map = (IMap<TCoordinate, TNodeData, TEdgeData>) Activator.CreateInstance(MapType, Topology, CellProvider, LogManager.Log);
-				var world = new World<TCoordinate, TNodeData, TEdgeData>(NodeDataLayer, EdgeDataLayer, map, LogManager.Log);
-				var runner = new Runner<TCoordinate, TNodeData, TEdgeData>(world, GarbageCollector);
-				return Tuple.Create(runner, LogManager.Journal);
-			}
-
-			#endregion
 		}
 
 		#endregion

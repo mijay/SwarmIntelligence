@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using Common.Collections.Concurrent;
 using SwarmIntelligence.Core.Playground;
 using SwarmIntelligence.Core.Space;
-using SwarmIntelligence.Infrastructure.MemoryManagement;
+using SwarmIntelligence.Infrastructure.Playground;
 
 namespace SILibrary.Base
 {
@@ -12,12 +11,6 @@ namespace SILibrary.Base
 	{
 		private readonly ConcurrentSet<IAnt<TCoordinate, TNodeData, TEdgeData>> set =
 			new ConcurrentSet<IAnt<TCoordinate, TNodeData, TEdgeData>>();
-
-		public SetCell(MapBase<TCoordinate, TNodeData, TEdgeData> map)
-			: base(map)
-		{
-			Contract.Requires(map != null);
-		}
 
 		#region Overrides of Cell<TCoordinate,TNodeData,TEdgeData>
 
@@ -46,10 +39,5 @@ namespace SILibrary.Base
 		}
 
 		#endregion
-
-		public static CellProvider<TCoordinate, TNodeData, TEdgeData> Provider()
-		{
-			return new CellProvider<TCoordinate, TNodeData, TEdgeData>(map => new SetCell<TCoordinate, TNodeData, TEdgeData>(map));
-		}
 	}
 }

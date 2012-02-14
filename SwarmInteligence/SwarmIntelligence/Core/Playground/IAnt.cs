@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics.Contracts;
-using SwarmIntelligence.Contracts;
 using SwarmIntelligence.Core.Space;
 
 namespace SwarmIntelligence.Core.Playground
@@ -10,7 +9,6 @@ namespace SwarmIntelligence.Core.Playground
 	/// <typeparam name="TCoordinate">Type of coordinates in represented space.</typeparam>
 	/// <typeparam name="TNodeData">Type of data associated with points in current space.</typeparam>
 	/// <typeparam name="TEdgeData">Type of data associated with edges between point in current space.</typeparam>
-	[ContractClass(typeof(IAntContract<,,>))]
 	public interface IAnt<TCoordinate, TNodeData, TEdgeData>
 		where TCoordinate: ICoordinate<TCoordinate>
 	{

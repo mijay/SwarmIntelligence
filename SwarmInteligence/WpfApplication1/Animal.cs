@@ -4,7 +4,7 @@ using Common.Collections.Extensions;
 using SILibrary.General.Background;
 using SILibrary.TwoDimensional;
 using SwarmIntelligence.Core;
-using SwarmIntelligence.Infrastructure.TurnProcessing;
+using SwarmIntelligence.Infrastructure.Playground;
 
 namespace WpfApplication1
 {

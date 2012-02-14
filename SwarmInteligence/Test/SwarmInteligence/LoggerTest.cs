@@ -8,7 +8,7 @@ using SILibrary.TwoDimensional;
 using SwarmIntelligence;
 using SwarmIntelligence.Core;
 using SwarmIntelligence.Infrastructure.Logging;
-using SwarmIntelligence.Infrastructure.TurnProcessing;
+using SwarmIntelligence.Infrastructure.Playground;
 using SwarmIntelligence.Specialized;
 
 namespace Test.SwarmInteligence

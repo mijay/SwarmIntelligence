@@ -66,15 +66,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Actions.cs" />
-    <Compile Include="Contracts\IAntContract.cs" />
+    <Compile Include="Contracts\EdgesDataLayerContract.cs" />
     <Compile Include="Contracts\IMapContract.cs" />
+    <Compile Include="Contracts\IMappingContract.cs" />
     <Compile Include="Contracts\ILogContract.cs" />
+    <Compile Include="Contracts\NodesDataLayerContract.cs" />
     <Compile Include="Contracts\TopologyContract.cs" />
+    <Compile Include="Core\Data\IEdgesDataLayer.cs" />
+    <Compile Include="Core\Data\INodesDataLayer.cs" />
+    <Compile Include="Core\IMapping.cs" />
+    <Compile Include="Core\Playground\IMap.cs" />
     <Compile Include="Core\World.cs" />
-    <Compile Include="Core\DataLayer.cs" />
     <Compile Include="Core\Space\Edge.cs" />
     <Compile Include="Core\Space\Topology.cs" />
-    <Compile Include="Infrastructure\GrabgeCollection\GarbageCollector.cs" />
+    <Compile Include="Infrastructure\Data\EdgesDataLayer.cs" />
+    <Compile Include="Infrastructure\Data\NodesDataLayer.cs" />
     <Compile Include="Infrastructure\Logging\CommonLogTypes.cs" />
     <Compile Include="Core\ILog.cs" />
     <Compile Include="Infrastructure\Logging\ILogJournal.cs" />
@@ -83,20 +89,18 @@
     <Compile Include="Infrastructure\Logging\LogManager.cs" />
     <Compile Include="Infrastructure\Logging\LogRecord.cs" />
     <Compile Include="Infrastructure\Logging\TmpLogRecord.cs" />
-    <Compile Include="Infrastructure\MemoryManagement\CellBase.cs" />
-    <Compile Include="Infrastructure\MemoryManagement\CellProviderBase.cs" />
-    <Compile Include="Infrastructure\MemoryManagement\ICellProvider.cs" />
-    <Compile Include="Contracts\ICellProviderContract.cs" />
-    <Compile Include="Infrastructure\GrabgeCollection\IGarbageCollector.cs" />
+    <Compile Include="Infrastructure\Playground\CellBase.cs" />
+    <Compile Include="Infrastructure\MemoryManagement\IGarbageCollector.cs" />
     <Compile Include="Contracts\IGarbageCollectorContract.cs" />
-    <Compile Include="Infrastructure\MemoryManagement\MapBase.cs" />
-    <Compile Include="Infrastructure\TurnProcessing\AntBase.cs" />
+    <Compile Include="Infrastructure\MemoryManagement\IValueProvider.cs" />
+    <Compile Include="Infrastructure\Playground\Map.cs" />
+    <Compile Include="Infrastructure\MemoryManagement\MappingBase.cs" />
+    <Compile Include="Infrastructure\Playground\AntBase.cs" />
     <Compile Include="Internal\Helpers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Core\Playground\IAnt.cs" />
     <Compile Include="Core\Playground\ICell.cs" />
     <Compile Include="Core\Space\ICoordinate.cs" />
-    <Compile Include="Core\Playground\IMap.cs" />
     <Compile Include="Runner.cs" />
     <Compile Include="Specialized\IMapModifier.cs" />
     <Compile Include="Contracts\IMapModifierContract.cs" />
@@ -108,6 +112,7 @@
       <Name>Common</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

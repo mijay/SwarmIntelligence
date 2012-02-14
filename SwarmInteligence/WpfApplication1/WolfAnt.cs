@@ -41,7 +41,7 @@ namespace WpfApplication1
 				Weight = 3;
 				AddCloneToEmptyCell();
 			} else if(Weight <= 0)
-				this.RemoveFrom(Coordinate, this);
+				this.Die();
 		}
 
 		private void AddCloneToEmptyCell()
@@ -56,7 +56,7 @@ namespace WpfApplication1
 			double preyWeight = 0;
 			foreach(PreyAnt preyAnt in target.OfType<PreyAnt>()) {
 				preyWeight += preyAnt.Weight;
-				this.RemoveFrom(target.Coordinate, preyAnt);
+				this.Kill(target.Coordinate, preyAnt);
 			}
 			Weight = (int) Math.Min(6, preyWeight * MassPrey + Weight);
 			this.MoveTo(target.Coordinate);

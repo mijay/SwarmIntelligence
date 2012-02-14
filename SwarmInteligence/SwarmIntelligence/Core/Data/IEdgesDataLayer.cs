@@ -1,17 +1,16 @@
-﻿using System.Diagnostics.Contracts;
+using System.Diagnostics.Contracts;
 using SwarmIntelligence.Contracts;
 using SwarmIntelligence.Core.Space;
 
-namespace SwarmIntelligence.Core.Playground
+namespace SwarmIntelligence.Core.Data
 {
 	/// <summary>
-	/// Class that represents the space as a placeholder for <see cref="IAnt{TCoordinate,TNodeData,TEdgeData}"/>s.
+	/// Class that represents the data associated with edges in current space.
 	/// </summary>
 	/// <typeparam name="TCoordinate">Type of coordinates in represented space.</typeparam>
-	/// <typeparam name="TNodeData">Type of data associated with points in current space.</typeparam>
 	/// <typeparam name="TEdgeData">Type of data associated with edges between point in current space.</typeparam>
-	[ContractClass(typeof(IMapContract<,,>))]
-	public interface IMap<TCoordinate, TNodeData, TEdgeData>: IMapping<TCoordinate, ICell<TCoordinate, TNodeData, TEdgeData>>
+	[ContractClass(typeof(EdgesDataLayerContract<,>))]
+	public interface IEdgesDataLayer<TCoordinate, TEdgeData>: IMapping<Edge<TCoordinate>, TEdgeData>
 		where TCoordinate: ICoordinate<TCoordinate>
 	{
 		/// <summary>

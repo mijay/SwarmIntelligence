@@ -1,33 +1,17 @@
 ﻿using System.Diagnostics.Contracts;
 using Common;
-using SwarmIntelligence.Core.Space;
-using SwarmIntelligence.Infrastructure.GrabgeCollection;
 using SwarmIntelligence.Infrastructure.MemoryManagement;
 
 namespace SwarmIntelligence.Contracts
 {
-	[ContractClassFor(typeof(IGarbageCollector<,,>))]
-	public abstract class IGarbageCollectorContract<TCoordinate, TNodeData, TEdgeData>: IGarbageCollector<TCoordinate, TNodeData, TEdgeData>
-		where TCoordinate: ICoordinate<TCoordinate>
+	[ContractClassFor(typeof(IGarbageCollector<,>))]
+	public abstract class IGarbageCollectorContract<TKey, TValue>: IGarbageCollector<TKey, TValue>
 	{
 		#region Implementation of IGarbageCollector<TCoordinate,TNodeData,TEdgeData>
 
-		public MapBase<TCoordinate, TNodeData, TEdgeData> MapBase
+		public void Collect(MappingBase<TKey, TValue> mappingBase)
 		{
-			get { throw new UreachableCodeException(); }
-		}
-
-		public void AttachTo(MapBase<TCoordinate, TNodeData, TEdgeData> mapBase)
-		{
-			Contract.Requires(mapBase != null);
-			Contract.Requires(MapBase == null);
-			Contract.Ensures(MapBase == mapBase);
-			throw new UreachableCodeException();
-		}
-
-		public void Collect()
-		{
-			Contract.Requires(MapBase != null);
+			Contract.Requires(mappingBase != null);
 			throw new UreachableCodeException();
 		}
 

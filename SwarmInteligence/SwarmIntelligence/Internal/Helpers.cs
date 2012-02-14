@@ -1,8 +1,7 @@
 using System.Diagnostics.Contracts;
 using SwarmIntelligence.Core.Playground;
 using SwarmIntelligence.Core.Space;
-using SwarmIntelligence.Infrastructure.MemoryManagement;
-using SwarmIntelligence.Infrastructure.TurnProcessing;
+using SwarmIntelligence.Infrastructure.Playground;
 
 namespace SwarmIntelligence.Internal
 {
@@ -24,12 +23,12 @@ namespace SwarmIntelligence.Internal
 			return (AntBase<TCoordinate, TNodeData, TEdgeData>) ant;
 		}
 
-		public static MapBase<TCoordinate, TNodeData, TEdgeData> Base<TCoordinate, TNodeData, TEdgeData>(
+		public static Map<TCoordinate, TNodeData, TEdgeData> Base<TCoordinate, TNodeData, TEdgeData>(
 			this IMap<TCoordinate, TNodeData, TEdgeData> map)
 			where TCoordinate: ICoordinate<TCoordinate>
 		{
-			Contract.Requires(map is MapBase<TCoordinate, TNodeData, TEdgeData>);
-			return (MapBase<TCoordinate, TNodeData, TEdgeData>) map;
+			Contract.Requires(map is Map<TCoordinate, TNodeData, TEdgeData>);
+			return (Map<TCoordinate, TNodeData, TEdgeData>) map;
 		}
 	}
 }

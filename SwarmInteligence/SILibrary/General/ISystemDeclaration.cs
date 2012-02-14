@@ -1,6 +1,6 @@
 ﻿using System;
 using SwarmIntelligence;
-using SwarmIntelligence.Core;
+using SwarmIntelligence.Core.Data;
 using SwarmIntelligence.Core.Space;
 using SwarmIntelligence.Infrastructure.Logging;
 
@@ -10,8 +10,8 @@ namespace SILibrary.General
 		where TCoordinate: ICoordinate<TCoordinate>
 	{
 		ISystemDeclaration<TCoordinate, TNodeData, TEdgeData> WithTopology(Topology<TCoordinate> topology);
-		ISystemDeclaration<TCoordinate, TNodeData, TEdgeData> WithEdgeData(DataLayer<Edge<TCoordinate>, TEdgeData> dataLayer);
-		ISystemDeclaration<TCoordinate, TNodeData, TEdgeData> WithNodeData(DataLayer<TCoordinate, TNodeData> dataLayer);
+		ISystemDeclaration<TCoordinate, TNodeData, TEdgeData> WithEdgeData(IEdgesDataLayer<TCoordinate, TEdgeData> dataLayer);
+		ISystemDeclaration<TCoordinate, TNodeData, TEdgeData> WithNodeData(INodesDataLayer<TCoordinate, TNodeData> dataLayer);
 		Tuple<Runner<TCoordinate, TNodeData, TEdgeData>, ILogJournal> Build();
 	}
 }

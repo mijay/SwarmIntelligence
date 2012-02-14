@@ -3,10 +3,9 @@ using System.Linq;
 using Common.Collections.Extensions;
 using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Space;
-using SwarmIntelligence.Infrastructure.GrabgeCollection;
 using SwarmIntelligence.Infrastructure.Logging;
 using SwarmIntelligence.Infrastructure.MemoryManagement;
-using SwarmIntelligence.Infrastructure.TurnProcessing;
+using SwarmIntelligence.Infrastructure.Playground;
 using SwarmIntelligence.Internal;
 
 namespace SwarmIntelligence
@@ -15,15 +14,15 @@ namespace SwarmIntelligence
 		where TCoordinate: ICoordinate<TCoordinate>
 	{
 		private readonly IGarbageCollector<TCoordinate, TNodeData, TEdgeData> garbageCollector;
-		private readonly MapBase<TCoordinate, TNodeData, TEdgeData> mapBase;
+		private readonly Map<TCoordinate, TNodeData, TEdgeData> map;
 
 		public Runner(World<TCoordinate, TNodeData, TEdgeData> world, IGarbageCollector<TCoordinate, TNodeData, TEdgeData> garbageCollector)
 		{
-			Contract.Requires(world != null && garbageCollector != null && garbageCollector.MapBase == null);
+			Contract.Requires(world != null && garbageCollector != null && garbageCollector.Map == null);
 			World = world;
-			mapBase = world.Map.Base();
+			map = world.Map.Base();
 			this.garbageCollector = garbageCollector;
-			garbageCollector.AttachTo(mapBase);
+			garbageCollector.AttachTo(map);
 		}
 
 		public World<TCoordinate, TNodeData, TEdgeData> World { get; private set; }
@@ -44,7 +43,7 @@ namespace SwarmIntelligence
 
 		private AntContext[] SelectContext()
 		{
-			return mapBase
+			return map
 				.AsParallel()
 				.Select(cell => cell.Base())
 				.SelectMany(cellBase => cellBase.Select(ant => new AntContext { Ant = ant.Base(), Cell = cellBase }))

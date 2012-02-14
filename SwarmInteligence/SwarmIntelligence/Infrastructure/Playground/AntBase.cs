@@ -1,10 +1,10 @@
-﻿using System.Diagnostics.Contracts;
+﻿using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Playground;
 using SwarmIntelligence.Core.Space;
-using SwarmIntelligence.Infrastructure.MemoryManagement;
 
-namespace SwarmIntelligence.Infrastructure.TurnProcessing
+namespace SwarmIntelligence.Infrastructure.Playground
 {
 	public abstract class AntBase<TCoordinate, TNodeData, TEdgeData>: IAnt<TCoordinate, TNodeData, TEdgeData>
 		where TCoordinate: ICoordinate<TCoordinate>
@@ -21,17 +21,17 @@ namespace SwarmIntelligence.Infrastructure.TurnProcessing
 		protected internal World<TCoordinate, TNodeData, TEdgeData> World { get; private set; }
 		protected internal ILog Log { get; private set; }
 
-		internal void ProcessTurn(CellBase<TCoordinate, TNodeData, TEdgeData> cell)
+		internal void ProcessTurn(KeyValuePair<TCoordinate, CellBase<TCoordinate, TNodeData, TEdgeData>> pair)
 		{
-			Contract.Requires(cell != null);
+			Contract.Requires(pair.Value != null);
 			if(removed)
 				return;
-			Cell = cell;
-			Coordinate = cell.Coordinate;
+			Cell = pair.Value;
+			Coordinate = pair.Key;
 			ProcessTurn();
 		}
 
-		public void Remove()
+		internal void Remove()
 		{
 			removed = true;
 		}

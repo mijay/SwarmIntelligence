@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using SwarmIntelligence.Core.Space;
 
 namespace SwarmIntelligence.Core.Playground
 {
 	/// <summary>
-	/// Class that represents one point of space.
+	/// Class that represents one point of space as a placeholder for <see cref="IAnt{TCoordinate,TNodeData,TEdgeData}"/>s.
 	/// </summary>
 	/// <typeparam name="TCoordinate">Type of coordinates in represented space.</typeparam>
 	/// <typeparam name="TNodeData">Type of data associated with points in current space.</typeparam>
@@ -13,10 +12,5 @@ namespace SwarmIntelligence.Core.Playground
 	public interface ICell<TCoordinate, TNodeData, TEdgeData>: IEnumerable<IAnt<TCoordinate, TNodeData, TEdgeData>>
 		where TCoordinate: ICoordinate<TCoordinate>
 	{
-		[Pure]
-		IMap<TCoordinate, TNodeData, TEdgeData> Map { get; }
-
-		[Pure]
-		TCoordinate Coordinate { get; }
 	}
 }

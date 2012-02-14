@@ -1,20 +1,20 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using Common;
-using SwarmIntelligence.Core.Playground;
+using SwarmIntelligence.Core.Data;
 using SwarmIntelligence.Core.Space;
 
 namespace SwarmIntelligence.Contracts
 {
-	[ContractClassFor(typeof(IMap<,,>))]
-	public class IMapContract<TCoordinate, TNodeData, TEdgeData>: IMap<TCoordinate, TNodeData, TEdgeData>
+	[ContractClassFor(typeof(INodesDataLayer<,>))]
+	public class NodesDataLayerContract<TCoordinate, TNodeData>: INodesDataLayer<TCoordinate, TNodeData>
 		where TCoordinate: ICoordinate<TCoordinate>
 	{
-		#region IMap<TCoordinate,TNodeData,TEdgeData> Members
+		#region INodesDataLayer<TCoordinate,TNodeData> Members
 
-		public bool TryGet(TCoordinate key, out ICell<TCoordinate, TNodeData, TEdgeData> value)
+		public bool TryGet(TCoordinate key, out TNodeData value)
 		{
 			Contract.EnsuresOnThrow<IndexOutOfRangeException>(!Topology.Lays(key));
 			Contract.Ensures(!Contract.Result<bool>() || Topology.Lays(key));
@@ -22,7 +22,7 @@ namespace SwarmIntelligence.Contracts
 			throw new UreachableCodeException();
 		}
 
-		public IEnumerator<KeyValuePair<TCoordinate, ICell<TCoordinate, TNodeData, TEdgeData>>> GetEnumerator()
+		public IEnumerator<KeyValuePair<TCoordinate, TNodeData>> GetEnumerator()
 		{
 			throw new UreachableCodeException();
 		}

@@ -1,8 +1,7 @@
 using SwarmIntelligence.Core.Playground;
 using SwarmIntelligence.Core.Space;
 using SwarmIntelligence.Infrastructure.Logging;
-using SwarmIntelligence.Infrastructure.MemoryManagement;
-using SwarmIntelligence.Infrastructure.TurnProcessing;
+using SwarmIntelligence.Infrastructure.Playground;
 using SwarmIntelligence.Internal;
 
 namespace SwarmIntelligence
@@ -14,7 +13,7 @@ namespace SwarmIntelligence
 		{
 			TCoordinate from = antBase.Coordinate;
 			antBase.Cell.Base().Remove(antBase);
-			CellBase<TCoordinate, TNodeData, TEdgeData> targetCell = antBase.World.Map.Base().Get(to).Base();
+			CellBase<TCoordinate, TNodeData, TEdgeData> targetCell = antBase.World.Map.Base().Get(to);
 			targetCell.Add(antBase);
 
 			antBase.Cell = targetCell;
@@ -27,20 +26,25 @@ namespace SwarmIntelligence
 		                                                            IAnt<TCoordinate, TNodeData, TEdgeData> ant, TCoordinate coordinate)
 			where TCoordinate: ICoordinate<TCoordinate>
 		{
-			antBase.World.Map.Base().Get(coordinate).Base().Add(ant);
+			antBase.World.Map.Base().Get(coordinate).Add(ant);
 
 			antBase.Log.Log(CommonLogTypes.AntAdded, antBase, coordinate);
 		}
 
-		public static void RemoveFrom<TCoordinate, TNodeData, TEdgeData>(this AntBase<TCoordinate, TNodeData, TEdgeData> antBase,
-		                                                                 TCoordinate coordinate,
-		                                                                 IAnt<TCoordinate, TNodeData, TEdgeData> ant)
+		public static void Kill<TCoordinate, TNodeData, TEdgeData>(this AntBase<TCoordinate, TNodeData, TEdgeData> antBase,
+		                                                           IAnt<TCoordinate, TNodeData, TEdgeData> ant)
 			where TCoordinate: ICoordinate<TCoordinate>
 		{
-			antBase.World.Map.Base().Get(coordinate).Base().Remove(ant);
+			antBase.World.Map.Base().Get(ant.Coordinate).Remove(ant);
 			ant.Base().Remove();
 
-			antBase.Log.Log(CommonLogTypes.AntRemoved, ant, coordinate);
+			antBase.Log.Log(CommonLogTypes.AntRemoved, ant);
+		}
+
+		public static void Die<TCoordinate, TNodeData, TEdgeData>(this AntBase<TCoordinate, TNodeData, TEdgeData> antBase)
+			where TCoordinate: ICoordinate<TCoordinate>
+		{
+			Kill(antBase, antBase);
 		}
 	}
 }

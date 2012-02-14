@@ -6,7 +6,7 @@ using SILibrary.TwoDimensional;
 using SwarmIntelligence;
 using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Playground;
-using SwarmIntelligence.Infrastructure.TurnProcessing;
+using SwarmIntelligence.Infrastructure.Playground;
 using SwarmIntelligence.Specialized;
 
 namespace Test.SwarmInteligence

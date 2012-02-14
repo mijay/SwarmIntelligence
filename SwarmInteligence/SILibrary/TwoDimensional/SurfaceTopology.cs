@@ -1,4 +1,5 @@
-﻿using SILibrary.General;
+﻿using System.Collections.Generic;
+using SILibrary.General;
 using SwarmIntelligence.Core.Space;
 
 namespace SILibrary.TwoDimensional
@@ -23,6 +24,13 @@ namespace SILibrary.TwoDimensional
 		public override bool Lays(Edge<Coordinates2D> edge)
 		{
 			return Lays(edge.from) && Lays(edge.to);
+		}
+
+		public IEnumerable<Coordinates2D> GetAllPoints()
+		{
+			for(int x = TopLeft.x; x <= BottomRight.x; ++x)
+				for(int y = TopLeft.y; y < BottomRight.y; y++)
+					yield return new Coordinates2D(x, y);
 		}
 	}
 }
