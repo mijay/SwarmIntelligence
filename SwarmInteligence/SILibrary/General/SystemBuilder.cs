@@ -2,9 +2,12 @@ using System;
 using SILibrary.Base;
 using SwarmIntelligence;
 using SwarmIntelligence.Core;
-using SwarmIntelligence.Core.Playground;
+using SwarmIntelligence.Core.Data;
 using SwarmIntelligence.Core.Space;
+using SwarmIntelligence.Infrastructure.Data;
 using SwarmIntelligence.Infrastructure.Logging;
+using SwarmIntelligence.Infrastructure.MemoryManagement;
+using SwarmIntelligence.Infrastructure.Playground;
 
 namespace SILibrary.General
 {
@@ -13,22 +16,17 @@ namespace SILibrary.General
 		public static ISystemDeclaration<TCoordinate, TNodeData, TEdgeData> Create<TCoordinate, TNodeData, TEdgeData>()
 			where TCoordinate: ICoordinate<TCoordinate>
 		{
-			return new SystemDeclaration<TCoordinate, TNodeData, TEdgeData>
-			       {
-			       	GarbageCollector = new GarbageCollector<TCoordinate, TNodeData, TEdgeData>(),
-			       	CellProvider = SetCell<TCoordinate, TNodeData, TEdgeData>.Provider(),
-			       	MapType = typeof(DictionaryMap<TCoordinate, TNodeData, TEdgeData>),
-			       	LogManager = new LogManager(),
-			       	EdgeDataLayer = GetDataLayer<Edge<TCoordinate>, TEdgeData>(),
-			       	NodeDataLayer = GetDataLayer<TCoordinate, TNodeData>()
-			       };
-		}
-
-		private static DataLayer<TCoordinate, TData> GetDataLayer<TCoordinate, TData>()
-		{
-			if(typeof(TData) == typeof(EmptyData))
-				return (DataLayer<TCoordinate, TData>) ((object) new EmptyDataLayer<TCoordinate>());
-			return new DictionaryDataLayer<TCoordinate, TData>();
+			var result = new SystemDeclaration<TCoordinate, TNodeData, TEdgeData>
+			             {
+			             	LogManager = new LogManager()
+			             };
+			if(typeof(TNodeData) == typeof(EmptyData))
+				result.NodeDataLayerBuilder = t => new NodesDataLayer<TCoordinate, TNodeData>(t,
+				                                   	(MappingBase<TCoordinate, TNodeData>) (object) new EmptyMapping<TCoordinate>());
+			if(typeof(TEdgeData) == typeof(EmptyData))
+				result.EdgeDataLayerBuilder = t => new EdgesDataLayer<TCoordinate, TEdgeData>(t,
+				                                   	(MappingBase<Edge<TCoordinate>, TEdgeData>) (object) new EmptyMapping<Edge<TCoordinate>>());
+			return result;
 		}
 
 		#region Nested type: SystemDeclaration
@@ -37,11 +35,8 @@ namespace SILibrary.General
 			where TCoordinate: ICoordinate<TCoordinate>
 		{
 			public Topology<TCoordinate> Topology { get; set; }
-			public DataLayer<Edge<TCoordinate>, TEdgeData> EdgeDataLayer { get; set; }
-			public DataLayer<TCoordinate, TNodeData> NodeDataLayer { get; set; }
-			public IGarbageCollector<TCoordinate, TNodeData, TEdgeData> GarbageCollector { get; set; }
-			public ICellProvider<TCoordinate, TNodeData, TEdgeData> CellProvider { get; set; }
-			public Type MapType { get; set; }
+			public Func<Topology<TCoordinate>, IEdgesDataLayer<TCoordinate, TEdgeData>> EdgeDataLayerBuilder { get; set; }
+			public Func<Topology<TCoordinate>, INodesDataLayer<TCoordinate, TNodeData>> NodeDataLayerBuilder { get; set; }
 			public LogManager LogManager { get; set; }
 
 			#region ISystemDeclaration<TCoordinate,TNodeData,TEdgeData> Members
@@ -54,25 +49,30 @@ namespace SILibrary.General
 
 			public Tuple<Runner<TCoordinate, TNodeData, TEdgeData>, ILogJournal> Build()
 			{
-				var map = (IMap<TCoordinate, TNodeData, TEdgeData>) Activator.CreateInstance(MapType, Topology, CellProvider, LogManager.Log);
-				var world = new World<TCoordinate, TNodeData, TEdgeData>(NodeDataLayer, EdgeDataLayer, map, LogManager.Log);
-				var runner = new Runner<TCoordinate, TNodeData, TEdgeData>(world, GarbageCollector);
+				var map = new Map<TCoordinate, TNodeData, TEdgeData>(Topology,
+					new DictionaryMapping<TCoordinate, CellBase<TCoordinate, TNodeData, TEdgeData>>(
+						TODO, LogManager.Log));
+				var world = new World<TCoordinate, TNodeData, TEdgeData>(NodeDataLayerBuilder(Topology), EdgeDataLayerBuilder(Topology), map,
+					LogManager.Log);
+				var runner = new Runner<TCoordinate, TNodeData, TEdgeData>(world);
 				return Tuple.Create(runner, LogManager.Journal);
 			}
 
+			public ISystemDeclaration<TCoordinate, TNodeData, TEdgeData> WithEdgeData(
+				Func<Topology<TCoordinate>, IEdgesDataLayer<TCoordinate, TEdgeData>> dataLayerBuilder)
+			{
+				EdgeDataLayerBuilder = dataLayerBuilder;
+				return this;
+			}
+
+			public ISystemDeclaration<TCoordinate, TNodeData, TEdgeData> WithNodeData(
+				Func<Topology<TCoordinate>, INodesDataLayer<TCoordinate, TNodeData>> dataLayerBuilder)
+			{
+				NodeDataLayerBuilder = dataLayerBuilder;
+				return this;
+			}
+
 			#endregion
-
-			public ISystemDeclaration<TCoordinate, TNodeData, TEdgeData> WithEdgeData(DataLayer<Edge<TCoordinate>, TEdgeData> dataLayer)
-			{
-				EdgeDataLayer = dataLayer;
-				return this;
-			}
-
-			public ISystemDeclaration<TCoordinate, TNodeData, TEdgeData> WithNodeData(DataLayer<TCoordinate, TNodeData> dataLayer)
-			{
-				NodeDataLayer = dataLayer;
-				return this;
-			}
 		}
 
 		#endregion

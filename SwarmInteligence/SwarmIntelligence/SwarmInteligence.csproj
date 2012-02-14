@@ -84,6 +84,7 @@
     <Compile Include="Infrastructure\Data\NodesDataLayer.cs" />
     <Compile Include="Infrastructure\Logging\CommonLogTypes.cs" />
     <Compile Include="Core\ILog.cs" />
+    <Compile Include="Infrastructure\Logging\EmptyLogger.cs" />
     <Compile Include="Infrastructure\Logging\ILogJournal.cs" />
     <Compile Include="Infrastructure\Logging\Logger.cs" />
     <Compile Include="Infrastructure\Logging\LogJournal.cs" />

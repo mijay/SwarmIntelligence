@@ -65,6 +65,7 @@
     <Compile Include="Graph\GraphTopology.cs" />
     <Compile Include="Graph\OrgraphTopology.cs" />
     <Compile Include="Graph\GraphCoordinate.cs" />
+    <Compile Include="MemoryManagement\BuildOnlyValueProvider.cs" />
     <Compile Include="MemoryManagement\DummyValueProvider.cs" />
     <Compile Include="MemoryManagement\GarbageCollector.cs" />
     <Compile Include="TwoDimensional\CellSuburb.cs" />
