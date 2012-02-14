@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using Common;
 using SwarmIntelligence.Core;
@@ -21,12 +22,14 @@ namespace SwarmIntelligence.Specialized
 
 		private class MapModifier<TCoordinate, TNodeData, TEdgeData>: DisposableBase, IMapModifier<TCoordinate, TNodeData, TEdgeData>
 		{
-			private readonly MapBase<TCoordinate, TNodeData, TEdgeData> mapBase;
+			private static readonly HashSet<object> alreadyModifiedMaps = new HashSet<object>();
 			private readonly ILog log;
+			private readonly MapBase<TCoordinate, TNodeData, TEdgeData> mapBase;
 
 			public MapModifier(MapBase<TCoordinate, TNodeData, TEdgeData> mapBase, ILog log)
 			{
-				Contract.Requires(mapBase != null);
+				Contract.Requires(mapBase != null && log != null);
+				Requires.True(alreadyModifiedMaps.Add(mapBase));
 				this.mapBase = mapBase;
 				this.log = log;
 			}
@@ -51,11 +54,6 @@ namespace SwarmIntelligence.Specialized
 			}
 
 			#endregion
-
-			protected override void DisposeManaged()
-			{
-				//todo: implement!
-			}
 		}
 
 		#endregion
