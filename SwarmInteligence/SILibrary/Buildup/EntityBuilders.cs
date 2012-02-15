@@ -1,12 +1,9 @@
 using System;
 using System.Linq.Expressions;
 using System.Reflection;
-using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Space;
 using SwarmIntelligence.Implementation;
-using SwarmIntelligence.Implementation.MemoryManagement;
 using SwarmIntelligence.Implementation.Playground;
-using SwarmIntelligence.MemoryManagement;
 
 namespace SILibrary.Buildup
 {
@@ -28,16 +25,6 @@ namespace SILibrary.Buildup
 						typeof(CellBase<TCoordinate, TNodeData, TEdgeData>)),
 					xMap, xCoordinate)
 				.Compile();
-		}
-
-		public static MappingBuilder<TCoordinate, TNodeData, TEdgeData> ForMapMapping<TMapping, TCell>(ILog log)
-			where TMapping: MappingBase<TCoordinate, CellBase<TCoordinate, TNodeData, TEdgeData>>
-			where TCell: CellBase<TCoordinate, TNodeData, TEdgeData>
-		{
-			return map => {
-			       	var cellProvider = new CellProvider<TCoordinate, TNodeData, TEdgeData>(map, ForCell<TCell>());
-			       	return (TMapping) Activator.CreateInstance(typeof(TMapping), cellProvider, log);
-			       };
 		}
 	}
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Interfaces;
+using SwarmIntelligence.Core.Loggin;
 using SwarmIntelligence.Implementation.Logging;
 
 namespace SwarmIntelligence.MemoryManagement

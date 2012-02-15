@@ -1,7 +1,7 @@
 using System.Diagnostics.Contracts;
 using SwarmIntelligence.Contracts;
 
-namespace SwarmIntelligence.Core
+namespace SwarmIntelligence.Core.Loggin
 {
 	[ContractClass(typeof(ILogContract))]
 	public interface ILog

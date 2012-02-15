@@ -86,9 +86,10 @@
     <Compile Include="Implementation\Data\NodesDataLayer.cs" />
     <Compile Include="Implementation\Delegates.cs" />
     <Compile Include="Implementation\Logging\CommonLogTypes.cs" />
-    <Compile Include="Core\ILog.cs" />
+    <Compile Include="Core\Loggin\ILog.cs" />
     <Compile Include="Implementation\Logging\EmptyLogger.cs" />
-    <Compile Include="Implementation\Logging\ILogJournal.cs" />
+    <Compile Include="Core\Loggin\ILogJournal.cs" />
+    <Compile Include="Core\Loggin\ILogManager.cs" />
     <Compile Include="Implementation\Logging\Logger.cs" />
     <Compile Include="Implementation\Logging\LogJournal.cs" />
     <Compile Include="Implementation\Logging\LogManager.cs" />

@@ -1,5 +1,6 @@
 using System.Diagnostics.Contracts;
 using SwarmIntelligence.Core.Data;
+using SwarmIntelligence.Core.Loggin;
 using SwarmIntelligence.Core.Playground;
 using SwarmIntelligence.Core.Space;
 

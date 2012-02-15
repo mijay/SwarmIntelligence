@@ -5,6 +5,7 @@ using SILibrary.Empty;
 using SILibrary.TwoDimensional;
 using SwarmIntelligence;
 using SwarmIntelligence.Core;
+using SwarmIntelligence.Core.Loggin;
 using SwarmIntelligence.Implementation.Logging;
 
 namespace Test.SwarmInteligence

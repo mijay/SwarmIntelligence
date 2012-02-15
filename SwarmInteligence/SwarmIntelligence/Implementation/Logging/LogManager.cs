@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Common.Collections.Concurrent;
 using Common.Tasks;
-using SwarmIntelligence.Core;
+using SwarmIntelligence.Core.Loggin;
 
 namespace SwarmIntelligence.Implementation.Logging
 {
-	public class LogManager
+	public class LogManager: ILogManager
 	{
 		private readonly ConcurrentQueue<TmpLogRecord> logAppendQueue = new ConcurrentQueue<TmpLogRecord>();
 		private readonly LogJournal logJournal;
@@ -24,12 +24,16 @@ namespace SwarmIntelligence.Implementation.Logging
 				.Then(() => LaunchLogProcessing());
 		}
 
+		#region ILogManager Members
+
 		public ILog Log { get; private set; }
 
 		public ILogJournal Journal
 		{
 			get { return logJournal; }
 		}
+
+		#endregion
 
 		private Task LaunchLogProcessing()
 		{

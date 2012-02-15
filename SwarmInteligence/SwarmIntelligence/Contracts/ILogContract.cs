@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics.Contracts;
 using Common;
 using SwarmIntelligence.Core;
+using SwarmIntelligence.Core.Loggin;
 
 namespace SwarmIntelligence.Contracts
 {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Common.Collections;
+using SwarmIntelligence.Core.Loggin;
 
 namespace SwarmIntelligence.Implementation.Logging
 {

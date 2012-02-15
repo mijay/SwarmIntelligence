@@ -58,10 +58,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Buildup\BuildingWorld.cs" />
+    <Compile Include="Buildup\Configured.cs" />
+    <Compile Include="Buildup\DataLayersConfiguration.cs" />
     <Compile Include="Buildup\EntityBuilders.cs" />
+    <Compile Include="Buildup\InitialConfiguration.cs" />
+    <Compile Include="Buildup\MapConfiguration.cs" />
     <Compile Include="Empty\EmptyData.cs" />
     <Compile Include="Empty\EmptyMapping.cs" />
-    <Compile Include="Buildup\ISystemDeclaration.cs" />
+    <Compile Include="Buildup\Interfaces.cs" />
     <Compile Include="Buildup\SystemBuilder.cs" />
     <Compile Include="Graph\GraphTopology.cs" />
     <Compile Include="Graph\OrgraphTopology.cs" />

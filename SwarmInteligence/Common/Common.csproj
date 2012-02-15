@@ -85,6 +85,7 @@
     <Compile Include="DisposableBase.cs" />
     <Compile Include="Collections\Extensions\EnumerableExtension.cs" />
     <Compile Include="ICloneable.cs" />
+    <Compile Include="IFluentInterface.cs" />
     <Compile Include="Memoization\IMemoizedFunc.cs" />
     <Compile Include="Memoization\IMemoizer.cs" />
     <Compile Include="Memoization\Memoizer.cs" />
