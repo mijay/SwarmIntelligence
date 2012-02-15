@@ -1,5 +1,6 @@
 using System;
 using SILibrary.Empty;
+using SILibrary.MemoryManagement.Mappings;
 using SwarmIntelligence;
 using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Data;

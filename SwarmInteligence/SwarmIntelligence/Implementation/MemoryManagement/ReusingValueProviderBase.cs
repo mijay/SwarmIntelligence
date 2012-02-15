@@ -5,6 +5,7 @@ namespace SwarmIntelligence.Implementation.MemoryManagement
 {
 	public abstract class ReusingValueProviderBase<TKey, TValue>: IValueProvider<TKey, TValue>
 	{
+		//todo: может сделать не наследование а делегирование?
 		private readonly ConcurrentBag<TValue> bag = new ConcurrentBag<TValue>();
 
 		#region Overrides of IValueProvider<TKey, TValue>

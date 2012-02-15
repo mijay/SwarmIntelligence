@@ -15,11 +15,11 @@ namespace SwarmIntelligence.Implementation.Playground
 	{
 		private readonly MappingBase<TCoordinate, CellBase<TCoordinate, TNodeData, TEdgeData>> mapping;
 
-		public Map(Topology<TCoordinate> topology, MappingBase<TCoordinate, CellBase<TCoordinate, TNodeData, TEdgeData>> mapping)
+		public Map(Topology<TCoordinate> topology, MappingBuilder<TCoordinate, TNodeData, TEdgeData> mappingBuilder)
 		{
-			Contract.Requires(topology != null && mapping != null);
+			Contract.Requires(topology != null && mappingBuilder != null);
 			Topology = topology;
-			this.mapping = mapping;
+			mapping = mappingBuilder(this);
 		}
 
 		#region IMap<TCoordinate,TNodeData,TEdgeData> Members

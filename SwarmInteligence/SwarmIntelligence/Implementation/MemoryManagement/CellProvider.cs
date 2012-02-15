@@ -1,7 +1,4 @@
-﻿using System;
-using System.Diagnostics.Contracts;
-using System.Linq.Expressions;
-using System.Reflection;
+﻿using System.Diagnostics.Contracts;
 using SwarmIntelligence.Core.Space;
 using SwarmIntelligence.Implementation.Playground;
 
@@ -11,16 +8,10 @@ namespace SwarmIntelligence.Implementation.MemoryManagement
 		ReusingValueProviderBase<TCoordinate, CellBase<TCoordinate, TNodeData, TEdgeData>>
 		where TCoordinate: ICoordinate<TCoordinate>
 	{
-		#region Delegates
-
-		public delegate CellBase<TCoordinate, TNodeData, TEdgeData> Builder(Map<TCoordinate, TNodeData, TEdgeData> map, TCoordinate coordinate);
-
-		#endregion
-
-		private readonly Builder builder;
+		private readonly CellBuilder<TCoordinate, TNodeData, TEdgeData> builder;
 		private readonly Map<TCoordinate, TNodeData, TEdgeData> map;
 
-		public CellProvider(Map<TCoordinate, TNodeData, TEdgeData> map, Builder builder)
+		public CellProvider(Map<TCoordinate, TNodeData, TEdgeData> map, CellBuilder<TCoordinate, TNodeData, TEdgeData> builder)
 		{
 			Contract.Requires(map != null && builder != null);
 			this.map = map;
@@ -40,22 +31,5 @@ namespace SwarmIntelligence.Implementation.MemoryManagement
 		}
 
 		#endregion
-
-		public static Builder BuilderFor<TCell>()
-			where TCell: CellBase<TCoordinate, TNodeData, TEdgeData>
-		{
-			Type mapType = typeof(Map<TCoordinate, TNodeData, TEdgeData>);
-			Type coordinateType = typeof(TCoordinate);
-			ConstructorInfo constructor = typeof(TCell).GetConstructor(new[] { mapType, coordinateType });
-			ParameterExpression xMap = Expression.Parameter(mapType);
-			ParameterExpression xCoordinate = Expression.Parameter(coordinateType);
-			return Expression
-				.Lambda<Builder>(
-					Expression.TypeAs(
-						Expression.New(constructor, xMap, xCoordinate),
-						typeof(CellBase<TCoordinate, TNodeData, TEdgeData>)),
-					xMap, xCoordinate)
-				.Compile();
-		}
 	}
 }
