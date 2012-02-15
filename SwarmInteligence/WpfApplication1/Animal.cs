@@ -4,7 +4,7 @@ using Common.Collections.Extensions;
 using SILibrary.Empty;
 using SILibrary.TwoDimensional;
 using SwarmIntelligence.Core;
-using SwarmIntelligence.Infrastructure.Playground;
+using SwarmIntelligence.Implementation.Playground;
 
 namespace WpfApplication1
 {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading;
 using Common.Collections;
 
-namespace SwarmIntelligence.Infrastructure.Logging
+namespace SwarmIntelligence.Implementation.Logging
 {
 	internal class LogJournal: ILogJournal
 	{

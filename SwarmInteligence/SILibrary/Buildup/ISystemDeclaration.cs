@@ -2,7 +2,7 @@
 using SwarmIntelligence;
 using SwarmIntelligence.Core.Data;
 using SwarmIntelligence.Core.Space;
-using SwarmIntelligence.Infrastructure.Logging;
+using SwarmIntelligence.Implementation.Logging;
 
 namespace SILibrary.Buildup
 {

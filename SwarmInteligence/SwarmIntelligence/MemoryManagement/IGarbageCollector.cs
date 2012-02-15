@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics.Contracts;
 using SwarmIntelligence.Contracts;
 
-namespace SwarmIntelligence.Infrastructure.MemoryManagement
+namespace SwarmIntelligence.MemoryManagement
 {
 	[ContractClass(typeof(IGarbageCollectorContract<,>))]
 	public interface IGarbageCollector<TKey, TValue>

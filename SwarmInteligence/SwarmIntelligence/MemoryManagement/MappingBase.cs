@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Interfaces;
-using SwarmIntelligence.Infrastructure.Logging;
+using SwarmIntelligence.Implementation.Logging;
 
-namespace SwarmIntelligence.Infrastructure.MemoryManagement
+namespace SwarmIntelligence.MemoryManagement
 {
 	public abstract class MappingBase<TKey, TValue>: ISparsedMapping<TKey, TValue>, ICompleteMapping<TKey, TValue>
 	{

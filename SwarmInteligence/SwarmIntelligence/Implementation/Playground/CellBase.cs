@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using SwarmIntelligence.Core.Playground;
 using SwarmIntelligence.Core.Space;
 
-namespace SwarmIntelligence.Infrastructure.Playground
+namespace SwarmIntelligence.Implementation.Playground
 {
 	public abstract class CellBase<TCoordinate, TNodeData, TEdgeData>: ICell<TCoordinate, TNodeData, TEdgeData>
 		where TCoordinate: ICoordinate<TCoordinate>

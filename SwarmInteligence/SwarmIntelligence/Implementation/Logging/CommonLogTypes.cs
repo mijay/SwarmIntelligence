@@ -1,4 +1,4 @@
-﻿namespace SwarmIntelligence.Infrastructure.Logging
+﻿namespace SwarmIntelligence.Implementation.Logging
 {
 	public static class CommonLogTypes
 	{

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Concurrent;
 using System.Collections.Generic;
 using SwarmIntelligence.Core;
-using SwarmIntelligence.Infrastructure.MemoryManagement;
+using SwarmIntelligence.MemoryManagement;
 
 namespace SILibrary.MemoryManagement.Mappings
 {

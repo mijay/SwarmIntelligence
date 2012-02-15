@@ -6,9 +6,9 @@ using System.Linq;
 using Common;
 using SwarmIntelligence.Core.Playground;
 using SwarmIntelligence.Core.Space;
-using SwarmIntelligence.Infrastructure.MemoryManagement;
+using SwarmIntelligence.MemoryManagement;
 
-namespace SwarmIntelligence.Infrastructure.Playground
+namespace SwarmIntelligence.Implementation.Playground
 {
 	public class Map<TCoordinate, TNodeData, TEdgeData>: IMap<TCoordinate, TNodeData, TEdgeData>
 		where TCoordinate: ICoordinate<TCoordinate>

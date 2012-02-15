@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.Contracts;
 using Common;
-using SwarmIntelligence.Infrastructure.MemoryManagement;
+using SwarmIntelligence.MemoryManagement;
 
 namespace SwarmIntelligence.Contracts
 {

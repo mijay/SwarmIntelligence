@@ -2,7 +2,7 @@
 using Common.Collections.Concurrent;
 using SwarmIntelligence.Core.Playground;
 using SwarmIntelligence.Core.Space;
-using SwarmIntelligence.Infrastructure.Playground;
+using SwarmIntelligence.Implementation.Playground;
 
 namespace SILibrary
 {

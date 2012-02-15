@@ -2,7 +2,7 @@ using System.Collections.Concurrent;
 using System.Diagnostics.Contracts;
 using SwarmIntelligence.Core;
 
-namespace SwarmIntelligence.Infrastructure.Logging
+namespace SwarmIntelligence.Implementation.Logging
 {
 	internal class Logger: ILog
 	{

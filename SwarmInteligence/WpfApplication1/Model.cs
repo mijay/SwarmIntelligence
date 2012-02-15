@@ -6,7 +6,7 @@ using SILibrary.TwoDimensional;
 using SwarmIntelligence;
 using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Playground;
-using SwarmIntelligence.Infrastructure.Logging;
+using SwarmIntelligence.Implementation.Logging;
 using SwarmIntelligence.Specialized;
 
 namespace WpfApplication1

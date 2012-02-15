@@ -68,7 +68,6 @@
     <Compile Include="MemoryManagement\GarbageCollector.cs" />
     <Compile Include="MemoryManagement\Mappings\DictionaryMapping.cs" />
     <Compile Include="TwoDimensional\CellSuburb.cs" />
-    <Compile Include="MemoryManagement\ReusingValueProviderBase.cs" />
     <Compile Include="SetCell.cs" />
     <Compile Include="Contracts\BiConnectedTopologyBaseContract.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

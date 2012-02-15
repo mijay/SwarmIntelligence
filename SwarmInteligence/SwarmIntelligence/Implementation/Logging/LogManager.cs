@@ -5,7 +5,7 @@ using Common.Collections.Concurrent;
 using Common.Tasks;
 using SwarmIntelligence.Core;
 
-namespace SwarmIntelligence.Infrastructure.Logging
+namespace SwarmIntelligence.Implementation.Logging
 {
 	public class LogManager
 	{

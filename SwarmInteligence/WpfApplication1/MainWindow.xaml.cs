@@ -10,7 +10,7 @@ using System.Windows.Shapes;
 using Common.Collections;
 using Common.Collections.Extensions;
 using SILibrary.TwoDimensional;
-using SwarmIntelligence.Infrastructure.Logging;
+using SwarmIntelligence.Implementation.Logging;
 
 namespace WpfApplication1
 {

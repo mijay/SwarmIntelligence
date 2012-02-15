@@ -5,7 +5,7 @@ using SILibrary.Empty;
 using SILibrary.TwoDimensional;
 using SwarmIntelligence;
 using SwarmIntelligence.Core;
-using SwarmIntelligence.Infrastructure.Playground;
+using SwarmIntelligence.Implementation.Playground;
 
 namespace Example1
 {

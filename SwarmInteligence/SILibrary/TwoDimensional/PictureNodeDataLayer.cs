@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Drawing;
 using SwarmIntelligence.Core.Interfaces;
-using SwarmIntelligence.Infrastructure.Data;
+using SwarmIntelligence.Implementation.Data;
 using Utils.Drawing;
 
 namespace SILibrary.TwoDimensional

@@ -1,6 +1,6 @@
 using SwarmIntelligence.Core;
 
-namespace SwarmIntelligence.Infrastructure.Logging
+namespace SwarmIntelligence.Implementation.Logging
 {
 	public class EmptyLogger: ILog
 	{

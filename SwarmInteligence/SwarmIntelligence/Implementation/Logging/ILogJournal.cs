@@ -1,7 +1,7 @@
 ﻿using System;
 using Common.Collections;
 
-namespace SwarmIntelligence.Infrastructure.Logging
+namespace SwarmIntelligence.Implementation.Logging
 {
 	public interface ILogJournal
 	{

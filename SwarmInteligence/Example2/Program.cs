@@ -4,7 +4,7 @@ using SILibrary.Empty;
 using SILibrary.Graph;
 using SwarmIntelligence;
 using SwarmIntelligence.Core;
-using SwarmIntelligence.Infrastructure.Logging;
+using SwarmIntelligence.Implementation.Logging;
 
 namespace Example2
 {

@@ -1,7 +1,7 @@
 using System.Diagnostics.Contracts;
 using SwarmIntelligence.Core.Playground;
 using SwarmIntelligence.Core.Space;
-using SwarmIntelligence.Infrastructure.Playground;
+using SwarmIntelligence.Implementation.Playground;
 
 namespace SwarmIntelligence.Internal
 {

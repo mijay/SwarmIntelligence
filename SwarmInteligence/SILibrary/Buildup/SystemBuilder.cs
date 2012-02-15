@@ -4,10 +4,10 @@ using SwarmIntelligence;
 using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Data;
 using SwarmIntelligence.Core.Space;
-using SwarmIntelligence.Infrastructure.Data;
-using SwarmIntelligence.Infrastructure.Logging;
-using SwarmIntelligence.Infrastructure.MemoryManagement;
-using SwarmIntelligence.Infrastructure.Playground;
+using SwarmIntelligence.Implementation.Data;
+using SwarmIntelligence.Implementation.Logging;
+using SwarmIntelligence.Implementation.Playground;
+using SwarmIntelligence.MemoryManagement;
 
 namespace SILibrary.Buildup
 {

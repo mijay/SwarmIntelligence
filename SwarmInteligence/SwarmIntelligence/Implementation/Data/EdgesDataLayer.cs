@@ -7,7 +7,7 @@ using SwarmIntelligence.Core.Data;
 using SwarmIntelligence.Core.Interfaces;
 using SwarmIntelligence.Core.Space;
 
-namespace SwarmIntelligence.Infrastructure.Data
+namespace SwarmIntelligence.Implementation.Data
 {
 	public class EdgesDataLayer<TCoordinates, TEdgeData>: IEdgesDataLayer<TCoordinates, TEdgeData>
 		where TCoordinates: ICoordinate<TCoordinates>

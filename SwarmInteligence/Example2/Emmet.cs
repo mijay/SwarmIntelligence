@@ -8,7 +8,7 @@ using SILibrary.Graph;
 using SwarmIntelligence;
 using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Space;
-using SwarmIntelligence.Infrastructure.Playground;
+using SwarmIntelligence.Implementation.Playground;
 
 namespace Example2
 {

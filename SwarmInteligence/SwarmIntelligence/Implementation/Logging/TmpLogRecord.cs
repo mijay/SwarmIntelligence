@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.Contracts;
 
-namespace SwarmIntelligence.Infrastructure.Logging
+namespace SwarmIntelligence.Implementation.Logging
 {
 	internal struct TmpLogRecord
 	{

@@ -1,5 +1,5 @@
 using System;
-using SwarmIntelligence.Infrastructure.MemoryManagement;
+using SwarmIntelligence.MemoryManagement;
 
 namespace SILibrary.MemoryManagement
 {

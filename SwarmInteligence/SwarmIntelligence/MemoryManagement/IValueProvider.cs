@@ -1,4 +1,4 @@
-﻿namespace SwarmIntelligence.Infrastructure.MemoryManagement
+﻿namespace SwarmIntelligence.MemoryManagement
 {
 	public interface IValueProvider<in TKey, TValue>
 	{

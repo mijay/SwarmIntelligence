@@ -1,7 +1,7 @@
 using SwarmIntelligence.Core.Playground;
 using SwarmIntelligence.Core.Space;
-using SwarmIntelligence.Infrastructure.Logging;
-using SwarmIntelligence.Infrastructure.Playground;
+using SwarmIntelligence.Implementation.Logging;
+using SwarmIntelligence.Implementation.Playground;
 using SwarmIntelligence.Internal;
 
 namespace SwarmIntelligence
