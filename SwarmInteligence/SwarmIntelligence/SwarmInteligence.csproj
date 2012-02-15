@@ -67,15 +67,17 @@
   <ItemGroup>
     <Compile Include="Actions.cs" />
     <Compile Include="Contracts\EdgesDataLayerContract.cs" />
+    <Compile Include="Contracts\ICompleteMappingContract.cs" />
     <Compile Include="Contracts\IMapContract.cs" />
-    <Compile Include="Contracts\IMappingContract.cs" />
+    <Compile Include="Contracts\ISparsedMappingContract.cs" />
     <Compile Include="Contracts\ILogContract.cs" />
     <Compile Include="Contracts\NodesDataLayerContract.cs" />
     <Compile Include="Contracts\TopologyContract.cs" />
-    <Compile Include="Core\Data\IDataLayer.cs" />
     <Compile Include="Core\Data\IEdgesDataLayer.cs" />
     <Compile Include="Core\Data\INodesDataLayer.cs" />
-    <Compile Include="Core\IMapping.cs" />
+    <Compile Include="Core\Interfaces\ICompleteMapping.cs" />
+    <Compile Include="Core\Interfaces\IKeyValueContainer.cs" />
+    <Compile Include="Core\Interfaces\ISparsedMapping.cs" />
     <Compile Include="Core\Playground\IMap.cs" />
     <Compile Include="Core\World.cs" />
     <Compile Include="Core\Space\Edge.cs" />

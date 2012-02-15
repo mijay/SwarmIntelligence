@@ -4,7 +4,7 @@ using SwarmIntelligence.Core.Data;
 using SwarmIntelligence.Core.Space;
 using SwarmIntelligence.Infrastructure.Logging;
 
-namespace SILibrary.General
+namespace SILibrary.Buildup
 {
 	public interface ISystemDeclaration<TCoordinate, TNodeData, TEdgeData>
 		where TCoordinate: ICoordinate<TCoordinate>

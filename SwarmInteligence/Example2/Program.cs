@@ -1,6 +1,6 @@
 ﻿using System;
-using SILibrary.Base;
-using SILibrary.General;
+using SILibrary.Buildup;
+using SILibrary.Empty;
 using SILibrary.Graph;
 using SwarmIntelligence;
 using SwarmIntelligence.Core;

@@ -1,5 +1,5 @@
 using System;
-using SILibrary.Base;
+using SILibrary.Empty;
 using SwarmIntelligence;
 using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Data;
@@ -9,7 +9,7 @@ using SwarmIntelligence.Infrastructure.Logging;
 using SwarmIntelligence.Infrastructure.MemoryManagement;
 using SwarmIntelligence.Infrastructure.Playground;
 
-namespace SILibrary.General
+namespace SILibrary.Buildup
 {
 	public static class SystemBuilder
 	{

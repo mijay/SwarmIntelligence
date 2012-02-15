@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using SwarmIntelligence.Core;
+using SwarmIntelligence.Core.Interfaces;
 using SwarmIntelligence.Infrastructure.Logging;
 
 namespace SwarmIntelligence.Infrastructure.MemoryManagement
 {
-	public abstract class MappingBase<TKey, TValue>: IMapping<TKey, TValue>
+	public abstract class MappingBase<TKey, TValue>: ISparsedMapping<TKey, TValue>, ICompleteMapping<TKey, TValue>
 	{
 		private readonly ILog log;
 		private readonly IValueProvider<TKey, TValue> valueProvider;
@@ -15,6 +16,8 @@ namespace SwarmIntelligence.Infrastructure.MemoryManagement
 			this.valueProvider = valueProvider;
 			this.log = log;
 		}
+
+		#region ICompleteMapping<TKey,TValue> Members
 
 		public TValue Get(TKey key)
 		{
@@ -31,17 +34,9 @@ namespace SwarmIntelligence.Infrastructure.MemoryManagement
 			return value;
 		}
 
-		public void Free(TKey coordinate)
-		{
-			TValue value;
-			if(!TryRemove(coordinate, out value))
-				return;
-			valueProvider.Return(value);
+		#endregion
 
-			log.Log(CommonLogTypes.CellFreed, coordinate);
-		}
-
-		#region IMapping<TKey,TValue> Members
+		#region ISparsedMapping<TKey,TValue> Members
 
 		public abstract bool TryGet(TKey key, out TValue value);
 
@@ -53,6 +48,16 @@ namespace SwarmIntelligence.Infrastructure.MemoryManagement
 		}
 
 		#endregion
+
+		public void Free(TKey coordinate)
+		{
+			TValue value;
+			if(!TryRemove(coordinate, out value))
+				return;
+			valueProvider.Return(value);
+
+			log.Log(CommonLogTypes.CellFreed, coordinate);
+		}
 
 		protected abstract bool TryRemove(TKey key, out TValue value);
 		protected abstract TValue GetOrAdd(TKey key, TValue value);

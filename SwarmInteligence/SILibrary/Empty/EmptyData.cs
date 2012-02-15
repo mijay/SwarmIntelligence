@@ -1,4 +1,4 @@
-namespace SILibrary.Base
+namespace SILibrary.Empty
 {
 	public struct EmptyData
 	{

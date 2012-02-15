@@ -58,23 +58,21 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Base\EmptyData.cs" />
-    <Compile Include="Base\EmptyMapping.cs" />
-    <Compile Include="General\ISystemDeclaration.cs" />
-    <Compile Include="General\SystemBuilder.cs" />
+    <Compile Include="Empty\EmptyData.cs" />
+    <Compile Include="Empty\EmptyMapping.cs" />
+    <Compile Include="Buildup\ISystemDeclaration.cs" />
+    <Compile Include="Buildup\SystemBuilder.cs" />
     <Compile Include="Graph\GraphTopology.cs" />
     <Compile Include="Graph\OrgraphTopology.cs" />
     <Compile Include="Graph\GraphCoordinate.cs" />
-    <Compile Include="MemoryManagement\BuildOnlyValueProvider.cs" />
-    <Compile Include="MemoryManagement\DummyValueProvider.cs" />
     <Compile Include="MemoryManagement\GarbageCollector.cs" />
+    <Compile Include="MemoryManagement\Mappings\DictionaryMapping.cs" />
     <Compile Include="TwoDimensional\CellSuburb.cs" />
     <Compile Include="MemoryManagement\ReusingValueProviderBase.cs" />
-    <Compile Include="Base\DictionaryMapping.cs" />
-    <Compile Include="Base\SetCell.cs" />
+    <Compile Include="SetCell.cs" />
     <Compile Include="Contracts\BiConnectedTopologyBaseContract.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="General\BiConnectedTopologyBase.cs" />
+    <Compile Include="BiConnectedTopologyBase.cs" />
     <Compile Include="TwoDimensional\Coordinate2D.cs" />
     <Compile Include="TwoDimensional\FourConnectedSurfaceTopology.cs" />
     <Compile Include="TwoDimensional\PictureNodeDataLayer.cs" />

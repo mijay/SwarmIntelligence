@@ -9,15 +9,15 @@ using SwarmIntelligence.Core.Space;
 namespace SwarmIntelligence.Contracts
 {
 	[ContractClassFor(typeof(IMap<,,>))]
-	public class IMapContract<TCoordinate, TNodeData, TEdgeData>: IMap<TCoordinate, TNodeData, TEdgeData>
+	public abstract class IMapContract<TCoordinate, TNodeData, TEdgeData>: IMap<TCoordinate, TNodeData, TEdgeData>
 		where TCoordinate: ICoordinate<TCoordinate>
 	{
 		#region IMap<TCoordinate,TNodeData,TEdgeData> Members
 
 		public bool TryGet(TCoordinate key, out ICell<TCoordinate, TNodeData, TEdgeData> value)
 		{
+			Contract.Ensures(Topology.Lays(key));
 			Contract.EnsuresOnThrow<IndexOutOfRangeException>(!Topology.Lays(key));
-			Contract.Ensures(!Contract.Result<bool>() || Topology.Lays(key));
 			Contract.Ensures(!Contract.Result<bool>() || Contract.ValueAtReturn(out value).Coordinate.Equals(key));
 			Contract.Ensures(!Contract.Result<bool>() || Contract.ValueAtReturn(out value).Map == this);
 
@@ -26,6 +26,7 @@ namespace SwarmIntelligence.Contracts
 
 		public IEnumerator<KeyValuePair<TCoordinate, ICell<TCoordinate, TNodeData, TEdgeData>>> GetEnumerator()
 		{
+			//todo!
 			throw new UnreachableCodeException();
 		}
 

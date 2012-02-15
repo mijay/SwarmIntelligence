@@ -4,21 +4,21 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using Common;
 using SwarmIntelligence.Core.Data;
+using SwarmIntelligence.Core.Interfaces;
 using SwarmIntelligence.Core.Space;
-using SwarmIntelligence.Infrastructure.MemoryManagement;
 
 namespace SwarmIntelligence.Infrastructure.Data
 {
 	public class NodesDataLayer<TCoordinates, TNodeData>: INodesDataLayer<TCoordinates, TNodeData>
 		where TCoordinates: ICoordinate<TCoordinates>
 	{
-		private readonly MappingBase<TCoordinates, TNodeData> mappingBase;
+		private readonly ICompleteMapping<TCoordinates, TNodeData> completeMapping;
 
-		public NodesDataLayer(Topology<TCoordinates> topology, MappingBase<TCoordinates, TNodeData> mappingBase)
+		public NodesDataLayer(Topology<TCoordinates> topology, ICompleteMapping<TCoordinates, TNodeData> completeMapping)
 		{
-			Contract.Requires(topology != null && mappingBase != null);
+			Contract.Requires(topology != null && completeMapping != null);
 			Topology = topology;
-			this.mappingBase = mappingBase;
+			this.completeMapping = completeMapping;
 		}
 
 		#region Implementation of INodesDataLayer<TCoordinates,TNodeData>
@@ -27,18 +27,13 @@ namespace SwarmIntelligence.Infrastructure.Data
 
 		public TNodeData Get(TCoordinates key)
 		{
-			return mappingBase.Get(key);
-		}
-
-		public bool TryGet(TCoordinates key, out TNodeData value)
-		{
 			Requires.True<IndexOutOfRangeException>(Topology.Lays(key));
-			return mappingBase.TryGet(key, out value);
+			return completeMapping.Get(key);
 		}
 
 		public IEnumerator<KeyValuePair<TCoordinates, TNodeData>> GetEnumerator()
 		{
-			return mappingBase.GetEnumerator();
+			return completeMapping.GetEnumerator();
 		}
 
 		IEnumerator IEnumerable.GetEnumerator()

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Common;
 using Common.Collections.Extensions;
-using SILibrary.Base;
+using SILibrary.Empty;
 using SILibrary.Graph;
 using SwarmIntelligence;
 using SwarmIntelligence.Core;

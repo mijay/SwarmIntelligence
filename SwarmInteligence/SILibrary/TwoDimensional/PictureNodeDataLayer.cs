@@ -1,66 +1,60 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Drawing;
-using System.Linq;
-using Common;
-using SwarmIntelligence.Core.Data;
-using SwarmIntelligence.Core.Space;
+using SwarmIntelligence.Core.Interfaces;
+using SwarmIntelligence.Infrastructure.Data;
 using Utils.Drawing;
 
 namespace SILibrary.TwoDimensional
 {
-	public class PictureNodeDataLayer: DisposableBase, INodesDataLayer<Coordinates2D, Color>
+	public static class PictureNodeDataLayer
 	{
-		private readonly FastBitmap bitmap;
-		private readonly SurfaceTopology topology;
-
-		public PictureNodeDataLayer(SurfaceTopology topology, Bitmap data)
+		public static NodesDataLayer<Coordinates2D, Color> Create(SurfaceTopology topology, Bitmap bitmap)
 		{
-			Contract.Requires(topology != null && data != null);
-			Contract.Requires(topology.BottomRight.x - topology.TopLeft.x == data.Width);
-			Contract.Requires(topology.BottomRight.y - topology.TopLeft.y == data.Height);
-			this.topology = topology;
-			bitmap = new FastBitmap(data);
+			Contract.Requires(topology != null && bitmap != null);
+			Contract.Requires(topology.BottomRight.x == bitmap.Width - 1);
+			Contract.Requires(topology.TopLeft.x == 0);
+			Contract.Requires(topology.BottomRight.y == bitmap.Height - 1);
+			Contract.Requires(topology.TopLeft.y == 0);
+			return new NodesDataLayer<Coordinates2D, Color>(topology, new BitmapProxy(bitmap));
 		}
 
-		#region Implementation of IDisposable
+		#region Nested type: BitmapProxy
 
-		protected override void DisposeManaged()
+		private class BitmapProxy: ICompleteMapping<Coordinates2D, Color>
 		{
-			bitmap.Dispose();
-		}
+			private readonly FastBitmap fastBitmap;
+			private readonly int height;
+			private readonly int width;
 
-		#endregion
+			public BitmapProxy(Bitmap bitmap)
+			{
+				fastBitmap = new FastBitmap(bitmap);
+				width = bitmap.Width;
+				height = bitmap.Height;
+			}
 
-		#region Implementation of INodesDataLayer<Coordinates2D,Color>
+			#region ICompleteMapping<Coordinates2D,Color> Members
 
-		public IEnumerator<KeyValuePair<Coordinates2D, Color>> GetEnumerator()
-		{
-			return topology.GetAllPoints().Select(x => new KeyValuePair<Coordinates2D, Color>(x, Get(x))).GetEnumerator();
-		}
+			public Color Get(Coordinates2D key)
+			{
+				return fastBitmap.GetColor(key.x, key.y);
+			}
 
-		public bool TryGet(Coordinates2D key, out Color value)
-		{
-			Requires.True<IndexOutOfRangeException>(Topology.Lays(key));
-			value = Get(key);
-			return true;
-		}
+			public IEnumerator<KeyValuePair<Coordinates2D, Color>> GetEnumerator()
+			{
+				for(int x = 0; x < width; x++)
+					for(int y = 0; y < height; y++)
+						yield return new KeyValuePair<Coordinates2D, Color>(new Coordinates2D(x, y), fastBitmap.GetColor(x, y));
+			}
 
-		IEnumerator IEnumerable.GetEnumerator()
-		{
-			return GetEnumerator();
-		}
+			IEnumerator IEnumerable.GetEnumerator()
+			{
+				return GetEnumerator();
+			}
 
-		public Topology<Coordinates2D> Topology
-		{
-			get { return topology; }
-		}
-
-		public Color Get(Coordinates2D key)
-		{
-			return bitmap.GetColor(key.x, key.y);
+			#endregion
 		}
 
 		#endregion

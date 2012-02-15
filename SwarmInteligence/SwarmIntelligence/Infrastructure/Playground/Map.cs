@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
+using Common;
 using SwarmIntelligence.Core.Playground;
 using SwarmIntelligence.Core.Space;
 using SwarmIntelligence.Infrastructure.MemoryManagement;
@@ -26,6 +28,8 @@ namespace SwarmIntelligence.Infrastructure.Playground
 
 		public bool TryGet(TCoordinate coordinate, out ICell<TCoordinate, TNodeData, TEdgeData> cell)
 		{
+			Requires.True<IndexOutOfRangeException>(Topology.Lays(coordinate));
+
 			CellBase<TCoordinate, TNodeData, TEdgeData> cellBase;
 			bool result = mapping.TryGet(coordinate, out cellBase);
 			cell = cellBase;
@@ -48,16 +52,9 @@ namespace SwarmIntelligence.Infrastructure.Playground
 
 		internal CellBase<TCoordinate, TNodeData, TEdgeData> Get(TCoordinate coordinate)
 		{
-			Contract.Requires(Topology.Lays(coordinate));
+			Requires.True<IndexOutOfRangeException>(Topology.Lays(coordinate));
 
 			return mapping.Get(coordinate);
-		}
-
-		internal void Free(TCoordinate coordinate)
-		{
-			Contract.Requires(Topology.Lays(coordinate));
-
-			mapping.Free(coordinate);
 		}
 
 		#endregion

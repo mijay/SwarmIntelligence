@@ -12,7 +12,14 @@ namespace SwarmIntelligence.Core.Playground
 	public interface ICell<TCoordinate, TNodeData, TEdgeData>: IEnumerable<IAnt<TCoordinate, TNodeData, TEdgeData>>
 		where TCoordinate: ICoordinate<TCoordinate>
 	{
+		/// <summary>
+		/// <see cref="IMap{TCoordinate,TNodeData,TEdgeData}"/> to which current <see cref="ICell{TCoordinate,TNodeData,TEdgeData}"/> belongs.
+		/// </summary>
 		IMap<TCoordinate, TNodeData, TEdgeData> Map { get; }
+
+		/// <summary>
+		/// <typeparamref name="TCoordinate"/> of the point represented by current <see cref="ICell{TCoordinate,TNodeData,TEdgeData}"/>
+		/// </summary>
 		TCoordinate Coordinate { get; }
 	}
 }

@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using Common;
-using SwarmIntelligence.Core;
+using SwarmIntelligence.Core.Interfaces;
 
 namespace SwarmIntelligence.Contracts
 {
-	[ContractClassFor(typeof(IMapping<,>))]
-	public abstract class IMappingContract<TKey, TValue>: IMapping<TKey, TValue>
+	[ContractClassFor(typeof(ISparsedMapping<,>))]
+	public abstract class ISparsedMappingContract<TKey, TValue>: ISparsedMapping<TKey, TValue>
 	{
-		#region IMapping<TKey,TValue> Members
+		#region ISparsedMapping<TKey,TValue> Members
 
 		public bool TryGet(TKey coordinate, out TValue value)
 		{

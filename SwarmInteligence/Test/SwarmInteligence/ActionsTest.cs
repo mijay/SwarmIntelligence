@@ -1,6 +1,6 @@
 using System.Linq;
 using NUnit.Framework;
-using SILibrary.Base;
+using SILibrary.Empty;
 using SILibrary.TwoDimensional;
 using SwarmIntelligence;
 using SwarmIntelligence.Core;

@@ -2,7 +2,6 @@
 using System.Diagnostics.Contracts;
 using Common;
 using Common.Collections.Extensions;
-using SILibrary.General;
 using SwarmIntelligence.Core.Space;
 
 namespace SILibrary.Contracts
