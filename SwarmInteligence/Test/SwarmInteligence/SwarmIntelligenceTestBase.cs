@@ -1,12 +1,13 @@
-﻿using System;
-using CommonTest;
+﻿using CommonTest;
+using SILibrary;
 using SILibrary.Buildup;
 using SILibrary.Empty;
+using SILibrary.MemoryManagement.Mappings;
 using SILibrary.TwoDimensional;
 using SwarmIntelligence;
 using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Loggin;
-using SwarmIntelligence.Implementation.Logging;
+using SwarmIntelligence.Implementation.Playground;
 
 namespace Test.SwarmInteligence
 {
@@ -18,13 +19,18 @@ namespace Test.SwarmInteligence
 
 		protected void InitializeWorld(Coordinates2D min, Coordinates2D max)
 		{
-			Tuple<Runner<Coordinates2D, EmptyData, EmptyData>, ILogJournal> tuple = SystemBuilder
+			ILogManager logManager;
+			world = SystemBuilder
 				.Create<Coordinates2D, EmptyData, EmptyData>()
+				.WithDefaultLog(out logManager)
 				.WithTopology(new FourConnectedSurfaceTopology(min, max))
+				.WithCommonMap()
+				.WithEmptyNodeData()
+				.WithEmptyEdgeData()
 				.Build();
-			runner = tuple.Item1;
-			journal = tuple.Item2;
+			journal = logManager.Journal;
 			world = runner.World;
+			runner = new Runner<Coordinates2D, EmptyData, EmptyData>(world);
 		}
 	}
 }

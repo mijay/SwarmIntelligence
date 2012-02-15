@@ -6,6 +6,7 @@ using SILibrary.Empty;
 using SILibrary.TwoDimensional;
 using SwarmIntelligence;
 using SwarmIntelligence.Core;
+using SwarmIntelligence.Core.Loggin;
 using SwarmIntelligence.Core.Playground;
 using SwarmIntelligence.Specialized;
 
@@ -22,12 +23,16 @@ namespace Example1
 
 		private static void Main(string[] args)
 		{
-			runner = SystemBuilder
+			ILogManager logManager;
+			world = SystemBuilder
 				.Create<Coordinates2D, EmptyData, EmptyData>()
+				.WithDefaultLog(out logManager)
 				.WithTopology(new EightConnectedSurfaceTopology(min, max))
-				.Build()
-				.Item1;
-			world = runner.World;
+				.WithCommonMap()
+				.WithEmptyNodeData()
+				.WithEmptyEdgeData()
+				.Build();
+			runner = new Runner<Coordinates2D, EmptyData, EmptyData>(world);
 
 			IAnt<Coordinates2D, EmptyData, EmptyData>[] ants = SeedAnts(10);
 

@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics.Contracts;
+using SwarmIntelligence.Contracts;
 
 namespace SwarmIntelligence.Core.Interfaces
 {
@@ -8,6 +9,7 @@ namespace SwarmIntelligence.Core.Interfaces
 	/// </summary>
 	/// <typeparam name="TKey">Type of keys in mapping.</typeparam>
 	/// <typeparam name="TValue">Type of values mapping.</typeparam>
+	[ContractClass(typeof(ISparsedMappingContract<,>))]
 	public interface ISparsedMapping<TKey, TValue>: IKeyValueContainer<TKey, TValue>
 	{
 		/// <summary>

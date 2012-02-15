@@ -7,7 +7,8 @@ using SwarmIntelligence.Specialized;
 
 namespace SILibrary.Buildup
 {
-	internal class Configured<TCoordinate, TNodeData, TEdgeData>: DisposableBase, SystemBuilder.IConfigured<TCoordinate, TNodeData, TEdgeData>
+	internal class Configured<TCoordinate, TNodeData, TEdgeData>: DisposableBase,
+	                                                              SystemBuilder.IConfigured<TCoordinate, TNodeData, TEdgeData>
 		where TCoordinate: ICoordinate<TCoordinate>
 	{
 		private readonly IMapModifier<TCoordinate, TNodeData, TEdgeData> mapModifier;

@@ -9,7 +9,7 @@ using SwarmIntelligence.Core.Space;
 namespace SwarmIntelligence.Contracts
 {
 	[ContractClassFor(typeof(INodesDataLayer<,>))]
-	public abstract class NodesDataLayerContract<TCoordinate, TNodeData>: INodesDataLayer<TCoordinate, TNodeData>
+	public abstract class INodesDataLayerContract<TCoordinate, TNodeData>: INodesDataLayer<TCoordinate, TNodeData>
 		where TCoordinate: ICoordinate<TCoordinate>
 	{
 		#region INodesDataLayer<TCoordinate,TNodeData> Members

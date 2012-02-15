@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.Contracts;
+using SwarmIntelligence.Contracts;
 using SwarmIntelligence.Core.Interfaces;
 using SwarmIntelligence.Core.Space;
 
@@ -9,6 +10,7 @@ namespace SwarmIntelligence.Core.Data
 	/// </summary>
 	/// <typeparam name="TCoordinate">Type of coordinates in represented space.</typeparam>
 	/// <typeparam name="TNodeData">Type of data associated with edges between point in current space.</typeparam>
+	[ContractClass(typeof(INodesDataLayerContract<,>))]
 	public interface INodesDataLayer<TCoordinate, TNodeData>: ICompleteMapping<TCoordinate, TNodeData>
 		where TCoordinate: ICoordinate<TCoordinate>
 	{

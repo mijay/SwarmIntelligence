@@ -49,13 +49,17 @@ namespace WpfApplication1
 
 		public void Initialize()
 		{
-			Tuple<Runner<Coordinates2D, EmptyData, EmptyData>, ILogJournal> tuple = SystemBuilder
+			ILogManager logManager;
+			world = SystemBuilder
 				.Create<Coordinates2D, EmptyData, EmptyData>()
+				.WithDefaultLog(out logManager)
 				.WithTopology(new EightConnectedSurfaceTopology(min, max))
+				.WithCommonMap()
+				.WithEmptyNodeData()
+				.WithEmptyEdgeData()
 				.Build();
-			ILogJournal logJournal = tuple.Item2;
-			runner = tuple.Item1;
-			world = tuple.Item1.World;
+			ILogJournal logJournal = logManager.Journal;
+			runner = new Runner<Coordinates2D, EmptyData, EmptyData>(world);
 
 			logJournal.OnRecordsAdded += OnNewRecords;
 			SeedAnts(wolfCount, true);

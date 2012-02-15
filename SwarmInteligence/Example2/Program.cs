@@ -1,11 +1,9 @@
-﻿using System;
-using SILibrary.Buildup;
+﻿using SILibrary.Buildup;
 using SILibrary.Empty;
 using SILibrary.Graph;
 using SwarmIntelligence;
 using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Loggin;
-using SwarmIntelligence.Implementation.Logging;
 
 namespace Example2
 {
@@ -17,15 +15,18 @@ namespace Example2
 
 		public static void Main(string[] args)
 		{
-			Tuple<Runner<GraphCoordinate, EmptyData, EdgeData>, ILogJournal>
-				tuple = SystemBuilder
-					.Create<GraphCoordinate, EmptyData, EdgeData>()
-					.WithTopology(new GraphTopology(null))
-					.Build();
+			ILogManager logManager;
+			world = SystemBuilder
+				.Create<GraphCoordinate, EmptyData, EdgeData>()
+				.WithDefaultLog(out logManager)
+				.WithTopology(new GraphTopology(null))
+				.WithCommonMap()
+				.WithEmptyNodeData()
+				.WithEmptyEdgeData()
+				.Build();
 
-			runner = tuple.Item1;
-			logger = tuple.Item2;
-			world = runner.World;
+			runner = new Runner<GraphCoordinate, EmptyData, EdgeData>(world);
+			logger = logManager.Journal;
 		}
 	}
 }

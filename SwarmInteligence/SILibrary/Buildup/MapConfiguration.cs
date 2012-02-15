@@ -1,5 +1,6 @@
 ﻿using System;
 using Common;
+using SILibrary.MemoryManagement.Mappings;
 using SwarmIntelligence.Core.Space;
 using SwarmIntelligence.Implementation;
 using SwarmIntelligence.Implementation.MemoryManagement;
@@ -63,6 +64,12 @@ namespace SILibrary.Buildup
 			where TCell: CellBase<TCoordinate, TNodeData, TEdgeData>
 		{
 			return WithDefaultMap<TMapping>(EntityBuilders<TCoordinate, TNodeData, TEdgeData>.ForCell<TCell>());
+		}
+
+		public SystemBuilder.INodeDataConfiguration<TCoordinate, TNodeData, TEdgeData> WithCommonMap()
+		{
+			return WithDefaultMap<DictionaryMapping<TCoordinate, CellBase<TCoordinate, TNodeData, TEdgeData>>,
+				SetCell<TCoordinate, TNodeData, TEdgeData>>();
 		}
 
 		#endregion

@@ -60,6 +60,7 @@ namespace SILibrary.Buildup
 		public interface IMapConfiguration<TCoordinate, TNodeData, TEdgeData>: IFluentInterface
 			where TCoordinate: ICoordinate<TCoordinate>
 		{
+			INodeDataConfiguration<TCoordinate, TNodeData, TEdgeData> WithCommonMap();
 			INodeDataConfiguration<TCoordinate, TNodeData, TEdgeData> WithMap(Map<TCoordinate, TNodeData, TEdgeData> map);
 
 			INodeDataConfiguration<TCoordinate, TNodeData, TEdgeData> WithMapCreatedBy(
@@ -78,6 +79,7 @@ namespace SILibrary.Buildup
 			INodeDataConfiguration<TCoordinate, TNodeData, TEdgeData> WithDefaultMap<TMapping, TCell>()
 				where TMapping: MappingBase<TCoordinate, CellBase<TCoordinate, TNodeData, TEdgeData>>
 				where TCell: CellBase<TCoordinate, TNodeData, TEdgeData>;
+
 		}
 
 		#endregion
