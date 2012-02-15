@@ -4,7 +4,13 @@ namespace Common
 {
 	public abstract class DisposableBase: IDisposable
 	{
-		protected bool Disposed { get; private set; }
+		private bool disposed;
+
+		protected void CheckDisposedState()
+		{
+			if (disposed)
+				throw new ObjectDisposedException(this.GetType().Name);
+		}
 
 		protected virtual void DisposeManaged()
 		{
@@ -16,7 +22,7 @@ namespace Common
 
 		~DisposableBase()
 		{
-			if(Disposed)
+			if(disposed)
 				return;
 			DisposeUnmanaged();
 		}
@@ -25,9 +31,9 @@ namespace Common
 
 		public void Dispose()
 		{
-			if(Disposed)
+			if(disposed)
 				return;
-			Disposed = true;
+			disposed = true;
 			DisposeManaged();
 			DisposeUnmanaged();
 			GC.SuppressFinalize(this);

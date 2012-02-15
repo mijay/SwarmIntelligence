@@ -1,4 +1,5 @@
 ﻿using System;
+using Common;
 using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Data;
 using SwarmIntelligence.Core.Space;
@@ -6,7 +7,7 @@ using SwarmIntelligence.Specialized;
 
 namespace SILibrary.Buildup
 {
-	internal class Configured<TCoordinate, TNodeData, TEdgeData>: IConfigured<TCoordinate, TNodeData, TEdgeData>
+	internal class Configured<TCoordinate, TNodeData, TEdgeData>: DisposableBase, SystemBuilder.IConfigured<TCoordinate, TNodeData, TEdgeData>
 		where TCoordinate: ICoordinate<TCoordinate>
 	{
 		private readonly IMapModifier<TCoordinate, TNodeData, TEdgeData> mapModifier;
@@ -18,29 +19,39 @@ namespace SILibrary.Buildup
 			mapModifier = world.GetModifier();
 		}
 
+		protected override void DisposeManaged()
+		{
+			base.DisposeManaged();
+			mapModifier.Dispose();
+		}
+
 		#region Implementation of IConfigured<TCoordinate,TNodeData,TEdgeData>
 
-		public IConfigured<TCoordinate, TNodeData, TEdgeData> SeedData(Action<IEdgesDataLayer<TCoordinate, TEdgeData>> seed)
+		public SystemBuilder.IConfigured<TCoordinate, TNodeData, TEdgeData> SeedData(Action<IEdgesDataLayer<TCoordinate, TEdgeData>> seed)
 		{
+			CheckDisposedState();
 			seed(world.EdgesData);
 			return this;
 		}
 
-		public IConfigured<TCoordinate, TNodeData, TEdgeData> SeedData(Action<INodesDataLayer<TCoordinate, TNodeData>> seed)
+		public SystemBuilder.IConfigured<TCoordinate, TNodeData, TEdgeData> SeedData(Action<INodesDataLayer<TCoordinate, TNodeData>> seed)
 		{
+			CheckDisposedState();
 			seed(world.NodesData);
 			return this;
 		}
 
-		public IConfigured<TCoordinate, TNodeData, TEdgeData> SeedAnts(Action<IMapModifier<TCoordinate, TNodeData, TEdgeData>> seed)
+		public SystemBuilder.IConfigured<TCoordinate, TNodeData, TEdgeData> SeedAnts(Action<IMapModifier<TCoordinate, TNodeData, TEdgeData>> seed)
 		{
+			CheckDisposedState();
 			seed(mapModifier);
 			return this;
 		}
 
 		public World<TCoordinate, TNodeData, TEdgeData> Build()
 		{
-			mapModifier.Dispose();
+			CheckDisposedState();
+			Dispose();
 			return world;
 		}
 

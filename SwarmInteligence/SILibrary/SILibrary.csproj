@@ -66,7 +66,6 @@
     <Compile Include="Buildup\MapConfiguration.cs" />
     <Compile Include="Empty\EmptyData.cs" />
     <Compile Include="Empty\EmptyMapping.cs" />
-    <Compile Include="Buildup\Interfaces.cs" />
     <Compile Include="Buildup\SystemBuilder.cs" />
     <Compile Include="Graph\GraphTopology.cs" />
     <Compile Include="Graph\OrgraphTopology.cs" />
