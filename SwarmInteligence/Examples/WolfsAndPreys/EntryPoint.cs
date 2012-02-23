@@ -28,7 +28,7 @@ namespace WolfsAndPreys
 				.Create<Coordinates2D, EmptyData, EmptyData>()
 				.WithDefaultLog(out logManager)
 				.WithTopology(new EightConnectedSurfaceTopology(min, max))
-				.WithCommonMap()
+				.WithSurfaceMap()
 				.WithEmptyNodeData()
 				.WithEmptyEdgeData()
 				.Build();

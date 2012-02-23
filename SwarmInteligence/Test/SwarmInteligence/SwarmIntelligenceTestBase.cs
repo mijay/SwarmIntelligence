@@ -23,7 +23,7 @@ namespace Test.SwarmInteligence
 				.Create<Coordinates2D, EmptyData, EmptyData>()
 				.WithDefaultLog(out logManager)
 				.WithTopology(new FourConnectedSurfaceTopology(min, max))
-				.WithCommonMap()
+				.WithSurfaceMap()
 				.WithEmptyNodeData()
 				.WithEmptyEdgeData()
 				.Build();

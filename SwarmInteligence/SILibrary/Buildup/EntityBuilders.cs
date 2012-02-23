@@ -31,7 +31,8 @@ namespace SILibrary.BuildUp
 		}
 
 		internal static MappingBuilder<TCoordinate, TNodeData, TEdgeData> ForMapping<TMapping>(
-			SystemBuilder.CellProviderBuilder<TCoordinate, TNodeData, TEdgeData> cellProviderBuilder, ILog log)
+			SystemBuilder.CellProviderBuilder<TCoordinate, TNodeData, TEdgeData> cellProviderBuilder,
+			Topology<TCoordinate> topology, ILog log)
 			where TMapping: MappingBase<TCoordinate, CellBase<TCoordinate, TNodeData, TEdgeData>>
 		{
 			ConstructorInfo constructorInfo = typeof(TMapping).GetConstructors().Single();
@@ -40,18 +41,18 @@ namespace SILibrary.BuildUp
 
 			Expression[] xConstructorArguments = constructorInfo.GetParameters()
 				.Select(parameterInfo => {
-				        	if(parameterInfo.ParameterType.IsAssignableFrom(
-				        		typeof(SystemBuilder.CellProviderBuilder<TCoordinate, TNodeData, TEdgeData>)))
+				        	if(parameterInfo.ParameterType.IsAssignableFrom(cellProviderBuilder.GetType()))
 				        		return (Expression) Expression.Constant(cellProviderBuilder);
-				        	if(parameterInfo.ParameterType.IsAssignableFrom(typeof(ILog)))
+				        	if(parameterInfo.ParameterType.IsAssignableFrom(topology.GetType()))
+				        		return Expression.Property(xParameter, "Topology");
+				        	if(parameterInfo.ParameterType.IsAssignableFrom(log.GetType()))
 				        		return Expression.Constant(log);
+
 				        	if(parameterInfo.ParameterType.IsAssignableFrom(
 				        		typeof(IValueProvider<TCoordinate, CellBase<TCoordinate, TNodeData, TEdgeData>>)))
 				        		return Expression.Invoke(Expression.Constant(cellProviderBuilder), xParameter);
 				        	if(parameterInfo.ParameterType.IsAssignableFrom(typeof(Map<TCoordinate, TNodeData, TEdgeData>)))
 				        		return xParameter;
-				        	if(parameterInfo.ParameterType.IsAssignableFrom(typeof(Topology<TCoordinate>)))
-				        		return Expression.Property(xParameter, "Topology");
 				        	throw new ArgumentOutOfRangeException();
 				        })
 				.ToArray();

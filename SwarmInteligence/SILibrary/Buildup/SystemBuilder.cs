@@ -72,8 +72,6 @@ namespace SILibrary.BuildUp
 		public interface IMapConfiguration<TCoordinate, TNodeData, TEdgeData>: IFluentInterface
 			where TCoordinate: ICoordinate<TCoordinate>
 		{
-			INodeDataConfiguration<TCoordinate, TNodeData, TEdgeData> WithCommonMap();
-
 			INodeDataConfiguration<TCoordinate, TNodeData, TEdgeData> WithMap(MapBuilder<TCoordinate, TNodeData, TEdgeData> mapBuilder);
 			INodeDataConfiguration<TCoordinate, TNodeData, TEdgeData> WithDefaultMap(MappingBuilder<TCoordinate, TNodeData, TEdgeData> mappingBuilder);
 

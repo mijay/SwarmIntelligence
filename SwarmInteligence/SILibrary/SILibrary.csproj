@@ -67,12 +67,15 @@
     <Compile Include="Empty\EmptyData.cs" />
     <Compile Include="Empty\EmptyMapping.cs" />
     <Compile Include="BuildUp\SystemBuilder.cs" />
+    <Compile Include="Graph\BuildUpExtension.cs" />
     <Compile Include="Graph\GraphMapping.cs" />
     <Compile Include="Graph\GraphTopology.cs" />
+    <Compile Include="Common\ListBasedMappingBase.cs" />
     <Compile Include="Graph\OrgraphTopology.cs" />
     <Compile Include="Graph\GraphCoordinate.cs" />
     <Compile Include="Common\GarbageCollector.cs" />
     <Compile Include="Common\DictionaryMapping.cs" />
+    <Compile Include="TwoDimensional\BuildUpExtension.cs" />
     <Compile Include="TwoDimensional\CellSuburb.cs" />
     <Compile Include="Common\SetCell.cs" />
     <Compile Include="Contracts\BiConnectedTopologyBaseContract.cs" />
@@ -82,6 +85,7 @@
     <Compile Include="TwoDimensional\FourConnectedSurfaceTopology.cs" />
     <Compile Include="TwoDimensional\PictureNodeDataLayer.cs" />
     <Compile Include="TwoDimensional\EightConnectedSurfaceTopology.cs" />
+    <Compile Include="TwoDimensional\SurfaceMapping.cs" />
     <Compile Include="TwoDimensional\SurfaceTopology.cs" />
   </ItemGroup>
   <ItemGroup>

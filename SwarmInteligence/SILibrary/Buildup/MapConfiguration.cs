@@ -41,7 +41,8 @@ namespace SILibrary.BuildUp
 			SystemBuilder.CellProviderBuilder<TCoordinate, TNodeData, TEdgeData> cellProviderBuilder)
 			where TMapping: MappingBase<TCoordinate, CellBase<TCoordinate, TNodeData, TEdgeData>>
 		{
-			return WithDefaultMap(EntityBuilders<TCoordinate, TNodeData, TEdgeData>.ForMapping<TMapping>(cellProviderBuilder, buildingWorld.Log));
+			return WithDefaultMap(EntityBuilders<TCoordinate, TNodeData, TEdgeData>.ForMapping<TMapping>(
+				cellProviderBuilder, buildingWorld.Topology, buildingWorld.Log));
 		}
 
 		public SystemBuilder.INodeDataConfiguration<TCoordinate, TNodeData, TEdgeData> WithDefaultMapCellProvider<TMapping>(
@@ -58,11 +59,7 @@ namespace SILibrary.BuildUp
 			return WithDefaultMapCellProvider<TMapping>(EntityBuilders<TCoordinate, TNodeData, TEdgeData>.ForCell<TCell>());
 		}
 
-		public SystemBuilder.INodeDataConfiguration<TCoordinate, TNodeData, TEdgeData> WithCommonMap()
-		{
-			return WithDefaultMapCellProvider<DictionaryMapping<TCoordinate, CellBase<TCoordinate, TNodeData, TEdgeData>>,
-				SetCell<TCoordinate, TNodeData, TEdgeData>>();
-		}
+		
 
 		#endregion
 	}

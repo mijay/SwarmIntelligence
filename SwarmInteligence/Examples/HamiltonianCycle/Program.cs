@@ -20,7 +20,7 @@ namespace HamiltonianCycle
 				.Create<GraphCoordinate, EmptyData, EdgeData>()
 				.WithDefaultLog(out logManager)
 				.WithTopology(new GraphTopology(null))
-				.WithCommonMap()
+				.WithGraphMap()
 				.WithEmptyNodeData()
 				.WithEmptyEdgeData()
 				.Build();
