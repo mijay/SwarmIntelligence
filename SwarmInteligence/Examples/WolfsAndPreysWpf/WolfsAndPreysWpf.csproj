@@ -119,15 +119,15 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Common\Common.csproj">
+    <ProjectReference Include="..\..\Common\Common.csproj">
       <Project>{2BC749DB-5C4C-403A-9391-8FC43719D93A}</Project>
       <Name>Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SILibrary\SILibrary.csproj">
+    <ProjectReference Include="..\..\SILibrary\SILibrary.csproj">
       <Project>{946A0892-9823-49F6-9D96-3B2B90B6C9C0}</Project>
       <Name>SILibrary</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SwarmIntelligence\SwarmInteligence.csproj">
+    <ProjectReference Include="..\..\SwarmIntelligence\SwarmInteligence.csproj">
       <Project>{2FACFBFE-7D25-4F20-96D6-EFC7F742988A}</Project>
       <Name>SwarmInteligence</Name>
     </ProjectReference>
