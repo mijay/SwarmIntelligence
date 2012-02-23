@@ -10,7 +10,7 @@ using SwarmIntelligence.Core.Playground;
 using SwarmIntelligence.Implementation.Logging;
 using SwarmIntelligence.Specialized;
 
-namespace WpfApplication1
+namespace WolfsAndPreysWpf
 {
 	public class Model
 	{

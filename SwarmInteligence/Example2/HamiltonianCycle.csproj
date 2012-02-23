@@ -8,8 +8,8 @@
     <ProjectGuid>{C922FA30-7571-4FD4-89E1-30F4BBCDD29F}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Example2</RootNamespace>
-    <AssemblyName>PP</AssemblyName>
+    <RootNamespace>HamiltonianCycle</RootNamespace>
+    <AssemblyName>HamiltonianCycle</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>

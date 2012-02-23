@@ -7,7 +7,7 @@ using SwarmIntelligence;
 using SwarmIntelligence.Core;
 using SwarmIntelligence.Implementation.Playground;
 
-namespace Example1
+namespace WolfsAndPreys
 {
 	internal class WolfAnt: AntBase<Coordinates2D, EmptyData, EmptyData>
 	{

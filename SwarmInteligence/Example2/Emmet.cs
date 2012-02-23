@@ -10,9 +10,9 @@ using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Space;
 using SwarmIntelligence.Implementation.Playground;
 
-namespace Example2
+namespace HamiltonianCycle
 {
-	internal class Emmet: AntBase<GraphCoordinate, EmptyData, EdgeData>
+	public class Emmet: AntBase<GraphCoordinate, EmptyData, EdgeData>
 	{
 		private static readonly Random random = new Random();
 		private readonly double alpha;

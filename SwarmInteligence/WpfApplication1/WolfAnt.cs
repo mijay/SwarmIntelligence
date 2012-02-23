@@ -7,7 +7,7 @@ using SwarmIntelligence;
 using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Playground;
 
-namespace WpfApplication1
+namespace WolfsAndPreysWpf
 {
 	public class WolfAnt: Animal
 	{

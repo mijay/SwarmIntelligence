@@ -12,7 +12,7 @@ using Common.Collections.Extensions;
 using SILibrary.TwoDimensional;
 using SwarmIntelligence.Implementation.Logging;
 
-namespace WpfApplication1
+namespace WolfsAndPreysWpf
 {
 	/// <summary>
 	/// Interaction logic for MainWindow.xaml

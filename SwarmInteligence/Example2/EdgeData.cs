@@ -1,9 +1,9 @@
-﻿namespace Example2
+﻿namespace HamiltonianCycle
 {
-	internal class EdgeData
+	public class EdgeData
 	{
-		public double Odor;
-		public double Weight;
+		public double Odor { get; set; }
+		public double Weight { get; private set; }
 
 		public EdgeData(double weight, double odor)
 		{

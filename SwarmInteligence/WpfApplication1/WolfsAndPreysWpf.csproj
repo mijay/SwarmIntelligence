@@ -8,8 +8,8 @@
     <ProjectGuid>{920B8278-6167-49F4-9A75-077FD0622980}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WpfApplication1</RootNamespace>
-    <AssemblyName>WpfApplication1</AssemblyName>
+    <RootNamespace>WolfsAndPreysWpf</RootNamespace>
+    <AssemblyName>WolfsAndPreysWpf</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>

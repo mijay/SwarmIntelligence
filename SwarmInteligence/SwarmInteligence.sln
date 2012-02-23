@@ -13,11 +13,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Test", "Common.Test\Common.Test.csproj", "{AFCB32EC-DFCF-4B5D-AD23-F34CBC0C48DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example1", "Example1\Example1.csproj", "{286318FD-17BB-4F1A-8A62-29943E0589E1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WolfsAndPreys", "Example1\WolfsAndPreys.csproj", "{286318FD-17BB-4F1A-8A62-29943E0589E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfApplication1", "WpfApplication1\WpfApplication1.csproj", "{920B8278-6167-49F4-9A75-077FD0622980}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WolfsAndPreysWpf", "WpfApplication1\WolfsAndPreysWpf.csproj", "{920B8278-6167-49F4-9A75-077FD0622980}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example2", "Example2\Example2.csproj", "{C922FA30-7571-4FD4-89E1-30F4BBCDD29F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HamiltonianCycle", "Example2\HamiltonianCycle.csproj", "{C922FA30-7571-4FD4-89E1-30F4BBCDD29F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{7B74C2EC-B409-40EF-99C6-6011B6CFF887}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -122,5 +124,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{286318FD-17BB-4F1A-8A62-29943E0589E1} = {7B74C2EC-B409-40EF-99C6-6011B6CFF887}
+		{C922FA30-7571-4FD4-89E1-30F4BBCDD29F} = {7B74C2EC-B409-40EF-99C6-6011B6CFF887}
+		{920B8278-6167-49F4-9A75-077FD0622980} = {7B74C2EC-B409-40EF-99C6-6011B6CFF887}
 	EndGlobalSection
 EndGlobal

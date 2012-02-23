@@ -5,9 +5,9 @@ using SwarmIntelligence;
 using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Loggin;
 
-namespace Example2
+namespace HamiltonianCycle
 {
-	internal class Programnew
+	public static class EntryPoint
 	{
 		private static World<GraphCoordinate, EmptyData, EdgeData> world;
 		private static Runner<GraphCoordinate, EmptyData, EdgeData> runner;

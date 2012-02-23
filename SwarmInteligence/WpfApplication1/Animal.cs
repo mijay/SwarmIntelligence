@@ -6,7 +6,7 @@ using SILibrary.TwoDimensional;
 using SwarmIntelligence.Core;
 using SwarmIntelligence.Implementation.Playground;
 
-namespace WpfApplication1
+namespace WolfsAndPreysWpf
 {
 	public abstract class Animal: AntBase<Coordinates2D, EmptyData, EmptyData>
 	{

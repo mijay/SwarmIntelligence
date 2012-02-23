@@ -10,9 +10,9 @@ using SwarmIntelligence.Core.Loggin;
 using SwarmIntelligence.Core.Playground;
 using SwarmIntelligence.Specialized;
 
-namespace Example1
+namespace WolfsAndPreys
 {
-	internal class Program
+	public static class EntryPoint
 	{
 		private static World<Coordinates2D, EmptyData, EmptyData> world;
 		private static Runner<Coordinates2D, EmptyData, EmptyData> runner;

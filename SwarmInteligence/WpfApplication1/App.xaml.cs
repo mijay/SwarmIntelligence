@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace WpfApplication1
+namespace WolfsAndPreysWpf
 {
 	/// <summary>
 	/// Interaction logic for App.xaml

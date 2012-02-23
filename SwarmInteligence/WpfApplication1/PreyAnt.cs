@@ -3,7 +3,7 @@ using SILibrary.TwoDimensional;
 using SwarmIntelligence;
 using SwarmIntelligence.Core;
 
-namespace WpfApplication1
+namespace WolfsAndPreysWpf
 {
 	public class PreyAnt: Animal
 	{
