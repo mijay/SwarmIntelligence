@@ -32,14 +32,5 @@ namespace Common.Collections.Extensions
 			Contract.Requires(list != null);
 			return new ReadOnlyList<T>(list);
 		}
-
-		/// <summary>
-		/// Figures out if given list is null or if it is empty.
-		/// </summary>
-		[Pure]
-		public static bool IsNullOrEmpty<T>(this IList<T> data)
-		{
-			return data == null || data.Count == 0;
-		}
 	}
 }

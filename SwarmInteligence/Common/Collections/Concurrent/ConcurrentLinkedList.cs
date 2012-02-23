@@ -35,14 +35,14 @@ namespace Common.Collections.Concurrent
 			get { return count; }
 		}
 
-		public void Append(T value)
+		public void Add(T value)
 		{
 			lockSlim.EnterWriteLock();
 			AddInternal(value);
 			lockSlim.ExitWriteLock();
 		}
 
-		public void Append(IEnumerable<T> values)
+		public void Add(IEnumerable<T> values)
 		{
 			lockSlim.EnterWriteLock();
 			values.ForEach(AddInternal);

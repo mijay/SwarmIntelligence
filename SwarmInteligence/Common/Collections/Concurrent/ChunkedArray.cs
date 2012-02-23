@@ -18,7 +18,7 @@ namespace Common.Collections.Concurrent
 		{
 			Contract.Requires(chunkSize > 0);
 			this.chunkSize = chunkSize;
-			chunkList.Append(new T[chunkSize]);
+			chunkList.Add(new T[chunkSize]);
 		}
 
 		#region IAppendableCollection<T> Members
@@ -38,7 +38,7 @@ namespace Common.Collections.Concurrent
 			}
 		}
 
-		public void Append(IEnumerable<T> values)
+		public void Add(IEnumerable<T> values)
 		{
 			lockSlim.EnterWriteLock();
 			values.ForEach(AppendInternal);
@@ -62,7 +62,7 @@ namespace Common.Collections.Concurrent
 			}
 		}
 
-		public void Append(T value)
+		public void Add(T value)
 		{
 			lockSlim.EnterWriteLock();
 			AppendInternal(value);
@@ -78,7 +78,7 @@ namespace Common.Collections.Concurrent
 			chunkList[chunkNumber][indexInChunk] = data;
 			count++;
 			if(indexInChunk == chunkSize - 1)
-				chunkList.Append(new T[chunkSize]);
+				chunkList.Add(new T[chunkSize]);
 		}
 	}
 }

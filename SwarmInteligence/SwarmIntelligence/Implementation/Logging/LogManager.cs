@@ -52,7 +52,7 @@ namespace SwarmIntelligence.Implementation.Logging
 			LogRecord[] newRecords = DequeueAllAppended();
 			long lastNewRecord = logRecordIndex;
 
-			logRecords.Append(newRecords);
+			logRecords.Add(newRecords);
 
 			Task.Factory.StartNew(
 				() => logJournal.NotifyRecordsAdded(newRecords, lastOldRecord + 1, lastNewRecord),

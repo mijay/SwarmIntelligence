@@ -67,6 +67,7 @@
     <Compile Include="Empty\EmptyData.cs" />
     <Compile Include="Empty\EmptyMapping.cs" />
     <Compile Include="BuildUp\SystemBuilder.cs" />
+    <Compile Include="Graph\GraphMapping.cs" />
     <Compile Include="Graph\GraphTopology.cs" />
     <Compile Include="Graph\OrgraphTopology.cs" />
     <Compile Include="Graph\GraphCoordinate.cs" />

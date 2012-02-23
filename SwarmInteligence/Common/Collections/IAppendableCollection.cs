@@ -2,9 +2,9 @@ using System.Collections.Generic;
 
 namespace Common.Collections
 {
-	public interface IAppendableCollection<T>: ITailableCollection<T>
+	public interface IAppendableCollection<T>: IEnumerable<T>
 	{
-		void Append(T value);
-		void Append(IEnumerable<T> values);
+		void Add(T value);
+		void Add(IEnumerable<T> values);
 	}
 }

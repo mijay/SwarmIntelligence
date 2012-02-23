@@ -11,14 +11,20 @@ namespace Common.Collections.Extensions
 		public static bool IsEmpty<T>(this IEnumerable<T> source)
 		{
 			Contract.Requires(source != null);
-			return source.Take(1).Count() == 0;
+			return !source.Any();
+		}
+
+		[Pure]
+		public static bool IsNullOrEmpty<T>(this IEnumerable<T> source)
+		{
+			return source == null || !source.Any();
 		}
 
 		[Pure]
 		public static bool IsNotEmpty<T>(this IEnumerable<T> source)
 		{
 			Contract.Requires(source != null);
-			return source.Take(1).Count() != 0;
+			return source.Any();
 		}
 
 		[Pure]
@@ -60,6 +66,13 @@ namespace Common.Collections.Extensions
 		{
 			Contract.Requires(source != null);
 			return source.Where(x => x != null);
+		}
+
+		[Pure]
+		public static IEnumerable<T> NotNull<T>(this IEnumerable<T?> source) where T: struct 
+		{
+			Contract.Requires(source != null);
+			return source.Where(x => x != null).Select(x => x.Value);
 		}
 
 		[Pure]
