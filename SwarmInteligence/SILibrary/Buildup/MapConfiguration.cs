@@ -41,7 +41,7 @@ namespace SILibrary.BuildUp
 			SystemBuilder.CellProviderBuilder<TCoordinate, TNodeData, TEdgeData> cellProviderBuilder)
 			where TMapping: MappingBase<TCoordinate, CellBase<TCoordinate, TNodeData, TEdgeData>>
 		{
-			return WithDefaultMap(map => (TMapping) Activator.CreateInstance(typeof(TMapping), cellProviderBuilder(map), buildingWorld.Log));
+			return WithDefaultMap(EntityBuilders<TCoordinate, TNodeData, TEdgeData>.ForMapping<TMapping>(cellProviderBuilder, buildingWorld.Log));
 		}
 
 		public SystemBuilder.INodeDataConfiguration<TCoordinate, TNodeData, TEdgeData> WithDefaultMapCellProvider<TMapping>(
