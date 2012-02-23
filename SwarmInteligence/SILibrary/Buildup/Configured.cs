@@ -5,7 +5,7 @@ using SwarmIntelligence.Core.Data;
 using SwarmIntelligence.Core.Space;
 using SwarmIntelligence.Specialized;
 
-namespace SILibrary.Buildup
+namespace SILibrary.BuildUp
 {
 	internal class Configured<TCoordinate, TNodeData, TEdgeData>: DisposableBase,
 	                                                              SystemBuilder.IConfigured<TCoordinate, TNodeData, TEdgeData>

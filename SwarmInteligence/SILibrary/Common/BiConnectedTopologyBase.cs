@@ -3,7 +3,7 @@ using System.Diagnostics.Contracts;
 using SILibrary.Contracts;
 using SwarmIntelligence.Core.Space;
 
-namespace SILibrary
+namespace SILibrary.Common
 {
 	[ContractClass(typeof(BiConnectedTopologyBaseContract<>))]
 	public abstract class BiConnectedTopologyBase<TCoordinate>: Topology<TCoordinate>

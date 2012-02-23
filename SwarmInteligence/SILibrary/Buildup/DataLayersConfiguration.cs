@@ -4,7 +4,7 @@ using SwarmIntelligence.Core.Interfaces;
 using SwarmIntelligence.Core.Space;
 using SwarmIntelligence.Implementation.Data;
 
-namespace SILibrary.Buildup
+namespace SILibrary.BuildUp
 {
 	internal class DataLayersConfiguration<TCoordinate, TNodeData, TEdgeData>: DisposableBase,
 	                                                                           SystemBuilder.INodeDataConfiguration<TCoordinate, TNodeData, TEdgeData>,

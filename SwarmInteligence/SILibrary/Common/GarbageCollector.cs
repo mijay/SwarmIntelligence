@@ -1,7 +1,7 @@
 using System;
 using SwarmIntelligence.MemoryManagement;
 
-namespace SILibrary.MemoryManagement
+namespace SILibrary.Common
 {
 	public class GarbageCollector<TKey, TValue>: IGarbageCollector<TKey, TValue>
 	{

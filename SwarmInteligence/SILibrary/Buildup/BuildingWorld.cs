@@ -4,7 +4,7 @@ using SwarmIntelligence.Core.Space;
 using SwarmIntelligence.Implementation.Data;
 using SwarmIntelligence.Implementation.Playground;
 
-namespace SILibrary.Buildup
+namespace SILibrary.BuildUp
 {
 	internal class BuildingWorld<TCoordinate, TNodeData, TEdgeData>
 		where TCoordinate: ICoordinate<TCoordinate>

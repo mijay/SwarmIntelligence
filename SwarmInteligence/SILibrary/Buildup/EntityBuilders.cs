@@ -5,7 +5,7 @@ using SwarmIntelligence.Core.Space;
 using SwarmIntelligence.Implementation;
 using SwarmIntelligence.Implementation.Playground;
 
-namespace SILibrary.Buildup
+namespace SILibrary.BuildUp
 {
 	public static class EntityBuilders<TCoordinate, TNodeData, TEdgeData>
 		where TCoordinate: ICoordinate<TCoordinate>

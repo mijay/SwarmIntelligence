@@ -58,25 +58,25 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Buildup\BuildingWorld.cs" />
-    <Compile Include="Buildup\Configured.cs" />
-    <Compile Include="Buildup\DataLayersConfiguration.cs" />
-    <Compile Include="Buildup\EntityBuilders.cs" />
-    <Compile Include="Buildup\InitialConfiguration.cs" />
-    <Compile Include="Buildup\MapConfiguration.cs" />
+    <Compile Include="BuildUp\BuildingWorld.cs" />
+    <Compile Include="BuildUp\Configured.cs" />
+    <Compile Include="BuildUp\DataLayersConfiguration.cs" />
+    <Compile Include="BuildUp\EntityBuilders.cs" />
+    <Compile Include="BuildUp\InitialConfiguration.cs" />
+    <Compile Include="BuildUp\MapConfiguration.cs" />
     <Compile Include="Empty\EmptyData.cs" />
     <Compile Include="Empty\EmptyMapping.cs" />
-    <Compile Include="Buildup\SystemBuilder.cs" />
+    <Compile Include="BuildUp\SystemBuilder.cs" />
     <Compile Include="Graph\GraphTopology.cs" />
     <Compile Include="Graph\OrgraphTopology.cs" />
     <Compile Include="Graph\GraphCoordinate.cs" />
-    <Compile Include="MemoryManagement\GarbageCollector.cs" />
-    <Compile Include="MemoryManagement\Mappings\DictionaryMapping.cs" />
+    <Compile Include="Common\GarbageCollector.cs" />
+    <Compile Include="Common\DictionaryMapping.cs" />
     <Compile Include="TwoDimensional\CellSuburb.cs" />
-    <Compile Include="SetCell.cs" />
+    <Compile Include="Common\SetCell.cs" />
     <Compile Include="Contracts\BiConnectedTopologyBaseContract.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="BiConnectedTopologyBase.cs" />
+    <Compile Include="Common\BiConnectedTopologyBase.cs" />
     <Compile Include="TwoDimensional\Coordinate2D.cs" />
     <Compile Include="TwoDimensional\FourConnectedSurfaceTopology.cs" />
     <Compile Include="TwoDimensional\PictureNodeDataLayer.cs" />

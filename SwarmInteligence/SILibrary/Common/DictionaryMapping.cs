@@ -1,10 +1,9 @@
 ﻿using System.Collections.Concurrent;
 using System.Collections.Generic;
-using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Loggin;
 using SwarmIntelligence.MemoryManagement;
 
-namespace SILibrary.MemoryManagement.Mappings
+namespace SILibrary.Common
 {
 	public class DictionaryMapping<TKey, TValue>: MappingBase<TKey, TValue>
 	{

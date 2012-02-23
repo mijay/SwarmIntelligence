@@ -3,7 +3,7 @@ using SwarmIntelligence.Core.Loggin;
 using SwarmIntelligence.Core.Space;
 using SwarmIntelligence.Implementation.Logging;
 
-namespace SILibrary.Buildup
+namespace SILibrary.BuildUp
 {
 	internal class InitialConfiguration<TCoordinate, TNodeData, TEdgeData>: DisposableBase,
 	                                                                        SystemBuilder.ILogConfiguration<TCoordinate, TNodeData, TEdgeData>,

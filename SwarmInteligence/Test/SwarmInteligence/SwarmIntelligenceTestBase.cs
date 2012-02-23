@@ -1,8 +1,7 @@
 ﻿using CommonTest;
 using SILibrary;
-using SILibrary.Buildup;
+using SILibrary.BuildUp;
 using SILibrary.Empty;
-using SILibrary.MemoryManagement.Mappings;
 using SILibrary.TwoDimensional;
 using SwarmIntelligence;
 using SwarmIntelligence.Core;

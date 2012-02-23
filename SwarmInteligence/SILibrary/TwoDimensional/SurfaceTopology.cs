@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using SILibrary.Common;
 using SwarmIntelligence.Core.Space;
 
 namespace SILibrary.TwoDimensional
