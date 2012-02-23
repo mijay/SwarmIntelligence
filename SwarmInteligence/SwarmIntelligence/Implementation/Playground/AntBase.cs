@@ -21,14 +21,11 @@ namespace SwarmIntelligence.Implementation.Playground
 		protected internal World<TCoordinate, TNodeData, TEdgeData> World { get; private set; }
 		protected internal ILog Log { get; private set; }
 
-		internal void ProcessTurn(CellBase<TCoordinate, TNodeData, TEdgeData> cell)
+		internal void GotoCell(CellBase<TCoordinate, TNodeData, TEdgeData> cellBase)
 		{
-			Contract.Requires(cell != null && cell.Map == World.Map);
-			if(removed)
-				return;
-			Cell = cell;
-			Coordinate = cell.Coordinate;
-			ProcessTurn();
+			Contract.Requires(cellBase != null && cellBase.Map == World.Map);
+			Cell = cellBase;
+			Coordinate = cellBase.Coordinate;
 		}
 
 		internal void Remove()
@@ -39,8 +36,8 @@ namespace SwarmIntelligence.Implementation.Playground
 		#region Implementation of IAnt<TCoordinate,TNodeData,TEdgeData>
 
 		public abstract void ProcessTurn();
-		public TCoordinate Coordinate { get; internal set; }
-		public ICell<TCoordinate, TNodeData, TEdgeData> Cell { get; internal set; }
+		public TCoordinate Coordinate { get; private set; }
+		public ICell<TCoordinate, TNodeData, TEdgeData> Cell { get; private set; }
 
 		#endregion
 	}

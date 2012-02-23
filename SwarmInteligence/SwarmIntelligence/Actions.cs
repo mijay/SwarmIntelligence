@@ -16,8 +16,7 @@ namespace SwarmIntelligence
 			CellBase<TCoordinate, TNodeData, TEdgeData> targetCell = antBase.World.Map.Base().Get(to);
 			targetCell.Add(antBase);
 
-			antBase.Cell = targetCell;
-			antBase.Coordinate = to;
+			antBase.GotoCell(targetCell);
 
 			antBase.Log.Log(CommonLogTypes.AntMoved, antBase, from, to);
 		}
@@ -26,7 +25,9 @@ namespace SwarmIntelligence
 		                                                            IAnt<TCoordinate, TNodeData, TEdgeData> ant, TCoordinate coordinate)
 			where TCoordinate: ICoordinate<TCoordinate>
 		{
-			antBase.World.Map.Base().Get(coordinate).Add(ant);
+			var cellBase = antBase.World.Map.Base().Get(coordinate);
+			cellBase.Add(ant);
+			ant.Base().GotoCell(cellBase);
 
 			antBase.Log.Log(CommonLogTypes.AntAdded, antBase, coordinate);
 		}
@@ -38,7 +39,7 @@ namespace SwarmIntelligence
 			antBase.World.Map.Base().Get(ant.Coordinate).Remove(ant);
 			ant.Base().Remove();
 
-			antBase.Log.Log(CommonLogTypes.AntRemoved, ant);
+			antBase.Log.Log(CommonLogTypes.AntRemoved, ant, ant.Coordinate);
 		}
 
 		public static void Die<TCoordinate, TNodeData, TEdgeData>(this AntBase<TCoordinate, TNodeData, TEdgeData> antBase)

@@ -2,6 +2,7 @@ using System.Diagnostics.Contracts;
 using System.Linq;
 using Common.Collections.Extensions;
 using SwarmIntelligence.Core;
+using SwarmIntelligence.Core.Playground;
 using SwarmIntelligence.Core.Space;
 using SwarmIntelligence.Implementation.Logging;
 using SwarmIntelligence.Implementation.Playground;
@@ -26,22 +27,16 @@ namespace SwarmIntelligence
 		public void DoTurn()
 		{
 			World.Log.Log(CommonLogTypes.TurnStarted);
-			AntContext[] contexts = SelectContext();
-			RunTurn(contexts);
+			var selectContext = SelectContext();
+			selectContext.ForEach(x => x.ProcessTurn());
 			World.Log.Log(CommonLogTypes.TurnDone);
 		}
 
-		private static void RunTurn(AntContext[] contexts)
-		{
-			contexts.ForEach(x => x.Ant.ProcessTurn(x.Cell));
-		}
-
-		private AntContext[] SelectContext()
+		private IAnt<TCoordinate, TNodeData, TEdgeData>[] SelectContext()
 		{
 			return map
 				.AsParallel()
-				.Select(cell => cell.Value.Base())
-				.SelectMany(cellBase => cellBase.Select(ant => new AntContext { Ant = ant.Base(), Cell = cellBase }))
+				.SelectMany(cell => cell.Value)
 				.ToArray();
 		}
 

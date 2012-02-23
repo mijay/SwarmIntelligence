@@ -45,7 +45,9 @@ namespace SwarmIntelligence.Specialized
 
 			public void AddAt(IAnt<TCoordinate, TNodeData, TEdgeData> ant, TCoordinate coordinate)
 			{
-				map.Get(coordinate).Add(ant);
+				var cellBase = map.Get(coordinate);
+				cellBase.Add(ant);
+				ant.Base().GotoCell(cellBase);
 				log.Log(CommonLogTypes.AntAdded, ant, coordinate);
 			}
 

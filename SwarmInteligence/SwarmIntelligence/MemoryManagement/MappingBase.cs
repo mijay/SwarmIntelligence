@@ -27,7 +27,7 @@ namespace SwarmIntelligence.MemoryManagement
 
 			TValue createdCell = valueProvider.Get(key);
 			value = GetOrAdd(key, createdCell);
-			if(createdCell.Equals(value))
+			if(!createdCell.Equals(value))
 				valueProvider.Return(createdCell);
 
 			log.Log(CommonLogTypes.CellBuilded, key);

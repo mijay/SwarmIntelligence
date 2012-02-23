@@ -21,7 +21,7 @@ namespace Common.Collections.Concurrent
 				return list.ToArray().AsEnumerable().GetEnumerator();
 			}
 			finally {
-				lockSlim.EnterReadLock();
+				lockSlim.ExitReadLock();
 			}
 		}
 
@@ -95,7 +95,7 @@ namespace Common.Collections.Concurrent
 						list[index] = value;
 					}
 					finally {
-						lockSlim.EnterReadLock();
+						lockSlim.ExitReadLock();
 					}
 				} else {
 					lockSlim.EnterWriteLock();
@@ -103,7 +103,7 @@ namespace Common.Collections.Concurrent
 						list.AddRange(Enumerable.Repeat(default(T), index - list.Count).Concat(value));
 					}
 					finally {
-						lockSlim.EnterWriteLock();
+						lockSlim.ExitWriteLock();
 					}
 				}
 			}
