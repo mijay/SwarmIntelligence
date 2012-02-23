@@ -53,7 +53,8 @@ namespace SILibrary.Common
 
 		protected override TValue GetOrAdd(TKey key, TValue value)
 		{
-			return values.CompareExchange(ToIndex(key), value, null);
+			var oldValue = values.CompareExchange(ToIndex(key), value, null);
+			return oldValue == null ? value : oldValue;
 		}
 	}
 }

@@ -44,7 +44,7 @@ namespace SILibrary.BuildUp
 				        	if(parameterInfo.ParameterType.IsAssignableFrom(cellProviderBuilder.GetType()))
 				        		return (Expression) Expression.Constant(cellProviderBuilder);
 				        	if(parameterInfo.ParameterType.IsAssignableFrom(topology.GetType()))
-				        		return Expression.Property(xParameter, "Topology");
+				        		return Expression.Constant(topology);
 				        	if(parameterInfo.ParameterType.IsAssignableFrom(log.GetType()))
 				        		return Expression.Constant(log);
 

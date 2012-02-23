@@ -100,7 +100,7 @@ namespace Common.Collections.Concurrent
 				} else {
 					lockSlim.EnterWriteLock();
 					try {
-						list.AddRange(Enumerable.Repeat(default(T), list.Count - index).Concat(value));
+						list.AddRange(Enumerable.Repeat(default(T), index - list.Count).Concat(value));
 					}
 					finally {
 						lockSlim.EnterWriteLock();
@@ -116,7 +116,7 @@ namespace Common.Collections.Concurrent
 			try {
 				T current = this[index];
 				if(ReferenceEquals(current, null) ? ReferenceEquals(comparand, null) : current.Equals(comparand))
-					list[index] = value;
+					this[index] = value;
 				return current;
 			}
 			finally {

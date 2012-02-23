@@ -13,7 +13,7 @@ namespace SwarmIntelligence.Contracts
 
 		public TValue Get(TKey key)
 		{
-			Contract.Ensures(!Contract.Result<TValue>().Equals(default(TValue)));
+			Contract.Ensures(!ReferenceEquals(Contract.Result<TValue>(), null));
 			throw new UnreachableCodeException();
 		}
 

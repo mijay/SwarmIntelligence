@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.Contracts;
 using Common;
+using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Playground;
 using SwarmIntelligence.Core.Space;
 using SwarmIntelligence.Specialized;
@@ -21,11 +22,11 @@ namespace SwarmIntelligence.Contracts
 
 		#region Implementation of IMapModifier<TCoordinate,TNodeData,TEdgeData>
 
-		public IMap<TCoordinate, TNodeData, TEdgeData> Map
+		public World<TCoordinate, TNodeData, TEdgeData> World
 		{
 			get
 			{
-				Contract.Ensures(Contract.Result<IMap<TCoordinate, TNodeData, TEdgeData>>() != null);
+				Contract.Ensures(Contract.Result<World<TCoordinate, TNodeData, TEdgeData>>() != null);
 				throw new UnreachableCodeException();
 			}
 		}
@@ -33,14 +34,14 @@ namespace SwarmIntelligence.Contracts
 		public void AddAt(IAnt<TCoordinate, TNodeData, TEdgeData> ant, TCoordinate coordinate)
 		{
 			Contract.Requires(ant != null);
-			Contract.Requires(Map.Topology.Lays(coordinate));
+			Contract.Requires(World.Topology.Lays(coordinate));
 			throw new UnreachableCodeException();
 		}
 
 		public void RemoveAt(IAnt<TCoordinate, TNodeData, TEdgeData> ant, TCoordinate coordinate)
 		{
 			Contract.Requires(ant != null);
-			Contract.Requires(Map.Topology.Lays(coordinate));
+			Contract.Requires(World.Topology.Lays(coordinate));
 			//Contract.Requires(Map.Get(coordinate).Contains(ant));
 			throw new UnreachableCodeException();
 		}

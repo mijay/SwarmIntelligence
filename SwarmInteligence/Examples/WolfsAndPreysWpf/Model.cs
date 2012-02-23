@@ -37,14 +37,13 @@ namespace WolfsAndPreysWpf
 			return new Coordinates2D(x, y);
 		}
 
-		private void SeedAnts(int count, bool isWolf)
+		private void SeedAnts(IMapModifier<Coordinates2D, EmptyData, EmptyData> mapModifier, int count, bool isWolf)
 		{
-			using(IMapModifier<Coordinates2D, EmptyData, EmptyData> mapModifier = world.GetModifier())
-				for(int i = 0; i < count; i++)
-					mapModifier.AddAt(isWolf
-					                  	? (IAnt<Coordinates2D, EmptyData, EmptyData>) new WolfAnt(world, 3)
-					                  	: new PreyAnt(world, 3),
-					                  GenerateCoordinates());
+			for(int i = 0; i < count; i++)
+				mapModifier.AddAt(isWolf
+				                  	? (IAnt<Coordinates2D, EmptyData, EmptyData>) new WolfAnt(mapModifier.World, 3)
+									: new PreyAnt(mapModifier.World, 3),
+					GenerateCoordinates());
 		}
 
 		public void Initialize()
@@ -57,13 +56,13 @@ namespace WolfsAndPreysWpf
 				.WithSurfaceMap()
 				.WithEmptyNodeData()
 				.WithEmptyEdgeData()
+				.SeedAnts(map => SeedAnts(map, wolfCount, true))
+				.SeedAnts(map => SeedAnts(map, preyCount, false))
 				.Build();
 			ILogJournal logJournal = logManager.Journal;
 			runner = new Runner<Coordinates2D, EmptyData, EmptyData>(world);
 
 			logJournal.OnRecordsAdded += OnNewRecords;
-			SeedAnts(wolfCount, true);
-			SeedAnts(preyCount, false);
 		}
 
 		public void Turn()

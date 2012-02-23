@@ -18,7 +18,7 @@ namespace SwarmIntelligence.Specialized
 			where TCoordinate: ICoordinate<TCoordinate>
 		{
 			Contract.Requires(world != null);
-			return new MapModifier<TCoordinate, TNodeData, TEdgeData>(world.Map.Base(), world.Log);
+			return new MapModifier<TCoordinate, TNodeData, TEdgeData>(world.Map.Base(), world, world.Log);
 		}
 
 		#region Nested type: MapModifier
@@ -30,8 +30,9 @@ namespace SwarmIntelligence.Specialized
 			private readonly ILog log;
 			private readonly Map<TCoordinate, TNodeData, TEdgeData> map;
 
-			public MapModifier(Map<TCoordinate, TNodeData, TEdgeData> map, ILog log)
+			public MapModifier(Map<TCoordinate, TNodeData, TEdgeData> map, World<TCoordinate, TNodeData, TEdgeData> world, ILog log)
 			{
+				World = world;
 				Contract.Requires(map != null && log != null);
 				Requires.True(alreadyModifiedMaps.Add(map));
 				this.map = map;
@@ -40,10 +41,7 @@ namespace SwarmIntelligence.Specialized
 
 			#region Implementation of IMutableMap<TCoordinate,TNodeData,TEdgeData>
 
-			public IMap<TCoordinate, TNodeData, TEdgeData> Map
-			{
-				get { return map; }
-			}
+			public World<TCoordinate, TNodeData, TEdgeData> World { get; private set; }
 
 			public void AddAt(IAnt<TCoordinate, TNodeData, TEdgeData> ant, TCoordinate coordinate)
 			{
