@@ -38,7 +38,8 @@ namespace SILibrary.Common
 
 		protected override bool TryRemove(TKey key, out TValue value)
 		{
-			TValue tmpValue = values[ToIndex(key)];
+			var index = ToIndex(key);
+			TValue tmpValue = values[index];
 			if(tmpValue == null) {
 				value = null;
 				return false;
@@ -46,7 +47,7 @@ namespace SILibrary.Common
 
 			do {
 				value = tmpValue;
-				tmpValue = values.CompareExchange(ToIndex(key), null, value);
+				tmpValue = values.CompareExchange(index, null, value);
 			} while(tmpValue != value);
 			return value != null;
 		}
@@ -54,7 +55,7 @@ namespace SILibrary.Common
 		protected override TValue GetOrAdd(TKey key, TValue value)
 		{
 			var oldValue = values.CompareExchange(ToIndex(key), value, null);
-			return oldValue == null ? value : oldValue;
+			return oldValue ?? value;
 		}
 	}
 }
