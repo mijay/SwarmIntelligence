@@ -100,7 +100,10 @@ namespace Common.Collections.Concurrent
 				} else {
 					lockSlim.EnterWriteLock();
 					try {
-						list.AddRange(Enumerable.Repeat(default(T), index - list.Count).Concat(value));
+						if(list.Count > index)
+							list.AddRange(Enumerable.Repeat(default(T), index - list.Count).Concat(value));
+						else
+							list[index] = value;
 					}
 					finally {
 						lockSlim.ExitWriteLock();
