@@ -2,6 +2,7 @@
 using SILibrary.TwoDimensional;
 using SwarmIntelligence;
 using SwarmIntelligence.Core;
+using Common.Collections.Extensions;
 
 namespace WolfsAndPreysWpf
 {
@@ -27,6 +28,8 @@ namespace WolfsAndPreysWpf
 		private void MoveToCellWithoutWolf(int radius)
 		{
 			Coordinates2D[] cellsWithouWolfs = CellWithoutAnimalOfType<WolfAnt>(radius);
+			if(cellsWithouWolfs.IsEmpty())
+				return;
 			Coordinates2D cellToGo = cellsWithouWolfs[Random.Next(cellsWithouWolfs.Length)];
 			this.MoveTo(cellToGo);
 		}
@@ -34,6 +37,8 @@ namespace WolfsAndPreysWpf
 		private void AddCloneToEmptyCell(int radius)
 		{
 			Coordinates2D[] emptyCells = GetEmptySuburbCells(radius);
+			if(emptyCells.IsEmpty())
+				return;
 			Coordinates2D cellToAdd = emptyCells[Random.Next(emptyCells.Length)];
 			this.AddTo(new PreyAnt(World, Weight / 2), cellToAdd);
 		}

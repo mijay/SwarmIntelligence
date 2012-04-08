@@ -47,6 +47,8 @@ namespace WolfsAndPreysWpf
 		private void AddCloneToEmptyCell()
 		{
 			Coordinates2D[] emptyCells = GetEmptySuburbCells(reproductionRadius);
+			if(emptyCells.IsEmpty())
+				return;
 			Coordinates2D cellToAddTo = emptyCells[Random.Next(emptyCells.Length)];
 			this.AddTo(new WolfAnt(World, Weight), cellToAddTo);
 		}

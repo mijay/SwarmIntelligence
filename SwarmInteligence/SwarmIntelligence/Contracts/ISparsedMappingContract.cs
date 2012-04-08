@@ -13,7 +13,7 @@ namespace SwarmIntelligence.Contracts
 
 		public bool TryGet(TKey coordinate, out TValue value)
 		{
-			Contract.Ensures(Contract.Result<bool>() ? !Contract.ValueAtReturn(out value).Equals(default(TValue)) : true);
+			Contract.Ensures(!Contract.Result<bool>() || !Contract.ValueAtReturn(out value).Equals(default(TValue)));
 			throw new UnreachableCodeException();
 		}
 

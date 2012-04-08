@@ -85,6 +85,7 @@
     <Compile Include="Core\Space\Topology.cs" />
     <Compile Include="Implementation\Data\EdgesDataLayer.cs" />
     <Compile Include="Implementation\Data\NodesDataLayer.cs" />
+    <Compile Include="Implementation\Logging\SimpleLogManager.cs" />
     <Compile Include="MemoryManagement\Delegates.cs" />
     <Compile Include="Implementation\Logging\CommonLogTypes.cs" />
     <Compile Include="Core\Loggin\ILog.cs" />

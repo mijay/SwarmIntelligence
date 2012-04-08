@@ -32,6 +32,7 @@ namespace SwarmIntelligence.Implementation.Playground
 		public bool TryGet(TCoordinate coordinate, out ICell<TCoordinate, TNodeData, TEdgeData> cell)
 		{
 			Requires.True<IndexOutOfRangeException>(Topology.Lays(coordinate));
+			Contract.Ensures(!Contract.Result<bool>() || Contract.ValueAtReturn(out cell).Coordinate.Equals(coordinate));
 
 			CellBase<TCoordinate, TNodeData, TEdgeData> cellBase;
 			bool result = valueStorage.TryGet(coordinate, out cellBase);
@@ -57,7 +58,8 @@ namespace SwarmIntelligence.Implementation.Playground
 
 		internal CellBase<TCoordinate, TNodeData, TEdgeData> ForcedGet(TCoordinate coordinate)
 		{
-			Requires.True<IndexOutOfRangeException>(Topology.Lays(coordinate));
+			Contract.Requires(Topology.Lays(coordinate));
+			Contract.Ensures(Contract.Result<CellBase<TCoordinate, TNodeData, TEdgeData>>().Coordinate.Equals(coordinate));
 
 			return valueStorage.GetOrCreate(coordinate, c => valueProvider.Get(c));
 		}

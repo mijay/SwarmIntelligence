@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
+using System.Threading;
 using Common;
 using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Loggin;
@@ -12,12 +13,15 @@ namespace SwarmIntelligence.Implementation.Playground
 		where TCoordinate: ICoordinate<TCoordinate>
 	{
 		private bool removed;
+		private static int globalId = 0;
+		private readonly int id;
 
 		protected AntBase(World<TCoordinate, TNodeData, TEdgeData> world)
 		{
 			Contract.Requires(world != null);
 			Log = world.Log;
 			World = world;
+			id = Interlocked.Increment(ref globalId);
 		}
 
 		protected internal World<TCoordinate, TNodeData, TEdgeData> World { get; private set; }
@@ -34,6 +38,11 @@ namespace SwarmIntelligence.Implementation.Playground
 		{
 			Requires.True<InvalidOperationException>(!removed);
 			removed = true;
+		}
+
+		public override string ToString()
+		{
+			return base.ToString() + "(" + id + ")";
 		}
 
 		protected abstract void DoProcessTurn();

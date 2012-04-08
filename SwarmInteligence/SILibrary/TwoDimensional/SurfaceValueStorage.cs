@@ -20,12 +20,12 @@ namespace SILibrary.TwoDimensional
 
 		protected override int ToIndex(Coordinates2D key)
 		{
-			return (key.y - minY) * (maxX - minX) + (key.x - minX);
+			return (key.y - minY) * (maxX - minX + 1) + (key.x - minX);
 		}
 
 		protected override Coordinates2D ToKey(int index)
 		{
-			return new Coordinates2D(index % (maxX - minX), index / (maxX - minX));
+			return new Coordinates2D(index % (maxX - minX + 1) + minX, index / (maxX - minX + 1) + minY);
 		}
 
 		#endregion

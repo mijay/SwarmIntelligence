@@ -32,7 +32,7 @@ namespace WolfsAndPreysWpf
 			InitializeComponent();
 			DrawGrid();
 
-			model = new Model(new Coordinates2D(-4, -4), new Coordinates2D(4, 4), 1, 10);
+			model = new Model(new Coordinates2D(-10, -10), new Coordinates2D(10, 10), 2, 9);
 
 			SynchronizationContext uiContext = SynchronizationContext.Current;
 			TaskScheduler uiContextScheduler = TaskScheduler.FromCurrentSynchronizationContext();
