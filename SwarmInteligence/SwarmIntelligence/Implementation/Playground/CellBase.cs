@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
+using SwarmIntelligence.Contracts;
 using SwarmIntelligence.Core.Playground;
 using SwarmIntelligence.Core.Space;
 
 namespace SwarmIntelligence.Implementation.Playground
 {
+	[ContractClass(typeof(CellBaseContract<,,>))]
 	public abstract class CellBase<TCoordinate, TNodeData, TEdgeData>: ICell<TCoordinate, TNodeData, TEdgeData>
 		where TCoordinate: ICoordinate<TCoordinate>
 	{
@@ -37,7 +40,9 @@ namespace SwarmIntelligence.Implementation.Playground
 
 		#region Abstract Methods
 
+		[Pure]
 		public abstract bool IsEmpty { get; }
+
 		public abstract void Add(IAnt<TCoordinate, TNodeData, TEdgeData> ant);
 
 		/// <exception cref="ArgumentOutOfRangeException"><paramref name="ant"/> does not contained in current <see cref="ICell{TCoordinate,TNodeData,TEdgeData}"/></exception>

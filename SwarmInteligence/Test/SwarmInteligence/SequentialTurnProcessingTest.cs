@@ -34,7 +34,7 @@ namespace Test.SwarmInteligence
 
 			#region Overrides of AntBase<Coordinates2D,EmptyData,EmptyData>
 
-			public override void ProcessTurn()
+			protected override void DoProcessTurn()
 			{
 				var center = new Coordinates2D(2, 2);
 

@@ -10,7 +10,7 @@ namespace SILibrary.Graph
 			this SystemBuilder.IMapConfiguration<GraphCoordinate, TNodeData, TEdgeData> mapConfiguration)
 		{
 			return mapConfiguration.WithDefaultMapCellProvider<
-				GraphMapping<CellBase<GraphCoordinate, TNodeData, TEdgeData>>,
+				GraphValueStorage<CellBase<GraphCoordinate, TNodeData, TEdgeData>>,
 				SetCell<GraphCoordinate, TNodeData, TEdgeData>>();
 		}
 	}

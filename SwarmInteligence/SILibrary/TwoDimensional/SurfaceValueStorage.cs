@@ -1,25 +1,22 @@
 using SILibrary.Common;
-using SwarmIntelligence.Core.Loggin;
-using SwarmIntelligence.MemoryManagement;
 
 namespace SILibrary.TwoDimensional
 {
-	public class SurfaceMapping<TValue>: ListBasedMappingBase<Coordinates2D, TValue>
+	public class SurfaceValueStorage<TValue>: ListValueStorageBase<Coordinates2D, TValue>
 		where TValue: class
 	{
 		private readonly int maxX;
 		private readonly int minX;
 		private readonly int minY;
 
-		public SurfaceMapping(IValueProvider<Coordinates2D, TValue> valueProvider, SurfaceTopology surfaceTopology, ILog log)
-			: base(valueProvider, log)
+		public SurfaceValueStorage(SurfaceTopology surfaceTopology)
 		{
 			minX = surfaceTopology.TopLeft.x;
 			minY = surfaceTopology.TopLeft.y;
 			maxX = surfaceTopology.BottomRight.x;
 		}
 
-		#region Overrides of ListBasedMappingBase<Coordinates2D,TValue>
+		#region Overrides of ListValueStorageBase<Coordinates2D,TValue>
 
 		protected override int ToIndex(Coordinates2D key)
 		{

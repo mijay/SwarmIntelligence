@@ -31,7 +31,7 @@ namespace HamiltonianCycle
 			this.k = k;
 		}
 
-		public override void ProcessTurn()
+		protected override void DoProcessTurn()
 		{
 			UpdateNotVisitedVertex();
 			double point = random.NextDouble();

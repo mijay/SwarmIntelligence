@@ -5,7 +5,6 @@ using SwarmIntelligence.Core.Data;
 using SwarmIntelligence.Core.Interfaces;
 using SwarmIntelligence.Core.Loggin;
 using SwarmIntelligence.Core.Space;
-using SwarmIntelligence.Implementation;
 using SwarmIntelligence.Implementation.Playground;
 using SwarmIntelligence.MemoryManagement;
 using SwarmIntelligence.Specialized;
@@ -16,13 +15,13 @@ namespace SILibrary.BuildUp
 	{
 		#region Delegates
 
-		public delegate IValueProvider<TCoordinate, CellBase<TCoordinate, TNodeData, TEdgeData>> CellProviderBuilder
-			<TCoordinate, TNodeData, TEdgeData>(Map<TCoordinate, TNodeData, TEdgeData> map)
-			where TCoordinate: ICoordinate<TCoordinate>;
-
 		public delegate Map<TCoordinate, TNodeData, TEdgeData> MapBuilder<TCoordinate, TNodeData, TEdgeData>(
 			Topology<TCoordinate> topology)
 			where TCoordinate: ICoordinate<TCoordinate>;
+		
+		public delegate IValueStorage<TCoordinate, CellBase<TCoordinate, TNodeData, TEdgeData>> ValueStorageBuilder<TCoordinate, TNodeData, TEdgeData>(
+			Topology<TCoordinate> topology)
+			where TCoordinate : ICoordinate<TCoordinate>;
 
 		#endregion
 
@@ -73,18 +72,21 @@ namespace SILibrary.BuildUp
 			where TCoordinate: ICoordinate<TCoordinate>
 		{
 			INodeDataConfiguration<TCoordinate, TNodeData, TEdgeData> WithMap(MapBuilder<TCoordinate, TNodeData, TEdgeData> mapBuilder);
-			INodeDataConfiguration<TCoordinate, TNodeData, TEdgeData> WithDefaultMap(MappingBuilder<TCoordinate, TNodeData, TEdgeData> mappingBuilder);
 
-			INodeDataConfiguration<TCoordinate, TNodeData, TEdgeData> WithDefaultMap<TMapping>(
-				CellProviderBuilder<TCoordinate, TNodeData, TEdgeData> cellProviderBuilder)
-				where TMapping: MappingBase<TCoordinate, CellBase<TCoordinate, TNodeData, TEdgeData>>;
+			INodeDataConfiguration<TCoordinate, TNodeData, TEdgeData> WithDefaultMap(
+				ValueProviderBuilder<TCoordinate, TNodeData, TEdgeData> valueProviderBuilder,
+				ValueStorageBuilder<TCoordinate, TNodeData, TEdgeData> valueStorageBuilder);
 
-			INodeDataConfiguration<TCoordinate, TNodeData, TEdgeData> WithDefaultMapCellProvider<TMapping>(
+			INodeDataConfiguration<TCoordinate, TNodeData, TEdgeData> WithDefaultMap<TValueStorage>(
+				ValueProviderBuilder<TCoordinate, TNodeData, TEdgeData> cellProviderBuilder)
+				where TValueStorage: IValueStorage<TCoordinate, CellBase<TCoordinate, TNodeData, TEdgeData>>;
+
+			INodeDataConfiguration<TCoordinate, TNodeData, TEdgeData> WithDefaultMapCellProvider<TValueStorage>(
 				CellBuilder<TCoordinate, TNodeData, TEdgeData> cellBuilder)
-				where TMapping: MappingBase<TCoordinate, CellBase<TCoordinate, TNodeData, TEdgeData>>;
+				where TValueStorage: IValueStorage<TCoordinate, CellBase<TCoordinate, TNodeData, TEdgeData>>;
 
-			INodeDataConfiguration<TCoordinate, TNodeData, TEdgeData> WithDefaultMapCellProvider<TMapping, TCell>()
-				where TMapping: MappingBase<TCoordinate, CellBase<TCoordinate, TNodeData, TEdgeData>>
+			INodeDataConfiguration<TCoordinate, TNodeData, TEdgeData> WithDefaultMapCellProvider<TValueStorage, TCell>()
+				where TValueStorage: IValueStorage<TCoordinate, CellBase<TCoordinate, TNodeData, TEdgeData>>
 				where TCell: CellBase<TCoordinate, TNodeData, TEdgeData>;
 		}
 

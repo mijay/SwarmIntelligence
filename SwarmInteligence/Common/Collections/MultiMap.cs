@@ -51,6 +51,16 @@ namespace Common.Collections
 			return false;
 		}
 
+		public IEnumerable<TValue> this[TKey key]
+		{
+			get
+			{
+				if (!dictionary.ContainsKey(key))
+					return Enumerable.Empty<TValue>();
+				return dictionary[key];
+			}
+		}
+
 		public bool ContainsKey(TKey key)
 		{
 			return dictionary.ContainsKey(key);

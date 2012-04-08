@@ -1,7 +1,11 @@
-﻿using System.Diagnostics.Contracts;
+﻿using System.Diagnostics;
+using System.Diagnostics.Contracts;
+using System.Linq;
+using Common.Collections.Extensions;
 
 namespace SwarmIntelligence.Implementation.Logging
 {
+	[DebuggerDisplay("{type} with [{GetDebugView()}]")]
 	public struct LogRecord
 	{
 		public readonly object[] arguments;
@@ -15,6 +19,11 @@ namespace SwarmIntelligence.Implementation.Logging
 			this.id = id;
 			type = tmpLogRecord.eventType;
 			arguments = tmpLogRecord.eventArgs;
+		}
+
+		private string GetDebugView()
+		{
+			return arguments.Select(x => "{" + x.ToString() + "}").JoinStrings(", ");
 		}
 	}
 }

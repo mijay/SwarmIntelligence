@@ -10,7 +10,7 @@ namespace SILibrary.TwoDimensional
 			this SystemBuilder.IMapConfiguration<Coordinates2D, TNodeData, TEdgeData> mapConfiguration)
 		{
 			return mapConfiguration.WithDefaultMapCellProvider<
-				SurfaceMapping<CellBase<Coordinates2D, TNodeData, TEdgeData>>,
+				SurfaceValueStorage<CellBase<Coordinates2D, TNodeData, TEdgeData>>,
 				SetCell<Coordinates2D, TNodeData, TEdgeData>>();
 		}
 	}

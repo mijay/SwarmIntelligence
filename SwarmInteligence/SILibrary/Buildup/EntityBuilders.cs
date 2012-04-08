@@ -2,9 +2,8 @@ using System;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using SwarmIntelligence.Core.Loggin;
+using Common.Collections.Extensions;
 using SwarmIntelligence.Core.Space;
-using SwarmIntelligence.Implementation;
 using SwarmIntelligence.Implementation.Playground;
 using SwarmIntelligence.MemoryManagement;
 
@@ -30,38 +29,27 @@ namespace SILibrary.BuildUp
 				.Compile();
 		}
 
-		internal static MappingBuilder<TCoordinate, TNodeData, TEdgeData> ForMapping<TMapping>(
-			SystemBuilder.CellProviderBuilder<TCoordinate, TNodeData, TEdgeData> cellProviderBuilder,
-			Topology<TCoordinate> topology, ILog log)
-			where TMapping: MappingBase<TCoordinate, CellBase<TCoordinate, TNodeData, TEdgeData>>
+		internal static IValueStorage<TCoordinate, CellBase<TCoordinate, TNodeData, TEdgeData>> ForStorage<TStorage>(
+			Topology<TCoordinate> topology)
+			where TStorage: IValueStorage<TCoordinate, CellBase<TCoordinate, TNodeData, TEdgeData>>
 		{
-			ConstructorInfo constructorInfo = typeof(TMapping).GetConstructors().Single();
-
-			ParameterExpression xParameter = Expression.Parameter(typeof(Map<TCoordinate, TNodeData, TEdgeData>));
-
-			Expression[] xConstructorArguments = constructorInfo.GetParameters()
-				.Select(parameterInfo => {
-				        	if(parameterInfo.ParameterType.IsAssignableFrom(cellProviderBuilder.GetType()))
-				        		return (Expression) Expression.Constant(cellProviderBuilder);
-				        	if(parameterInfo.ParameterType.IsAssignableFrom(topology.GetType()))
-				        		return Expression.Constant(topology);
-				        	if(parameterInfo.ParameterType.IsAssignableFrom(log.GetType()))
-				        		return Expression.Constant(log);
-
-				        	if(parameterInfo.ParameterType.IsAssignableFrom(
-				        		typeof(IValueProvider<TCoordinate, CellBase<TCoordinate, TNodeData, TEdgeData>>)))
-				        		return Expression.Invoke(Expression.Constant(cellProviderBuilder), xParameter);
-				        	if(parameterInfo.ParameterType.IsAssignableFrom(typeof(Map<TCoordinate, TNodeData, TEdgeData>)))
-				        		return xParameter;
-				        	throw new ArgumentOutOfRangeException();
-				        })
+			var constructors = typeof(TStorage)
+				.GetConstructors()
+				.Select(x => new { Constructor = x, Params = x.GetParameters() })
 				.ToArray();
 
-			return Expression
-				.Lambda<MappingBuilder<TCoordinate, TNodeData, TEdgeData>>(
-					Expression.New(constructorInfo, xConstructorArguments),
-					xParameter)
-				.Compile();
+			ConstructorInfo defaultConstructor;
+			if(constructors
+				.Where(x => x.Params.Length == 0)
+				.Select(x => x.Constructor)
+				.TrySingle(out defaultConstructor))
+				return (TStorage) defaultConstructor.Invoke(new object[0]);
+
+			ConstructorInfo topologyBasedConsrtuctor = constructors
+				.Where(x => x.Params.Length == 1 && x.Params[0].ParameterType.IsAssignableFrom(topology.GetType()))
+				.Select(x => x.Constructor)
+				.Single();
+			return (TStorage) topologyBasedConsrtuctor.Invoke(new object[] { topology });
 		}
 	}
 }

@@ -1,6 +1,5 @@
 using System.Collections.Concurrent;
 using System.Diagnostics.Contracts;
-using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Loggin;
 
 namespace SwarmIntelligence.Implementation.Logging

@@ -31,7 +31,7 @@ namespace Test.SwarmInteligence
 
 			#region Overrides of AntBase<Coordinates2D,EmptyData,EmptyData>
 
-			public override void ProcessTurn()
+			protected override void DoProcessTurn()
 			{
 				Validate(new Coordinates2D(3, 3));
 				this.MoveTo(new Coordinates2D(1, 1));

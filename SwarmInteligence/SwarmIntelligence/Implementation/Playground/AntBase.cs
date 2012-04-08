@@ -1,4 +1,6 @@
-﻿using System.Diagnostics.Contracts;
+﻿using System;
+using System.Diagnostics.Contracts;
+using Common;
 using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Loggin;
 using SwarmIntelligence.Core.Playground;
@@ -30,12 +32,21 @@ namespace SwarmIntelligence.Implementation.Playground
 
 		internal void Remove()
 		{
+			Requires.True<InvalidOperationException>(!removed);
 			removed = true;
 		}
 
+		protected abstract void DoProcessTurn();
+
 		#region Implementation of IAnt<TCoordinate,TNodeData,TEdgeData>
 
-		public abstract void ProcessTurn();
+		public void ProcessTurn()
+		{
+			if(removed)
+				return;
+			DoProcessTurn();
+		}
+
 		public TCoordinate Coordinate { get; private set; }
 		public ICell<TCoordinate, TNodeData, TEdgeData> Cell { get; private set; }
 

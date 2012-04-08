@@ -1,7 +1,6 @@
 using System.Collections.Concurrent;
-using SwarmIntelligence.MemoryManagement;
 
-namespace SwarmIntelligence.Implementation.MemoryManagement
+namespace SwarmIntelligence.MemoryManagement
 {
 	public abstract class ReusingValueProviderBase<TKey, TValue>: IValueProvider<TKey, TValue>
 	{

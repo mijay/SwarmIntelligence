@@ -37,7 +37,7 @@ namespace Test.SwarmInteligence
 			{
 			}
 
-			public override void ProcessTurn()
+			protected override void DoProcessTurn()
 			{
 				int x = r.Next(0, 101);
 				int y = r.Next(0, 101);

@@ -12,7 +12,7 @@ namespace WolfsAndPreysWpf
 		{
 		}
 
-		public override void ProcessTurn()
+		protected override void DoProcessTurn()
 		{
 			MoveToCellWithoutWolf(speed);
 

@@ -2,7 +2,7 @@
 using SwarmIntelligence.Core.Space;
 using SwarmIntelligence.Implementation.Playground;
 
-namespace SwarmIntelligence.Implementation.MemoryManagement
+namespace SwarmIntelligence.MemoryManagement
 {
 	public class CellProvider<TCoordinate, TNodeData, TEdgeData>:
 		ReusingValueProviderBase<TCoordinate, CellBase<TCoordinate, TNodeData, TEdgeData>>

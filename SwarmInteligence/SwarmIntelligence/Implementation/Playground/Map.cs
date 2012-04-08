@@ -13,13 +13,16 @@ namespace SwarmIntelligence.Implementation.Playground
 	public class Map<TCoordinate, TNodeData, TEdgeData>: IMap<TCoordinate, TNodeData, TEdgeData>
 		where TCoordinate: ICoordinate<TCoordinate>
 	{
-		private readonly MappingBase<TCoordinate, CellBase<TCoordinate, TNodeData, TEdgeData>> mapping;
+		private readonly IValueProvider<TCoordinate, CellBase<TCoordinate, TNodeData, TEdgeData>> valueProvider;
+		private readonly IValueStorage<TCoordinate, CellBase<TCoordinate, TNodeData, TEdgeData>> valueStorage;
 
-		public Map(Topology<TCoordinate> topology, MappingBuilder<TCoordinate, TNodeData, TEdgeData> mappingBuilder)
+		public Map(Topology<TCoordinate> topology, ValueProviderBuilder<TCoordinate, TNodeData, TEdgeData> valueProviderBuilder,
+		           IValueStorage<TCoordinate, CellBase<TCoordinate, TNodeData, TEdgeData>> valueStorage)
 		{
-			Contract.Requires(topology != null && mappingBuilder != null);
+			Contract.Requires(topology != null && valueProviderBuilder != null && valueStorage != null);
 			Topology = topology;
-			mapping = mappingBuilder(this);
+			this.valueStorage = valueStorage;
+			valueProvider = valueProviderBuilder(this);
 		}
 
 		#region IMap<TCoordinate,TNodeData,TEdgeData> Members
@@ -31,7 +34,7 @@ namespace SwarmIntelligence.Implementation.Playground
 			Requires.True<IndexOutOfRangeException>(Topology.Lays(coordinate));
 
 			CellBase<TCoordinate, TNodeData, TEdgeData> cellBase;
-			bool result = mapping.TryGet(coordinate, out cellBase);
+			bool result = valueStorage.TryGet(coordinate, out cellBase);
 			cell = cellBase;
 			return result;
 		}
@@ -43,18 +46,20 @@ namespace SwarmIntelligence.Implementation.Playground
 
 		public IEnumerator<KeyValuePair<TCoordinate, ICell<TCoordinate, TNodeData, TEdgeData>>> GetEnumerator()
 		{
-			return mapping.Select(x => new KeyValuePair<TCoordinate, ICell<TCoordinate, TNodeData, TEdgeData>>(x.Key, x.Value)).GetEnumerator();
+			return valueStorage
+				.Select(x => new KeyValuePair<TCoordinate, ICell<TCoordinate, TNodeData, TEdgeData>>(x.Key, x.Value))
+				.GetEnumerator();
 		}
 
 		#endregion
 
 		#region Internal interface
 
-		internal CellBase<TCoordinate, TNodeData, TEdgeData> Get(TCoordinate coordinate)
+		internal CellBase<TCoordinate, TNodeData, TEdgeData> ForcedGet(TCoordinate coordinate)
 		{
 			Requires.True<IndexOutOfRangeException>(Topology.Lays(coordinate));
 
-			return mapping.Get(coordinate);
+			return valueStorage.GetOrCreate(coordinate, c => valueProvider.Get(c));
 		}
 
 		#endregion

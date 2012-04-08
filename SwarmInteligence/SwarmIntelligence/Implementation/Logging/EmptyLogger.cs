@@ -1,4 +1,3 @@
-using SwarmIntelligence.Core;
 using SwarmIntelligence.Core.Loggin;
 
 namespace SwarmIntelligence.Implementation.Logging

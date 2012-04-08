@@ -13,10 +13,10 @@ namespace SwarmIntelligence
 		{
 			TCoordinate from = antBase.Coordinate;
 			antBase.Cell.Base().Remove(antBase);
-			CellBase<TCoordinate, TNodeData, TEdgeData> targetCell = antBase.World.Map.Base().Get(to);
-			targetCell.Add(antBase);
 
+			CellBase<TCoordinate, TNodeData, TEdgeData> targetCell = antBase.World.Map.Base().ForcedGet(to);
 			antBase.GotoCell(targetCell);
+			targetCell.Add(antBase);
 
 			antBase.Log.Log(CommonLogTypes.AntMoved, antBase, from, to);
 		}
@@ -25,9 +25,9 @@ namespace SwarmIntelligence
 		                                                            IAnt<TCoordinate, TNodeData, TEdgeData> ant, TCoordinate coordinate)
 			where TCoordinate: ICoordinate<TCoordinate>
 		{
-			var cellBase = antBase.World.Map.Base().Get(coordinate);
-			cellBase.Add(ant);
+			var cellBase = antBase.World.Map.Base().ForcedGet(coordinate);
 			ant.Base().GotoCell(cellBase);
+			cellBase.Add(ant);
 
 			antBase.Log.Log(CommonLogTypes.AntAdded, antBase, coordinate);
 		}
@@ -36,7 +36,7 @@ namespace SwarmIntelligence
 		                                                           IAnt<TCoordinate, TNodeData, TEdgeData> ant)
 			where TCoordinate: ICoordinate<TCoordinate>
 		{
-			antBase.World.Map.Base().Get(ant.Coordinate).Remove(ant);
+			antBase.World.Map.Base().ForcedGet(ant.Coordinate).Remove(ant);
 			ant.Base().Remove();
 
 			antBase.Log.Log(CommonLogTypes.AntRemoved, ant, ant.Coordinate);

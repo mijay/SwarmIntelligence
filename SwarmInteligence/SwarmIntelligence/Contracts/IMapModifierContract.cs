@@ -42,7 +42,7 @@ namespace SwarmIntelligence.Contracts
 		{
 			Contract.Requires(ant != null);
 			Contract.Requires(World.Topology.Lays(coordinate));
-			//Contract.Requires(Map.Get(coordinate).Contains(ant));
+			//Contract.Requires(Map.ForcedGet(coordinate).Contains(ant));
 			throw new UnreachableCodeException();
 		}
 

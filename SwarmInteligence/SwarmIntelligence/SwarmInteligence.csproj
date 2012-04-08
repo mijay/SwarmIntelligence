@@ -66,6 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Actions.cs" />
+    <Compile Include="Contracts\CellBaseContract.cs" />
     <Compile Include="Contracts\EdgesDataLayerContract.cs" />
     <Compile Include="Contracts\ICompleteMappingContract.cs" />
     <Compile Include="Contracts\IMapContract.cs" />
@@ -84,7 +85,7 @@
     <Compile Include="Core\Space\Topology.cs" />
     <Compile Include="Implementation\Data\EdgesDataLayer.cs" />
     <Compile Include="Implementation\Data\NodesDataLayer.cs" />
-    <Compile Include="Implementation\Delegates.cs" />
+    <Compile Include="MemoryManagement\Delegates.cs" />
     <Compile Include="Implementation\Logging\CommonLogTypes.cs" />
     <Compile Include="Core\Loggin\ILog.cs" />
     <Compile Include="Implementation\Logging\EmptyLogger.cs" />
@@ -95,14 +96,12 @@
     <Compile Include="Implementation\Logging\LogManager.cs" />
     <Compile Include="Implementation\Logging\LogRecord.cs" />
     <Compile Include="Implementation\Logging\TmpLogRecord.cs" />
-    <Compile Include="Implementation\MemoryManagement\CellProvider.cs" />
-    <Compile Include="Implementation\MemoryManagement\ReusingValueProviderBase.cs" />
+    <Compile Include="MemoryManagement\CellProvider.cs" />
+    <Compile Include="MemoryManagement\IValueStorage.cs" />
+    <Compile Include="MemoryManagement\ReusingValueProviderBase.cs" />
     <Compile Include="Implementation\Playground\CellBase.cs" />
-    <Compile Include="MemoryManagement\IGarbageCollector.cs" />
-    <Compile Include="Contracts\IGarbageCollectorContract.cs" />
     <Compile Include="MemoryManagement\IValueProvider.cs" />
     <Compile Include="Implementation\Playground\Map.cs" />
-    <Compile Include="MemoryManagement\MappingBase.cs" />
     <Compile Include="Implementation\Playground\AntBase.cs" />
     <Compile Include="Internal\Helpers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

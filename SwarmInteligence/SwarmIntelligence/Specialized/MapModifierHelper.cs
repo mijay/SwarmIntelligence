@@ -45,15 +45,15 @@ namespace SwarmIntelligence.Specialized
 
 			public void AddAt(IAnt<TCoordinate, TNodeData, TEdgeData> ant, TCoordinate coordinate)
 			{
-				var cellBase = map.Get(coordinate);
-				cellBase.Add(ant);
+				var cellBase = map.ForcedGet(coordinate);
 				ant.Base().GotoCell(cellBase);
+				cellBase.Add(ant);
 				log.Log(CommonLogTypes.AntAdded, ant, coordinate);
 			}
 
 			public void RemoveAt(IAnt<TCoordinate, TNodeData, TEdgeData> ant, TCoordinate coordinate)
 			{
-				map.Get(coordinate).Remove(ant);
+				map.ForcedGet(coordinate).Remove(ant);
 				log.Log(CommonLogTypes.AntRemoved, ant, coordinate);
 			}
 

@@ -18,7 +18,7 @@ namespace WolfsAndPreysWpf
 		{
 		}
 
-		public override void ProcessTurn()
+		protected override void DoProcessTurn()
 		{
 			ICell<Coordinates2D, EmptyData, EmptyData>[] cellsWithPreys = Cell
 				.GetSuburbCells(speed)

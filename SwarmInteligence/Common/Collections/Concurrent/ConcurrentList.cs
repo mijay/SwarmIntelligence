@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
@@ -8,6 +9,7 @@ using Common.Collections.Extensions;
 namespace Common.Collections.Concurrent
 {
 	public class ConcurrentList<T>: IAppendableCollection<T>
+		where T: class
 	{
 		private readonly List<T> list = new List<T>();
 		private readonly ReaderWriterLockSlim lockSlim = new ReaderWriterLockSlim(LockRecursionPolicy.SupportsRecursion);
@@ -74,12 +76,9 @@ namespace Common.Collections.Concurrent
 			{
 				Contract.Requires(index >= 0);
 
-				if(index >= list.Count)
-					return default(T);
-
 				lockSlim.EnterReadLock();
 				try {
-					return list[index];
+					return index >= list.Count ? null : list[index];
 				}
 				finally {
 					lockSlim.ExitReadLock();
@@ -89,41 +88,47 @@ namespace Common.Collections.Concurrent
 			{
 				Contract.Requires(index >= 0);
 
-				if(list.Count > index) {
-					lockSlim.EnterReadLock();
-					try {
+				lockSlim.EnterUpgradeableReadLock();
+
+				try {
+					if(list.Count > index)
 						list[index] = value;
-					}
-					finally {
-						lockSlim.ExitReadLock();
-					}
-				} else {
-					lockSlim.EnterWriteLock();
-					try {
-						if(list.Count > index)
+					else {
+						lockSlim.EnterWriteLock();
+						try {
 							list.AddRange(Enumerable.Repeat(default(T), index - list.Count).Concat(value));
-						else
-							list[index] = value;
+						}
+						finally {
+							lockSlim.ExitWriteLock();
+						}
 					}
-					finally {
-						lockSlim.ExitWriteLock();
-					}
+				}
+				finally {
+					lockSlim.ExitUpgradeableReadLock();
 				}
 			}
 		}
 
-		public T CompareExchange(int index, T value, T comparand)
+		public T GetOrCreate(int index, Func<T> valueBuilder)
 		{
-			Contract.Requires(index >= 0);
-			lockSlim.EnterWriteLock();
+			Contract.Requires(index >= 0 && valueBuilder != null);
+			Contract.Ensures(Contract.Result<T>() != null);
+
+			lockSlim.EnterUpgradeableReadLock();
 			try {
-				T current = this[index];
-				if(ReferenceEquals(current, null) ? ReferenceEquals(comparand, null) : current.Equals(comparand))
-					this[index] = value;
-				return current;
+				T result;
+
+				if(list.Count <= index)
+					this[index] = result = valueBuilder();
+				else {
+					result = list[index];
+					if(result == null)
+						list[index] = result = valueBuilder();
+				}
+				return result;
 			}
 			finally {
-				lockSlim.ExitWriteLock();
+				lockSlim.ExitUpgradeableReadLock();
 			}
 		}
 	}

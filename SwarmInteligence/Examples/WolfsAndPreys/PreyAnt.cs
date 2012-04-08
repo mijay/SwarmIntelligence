@@ -18,7 +18,7 @@ namespace WolfsAndPreys
 		{
 		}
 
-		public override void ProcessTurn()
+		protected override void DoProcessTurn()
 		{
 			Coordinates2D[] cellsWithWolfs = Cell
 				.GetSuburbCells(Speed)
