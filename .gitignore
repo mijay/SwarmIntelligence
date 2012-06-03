@@ -16,3 +16,9 @@ obj/
 _ReSharper*/
 [Tt]est[Rr]esult*
 *ReSharper*
+*.aux
+*.out
+*.nlo
+*.toc
+*.bbl
+*.blg
