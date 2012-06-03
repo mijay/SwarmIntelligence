@@ -1,0 +1,83 @@
+\documentclass[14pt,a4paper,times,bachelor,
+    subf,href,
+%   draft
+]{disser}
+
+\usepackage[
+  a4paper, mag=1000, includefoot,
+  left=3cm, right=1cm, top=2cm, bottom=2cm, headsep=1cm, footskip=1cm
+]{geometry}
+\usepackage[T2A]{fontenc}
+\usepackage[cp1251]{inputenc}
+\usepackage[english,russian]{babel}
+\usepackage{tabularx}           % таблицы
+
+% списки:
+\usepackage{enumitem}
+\AddEnumerateCounter{\asbuk}{\asbuk}{щ}
+\setlist[2]{label={\asbuk*}.}
+
+% сокращения:
+\usepackage[intoc, russian]{nomencl}  
+\makenomenclature
+\renewcommand{\nomlabel}[1]{\hbox to 6cm{#1}} % делаем выравнивание и отступ
+\renewcommand{\nomname}{Перечень принятых в работе сокращений}
+
+
+\ifpdf\usepackage{epstopdf}\fi
+
+\usepackage[final]{listings}    % вставка листингов кода
+\lstloadlanguages{[Sharp]C}     % загрузка используемых языков
+\lstset{tabsize=2,              % изменить настройки пакета: поменять размер табов (4 а не 8)
+commentstyle=\itshape,          % меняем стиль комментариев на италик
+frame=lines,                    % обрамлять листинг линиями сверху и снизу
+framesep=10pt, texcl,           % отступ до кода + комментарии в коде обрабатываются LaTeX
+aboveskip=15pt,belowskip=15pt,  % отступы до и после листинга
+basicstyle=\small,              % стиль для всех надписей (избавляюсь от 14 шрифта)
+columns=fullflexible}           % магия - пробелы м/у буквами как в обычном тексте
+\lstnewenvironment{cscode}      % модифицированное окружение:
+{\lstset{                       % задаем настройки пакета локальные в этом окружении
+    language=[Sharp]C,          % язык - C#
+    morekeywords={where}        % добавили дополнительное ключевое слово
+ }\singlespacing}               % сделали одинарный интервал м/у строк
+{\onehalfspacing}               % вернули интервал обратно
+
+
+\usepackage{amssymb}            % доп. матсимволы + <= в русском стиле
+\renewcommand{\ge}{\geqslant}   % <= по умолчанию русское
+\renewcommand{\le}{\leqslant}   % >= по умолчанию русское
+
+\tolerance=9000                 % ставим растяжимость побольше - прощай overfull
+
+% Номера страниц сверху справа
+\def\headfont{\small}
+\pagestyle{headright}
+\chapterpagestyle{headright}
+% нумерация приложений по арабски:
+\renewcommand\theappendix{\@arabic\c@chapter}
+
+% Использовать полужирное начертание для векторов
+\let\vec=\mathbf
+
+% Включать подсекции в оглавление
+\setcounter{tocdepth}{2}
+\usepackage{indentfirst}        % отступ у первого абзаца раздела
+%\numberwithin{equation}{section}% включать в номера формул номера разделов
+
+%\graphicspath{{fig/}}
+
+\newcommand{\todo}[1]{\marginpar{TODO: #1}}
+
+\begin{document}
+\include{title}
+\include{referat}
+\setcounter{page}{2}
+\tableofcontents
+\include{intro}
+\include{first}
+\include{second}
+\include{concl}
+
+\bibliographystyle{gost705}
+\bibliography{thesis}
+\end{document}
