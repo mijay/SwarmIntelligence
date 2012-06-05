@@ -10,14 +10,8 @@
 \usepackage{tabularx}           % таблицы
 
 % подписи:
-\usepackage{environ}
 \usepackage{caption}
-\usepackage{calc}
-\captionsetup{justification=centering, singlelinecheck=false}
-\newlength \captionmarging
-\setlength \captionmarging {\hoffset+\oddsidemargin+1.5em}
-\newcommand{\capt}[1]{\vspace{-1em}\hspace{\captionmarging}\parbox{\textwidth}{\caption*{#1}}}
-\NewEnviron{formula}{\begin{figure}[h]\BODY\end{figure}}
+\newcommand{\capt}[1]{\hspace{\leftskip}\parbox{\linewidth}{\captionof*{formula}{#1}}}
 
 % оформление картинок
 \usepackage[
