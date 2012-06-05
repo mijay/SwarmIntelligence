@@ -22,3 +22,5 @@ _ReSharper*/
 *.toc
 *.bbl
 *.blg
+*.nls
+*.ilg

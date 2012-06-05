@@ -1,5 +1,5 @@
-\documentclass[14pt,a4paper,times,bachelor,
-    subf,href,
+\documentclass[14pt, times,
+	master, subf, href,
 	draft
 ]{disser}
 
@@ -68,7 +68,21 @@ columns=fullflexible}           % магия - пробелы м/у буквами как в обычном текс
 
 %\graphicspath{{fig/}}
 
-\newcommand{\todo}[1]{\marginpar{TODO: #1}}
+% Красивые todo
+\usepackage{ifdraft}
+\usepackage{tikz}
+\newcommand{\todo}[1]{
+	\ifdraft {
+		\begin{tikzpicture}[remember picture]
+			\definecolor{orange}{rgb}{1,0.5,0}
+			\draw node[draw=black, fill=orange,
+					 text width=\linewidth - 1.6 ex - 1 pt] {
+				TODO: #1
+			};
+		\end{tikzpicture}
+	} {}
+}
+
 
 \begin{document}
 \include{title}
@@ -77,8 +91,8 @@ columns=fullflexible}           % магия - пробелы м/у буквами как в обычном текс
 \tableofcontents
 \include{intro}
 \include{first}
-\include{second}
-\include{concl}
+%\include{second}
+%\include{concl}
 
 \bibliographystyle{gost2008}
 \bibliography{thesis}
