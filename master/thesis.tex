@@ -2,38 +2,39 @@
 	master, subf, href,
 	draft
 ]{disser}
-
-\usepackage{pscyr}
 \usepackage[T2A]{fontenc}
 \usepackage[cp1251]{inputenc}
 \usepackage[english,russian]{babel}
+
+\usepackage{pscyr}              % красивый шрифт
 \usepackage{tabularx}           % таблицы
+\usepackage{comment}            % многострочные комментарии
 
-% подписи:
+% Подписи:
 \usepackage{caption}
-\newcommand{\capt}[1]{\hspace{\leftskip}\parbox{\linewidth}{\captionof*{formula}{#1}}}
+\newcommand{\capt}[1]{\hspace{\leftskip}\parbox{\linewidth}{\captionof*{formula}{#1}}}  %подпись вырованенная по центру текста (а не страницы), т.е. как формулы
 
-% оформление картинок
+% Картинки:
 \usepackage[
   a4paper, mag=1000, includefoot,
   left=3cm, right=1cm, top=2cm, bottom=2cm, headsep=1cm, footskip=1cm
-]{geometry}
+]{geometry}                     % оформление картинки
+\ifpdf\usepackage{epstopdf}\fi  % вставка eps в pdf
+%\graphicspath{{fig/}}
 
-% списки:
+% Списки:
 \usepackage{enumitem}
 \AddEnumerateCounter{\asbuk}{\asbuk}{щ}
 \setlist[2]{label={\asbuk*}.}
 
-% сокращения:
+% Сокращения:
 \usepackage[intoc, russian]{nomencl}  
 \makenomenclature
 \renewcommand{\nomlabel}[1]{\hbox to 6cm{#1}} % делаем выравнивание и отступ
 \renewcommand{\nomname}{Перечень принятых в работе сокращений}
 
-
-\ifpdf\usepackage{epstopdf}\fi
-
-\usepackage[final]{listings}    % вставка листингов кода
+% Вставка листингов кода:
+\usepackage[final]{listings}
 \lstloadlanguages{[Sharp]C}     % загрузка используемых языков
 \lstset{tabsize=2,              % изменить настройки пакета: поменять размер табов (4 а не 8)
 commentstyle=\itshape,          % меняем стиль комментариев на италик
@@ -49,28 +50,20 @@ columns=fullflexible}           % магия - пробелы м/у буквами как в обычном текс
  }\singlespacing}               % сделали одинарный интервал м/у строк
 {\onehalfspacing}               % вернули интервал обратно
 
-
-\usepackage{amssymb}            % доп. матсимволы + <= в русском стиле
-\renewcommand{\ge}{\geqslant}   % <= по умолчанию русское
-\renewcommand{\le}{\leqslant}   % >= по умолчанию русское
-
-\tolerance=9000                 % ставим растяжимость побольше - прощай overfull
-
-% Номера страниц сверху справа
+% Номера страниц сверху справа:
 \def\headfont{\small}
 \pagestyle{headright}
 \chapterpagestyle{headright}
-% нумерация приложений по арабски:
-\renewcommand\theappendix{\@arabic\c@chapter}
 
-% Использовать полужирное начертание для векторов
-\let\vec=\mathbf
-
-% Включать подсекции в оглавление
-\setcounter{tocdepth}{2}
+% Кастомизация стилей:
+\renewcommand\theappendix{\@arabic\c@chapter}   % нумерация приложений по арабски
+\let\vec=\mathbf                % Использовать полужирное начертание для векторов
+\setcounter{tocdepth}{2}        % Включать подсекции в оглавление
 \usepackage{indentfirst}        % отступ у первого абзаца раздела
-
-%\graphicspath{{fig/}}
+\tolerance=9000                 % ставим растяжимость побольше - прощай overfull
+\usepackage{amssymb}            % доп. матсимволы + <= в русском стиле
+\renewcommand{\ge}{\geqslant}   % <= по умолчанию русское
+\renewcommand{\le}{\leqslant}   % >= по умолчанию русское
 
 % Красивые todo
 \usepackage{ifdraft}
@@ -96,7 +89,7 @@ columns=fullflexible}           % магия - пробелы м/у буквами как в обычном текс
 \include{intro}
 \include{first}
 \include{second}
-%\include{third}
+\include{third}
 %\include{concl}
 
 \bibliographystyle{gost2008}
