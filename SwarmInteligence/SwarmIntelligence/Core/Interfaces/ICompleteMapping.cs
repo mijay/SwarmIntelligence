@@ -10,7 +10,7 @@ namespace SwarmIntelligence.Core.Interfaces
 	/// <typeparam name="TKey">Type of keys in mapping.</typeparam>
 	/// <typeparam name="TValue">Type of values mapping.</typeparam>
 	[ContractClass(typeof(ICompleteMappingContract<,>))]
-	public interface ICompleteMapping<TKey, TValue>: IKeyValueContainer<TKey, TValue>
+	public interface ICompleteMapping<in TKey, TValue>
 	{
 		/// <summary>
 		/// Returns the <typeparamref name="TValue"/> associated with the <paramref name="key"/>.
@@ -20,5 +20,12 @@ namespace SwarmIntelligence.Core.Interfaces
 		/// <returns><typeparamref name="TValue"/> associated with the <paramref name="key"/>.</returns>
 		[Pure]
 		TValue Get(TKey key);
+
+		/// <summary>
+		/// Sets the <typeparamref name="TValue" /> associated with the <paramref name="key" /> to <paramref name="value" />.
+		/// Override existing one.
+		/// </summary>
+		/// <exception cref="NotSupportedException">This method is not supported.</exception>
+		void Set(TKey key, TValue value);
 	}
 }

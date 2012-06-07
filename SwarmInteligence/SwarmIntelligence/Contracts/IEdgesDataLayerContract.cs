@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using Common;
 using SwarmIntelligence.Core.Data;
@@ -9,22 +7,11 @@ using SwarmIntelligence.Core.Space;
 namespace SwarmIntelligence.Contracts
 {
 	[ContractClassFor(typeof(IEdgesDataLayer<,>))]
-	public abstract class EdgesDataLayerContract<TCoordinate, TEdgeData>: IEdgesDataLayer<TCoordinate, TEdgeData>
+	public abstract class IEdgesDataLayerContract<TCoordinate, TEdgeData>: IEdgesDataLayer<TCoordinate, TEdgeData>
 		where TCoordinate: ICoordinate<TCoordinate>
 	{
 		#region IEdgesDataLayer<TCoordinate,TEdgeData> Members
-
-		public IEnumerator<KeyValuePair<Edge<TCoordinate>, TEdgeData>> GetEnumerator()
-		{
-			//todo!
-			throw new UnreachableCodeException();
-		}
-
-		IEnumerator IEnumerable.GetEnumerator()
-		{
-			return GetEnumerator();
-		}
-
+		
 		public Topology<TCoordinate> Topology
 		{
 			get
@@ -35,6 +22,13 @@ namespace SwarmIntelligence.Contracts
 		}
 
 		public TEdgeData Get(Edge<TCoordinate> key)
+		{
+			Contract.Ensures(Topology.Lays(key));
+			Contract.EnsuresOnThrow<IndexOutOfRangeException>(!Topology.Lays(key));
+			throw new UnreachableCodeException();
+		}
+
+		public void Set(Edge<TCoordinate> key, TEdgeData value)
 		{
 			Contract.Ensures(Topology.Lays(key));
 			Contract.EnsuresOnThrow<IndexOutOfRangeException>(!Topology.Lays(key));

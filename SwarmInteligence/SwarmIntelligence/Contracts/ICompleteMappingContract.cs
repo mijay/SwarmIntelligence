@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using System.Diagnostics.Contracts;
 using Common;
 using SwarmIntelligence.Core.Interfaces;
@@ -13,18 +12,16 @@ namespace SwarmIntelligence.Contracts
 
 		public TValue Get(TKey key)
 		{
+			Contract.Requires(!ReferenceEquals(key, null));
 			Contract.Ensures(!ReferenceEquals(Contract.Result<TValue>(), null));
 			throw new UnreachableCodeException();
 		}
 
-		public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
+		public void Set(TKey key, TValue value)
 		{
+			Contract.Requires(!ReferenceEquals(key, null));
+			Contract.Requires(!ReferenceEquals(value, null));
 			throw new UnreachableCodeException();
-		}
-
-		IEnumerator IEnumerable.GetEnumerator()
-		{
-			return GetEnumerator();
 		}
 
 		#endregion

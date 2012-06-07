@@ -67,7 +67,7 @@
   <ItemGroup>
     <Compile Include="Actions.cs" />
     <Compile Include="Contracts\CellBaseContract.cs" />
-    <Compile Include="Contracts\EdgesDataLayerContract.cs" />
+    <Compile Include="Contracts\IEdgesDataLayerContract.cs" />
     <Compile Include="Contracts\ICompleteMappingContract.cs" />
     <Compile Include="Contracts\IMapContract.cs" />
     <Compile Include="Contracts\ISparsedMappingContract.cs" />

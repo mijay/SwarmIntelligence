@@ -10,7 +10,7 @@ namespace SwarmIntelligence.Core.Data
 	/// </summary>
 	/// <typeparam name="TCoordinate">Type of coordinates in represented space.</typeparam>
 	/// <typeparam name="TEdgeData">Type of data associated with edges between point in current space.</typeparam>
-	[ContractClass(typeof(EdgesDataLayerContract<,>))]
+	[ContractClass(typeof(IEdgesDataLayerContract<,>))]
 	public interface IEdgesDataLayer<TCoordinate, TEdgeData>: ICompleteMapping<Edge<TCoordinate>, TEdgeData>
 		where TCoordinate: ICoordinate<TCoordinate>
 	{

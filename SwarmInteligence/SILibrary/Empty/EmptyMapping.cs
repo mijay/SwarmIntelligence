@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using SwarmIntelligence.Core.Interfaces;
@@ -12,6 +13,11 @@ namespace SILibrary.Empty
 		public EmptyData Get(TKey key)
 		{
 			return new EmptyData();
+		}
+
+		public void Set(TKey key, EmptyData value)
+		{
+			throw new NotSupportedException();
 		}
 
 		public IEnumerator<KeyValuePair<TKey, EmptyData>> GetEnumerator()

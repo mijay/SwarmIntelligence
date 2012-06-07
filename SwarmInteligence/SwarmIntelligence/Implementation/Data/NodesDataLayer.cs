@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using Common;
 using SwarmIntelligence.Core.Data;
@@ -31,14 +29,10 @@ namespace SwarmIntelligence.Implementation.Data
 			return completeMapping.Get(key);
 		}
 
-		public IEnumerator<KeyValuePair<TCoordinate, TNodeData>> GetEnumerator()
+		public void Set(TCoordinate key, TNodeData value)
 		{
-			return completeMapping.GetEnumerator();
-		}
-
-		IEnumerator IEnumerable.GetEnumerator()
-		{
-			return GetEnumerator();
+			Requires.True<IndexOutOfRangeException>(Topology.Lays(key));
+			completeMapping.Set(key, value);
 		}
 
 		#endregion

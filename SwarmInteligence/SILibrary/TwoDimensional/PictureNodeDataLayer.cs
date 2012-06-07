@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using System.Diagnostics.Contracts;
 using System.Drawing;
 using SwarmIntelligence.Core.Interfaces;
@@ -42,16 +41,9 @@ namespace SILibrary.TwoDimensional
 				return fastBitmap.GetColor(key.x, key.y);
 			}
 
-			public IEnumerator<KeyValuePair<Coordinates2D, Color>> GetEnumerator()
+			public void Set(Coordinates2D key, Color value)
 			{
-				for(int x = 0; x < width; x++)
-					for(int y = 0; y < height; y++)
-						yield return new KeyValuePair<Coordinates2D, Color>(new Coordinates2D(x, y), fastBitmap.GetColor(x, y));
-			}
-
-			IEnumerator IEnumerable.GetEnumerator()
-			{
-				return GetEnumerator();
+				throw new NotSupportedException();
 			}
 
 			#endregion

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using Common;
 using SwarmIntelligence.Core.Data;
@@ -13,18 +11,7 @@ namespace SwarmIntelligence.Contracts
 		where TCoordinate: ICoordinate<TCoordinate>
 	{
 		#region INodesDataLayer<TCoordinate,TNodeData> Members
-
-		public IEnumerator<KeyValuePair<TCoordinate, TNodeData>> GetEnumerator()
-		{
-			//todo!
-			throw new UnreachableCodeException();
-		}
-
-		IEnumerator IEnumerable.GetEnumerator()
-		{
-			return GetEnumerator();
-		}
-
+		
 		public Topology<TCoordinate> Topology
 		{
 			get
@@ -35,6 +22,13 @@ namespace SwarmIntelligence.Contracts
 		}
 
 		public TNodeData Get(TCoordinate key)
+		{
+			Contract.Ensures(Topology.Lays(key));
+			Contract.EnsuresOnThrow<IndexOutOfRangeException>(!Topology.Lays(key));
+			throw new UnreachableCodeException();
+		}
+
+		public void Set(TCoordinate key, TNodeData value)
 		{
 			Contract.Ensures(Topology.Lays(key));
 			Contract.EnsuresOnThrow<IndexOutOfRangeException>(!Topology.Lays(key));
