@@ -41,6 +41,7 @@ public interface ICoordinate<TCoordinate>: IEquatable<TCoordinate>, ICloneable<T
 public abstract class Topology<TCoordinate>
     where TCoordinate: ICoordinate<TCoordinate>
 {
+    // реализация методов опущена для краткости
     public abstract bool Lays(TCoordinate coord);
     public abstract IEnumerable<TCoordinate> GetSuccessors(TCoordinate coord);
     public abstract IEnumerable<TCoordinate> GetPredecessors(TCoordinate coord);
@@ -54,16 +55,46 @@ public abstract class Topology<TCoordinate>
 
 Топология обладает парными методами для \lstinline!TCoordinate! и \lstinline!Edge<TCoordinate>!, который является предсталением перехода. Топология позволяет проверять лежит ли данная точка{\textfractionsolidus}переход на карте; получить по точке список последующих точек (таких, в которые из нее можно перейти) и наоборот --- предшествующих.
 
+Третья роль карты --- размещение агентов в ее точках. Это роль существенно более комплексная, поэтому будет описана отдельно в разделе \ref{sec:map+cells}.
+
+Четвертая роль --- размещение данных в точках и переходах карты. Она реализуется посредством двух интерфейсов: слоя данных точек и переходов соответственно.
+
+\begin{cscode}
+public interface IEdgesDataLayer<TCoordinate, TEdgeData>: ICompleteMapping<Edge<TCoordinate>, TEdgeData>
+    where TCoordinate: ICoordinate<TCoordinate>
+{
+    Topology<TCoordinate> Topology { get; }
+}
+
+public interface INodesDataLayer<TCoordinate, TNodeData>: ICompleteMapping<TCoordinate, TNodeData>
+		where TCoordinate: ICoordinate<TCoordinate>
+{
+    Topology<TCoordinate> Topology { get; }
+}
+\end{cscode} 
+
+Общий предок этих интерфейсов \lstinline!ICompleteMapping<TKey,TValue>! --- это интерфейс, описывающий всюду определенное отображение из ключей типа \lstinline!TKey! в значения типа \lstinline!TValue!. Опуская детали реализации, нужные в основном ради переиспользования кода, этот интерфейс имеет следующий вид:
+
+\begin{cscode}
+public interface ICompleteMapping<in TKey, TValue>
+{
+    TValue Get(TKey key);
+    void Set(TKey key, TValue value);
+}
+\end{cscode}
+
+То есть слой данных: во-первых, привязан к топологии карты (это нужно для обеспечения корректных внешних контрактов класса, см. раздел \ref{sec:why}) и, во-вторых, умеет по произвольной точке{\textfractionsolidus}переходу карты возвращать либо устанавливать ассоциированные с ним данные. Заметим, что реализовать такой интерфейс просто как поверх поставщиков статических данных, напрмер таковым будет слой данных, читающий данные из двумерного изображения и выбрасывающий исключение \lstinline!throw new NotSupportedException()! при попытки записи в него, так и поверх обычных хранилищ данных, снабженных операцией генерации начального значения данных в точке.
 
 
 
-\section{Общие концепции построения системы}\label{sec:why}
+
+\section{Общие концепции построения системы}\label{sec:why}\todo{еще контракты, еще привязка всего к топологии для них}
 Существенной особенностью реализации данного интерфейса является то, что в нем использована так называемая техника параметрического наследования (англ. curiously recurring template pattern) \nomenclature{CRTP}{Curiously Recurring Template Pattern} \cite{CRTP}. Согластно этой технике, каждая реализация интерфейса должна выглядеть следующим образом (в качестве примера приведем реализацию координаты в графе):
 
 \begin{cscode}
 public struct GraphCoordinate: ICoordinate<GraphCoordinate>
 {
-    // поля и методы опущены для краткости
+    // некоторые поля и методы
 }
 \end{cscode}
 
