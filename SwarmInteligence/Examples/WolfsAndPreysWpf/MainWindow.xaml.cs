@@ -64,7 +64,8 @@ namespace WolfsAndPreysWpf
 					bool isWolf = newRecord.arguments[0] is WolfAnt;
 
 					Ellipse ellipse;
-					Contract.Assert(ellipses.RemoveFirst(Tuple.Create(from, isWolf), out ellipse));
+					var removed = ellipses.RemoveFirst(Tuple.Create(from, isWolf), out ellipse);
+					Contract.Assert(removed);
 					gridVisual.Children.Remove(ellipse);
 
 					AddEllipse(isWolf, to);
@@ -78,7 +79,8 @@ namespace WolfsAndPreysWpf
 					bool isWolf = newRecord.arguments[0] is WolfAnt;
 
 					Ellipse ellipse;
-					Contract.Assert(ellipses.RemoveFirst(Tuple.Create(from, isWolf), out ellipse));
+					var removed = ellipses.RemoveFirst(Tuple.Create(from, isWolf), out ellipse);
+					Contract.Assert(removed);
 					gridVisual.Children.Remove(ellipse);
 
 					gridVisual.Children.Add(BuildCycle(isWolf, from, isWolf ? Brushes.BlueViolet : Brushes.Gray));
