@@ -11,6 +11,10 @@
 \usepackage{comment}            % многострочные комментарии
 \usepackage{textcomp}           % набор типографских символов
 
+% Алгоритмы:
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
 % Подписи:
 \usepackage{caption}
 \newcommand{\capt}[1]{\hspace{\leftskip}\parbox{\linewidth}{\captionof*{formula}{#1}}}  %подпись вырованенная по центру текста (а не страницы), т.е. как формулы
@@ -80,7 +84,6 @@ columns=fullflexible}           % магия - пробелы м/у буквами как в обычном текс
 		\end{tikzpicture}
 	} {}
 }
-
 
 \begin{document}
 \include{title}
