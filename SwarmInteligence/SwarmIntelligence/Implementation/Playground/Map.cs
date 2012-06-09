@@ -32,12 +32,14 @@ namespace SwarmIntelligence.Implementation.Playground
 		public bool TryGet(TCoordinate coordinate, out ICell<TCoordinate, TNodeData, TEdgeData> cell)
 		{
 			Requires.True<IndexOutOfRangeException>(Topology.Lays(coordinate));
-			Contract.Ensures(!Contract.Result<bool>() || Contract.ValueAtReturn(out cell).Coordinate.Equals(coordinate));
 
 			CellBase<TCoordinate, TNodeData, TEdgeData> cellBase;
-			bool result = valueStorage.TryGet(coordinate, out cellBase);
-			cell = cellBase;
-			return result;
+			if(valueStorage.TryGet(coordinate, out cellBase) && !cellBase.IsEmpty) {
+				cell = cellBase;
+				return true;
+			}
+			cell = null;
+			return false;
 		}
 
 		IEnumerator IEnumerable.GetEnumerator()
@@ -48,6 +50,7 @@ namespace SwarmIntelligence.Implementation.Playground
 		public IEnumerator<KeyValuePair<TCoordinate, ICell<TCoordinate, TNodeData, TEdgeData>>> GetEnumerator()
 		{
 			return valueStorage
+				.Where(x => !x.Value.IsEmpty)
 				.Select(x => new KeyValuePair<TCoordinate, ICell<TCoordinate, TNodeData, TEdgeData>>(x.Key, x.Value))
 				.GetEnumerator();
 		}

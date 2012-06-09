@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using System.Linq;
 using Common;
 using SwarmIntelligence.Core.Playground;
 using SwarmIntelligence.Core.Space;
@@ -20,6 +21,7 @@ namespace SwarmIntelligence.Contracts
 			Contract.EnsuresOnThrow<IndexOutOfRangeException>(!Topology.Lays(key));
 			Contract.Ensures(!Contract.Result<bool>() || Contract.ValueAtReturn(out value).Coordinate.Equals(key));
 			Contract.Ensures(!Contract.Result<bool>() || Contract.ValueAtReturn(out value).Map == this);
+			Contract.Ensures(!Contract.Result<bool>() || Contract.ValueAtReturn(out value).Any());
 
 			throw new UnreachableCodeException();
 		}
