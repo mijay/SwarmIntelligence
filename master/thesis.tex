@@ -52,8 +52,10 @@ columns=fullflexible}           % магия - пробелы м/у буквами как в обычном текс
 {\lstset{                       % задаем настройки пакета локальные в этом окружении
     language=[Sharp]C,          % язык - C#
     morekeywords={where}        % добавили дополнительное ключевое слово
- }\singlespacing}               % сделали одинарный интервал м/у строк
-{\onehalfspacing}               % вернули интервал обратно
+ }\singlespacing                % сделали одинарный интервал м/у строк
+ \noindent\minipage{\linewidth}}% не разбивать страницы
+{\endminipage                   % закончили неразбивать страницы
+\onehalfspacing}                % вернули интервал обратно
 
 % Номера страниц сверху справа:
 \def\headfont{\small}
