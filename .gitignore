@@ -24,3 +24,5 @@ _ReSharper*/
 *.blg
 *.nls
 *.ilg
+*.nav
+*.snm
