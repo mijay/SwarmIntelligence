@@ -1,0 +1,119 @@
+\documentclass[14pt]{beamer}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian,english]{babel}
+\usepackage{tabularx}
+\usepackage{pscyr}
+\usetheme{Warsaw}
+
+
+\title{Система поддержки алгоритмов коллективного разума}
+\author[Конончук Д.О.]{Дмитрий Конончук}
+\institute{
+    Уральский Федеральный Университет\\имени Первого Президента России\\Б.Н.Ельцина\vspace{0.5cm}
+
+    Научный руководитель: Окуловский Юрий Сергеевич \vspace{0.9em}
+}
+\date{\footnotesize 2012}
+\begin{document}
+
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\begin{frame}
+    \frametitle{Определение}
+    
+    \begin{description}
+        \item[АКР] --- алгоритмы исскуственного интеллекта, основаные на принципе решения задачи множеством простых агентов.
+    \end{description}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Первая работа}
+    \LARGE
+    \begin{center}
+        1991 \vspace{0.5cm}
+
+        A. Colorni, M. Dorigo et V. Maniezzo \vspace{0.5cm}
+
+        Distributed Optimization by Ant Colonies
+    \end{center}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Система поддержки}
+    \begin{itemize}
+        \item Фиксирует структуру алгоритма.
+        \item Предоставляет средства для упрощения его выражения.
+        \item Реализует сервисные функции.
+    \end{itemize}
+\end{frame}
+
+% \begin{frame}
+    % \frametitle{Фреймворки}
+    % \begin{columns}[t]
+        % \begin{column}{0.4\textwidth}
+            % Нейронные сети
+            % \begin{itemize}
+                % \item SNNS
+                % \item Emergnet
+                % \item JavaNNS
+                % \item NeuralLab
+                % \item Neuron
+                % \item Gans
+            % \end{itemize}
+        % \end{column}
+        % \begin{column}{0.6\textwidth}
+            % Генетические алгоритмы
+            % \begin{itemize}
+                % \item EvoJ
+                % \item CuberGA
+                % \item GAlib
+                % \item JAGA
+                % \item GAUL
+                % \item Gans
+            % \end{itemize}
+        % \end{column}
+    % \end{columns}
+% \end{frame}
+
+\begin{frame}
+    \frametitle{Возможные фреймворки для АКР}
+        Мульти-агентное моделирование: JADE, MASS, Repast, breve \ldots
+        \vspace{1cm}        
+        
+        Алгоритмы эволюционного моделирования:  EO Evolutionary Computation Framework, ECF \ldots
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Основные свойства АКР}
+    \begin{itemize}
+        \item Алгоритм работает в некотором адресуемом пространстве.
+        \item Единственная активная сущность --- агент.
+        \item Агент может перемещаться по пространству и изменять данные, ассоциированные с его ячейками.
+        \item Все действия агентов на каждой итерации независимы друг от друга.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Задачи}
+    \setbeamercovered{transparent=50}
+    \begin{enumerate}
+        \item<1> Разработка единой архитектуры.
+        \item<1> Улучшение ее юзабилити.
+        \item<1> Ее оптимизация под распараллеливание и транзакции.
+        \item<1-2> Реализация транзакций.
+        \item<1> Реализация распараллеливания и распределения.
+        \item<1> Реализация визуализации.
+        \item<1>  $\cdots$
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}
+    \begin{center}
+        Спасибо за внимание
+    \end{center}
+\end{frame}
+\end{document}
