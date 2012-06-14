@@ -25,7 +25,7 @@
     \frametitle{Определение}
     
     \begin{description}
-        \item[АКР] --- алгоритмы исскуственного интеллекта, основаные на принципе решения задачи множеством простых агентов.
+        \item[АКР] --- алгоритмы искусственного интеллекта, основанные на принципе решения задачи множеством простых агентов.
     \end{description}
 \end{frame}
 
@@ -41,41 +41,14 @@
     \end{center}
 \end{frame}
 
-\begin{frame}
-    \frametitle{Система поддержки}
-    \begin{itemize}
-        \item Фиксирует структуру алгоритма.
-        \item Предоставляет средства для упрощения его выражения.
-        \item Реализует сервисные функции.
-    \end{itemize}
-\end{frame}
-
 % \begin{frame}
-    % \frametitle{Фреймворки}
-    % \begin{columns}[t]
-        % \begin{column}{0.4\textwidth}
-            % Нейронные сети
-            % \begin{itemize}
-                % \item SNNS
-                % \item Emergnet
-                % \item JavaNNS
-                % \item NeuralLab
-                % \item Neuron
-                % \item Gans
-            % \end{itemize}
-        % \end{column}
-        % \begin{column}{0.6\textwidth}
-            % Генетические алгоритмы
-            % \begin{itemize}
-                % \item EvoJ
-                % \item CuberGA
-                % \item GAlib
-                % \item JAGA
-                % \item GAUL
-                % \item Gans
-            % \end{itemize}
-        % \end{column}
-    % \end{columns}
+    % \frametitle{Система поддержки}
+    % Реализация алгоритмов определенного класса.
+    % \begin{itemize}
+        % \item Фиксирует архитектуру программного представления алгоритма.
+        % \item Предоставляет средства для выражения алгоритма в терминах этой архитектуры.
+        % \item Обеспечивает функционирование архитектуры.
+    % \end{itemize}
 % \end{frame}
 
 \begin{frame}
@@ -86,29 +59,39 @@
         Алгоритмы эволюционного моделирования:  EO Evolutionary Computation Framework, ECF \ldots
 \end{frame}
 
-
 \begin{frame}
     \frametitle{Основные свойства АКР}
     \begin{itemize}
-        \item Алгоритм работает в некотором адресуемом пространстве.
-        \item Единственная активная сущность --- агент.
-        \item Агент может перемещаться по пространству и изменять данные, ассоциированные с его ячейками.
+        \item Алгоритм работает на карте --- адресуемый граф, потенциально бесконечный.
+        \item С вершинами и ребрами графа ассоциированы данные.
+        \item В вершинах располагаются агенты.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Агенты АКР}
+    \begin{itemize}
+        \item Агент --- единственная активная сущность.
+        \item Агент может:
+            \begin{itemize}
+                \item перемещаться по пространству;
+                \item читать данные, ассоциированные с его вершинами и ребрами;
+                \item изменять их.
+            \end{itemize}
         \item Все действия агентов на каждой итерации независимы друг от друга.
     \end{itemize}
 \end{frame}
 
 \begin{frame}
-    \frametitle{Задачи}
-    \setbeamercovered{transparent=50}
-    \begin{enumerate}
-        \item<1> Разработка единой архитектуры.
-        \item<1> Улучшение ее юзабилити.
-        \item<1> Ее оптимизация под распараллеливание и транзакции.
-        \item<1-2> Реализация транзакций.
-        \item<1> Реализация распараллеливания и распределения.
-        \item<1> Реализация визуализации.
-        \item<1>  $\cdots$
-    \end{enumerate}
+    \frametitle{Функции системы поддержки}
+    \begin{itemize}
+        \item Архитектура программного представления АКР.
+        \item Размещение и перемещение агентов в пространстве.
+        \item Связывание данных с пространством.
+        \item Реализация распараллеливания и конкурентного доступа к данным.
+        \item Система событий.
+        \item Библиотека компонентов.
+    \end{itemize}
 \end{frame}
 
 \begin{frame}
@@ -117,3 +100,4 @@
     \end{center}
 \end{frame}
 \end{document}
+
